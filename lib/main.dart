@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,6 +26,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      routes: {
+        login.tag: (context) => const login(title: "Login"),
+      },
     );
   }
 }
@@ -70,46 +74,55 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+
+        body: SafeArea(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                      Container(
+                        padding: const EdgeInsets.only(top: 40),
+                        width: 200,
+                        height: 200,
+                        child:  Image.asset("assets/logo.png"),
+                      ),
+                  const Padding(padding:EdgeInsets.only(top: 80) ,child: Text("Prenez soin de chez vous depuis votre mobile.", style: TextStyle(fontSize: 12),)),
+                  Container(
+                      padding: const EdgeInsets.only(top: 20),
+                      width: 220,
+                      child: OutlinedButton(
+                        onPressed: () {Navigator.of(context).pushNamed(login.tag);},
+                        style: OutlinedButton.styleFrom(
+                          shape: const StadiumBorder(),
+                          foregroundColor: Colors.yellow,
+                        ),
+                        child: const Text('Connexion', style: TextStyle(color: Colors.black)),
+                      )
+                  ),
+                  Container(
+                      padding: const EdgeInsets.only(top: 10),
+                      width: 220,
+                      child: OutlinedButton(
+                        onPressed: () {},
+                        style: OutlinedButton.styleFrom(
+                          shape: const StadiumBorder(),
+                          foregroundColor: Colors.yellow,
+                        ),
+                        child: const Text('Inscription',style: TextStyle(color: Colors.black)),
+                      )
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(top: 20),
+                    width: 350,
+                    height: 330,
+                    child:  Image.asset("assets/ouvrier.png"),
+                  ),
+                ]
+              ),
+            ],
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+      );
   }
 }
