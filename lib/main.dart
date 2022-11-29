@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/login.dart';
+import 'package:my_app/selectionPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
       routes: {
         login.tag: (context) => const login(title: "Login"),
+        selectionPage.tag: (context) => const selectionPage(title: "Selection"),
       },
     );
   }
@@ -92,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       padding: const EdgeInsets.only(top: 20),
                       width: 220,
                       child: OutlinedButton(
-                        onPressed: () {Navigator.of(context).pushNamed(login.tag);},
+                        onPressed: () {Navigator.of(context).pushNamed(selectionPage.tag);},
                         style: OutlinedButton.styleFrom(
                           shape: const StadiumBorder(),
                           foregroundColor: Colors.yellow,
