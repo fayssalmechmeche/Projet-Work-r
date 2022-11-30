@@ -13,4 +13,5 @@ router.get('/dashboard', (req,res)=> {
 
 
 router.post('/adduser',actions.addNew)
+router.get('/authenticate',actions.authenticate)
 module.exports= router
