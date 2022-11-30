@@ -1,4 +1,5 @@
 const express = require('express')
+const actions = require('../methods/actions')
 
 const router = express.Router()
 
@@ -11,5 +12,5 @@ router.get('/dashboard', (req,res)=> {
 })
 
 
-router.post('/addUser',)
+router.post('/adduser',actions.addNew)
 module.exports= router

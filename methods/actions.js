@@ -5,7 +5,7 @@ var config = require('../config/dbConfig')
 
 var functions = {
     addNew : function(req,res) {
-        if((!req.body.name) || (res.body.password)) {
+        if((!req.body.name) || (!req.body.password)) {
             res.json({success:false,msg:"Remplisez tout"})
         }
         else{
@@ -23,3 +23,4 @@ var functions = {
         }
     }
 }
+module.exports = functions
