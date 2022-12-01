@@ -1,6 +1,6 @@
 # Work'r 
 
-[image](image.png "assets/logo.png")
+[logo](assets/logo.png?raw=True "logo")
 
 ## Description 
 
