@@ -1,17 +1,17 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:my_app/view/Navigation/navigationpage.dart';
+import 'package:my_app/view/Navigation/NavigationPage.dart';
 
 import '../../Controller/NodeJSManager.dart';
 
-class login extends StatefulWidget {
-  const login({Key? key, required String title}) : super(key: key);
-  static const tag = "/login";
+class Login extends StatefulWidget {
+  const Login({Key? key, required String title}) : super(key: key);
+  static const tag = "/Login";
   @override
-  State<login> createState() => _loginState();
+  State<Login> createState() => _LoginState();
 }
 
-class _loginState extends State<login> {
+class _LoginState extends State<Login> {
   var visiblePassword = false;
   var passwordController = TextEditingController();
   var usernameController = TextEditingController();
@@ -96,7 +96,7 @@ class _loginState extends State<login> {
                           passwordController.text));
                       if (await NodeJSManager.authenticate(usernameController.text,
                               passwordController.text) == 200) {
-                        Navigator.of(context).pushNamed(navigationpage.tag);
+                        Navigator.of(context).pushNamed(NavigationPage.tag);
                       };
 
                     },

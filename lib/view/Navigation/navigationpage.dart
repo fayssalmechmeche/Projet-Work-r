@@ -5,21 +5,21 @@ import 'package:my_app/view/Home/workfollow.dart';
 import 'package:my_app/view/Msg/chat.dart';
 import 'package:my_app/view/Home/homepage.dart';
 import 'package:my_app/view/Map/map.dart';
-class navigationpage extends StatefulWidget {
-  const navigationpage({Key? key}) : super(key: key);
+class NavigationPage extends StatefulWidget {
+  const NavigationPage({Key? key}) : super(key: key);
   static const tag = "/nav";
   @override
-  State<navigationpage> createState() => _navigationpageState();
+  State<NavigationPage> createState() => _NavigationPageState();
 }
 
-class _navigationpageState extends State<navigationpage> {
+class _NavigationPageState extends State<NavigationPage> {
   int _selectedIndex = 2;
   static final List<Widget> _NavScreens = <Widget> [
-    chat(),
-    map(),
+    Chat(),
+    Map(),
     homepage(title: "home"),
     workfollow(),
-    profile(title: "profile"),
+    Profile(title: "profile"),
 
 
   ];

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-class editprofile extends StatefulWidget {
-  const editprofile({Key? key}) : super(key: key);
-  static const tag = "/editprofile";
+class EditProfile extends StatefulWidget {
+  const EditProfile({Key? key}) : super(key: key);
+  static const tag = "/EditProfile";
   @override
-  State<editprofile> createState() => _editprofileState();
+  State<EditProfile> createState() => _EditProfileState();
 }
 
-class _editprofileState extends State<editprofile> {
+class _EditProfileState extends State<EditProfile> {
   var adresseController = TextEditingController();
   var villeController = TextEditingController();
   var codePostaleController = TextEditingController();

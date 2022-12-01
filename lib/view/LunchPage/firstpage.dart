@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:my_app/view/Register/register.dart';
 import 'package:my_app/view/Register/registerselection.dart';
-import 'package:my_app/view/Login/selectionPage.dart';
+import 'package:my_app/view/Login/SelectionPage.dart';
 import 'package:my_app/Controller/NodeJSManager.dart';
 
-class firstpage extends StatefulWidget {
-  const firstpage({Key? key, required String title}) : super(key: key);
+class FirstPage extends StatefulWidget {
+  const FirstPage({Key? key, required String title}) : super(key: key);
 
   @override
-  State<firstpage> createState() => _firstpageState();
+  State<FirstPage> createState() => _FirstPageState();
 }
 
-class _firstpageState extends State<firstpage> {
+class _FirstPageState extends State<FirstPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +40,7 @@ class _firstpageState extends State<firstpage> {
                   width: 220,
                   child: OutlinedButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamed(selectionPage.tag);
+                      Navigator.of(context).pushNamed(SelectionPage.tag);
                     },
                     style: OutlinedButton.styleFrom(
                       shape: const StadiumBorder(),

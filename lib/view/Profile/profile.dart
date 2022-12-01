@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/view/Profile/editprofile.dart';
-class profile extends StatefulWidget {
-  const profile({Key? key, required String title}) : super(key: key);
-  static const tag = "/profile";
+class Profile extends StatefulWidget {
+  const Profile({Key? key, required String title}) : super(key: key);
+  static const tag = "/Profile";
   @override
-  State<profile> createState() => _profileState();
+  State<Profile> createState() => _ProfileState();
 }
 
-class _profileState extends State<profile> {
+class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +103,7 @@ class _profileState extends State<profile> {
               width: 160,
               height: 85,
               child: OutlinedButton(
-                onPressed: () {Navigator.of(context).pushNamed(editprofile.tag);},
+                onPressed: () {Navigator.of(context).pushNamed(EditProfile.tag);},
                 style: OutlinedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(0),

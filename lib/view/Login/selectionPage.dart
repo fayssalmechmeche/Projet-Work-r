@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/view/Login/login.dart';
-class selectionPage extends StatefulWidget {
-  const selectionPage({Key? key, required String title}) : super(key: key);
+class SelectionPage extends StatefulWidget {
+  const SelectionPage({Key? key, required String title}) : super(key: key);
   static const tag = "/selection";
   @override
-  State<selectionPage> createState() => _selectionPageState();
+  State<SelectionPage> createState() => _SelectionPageState();
 }
 
-class _selectionPageState extends State<selectionPage> {
+class _SelectionPageState extends State<SelectionPage> {
   @override
   Widget build(BuildContext context) {
 
@@ -35,7 +35,7 @@ class _selectionPageState extends State<selectionPage> {
                       padding: const EdgeInsets.only(top: 20),
                       width: 220,
                       child: OutlinedButton(
-                        onPressed: () {Navigator.of(context).pushNamed(login.tag);},
+                        onPressed: () {Navigator.of(context).pushNamed(Login.tag);},
                         style: OutlinedButton.styleFrom(
                           shape: const StadiumBorder(),
                           foregroundColor: Colors.yellow,
