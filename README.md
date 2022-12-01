@@ -1,16 +1,20 @@
-# my_app
+# Work'r 
 
-A new Flutter project.
+## Description 
 
-## Getting Started
+Work'r est notre projet de fin d'année. C'est une application developpé en Flutter par un groupe de trois etudiants
 
-This project is a starting point for a Flutter application.
+- Merwan 
+- Fayssal
+- Yannis
 
-A few resources to get you started if this is your first Flutter project:
+Le but de Work'r est de simplifier la mise en relation entre les personnes qui veulent effectuer des travaux chez eux et les artisans adapté a leurs besoins.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Pourquoi Flutter ? 
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Nous avons choisi Flutter afin que notre application soit dsponible à la fois sur IOS et android 
+
+
+
+
+
