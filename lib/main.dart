@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/view/editprofile.dart';
 import 'package:my_app/view/firstpage.dart';
 import 'package:my_app/view/homepage.dart';
 import 'package:my_app/view/login.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         login.tag: (context) => const login(title: "Login"),
         selectionPage.tag: (context) => const selectionPage(title: "Selection"),
         profile.tag: (context) => const profile(title: "profile"),
+        editprofile.tag: (context) => const editprofile(),
         navigationpage.tag: (context) => const navigationpage(),
       },
     );

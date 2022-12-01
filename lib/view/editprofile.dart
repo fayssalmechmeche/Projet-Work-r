@@ -17,6 +17,13 @@ class _editprofileState extends State<editprofile> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        leading: const BackButton(
+            color: Colors.black
+        ),
+        elevation: 0,
+      ),
       body: SafeArea(
         child: Column(
             children: [
