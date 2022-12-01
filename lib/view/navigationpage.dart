@@ -13,7 +13,7 @@ class navigationpage extends StatefulWidget {
 }
 
 class _navigationpageState extends State<navigationpage> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 2;
   static final List<Widget> _NavScreens = <Widget> [
     chat(),
     map(),

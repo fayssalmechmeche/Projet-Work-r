@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/view/editprofile.dart';
 class profile extends StatefulWidget {
   const profile({Key? key, required String title}) : super(key: key);
   static const tag = "/profile";
@@ -7,12 +8,6 @@ class profile extends StatefulWidget {
 }
 
 class _profileState extends State<profile> {
-  var adresseController = TextEditingController();
-  var villeController = TextEditingController();
-  var codePostaleController = TextEditingController();
-  var mailController = TextEditingController();
-  var passwordController = TextEditingController();
-  var phoneController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +15,10 @@ class _profileState extends State<profile> {
     body: SafeArea(
       child: Column(
         children: [
+
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
+          children:  [
               Text("Profile", style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
               ]
           ),
@@ -30,6 +26,7 @@ class _profileState extends State<profile> {
               padding: const EdgeInsets.only( top: 30, left: 40),
               child :
               Row(
+
                   children:  [
                   Container(
                     width: 120,
@@ -55,147 +52,67 @@ class _profileState extends State<profile> {
                 ]
               )
           ),
-          Container(
+          Padding(
             padding: const EdgeInsets.only(top: 40),
-            width: 330,
-            child: TextFormField(
-              cursorColor: Colors.grey,
-              controller: adresseController,
-              decoration:  InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(90.0),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(90.0),
-                ),
-                contentPadding: const EdgeInsets.all(10),
-                label: const Text("Adresse"),
-                  labelStyle: const TextStyle(color: Colors.grey)
-              ),
-            ),
+            child: Text("Adresse", style: TextStyle(fontSize: 18)),
           ),
+           Text("100 rue de la chance", style: TextStyle(fontSize: 16)),
+
           Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children:  [
+                Column(
+                    children:  [
                 Container(
                   padding: const EdgeInsets.only(top: 20, right: 20),
                   width: 210,
-                  child: TextFormField(
-                    cursorColor: Colors.grey,
-                    controller: villeController,
-                    decoration:  InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(90.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(90.0),
-                        ),
-                        contentPadding: const EdgeInsets.all(10),
-                        label: const Text("Ville"),
-                        labelStyle: const TextStyle(color: Colors.grey)
-                    ),
-                  ),
+                  child: Text("Ville", style: TextStyle(fontSize: 16)),
                 ),
-                Container(
-                  padding: const EdgeInsets.only(top: 20),
-                  width: 120,
-                  child: TextFormField(
-                    cursorColor: Colors.grey,
-                    controller: codePostaleController,
-                    decoration:  InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(90.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(90.0),
-                        ),
-                        contentPadding: const EdgeInsets.all(10),
-                        label: const Text("Code Postale"),
-                        labelStyle: const TextStyle(color: Colors.grey)
+                Text("Roubaix", style: TextStyle(fontSize: 16)),
+                    ]
+                ),
+                Column(
+                    children:  [
+                    Container(
+                      padding: const EdgeInsets.only(top: 20),
+                      width: 120,
+                      child: Text("Code Postale", style: TextStyle(fontSize: 16)),
                     ),
-                  ),
-                )
+                    Text("75004", style: TextStyle(fontSize: 16)),
+                    ]
+                ),
               ]
           ),
-          Container(
+          Padding(
             padding: const EdgeInsets.only(top: 20),
-            width: 330,
-            child: TextFormField(
-              cursorColor: Colors.grey,
-              controller: mailController,
-              decoration:  InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(90.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(90.0),
-                  ),
-                  contentPadding: const EdgeInsets.all(10),
-                  label: const Text("Mail"),
-                  labelStyle: const TextStyle(color: Colors.grey)
-              ),
-            ),
+            child: Text("Mail", style: TextStyle(fontSize: 16)),
           ),
-          Container(
+          Text("jeanpaul@gmail.com", style: TextStyle(fontSize: 16)),
+          Padding(
             padding: const EdgeInsets.only(top: 20),
-            width: 330,
-            child: TextFormField(
-              cursorColor: Colors.grey,
-              controller: passwordController,
-              decoration:  InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(90.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(90.0),
-                  ),
-                  contentPadding: const EdgeInsets.all(10),
-                  label: const Text("Mot de passe"),
-                  labelStyle: const TextStyle(color: Colors.grey)
-              ),
-            ),
+            child:Text("Mot de passe", style: TextStyle(fontSize: 16)),
           ),
-          Container(
+          Text("**********", style: TextStyle(fontSize: 16)),
+          Padding(
             padding: const EdgeInsets.only(top: 20),
-            width: 330,
-            child: TextFormField(
-              cursorColor: Colors.grey,
-              controller: phoneController,
-              decoration:  InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(90.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(90.0),
-                  ),
-                  contentPadding: const EdgeInsets.all(10),
-                  label: const Text("Téléphone"),
-                  labelStyle: const TextStyle(color: Colors.grey)
-
-              ),
-            ),
+            child:Text("Téléphone", style: TextStyle(fontSize: 16)),
           ),
+          Text("06 67 98 76 54", style: TextStyle(fontSize: 16)),
           Container(
               padding: const EdgeInsets.only(top: 40,bottom: 15, right: 15,left: 15),
               width: 160,
               height: 85,
               child: OutlinedButton(
-                onPressed: () {},
+                onPressed: () {Navigator.of(context).pushNamed(editprofile.tag);},
                 style: OutlinedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(0),
                     ),
-                  foregroundColor: Colors.green,
+                    foregroundColor: Colors.green,
                     side: const BorderSide(color: Colors.green)
 
                 ),
-                child: const Text('Sauvegarder', style: TextStyle(color: Colors.black)),
+                child: const Text('Modification', style: TextStyle(color: Colors.black)),
               )
           ),
         ]
