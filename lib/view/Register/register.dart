@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/view/Home/homepage.dart';
+import 'package:my_app/view/Navigation/navigationpage.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key, required String title}) : super(key: key);
@@ -30,7 +32,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Image.asset("assets/logo.png"),
                 ),
                 Row(
-                
                   children: [
                     Container(
                       padding: const EdgeInsets.only(top: 70, right: 10),
@@ -55,8 +56,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.only(top: 70,left: 10),
-                      
+                      padding: const EdgeInsets.only(top: 70, left: 10),
                       width: 150,
                       height: 150,
                       child: TextFormField(
@@ -158,34 +158,20 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                     Container(
-
-                      width: 100,
-                      height: 70,
-                      decoration: ShapeDecoration(
-                        shape: RoundedRectangleBorder(),
-                        color: Colors.transparent,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 30),
-                        child: DecoratedBox(
-                          child: Center(
-                            child: Text(
-                              'Inscription',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          decoration: ShapeDecoration(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            color: Color(0xFFF8DF02)
-                          ),
+                      padding: const EdgeInsets.only(top: 20),
+                      width: 130,
+                      child: OutlinedButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamed(NavigationPage.tag);
+                        },
+                        style: OutlinedButton.styleFrom(
+                          shape: const StadiumBorder(),
+                          foregroundColor: Colors.yellow,
                         ),
+                        child: const Text('Inscription',
+                            style: TextStyle(color: Colors.black)),
                       ),
-                    )
+                    ),
                   ],
                 )
               ],
@@ -195,4 +181,4 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
   }
-}
+} /*  color: Color(0xFFF8DF02) */

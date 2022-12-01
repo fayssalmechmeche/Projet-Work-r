@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../Navigation/NavigationPage.dart';
+
 class RegisterArtisan extends StatefulWidget {
   const RegisterArtisan({Key? key, required String title}) : super(key: key);
   static const tag = "/registerartisant";
@@ -175,37 +177,21 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                         ),
                       ),
                     ),
-
-
                     Container(
-
-                      width: 100,
-                      height: 70,
-                      decoration: ShapeDecoration(
-                        shape: RoundedRectangleBorder(),
-                        color: Colors.transparent,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 30),
-                        child: DecoratedBox(
-                          child: Center(
-                            child: Text(
-                              'Inscription',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          decoration: ShapeDecoration(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            color: Color(0xFFF8DF02)
-                          ),
+                      padding: const EdgeInsets.only(top: 35),
+                      width: 130,
+                      child: OutlinedButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamed(NavigationPage.tag);
+                        },
+                        style: OutlinedButton.styleFrom(
+                          shape: const StadiumBorder(),
+                          foregroundColor: Colors.yellow,
                         ),
+                        child: const Text('Inscription',
+                            style: TextStyle(color: Colors.black)),
                       ),
-                    )
+                    ),
                   ],
                 )
               ],

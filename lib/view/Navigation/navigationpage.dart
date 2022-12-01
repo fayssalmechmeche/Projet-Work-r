@@ -17,8 +17,8 @@ class _NavigationPageState extends State<NavigationPage> {
   static final List<Widget> _NavScreens = <Widget> [
     Chat(),
     Map(),
-    homepage(title: "home"),
-    workfollow(),
+    HomePage(title: "home"),
+    WorkFollow(),
     Profile(title: "profile"),
 
 
