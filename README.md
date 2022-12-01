@@ -5,8 +5,8 @@
 Work'r est notre projet de fin d'année. C'est une application developpé en Flutter par un groupe de trois etudiants
 
 - [Merwan](https://github.com/Meerwaan)
-- Fayssal
-- Yannis
+- [Fayssal](https://github.com/fayssalmechmeche)
+- [Yannis](https://github.com/yayaro27)
 
 Le but de Work'r est de simplifier la mise en relation entre les personnes qui veulent effectuer des travaux chez eux et les artisans adapté a leurs besoins.
 
