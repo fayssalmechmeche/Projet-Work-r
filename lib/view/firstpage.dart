@@ -13,16 +13,6 @@ class firstpage extends StatefulWidget {
 }
 
 class _firstpageState extends State<firstpage> {
- Future<void> createUser() async {
-   var url = "http://10.0.2.2:3000/";
-   var response = await http.post(Uri.parse("${url}authenticate"),headers:<String, String>{
-     'Content-Type': 'application/json; charset=UTF-8',
-   },body: jsonEncode(<String, String>{
-   'name': "admin",'password':"admin"}));
-   print('Response status: ${response.statusCode}');
-   print('Response body: ${response.body}');
-   print( response.body);
- }
 
 
 
@@ -51,7 +41,6 @@ class _firstpageState extends State<firstpage> {
                   width: 220,
                   child: OutlinedButton(
                     onPressed: () {
-                      createUser();
                       Navigator.of(context).pushNamed(selectionPage.tag);
                     },
                     style: OutlinedButton.styleFrom(
