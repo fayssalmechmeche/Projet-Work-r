@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:my_app/view/Login/login.dart';
 
 class SelectionPage extends StatefulWidget {
-  const SelectionPage({Key? key}) : super(key: key);
-  static const tag = "selection";
+  const SelectionPage({Key? key, required String title}) : super(key: key);
+  static const tag = "/selection";
   @override
   State<SelectionPage> createState() => _SelectionPageState();
 }
