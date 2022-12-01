@@ -15,7 +15,7 @@ Le but de Work'r est de simplifier la mise en relation entre les personnes qui v
 
 ### Pourquoi Flutter ? 
 
-Nous avons choisi Flutter afin que notre application soit dsponible à la fois sur IOS et android 
+Nous avons choisi Flutter afin que notre application soit dsponible à la fois sur IOS et Android 
 
 
 
