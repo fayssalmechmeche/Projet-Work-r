@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:my_app/view/register.dart';
+import 'package:my_app/view/registerselection.dart';
 import 'package:my_app/view/selectionPage.dart';
 import 'package:my_app/Controller/NodeJSManager.dart';
 
@@ -13,9 +15,6 @@ class firstpage extends StatefulWidget {
 }
 
 class _firstpageState extends State<firstpage> {
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +53,9 @@ class _firstpageState extends State<firstpage> {
                   padding: const EdgeInsets.only(top: 10),
                   width: 220,
                   child: OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(RegisterSelectionPage.tag);
+                    },
                     style: OutlinedButton.styleFrom(
                       shape: const StadiumBorder(),
                       foregroundColor: Colors.yellow,
