@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:my_app/view/navigationpage.dart';
 class login extends StatefulWidget {
   const login({Key? key, required String title}) : super(key: key);
   static const tag = "/login";
@@ -91,7 +92,7 @@ class _loginState extends State<login> {
                       width: 150,
                       height: 65,
                       child: OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {Navigator.of(context).pushNamed(navigationpage.tag);},
                         style: OutlinedButton.styleFrom(
                           shape: const StadiumBorder(),
                           foregroundColor: Colors.yellow,
