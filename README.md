@@ -1,5 +1,7 @@
 # Work'r 
 
+[image](logo.png "assets/logo.pnp")
+
 ## Description 
 
 Work'r est notre projet de fin d'année. C'est une application developpé en Flutter par un groupe de trois etudiants
