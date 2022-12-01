@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/view/Profile/editprofile.dart';
 import 'package:my_app/view/LunchPage/firstpage.dart';
-import 'package:my_app/view/Home/homepage.dart';
 import 'package:my_app/view/Login/login.dart';
 import 'package:my_app/view/Navigation/NavigationPage.dart';
 import 'package:my_app/view/Register/registerartisant.dart';

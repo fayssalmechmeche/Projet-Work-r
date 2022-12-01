@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-class workfollow extends StatefulWidget {
-  const workfollow({Key? key}) : super(key: key);
+class WorkFollow extends StatefulWidget {
+  const WorkFollow({Key? key}) : super(key: key);
 
   @override
-  State<workfollow> createState() => _workfollowState();
+  State<WorkFollow> createState() => _WorkFollowState();
 }
 
-class _workfollowState extends State<workfollow> {
+class _WorkFollowState extends State<WorkFollow> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(

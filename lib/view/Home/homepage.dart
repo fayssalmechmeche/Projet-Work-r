@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
-class homepage extends StatefulWidget {
-  const homepage({Key? key, required String title}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key, required String title}) : super(key: key);
+    static const tag = "/home";
+
 
   @override
-  State<homepage> createState() => _homepageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _homepageState extends State<homepage> {
+class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
