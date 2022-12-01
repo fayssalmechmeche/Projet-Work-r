@@ -1,7 +1,5 @@
 # Work'r 
 
-[logo](assets/logo.png?raw=True "logo")
-
 ## Description 
 
 Work'r est notre projet de fin d'année. C'est une application developpé en Flutter par un groupe de trois etudiants
