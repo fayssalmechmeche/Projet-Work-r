@@ -9,6 +9,7 @@ import 'package:my_app/view/Register/registerselection.dart';
 import 'package:my_app/view/Login/SelectionPage.dart';
 import 'package:my_app/view/Profile/profile.dart';
 import 'package:my_app/view/Register/register.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -18,19 +19,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:  const FirstPage(title: "register",),
+      home: const FirstPage(
+        title: "register",
+      ),
       routes: {
         Login.tag: (context) => const Login(title: "Login"),
-        RegisterPage.tag: (context) => const RegisterPage(title: "register",),
-        RegisterSelectionPage.tag: (context) => const RegisterSelectionPage(title: 'registerselection'),
-        RegisterArtisan.tag: (context) => const RegisterArtisan(title: "registerartisant"),
+        RegisterPage.tag: (context) => const RegisterPage(
+              title: "register",
+            ),
+        RegisterSelectionPage.tag: (context) =>
+            const RegisterSelectionPage(title: 'registerselection'),
+        RegisterArtisan.tag: (context) =>
+            const RegisterArtisan(title: "registerartisant"),
         SelectionPage.tag: (context) => const SelectionPage(title: "Selection"),
         Profile.tag: (context) => const Profile(title: "profile"),
         EditProfile.tag: (context) => const EditProfile(),
@@ -39,4 +45,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

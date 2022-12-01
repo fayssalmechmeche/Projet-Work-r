@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/Controller/NodeJSManager.dart';
+import 'package:my_app/view/Login/selectionPage.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key, required String title}) : super(key: key);
@@ -11,7 +13,12 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
+    var firstnameController = TextEditingController();
     var nameController = TextEditingController();
+    var passwordController = TextEditingController();
+    var telephoneController = TextEditingController();
+    var adressController = TextEditingController();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -30,7 +37,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Image.asset("assets/logo.png"),
                 ),
                 Row(
-                
                   children: [
                     Container(
                       padding: const EdgeInsets.only(top: 70, right: 10),
@@ -38,7 +44,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       height: 150,
                       child: TextFormField(
                         cursorColor: Colors.grey,
-                        controller: nameController,
+                        controller: firstnameController,
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(90),
@@ -55,8 +61,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.only(top: 70,left: 10),
-                      
+                      padding: const EdgeInsets.only(top: 70, left: 10),
                       width: 150,
                       height: 150,
                       child: TextFormField(
@@ -85,6 +90,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       padding: const EdgeInsets.only(top: 30),
                       width: 300,
                       child: TextFormField(
+                        controller: telephoneController,
                         cursorColor: Colors.grey,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -104,6 +110,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       padding: const EdgeInsets.only(top: 10),
                       width: 300,
                       child: TextFormField(
+                        controller: adressController,
                         cursorColor: Colors.grey,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -123,6 +130,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       padding: const EdgeInsets.only(top: 10),
                       width: 300,
                       child: TextFormField(
+                        controller: passwordController,
                         cursorColor: Colors.grey,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -158,7 +166,6 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                     Container(
-
                       width: 100,
                       height: 70,
                       decoration: ShapeDecoration(
@@ -169,20 +176,24 @@ class _RegisterPageState extends State<RegisterPage> {
                         padding: EdgeInsets.only(top: 30),
                         child: DecoratedBox(
                           child: Center(
-                            child: Text(
-                              'Inscription',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
+                              child: OutlinedButton(
+                            onPressed: () async => {
+                              if (await NodeJSManager.createUser(
+                                      "${firstnameController.text + nameController.text}",
+                                      passwordController.text) ==
+                                  200)
+                                {
+                                  Navigator.of(context)
+                                      .pushNamed(SelectionPage.tag)
+                                }
+                            },
+                            child: const Text("Inscription"),
+                          )),
                           decoration: ShapeDecoration(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            color: Color(0xFFF8DF02)
-                          ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              color: Color(0xFFF8DF02)),
                         ),
                       ),
                     )
