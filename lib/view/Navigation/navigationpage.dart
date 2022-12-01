@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:my_app/view/profile.dart';
-import 'package:my_app/view/workfollow.dart';
-import 'package:my_app/view/chat.dart';
-import 'package:my_app/view/homepage.dart';
-import 'package:my_app/view/map.dart';
+import 'package:my_app/view/Profile/profile.dart';
+import 'package:my_app/view/Home/workfollow.dart';
+import 'package:my_app/view/Msg/chat.dart';
+import 'package:my_app/view/Home/homepage.dart';
+import 'package:my_app/view/Map/map.dart';
 class navigationpage extends StatefulWidget {
   const navigationpage({Key? key}) : super(key: key);
   static const tag = "/nav";

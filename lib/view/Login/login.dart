@@ -1,8 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:my_app/view/navigationpage.dart';
+import 'package:my_app/view/Navigation/navigationpage.dart';
 
-import '../Controller/NodeJSManager.dart';
+import '../../Controller/NodeJSManager.dart';
 
 class login extends StatefulWidget {
   const login({Key? key, required String title}) : super(key: key);

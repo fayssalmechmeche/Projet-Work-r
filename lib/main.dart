@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:my_app/view/editprofile.dart';
-import 'package:my_app/view/firstpage.dart';
-import 'package:my_app/view/homepage.dart';
-import 'package:my_app/view/login.dart';
-import 'package:my_app/view/navigationpage.dart';
-import 'package:my_app/view/registerartisant.dart';
-import 'package:my_app/view/registerselection.dart';
-import 'package:my_app/view/selectionPage.dart';
-import 'package:my_app/view/profile.dart';
-import 'package:my_app/view/register.dart';
+import 'package:my_app/view/Profile/editprofile.dart';
+import 'package:my_app/view/LunchPage/firstpage.dart';
+import 'package:my_app/view/Home/homepage.dart';
+import 'package:my_app/view/Login/login.dart';
+import 'package:my_app/view/Navigation/navigationpage.dart';
+import 'package:my_app/view/Register/registerartisant.dart';
+import 'package:my_app/view/Register/registerselection.dart';
+import 'package:my_app/view/Login/selectionPage.dart';
+import 'package:my_app/view/Profile/profile.dart';
+import 'package:my_app/view/Register/register.dart';
 void main() {
   runApp(const MyApp());
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_app/view/editprofile.dart';
+import 'package:my_app/view/Profile/editprofile.dart';
 class profile extends StatefulWidget {
   const profile({Key? key, required String title}) : super(key: key);
   static const tag = "/profile";
