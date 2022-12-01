@@ -5,14 +5,14 @@ class NodeJSManager {
   static var url = "http://10.0.2.2:3000/";
 
 
-  static Future<void> createUser(String name,String password) async {
+  static Future<int> createUser(String name,String password) async {
   var response = await http.post(Uri.parse("${url}adduser"),headers:<String, String>{
   'Content-Type': 'application/json; charset=UTF-8',
   },body: jsonEncode(<String, String>{
   'name': name,'password':password}));
   print('Response status: ${response.statusCode}');
   print('Response body: ${response.body}');
-  print( "good");
+  return response.statusCode;
   }
   static Future<int> authenticate(String name,String password) async {
 
@@ -25,5 +25,17 @@ class NodeJSManager {
    // print('Response body: ${response.body}');
 
     return response.statusCode;
+  }
+  static Future<int> update(String name,String password) async{
+    var response = await http.post(Uri.parse("${url}update"),headers:<String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },body: jsonEncode(<String, String>{
+      'name': name,'password':password}));
+
+    // print('Response status: ${response.statusCode}');
+    // print('Response body: ${response.body}');
+
+    return response.statusCode;
+
   }
 }

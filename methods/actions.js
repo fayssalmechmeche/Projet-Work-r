@@ -44,6 +44,16 @@ var functions = {
             }
         }
         )
+    },
+    getInfo: function(req,res){
+        if(req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer'){
+            var token = req.headers.authorization.split(' ')[1]
+            var decodedToken = jwt.decode(token,config.secret) 
+            return res.json({success : true , msg : "hello " + decodedToken.name + " mdp : " + decodedToken.password})
+        }else {
+            return res.json({success:false, msg:'No Headers'})
+        }
     }
+
 }
 module.exports = functions
