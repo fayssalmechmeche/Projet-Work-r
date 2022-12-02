@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/Controller/Particulier/ParticulierController.dart';
 import 'package:my_app/view/Navigation/NavigationPage.dart';
 
 import '../../Controller/NodeJSManager.dart';
@@ -13,7 +14,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   var visiblePassword = false;
   var passwordController = TextEditingController();
-  var usernameController = TextEditingController();
+  var mailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +38,7 @@ class _LoginState extends State<Login> {
                 width: 300,
                 child: TextFormField(
                   cursorColor: Colors.grey,
-                  controller: usernameController,
+                  controller: mailController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(90.0),
@@ -47,7 +48,7 @@ class _LoginState extends State<Login> {
                       borderRadius: BorderRadius.circular(90.0),
                     ),
                     contentPadding: const EdgeInsets.all(10),
-                    labelText: "Nom d'utilisateur",
+                    labelText: "Adresse mail",
                     labelStyle: TextStyle(color: Colors.grey),
                   ),
                 ),
@@ -85,28 +86,29 @@ class _LoginState extends State<Login> {
                 ),
               ),
               Container(
-                  padding: const EdgeInsets.only(top: 20),
-                  width: 150,
-                  height: 65,
-                  child: OutlinedButton(
-                    onPressed: () async {
-
-                      print(await NodeJSManager.authenticate(usernameController.text,
-                          passwordController.text));
-                      if (await NodeJSManager.authenticate(usernameController.text,
-                              passwordController.text) == 200) {
-                        Navigator.of(context).pushNamed(NavigationPage.tag);
-                      };
-
-                    },
-                    style: OutlinedButton.styleFrom(
-                      shape: const StadiumBorder(),
-                      foregroundColor: Colors.yellow,
-                      backgroundColor: Colors.yellow.withOpacity(0.5),
-                    ),
-                    child: const Text('Connexion',
-                        style: TextStyle(color: Colors.black)),
-                  )),
+                padding: const EdgeInsets.only(top: 20),
+                width: 150,
+                height: 65,
+                child: OutlinedButton(
+                  onPressed: () async {
+                    print(await ParticulierController.authenticate(
+                        mailController.text, passwordController.text));
+                    if (await ParticulierController.authenticate(
+                            mailController.text, passwordController.text) ==
+                        200) {
+                      Navigator.of(context).pushNamed(NavigationPage.tag);
+                    }
+                    ;
+                  },
+                  style: OutlinedButton.styleFrom(
+                    shape: const StadiumBorder(),
+                    foregroundColor: Colors.yellow,
+                    backgroundColor: Colors.yellow.withOpacity(0.5),
+                  ),
+                  child: const Text('Connexion',
+                      style: TextStyle(color: Colors.black)),
+                ),
+              ),
               Padding(
                 padding: EdgeInsets.only(top: 15),
                 child: GestureDetector(
