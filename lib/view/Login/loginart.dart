@@ -12,7 +12,7 @@ class LoginArt extends StatefulWidget {
 class _LoginArtState extends State<LoginArt> {
   var visiblePassword = false;
   var passwordController = TextEditingController();
-  var usernameController = TextEditingController();
+  var mailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +36,7 @@ class _LoginArtState extends State<LoginArt> {
                 width: 300,
                 child: TextFormField(
                   cursorColor: Colors.grey,
-                  controller: usernameController,
+                  controller: mailController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(90.0),
@@ -46,7 +46,7 @@ class _LoginArtState extends State<LoginArt> {
                       borderRadius: BorderRadius.circular(90.0),
                     ),
                     contentPadding: const EdgeInsets.all(10),
-                    labelText: "Nom d'utilisateur",
+                    labelText: "Adresse mail",
                     labelStyle: TextStyle(color: Colors.grey),
                   ),
                 ),
@@ -89,14 +89,14 @@ class _LoginArtState extends State<LoginArt> {
                   height: 65,
                   child: OutlinedButton(
                     onPressed: () async {
-
-                      print(await NodeJSManager.authenticate(usernameController.text,
-                          passwordController.text));
-                      if (await NodeJSManager.authenticate(usernameController.text,
-                              passwordController.text) == 200) {
+                      print(await NodeJSManager.authenticate(
+                          mailController.text, passwordController.text));
+                      if (await NodeJSManager.authenticate(
+                              mailController.text, passwordController.text) ==
+                          200) {
                         Navigator.of(context).pushNamed(NavigationPage.tag);
-                      };
-
+                      }
+                      ;
                     },
                     style: OutlinedButton.styleFrom(
                       shape: const StadiumBorder(),
@@ -119,8 +119,6 @@ class _LoginArtState extends State<LoginArt> {
           ],
         ),
       ),
-    
-      
     );
   }
 }
