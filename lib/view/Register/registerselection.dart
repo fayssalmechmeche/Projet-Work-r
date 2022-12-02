@@ -24,19 +24,21 @@ class _RegisterSelectionPageState extends State<RegisterSelectionPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Column(children: <Widget>[
-              Container(
-                width: 150,
-                height: 150,
-                child: Image.asset("assets/logo.png"),
-              ),
-              const Padding(
-                  padding: EdgeInsets.only(top: 80),
-                  child: Text(
-                    "Je m'inscrit en tant que :",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  )),
-              Container(
+            Column(
+              children: <Widget>[
+                Container(
+                  width: 150,
+                  height: 150,
+                  child: Image.asset("assets/logo.png"),
+                ),
+                const Padding(
+                    padding: EdgeInsets.only(top: 80),
+                    child: Text(
+                      "Je m'inscrit en tant que :",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    )),
+                Container(
                   padding: const EdgeInsets.only(top: 20),
                   width: 220,
                   child: OutlinedButton(
@@ -49,8 +51,9 @@ class _RegisterSelectionPageState extends State<RegisterSelectionPage> {
                     ),
                     child: const Text('Particulier',
                         style: TextStyle(color: Colors.black)),
-                  )),
-              Container(
+                  ),
+                ),
+                Container(
                   padding: const EdgeInsets.only(top: 10),
                   width: 220,
                   child: OutlinedButton(
@@ -63,8 +66,10 @@ class _RegisterSelectionPageState extends State<RegisterSelectionPage> {
                     ),
                     child: const Text('Artisan',
                         style: TextStyle(color: Colors.black)),
-                  ))
-            ]),
+                  ),
+                )
+              ],
+            ),
           ],
         ),
       ),

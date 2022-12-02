@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/view/Login/login.dart';
+import 'package:my_app/view/Login/loginart.dart';
 
 class SelectionPage extends StatefulWidget {
   const SelectionPage({Key? key, required String title}) : super(key: key);
@@ -51,7 +52,9 @@ class _SelectionPageState extends State<SelectionPage> {
                   padding: const EdgeInsets.only(top: 10),
                   width: 220,
                   child: OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(LoginArt.tag);
+                    },
                     style: OutlinedButton.styleFrom(
                       shape: const StadiumBorder(),
                       foregroundColor: Colors.yellow,

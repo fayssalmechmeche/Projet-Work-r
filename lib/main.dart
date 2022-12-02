@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/view/Login/loginart.dart';
 import 'package:my_app/view/Profile/editprofile.dart';
 import 'package:my_app/view/LunchPage/firstpage.dart';
 import 'package:my_app/view/Login/login.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         Login.tag: (context) => const Login(),
+        LoginArt.tag: (context) => const LoginArt(),
         RegisterPage.tag: (context) => const RegisterPage(
               title: "register",
             ),

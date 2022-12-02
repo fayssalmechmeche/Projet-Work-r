@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/view/Navigation/NavigationPage.dart';
-
 import '../../Controller/NodeJSManager.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
-  static const tag = "/Login";
+class LoginArt extends StatefulWidget {
+  const LoginArt({Key? key}) : super(key: key);
+  static const tag = "/Loginart";
   @override
-  State<Login> createState() => _LoginState();
+  _LoginArtState createState() => _LoginArtState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginArtState extends State<LoginArt> {
   var visiblePassword = false;
   var passwordController = TextEditingController();
   var usernameController = TextEditingController();
@@ -120,6 +119,8 @@ class _LoginState extends State<Login> {
           ],
         ),
       ),
+    
+      
     );
   }
 }
