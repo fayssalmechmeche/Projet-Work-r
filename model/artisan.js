@@ -15,7 +15,7 @@ var artisansSchema = new Schema({
         type:String,
         require:true
     },
-    mail : {
+    email : {
         type:String,
         require:true
     },
@@ -44,13 +44,12 @@ var artisansSchema = new Schema({
         require:true
     },
     note : {
-        type:Number,
+        type:String,
         require:false
     },
     chantier : {
-        type:Array,
-        require:false,
-        of:[{type:String}]
+        type:String,
+        require:false
     },
 
 

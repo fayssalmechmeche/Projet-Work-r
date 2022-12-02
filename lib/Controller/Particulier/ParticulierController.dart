@@ -43,6 +43,8 @@ class ParticulierController {
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(<String, String>{'email': email, 'password': password}));
+    print('Response status 200: ${response.statusCode}');
+    print('Response body: ${response.body}');
 
     return response.statusCode;
   }

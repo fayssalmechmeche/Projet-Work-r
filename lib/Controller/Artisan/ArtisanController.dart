@@ -7,14 +7,16 @@ class ArtisanController {
   static Future<int> createArtisan(
       String name,
       String password,
-      String mail,
+      String email,
       String username,
       String telephone,
       String siret,
       String mobilite,
       String adress,
       String domaine,
-      String entreprise) async {
+      String entreprise,
+      String note,
+      String chantier) async {
     var response = await http.post(Uri.parse("${url}addArtisan"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -22,7 +24,7 @@ class ArtisanController {
         body: jsonEncode(<String, String>{
           'name': name,
           'password': password,
-          'mail': mail,
+          'email': email,
           'username': username,
           'telephone': telephone,
           'siret': siret,
@@ -30,19 +32,20 @@ class ArtisanController {
           'adress': adress,
           'domaine': domaine,
           'entreprise': entreprise,
-          'chantier': [].toString(),
-          'note': 0.toString()
+          'chantier': chantier,
+          'note': note
         }));
-
+    print('Response status 200: ${response.statusCode}');
+    print('Response body: ${response.body}');
     return response.statusCode;
   }
 
-  static Future<int> authenticate(String mail, String password) async {
+  static Future<int> authenticate(String email, String password) async {
     var response = await http.post(Uri.parse("${url}authenticateArtisan"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode(<String, String>{'mail': mail, 'password': password}));
+        body: jsonEncode(<String, String>{'email': email, 'password': password}));
 
     return response.statusCode;
   }

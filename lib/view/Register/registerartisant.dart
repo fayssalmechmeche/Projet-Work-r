@@ -1,5 +1,9 @@
+import 'package:dropdown_search/dropdown_search.dart';
+import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:my_app/Controller/Artisan/ArtisanController.dart';
 
+import '../Login/SelectionPage.dart';
 import '../Navigation/NavigationPage.dart';
 
 class RegisterArtisan extends StatefulWidget {
@@ -22,9 +26,18 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
   ];
 
   Widget build(BuildContext context) {
+    var firstnameController = TextEditingController();
+    var usernameController = TextEditingController();
+    var nameController = TextEditingController();
+    var passwordController = TextEditingController();
+    var emailController = TextEditingController();
+    var telephoneController = TextEditingController();
+    var companyController = TextEditingController();
     var CityController = TextEditingController();
     var AdressController = TextEditingController();
     var PostalCodeController = TextEditingController();
+    var siretController = TextEditingController();
+    var domaineController   = SingleValueDropDownController();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -53,8 +66,8 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                       width: 150,
                       child: TextFormField(
                         cursorColor: Colors.grey,
-                        /*                         controller: nameController,
-                                 */
+                        controller: nameController,
+
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(90),
@@ -75,8 +88,8 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                       width: 150,
                       child: TextFormField(
                         cursorColor: Colors.grey,
-                        /*                         controller: nameController,
-                                 */
+                        controller: firstnameController,
+
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(90),
@@ -100,6 +113,7 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                       padding: const EdgeInsets.only(top: 20),
                       width: 300,
                       child: TextFormField(
+                        controller: usernameController,
                         cursorColor: Colors.grey,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -122,6 +136,7 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                       padding: const EdgeInsets.only(top: 20),
                       width: 300,
                       child: TextFormField(
+                        controller: telephoneController,
                         cursorColor: Colors.grey,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -141,6 +156,7 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                       padding: const EdgeInsets.only(top: 20),
                       width: 300,
                       child: TextFormField(
+                        controller: emailController,
                         cursorColor: Colors.grey,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -160,6 +176,7 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                       padding: const EdgeInsets.only(top: 20),
                       width: 300,
                       child: TextFormField(
+                        controller: passwordController,
                         cursorColor: Colors.grey,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -198,6 +215,7 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                       padding: const EdgeInsets.only(top: 20),
                       width: 300,
                       child: TextFormField(
+                        controller: companyController ,
                         cursorColor: Colors.grey,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -239,6 +257,7 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                           padding: const EdgeInsets.only(top: 20, right: 10),
                           width: 170,
                           child: TextFormField(
+
                             cursorColor: Colors.grey,
                             controller: CityController,
                             decoration: InputDecoration(
@@ -283,6 +302,7 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                       padding: const EdgeInsets.only(top: 20),
                       width: 300,
                       child: TextFormField(
+                        controller: siretController,
                         cursorColor: Colors.grey,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -302,6 +322,7 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                       padding: const EdgeInsets.only(top: 20),
                       width: 300,
                       child: DecoratedBox(
+
                         decoration: BoxDecoration(
                           color: Colors
                               .white, //background color of dropdown button
@@ -310,21 +331,21 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                         ),
                         child: Padding(
                           padding: EdgeInsets.only(left: 30, right: 30),
-                          child: DropdownButton(
-                            value: dropdownvalue,
-                            items: items.map((String items) {
-                              return DropdownMenuItem(
-                                value: items,
-                                child: Text(items),
-                              );
-                            }).toList(),
-                            onChanged: (String? newValue) {
-                              setState(
-                                () {
-                                  dropdownvalue = newValue!;
-                                },
-                              );
-                            },
+                          child: DropDownTextField(
+                            controller:domaineController ,
+                            dropDownItemCount: items.length,
+
+                            dropDownList: [
+
+
+                              DropDownValueModel(name: items[0].toString(), value: items[0]),
+                              DropDownValueModel(name: items[1].toString(), value: items[1]),
+                              DropDownValueModel(name: items[2].toString(), value: items[2]),
+                              DropDownValueModel(name: items[3].toString(), value: items[3]),
+                              DropDownValueModel(name: items[4].toString(), value: items[4]),
+
+                          ],
+
                           ),
                         ),
                       ),
@@ -338,7 +359,22 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
             padding: const EdgeInsets.only(top: 20),
             width: 130,
             child: OutlinedButton(
-              onPressed: () {},
+              onPressed: () async {
+                if (await ArtisanController.createArtisan(
+                "${firstnameController.text + nameController.text}",
+                passwordController.text,
+                emailController.text,
+                usernameController.text,
+                telephoneController.text,
+                  siretController.text,'',
+                  AdressController.text,domaineController.toString(),companyController.text,'',''
+                ) ==
+                200)
+                {
+                Navigator.of(context)
+                    .pushNamed(SelectionPage.tag);
+                }
+              },
               style: OutlinedButton.styleFrom(
                 shape: const StadiumBorder(),
                 foregroundColor: Colors.yellow,

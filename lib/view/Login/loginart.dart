@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/Controller/Artisan/ArtisanController.dart';
 import 'package:my_app/view/Navigation/NavigationPage.dart';
 import '../../Controller/NodeJSManager.dart';
 
@@ -12,7 +13,7 @@ class LoginArt extends StatefulWidget {
 class _LoginArtState extends State<LoginArt> {
   var visiblePassword = false;
   var passwordController = TextEditingController();
-  var mailController = TextEditingController();
+  var emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +37,7 @@ class _LoginArtState extends State<LoginArt> {
                 width: 300,
                 child: TextFormField(
                   cursorColor: Colors.grey,
-                  controller: mailController,
+                  controller: emailController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(90.0),
@@ -89,10 +90,10 @@ class _LoginArtState extends State<LoginArt> {
                   height: 65,
                   child: OutlinedButton(
                     onPressed: () async {
-                      print(await NodeJSManager.authenticate(
-                          mailController.text, passwordController.text));
-                      if (await NodeJSManager.authenticate(
-                              mailController.text, passwordController.text) ==
+                      print(await ArtisanController.authenticate(
+                          emailController.text, passwordController.text));
+                      if (await ArtisanController.authenticate(
+                          emailController.text, passwordController.text) ==
                           200) {
                         Navigator.of(context).pushNamed(NavigationPage.tag);
                       }
