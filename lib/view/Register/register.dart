@@ -87,7 +87,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 Column(
                   children: [
                     Container(
-                      padding: const EdgeInsets.only(top: 30),
                       width: 300,
                       child: TextFormField(
                         controller: telephoneController,
@@ -166,37 +165,27 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                     Container(
-                      width: 100,
-                      height: 70,
-                      decoration: ShapeDecoration(
-                        shape: RoundedRectangleBorder(),
-                        color: Colors.transparent,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 30),
-                        child: DecoratedBox(
-                          child: Center(
-                              child: OutlinedButton(
-                            onPressed: () async => {
-                              if (await NodeJSManager.createUser(
-                                      "${firstnameController.text + nameController.text}",
-                                      passwordController.text) ==
-                                  200)
-                                {
-                                  Navigator.of(context)
-                                      .pushNamed(SelectionPage.tag)
-                                }
-                            },
-                            child: const Text("Inscription"),
-                          )),
-                          decoration: ShapeDecoration(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              color: Color(0xFFF8DF02)),
-                        ),
-                      ),
-                    )
+                        padding: const EdgeInsets.only(top: 40),
+                        width: 150,
+                        height: 75,
+                        child: OutlinedButton(
+                          onPressed: () async => {
+                            if (await NodeJSManager.createUser(
+                                "${firstnameController.text + nameController.text}",
+                                passwordController.text) ==
+                                200)
+                              {
+                                Navigator.of(context)
+                                    .pushNamed(SelectionPage.tag)
+                              }
+                          },
+                          style: OutlinedButton.styleFrom(
+                            shape: const StadiumBorder(),
+                            foregroundColor: Colors.yellow,
+                          ),
+                          child: const Text('Inscription',
+                              style: TextStyle(color: Colors.black)),
+                        )),
                   ],
                 )
               ],

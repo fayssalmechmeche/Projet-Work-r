@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         title: "register",
       ),
       routes: {
-        Login.tag: (context) => const Login(title: "Login"),
+        Login.tag: (context) => const Login(),
         RegisterPage.tag: (context) => const RegisterPage(
               title: "register",
             ),

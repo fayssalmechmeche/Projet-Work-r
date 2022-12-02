@@ -5,7 +5,7 @@ import 'package:my_app/view/Navigation/NavigationPage.dart';
 import '../../Controller/NodeJSManager.dart';
 
 class Login extends StatefulWidget {
-  const Login({Key? key, required String title}) : super(key: key);
+  const Login({Key? key}) : super(key: key);
   static const tag = "/Login";
   @override
   State<Login> createState() => _LoginState();

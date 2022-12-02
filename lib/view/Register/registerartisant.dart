@@ -181,9 +181,7 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                       padding: const EdgeInsets.only(top: 35),
                       width: 130,
                       child: OutlinedButton(
-                        onPressed: () {
-                          Navigator.of(context).pushNamed(NavigationPage.tag);
-                        },
+                        onPressed: () {},
                         style: OutlinedButton.styleFrom(
                           shape: const StadiumBorder(),
                           foregroundColor: Colors.yellow,
