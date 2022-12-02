@@ -19,14 +19,13 @@ class _ProfileState extends State<Profile> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
           children:  [
-              Text("Profile", style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
+              const Text("Profile", style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
               ]
           ),
           Container(
               padding: const EdgeInsets.only( top: 30, left: 40),
               child :
               Row(
-
                   children:  [
                   Container(
                     width: 120,
@@ -52,52 +51,63 @@ class _ProfileState extends State<Profile> {
                 ]
               )
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 40),
-            child: Text("Adresse", style: TextStyle(fontSize: 18)),
-          ),
-           Text("100 rue de la chance", style: TextStyle(fontSize: 16)),
-
-          Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children:  [
+          Container(
+            padding: const EdgeInsets.only( left: 45),
+            child :
                 Column(
-                    children:  [
-                Container(
-                  padding: const EdgeInsets.only(top: 20, right: 20),
-                  width: 210,
-                  child: Text("Ville", style: TextStyle(fontSize: 16)),
-                ),
-                Text("Roubaix", style: TextStyle(fontSize: 16)),
-                    ]
-                ),
-                Column(
-                    children:  [
-                    Container(
-                      padding: const EdgeInsets.only(top: 20),
-                      width: 120,
-                      child: Text("Code Postale", style: TextStyle(fontSize: 16)),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                children:  [
+                    const Padding(
+                      padding: EdgeInsets.only(top: 40, bottom: 10),
+                      child: Text("Adresse", style: TextStyle(fontSize: 18)),
                     ),
-                    Text("75004", style: TextStyle(fontSize: 16)),
-                    ]
-                ),
-              ]
+                     const Text("100 rue de la chance", style: TextStyle(fontSize: 16,  color: Colors.grey)),
+
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children:  [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                              children:  [
+                          Container(
+                            padding: const EdgeInsets.only(top: 20, right: 20, bottom: 10),
+                            width: 210,
+                            child: const Text("Ville", style: TextStyle(fontSize: 18)),
+                          ),
+                          const Text("Roubaix", style: TextStyle(fontSize: 16,  color: Colors.grey)),
+                              ]
+                          ),
+                          Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children:  [
+                              Container(
+                                padding: const EdgeInsets.only(top: 20,bottom: 10),
+                                width: 120,
+                                child: const Text("Code Postale", style: TextStyle(fontSize: 18)),
+                              ),
+                              const Text("75004", style: TextStyle(fontSize: 16,  color: Colors.grey)),
+                              ]
+                          ),
+                        ]
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 20, bottom: 10),
+                      child: Text("Mail", style: TextStyle(fontSize: 18)),
+                    ),
+                    const Text("jeanpaul@gmail.com", style: TextStyle(fontSize: 16,  color: Colors.grey)),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 20, bottom: 10),
+                      child:Text("Mot de passe", style: TextStyle(fontSize: 18)),
+                    ),
+                    const Text("**********", style: TextStyle(fontSize: 16,  color: Colors.grey)),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 20, bottom: 10),
+                      child:Text("Téléphone", style: TextStyle(fontSize: 18)),
+                    ),
+                    const Text("06 67 98 76 54", style: TextStyle(fontSize: 16,  color: Colors.grey)),
+                  ]
+                )
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: Text("Mail", style: TextStyle(fontSize: 16)),
-          ),
-          Text("jeanpaul@gmail.com", style: TextStyle(fontSize: 16)),
-          Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child:Text("Mot de passe", style: TextStyle(fontSize: 16)),
-          ),
-          Text("**********", style: TextStyle(fontSize: 16)),
-          Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child:Text("Téléphone", style: TextStyle(fontSize: 16)),
-          ),
-          Text("06 67 98 76 54", style: TextStyle(fontSize: 16)),
           Container(
               padding: const EdgeInsets.only(top: 40,bottom: 15, right: 15,left: 15),
               width: 160,
