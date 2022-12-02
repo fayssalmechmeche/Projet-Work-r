@@ -15,13 +15,11 @@ class _SelectionPageState extends State<SelectionPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        leading: BackButton(color: Colors.black),
+        leading: const BackButton(color: Colors.black),
         elevation: 0,
       ),
       body: SafeArea(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+        child:
             Column(children: <Widget>[
               Container(
                 width: 150,
@@ -35,7 +33,7 @@ class _SelectionPageState extends State<SelectionPage> {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   )),
               Container(
-                  padding: const EdgeInsets.only(top: 20),
+                  padding: const EdgeInsets.only(top: 40),
                   width: 220,
                   child: OutlinedButton(
                     onPressed: () {
@@ -48,6 +46,27 @@ class _SelectionPageState extends State<SelectionPage> {
                     child: const Text('Particulier',
                         style: TextStyle(color: Colors.black)),
                   )),
+              Row(children: <Widget>[
+                Expanded(
+                  child: Container(
+                      margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                      child: const Divider(
+                        color: Colors.black,
+                        thickness: 2,
+                        height: 36,
+                      )),
+                ),
+                const Text("OU"),
+                Expanded(
+                  child: Container(
+                      margin: const EdgeInsets.only(left: 20.0, right: 10.0),
+                      child: const Divider(
+                        color: Colors.black,
+                        thickness: 2,
+                        height: 36,
+                      )),
+                ),
+              ]),
               Container(
                   padding: const EdgeInsets.only(top: 10),
                   width: 220,
@@ -61,10 +80,10 @@ class _SelectionPageState extends State<SelectionPage> {
                     ),
                     child: const Text('Artisan',
                         style: TextStyle(color: Colors.black)),
-                  ))
-            ]),
-          ],
-        ),
+                  )
+                )
+              ]
+            ),
       ),
     );
   }
