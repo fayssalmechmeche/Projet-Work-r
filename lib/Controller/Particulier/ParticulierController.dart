@@ -37,12 +37,12 @@ class ParticulierController {
     return response.statusCode;
   }
 
-  static Future<int> authenticate(String mail, String password) async {
+  static Future<int> authenticate(String email, String password) async {
     var response = await http.post(Uri.parse("${url}authenticateParticulier"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode(<String, String>{'mail': mail, 'password': password}));
+        body: jsonEncode(<String, String>{'email': email, 'password': password}));
 
     return response.statusCode;
   }

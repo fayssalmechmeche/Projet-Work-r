@@ -14,7 +14,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   var visiblePassword = false;
   var passwordController = TextEditingController();
-  var mailController = TextEditingController();
+  var emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +38,7 @@ class _LoginState extends State<Login> {
                 width: 300,
                 child: TextFormField(
                   cursorColor: Colors.grey,
-                  controller: mailController,
+                  controller: emailController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(90.0),
@@ -92,9 +92,9 @@ class _LoginState extends State<Login> {
                 child: OutlinedButton(
                   onPressed: () async {
                     print(await ParticulierController.authenticate(
-                        mailController.text, passwordController.text));
+                        emailController.text, passwordController.text));
                     if (await ParticulierController.authenticate(
-                            mailController.text, passwordController.text) ==
+                        emailController.text, passwordController.text) ==
                         200) {
                       Navigator.of(context).pushNamed(NavigationPage.tag);
                     }
