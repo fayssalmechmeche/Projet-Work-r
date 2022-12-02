@@ -35,12 +35,13 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
           child: Column(
         children: <Widget>[
           Container(
+            padding: EdgeInsets.only(bottom: 10),
             width: 150,
-            height: 150,
+            height: 160,
             child: Image.asset("assets/logo.png"),
           ),
           SizedBox(
-            height: 470,
+            height: 460,
             child: ListView(
               shrinkWrap: true,
               children: [
@@ -48,9 +49,8 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      padding: const EdgeInsets.only(top: 70, right: 10),
+                      padding: const EdgeInsets.only(top: 20, right: 10),
                       width: 150,
-                      height: 150,
                       child: TextFormField(
                         cursorColor: Colors.grey,
                         /*                         controller: nameController,
@@ -71,9 +71,8 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.only(top: 70, left: 10),
+                      padding: const EdgeInsets.only(top: 20, left: 10),
                       width: 150,
-                      height: 150,
                       child: TextFormField(
                         cursorColor: Colors.grey,
                         /*                         controller: nameController,
@@ -98,7 +97,7 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                 Column(
                   children: [
                     Container(
-                      padding: const EdgeInsets.only(top: 5),
+                      padding: const EdgeInsets.only(top: 20),
                       width: 300,
                       child: TextFormField(
                         cursorColor: Colors.grey,
@@ -336,7 +335,7 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.only(top: 35),
+            padding: const EdgeInsets.only(top: 20),
             width: 130,
             child: OutlinedButton(
               onPressed: () {},

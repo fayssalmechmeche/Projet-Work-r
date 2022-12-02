@@ -39,7 +39,7 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Image.asset("assets/logo.png"),
           ),
           SizedBox(
-            height: 540,
+            height: 460,
             child: ListView(
               shrinkWrap: true,
               children: [
@@ -113,7 +113,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.only(top: 10),
+                      padding: const EdgeInsets.only(top: 20),
                       width: 300,
                       child: TextFormField(
                         controller: telephoneController,
@@ -133,7 +133,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.only(top: 10),
+                      padding: const EdgeInsets.only(top: 20),
                       width: 300,
                       child: TextFormField(
                         controller: emailController,
@@ -153,7 +153,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.only(top: 10),
+                      padding: const EdgeInsets.only(top: 20),
                       width: 300,
                       child: TextFormField(
                         cursorColor: Colors.grey,
@@ -173,7 +173,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                       Container(
-                        padding: const EdgeInsets.only(top: 10, right: 10),
+                        padding: const EdgeInsets.only(top: 20, right: 10),
                         width: 170,
                         child: TextFormField(
                           cursorColor: Colors.grey,
@@ -193,7 +193,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.only(top: 10),
+                        padding: const EdgeInsets.only(top: 20),
                         width: 130,
                         child: TextFormField(
                           cursorColor: Colors.grey,
@@ -214,7 +214,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       )
                     ]),
                     Container(
-                      padding: const EdgeInsets.only(top: 10),
+                      padding: const EdgeInsets.only(top: 20),
                       width: 300,
                       child: TextFormField(
                         controller: passwordController,
@@ -234,7 +234,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.only(top: 10),
+                      padding: const EdgeInsets.only(top: 20),
                       width: 300,
                       child: TextFormField(
                         cursorColor: Colors.grey,
@@ -252,39 +252,40 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                     ),
-                    Container(
-                        padding: const EdgeInsets.only(top: 20),
-                        width: 150,
-                        height: 55,
-                        child: OutlinedButton(
-                          onPressed: () async => {
-                            if (await ParticulierController.createParticulier(
-                                    "${firstnameController.text + nameController.text}",
-                                    passwordController.text,
-                                    emailController.text,
-                                    usernameController.text,
-                                    telephoneController.text,
-                                    cityController.text,
-                                    adressController.text,
-                                    PostalCodeController.text) ==
-                                200)
-                              {
-                                Navigator.of(context)
-                                    .pushNamed(SelectionPage.tag)
-                              }
-                          },
-                          style: OutlinedButton.styleFrom(
-                            shape: const StadiumBorder(),
-                            foregroundColor: Colors.yellow,
-                          ),
-                          child: const Text('Inscription',
-                              style: TextStyle(color: Colors.black)),
-                        )),
+
                   ],
                 ),
               ],
             ),
           ),
+          Container(
+              padding: const EdgeInsets.only(top: 20),
+              width: 150,
+              height: 55,
+              child: OutlinedButton(
+                onPressed: () async => {
+                  if (await ParticulierController.createParticulier(
+                      "${firstnameController.text + nameController.text}",
+                      passwordController.text,
+                      emailController.text,
+                      usernameController.text,
+                      telephoneController.text,
+                      cityController.text,
+                      adressController.text,
+                      PostalCodeController.text) ==
+                      200)
+                    {
+                      Navigator.of(context)
+                          .pushNamed(SelectionPage.tag)
+                    }
+                },
+                style: OutlinedButton.styleFrom(
+                  shape: const StadiumBorder(),
+                  foregroundColor: Colors.yellow,
+                ),
+                child: const Text('Inscription',
+                    style: TextStyle(color: Colors.black)),
+              )),
         ],
       )),
     );
