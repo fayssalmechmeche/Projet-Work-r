@@ -18,7 +18,9 @@ class _RegisterPageState extends State<RegisterPage> {
     var passwordController = TextEditingController();
     var telephoneController = TextEditingController();
     var adressController = TextEditingController();
-
+    var codePostaleController = TextEditingController();
+    var adresseController = TextEditingController();
+    var villeController = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -26,20 +28,23 @@ class _RegisterPageState extends State<RegisterPage> {
         elevation: 0,
       ),
       body: SafeArea(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                Container(
-                  width: 150,
-                  height: 150,
-                  child: Image.asset("assets/logo.png"),
-                ),
+          child: Column(
+        children: <Widget>[
+          Container(
+            width: 150,
+            height: 150,
+            child: Image.asset("assets/logo.png"),
+          ),
+          SizedBox(
+            height: 550,
+            child: ListView(
+              shrinkWrap: true,
+              children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      padding: const EdgeInsets.only(top: 70, right: 10),
+                      padding: const EdgeInsets.only(top: 40, right: 10),
                       width: 150,
                       height: 150,
                       child: TextFormField(
@@ -61,7 +66,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.only(top: 70, left: 10),
+                      padding: const EdgeInsets.only(top: 40, left: 10),
                       width: 150,
                       height: 150,
                       child: TextFormField(
@@ -87,6 +92,27 @@ class _RegisterPageState extends State<RegisterPage> {
                 Column(
                   children: [
                     Container(
+                      padding: const EdgeInsets.only(top: 0),
+                      width: 300,
+                      child: TextFormField(
+                        controller: adressController,
+                        cursorColor: Colors.grey,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(90.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(90.0),
+                          ),
+                          contentPadding: const EdgeInsets.all(10),
+                          labelText: "Nom d'utilisateur",
+                          labelStyle: TextStyle(color: Colors.grey),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(top: 10),
                       width: 300,
                       child: TextFormField(
                         controller: telephoneController,
@@ -120,11 +146,72 @@ class _RegisterPageState extends State<RegisterPage> {
                             borderRadius: BorderRadius.circular(90.0),
                           ),
                           contentPadding: const EdgeInsets.all(10),
-                          labelText: "Adresse",
+                          labelText: "Adresse mail",
                           labelStyle: TextStyle(color: Colors.grey),
                         ),
                       ),
                     ),
+                    Container(
+                      padding: const EdgeInsets.only(top: 10),
+                      width: 300,
+                      child: TextFormField(
+                        cursorColor: Colors.grey,
+                        controller: adresseController,
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(90.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(90.0),
+                            ),
+                            contentPadding: const EdgeInsets.all(10),
+                            label: const Text("Adresse"),
+                            labelStyle: const TextStyle(color: Colors.grey)),
+                      ),
+                    ),
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      Container(
+                        padding: const EdgeInsets.only(top: 10, right: 10),
+                        width: 170,
+                        child: TextFormField(
+                          cursorColor: Colors.grey,
+                          controller: villeController,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(90.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    const BorderSide(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(90.0),
+                              ),
+                              contentPadding: const EdgeInsets.all(10),
+                              label: const Text("Ville"),
+                              labelStyle: const TextStyle(color: Colors.grey)),
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.only(top: 10),
+                        width: 130,
+                        child: TextFormField(
+                          cursorColor: Colors.grey,
+                          controller: codePostaleController,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(90.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    const BorderSide(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(90.0),
+                              ),
+                              contentPadding: const EdgeInsets.all(10),
+                              label: const Text("Code Postale"),
+                              labelStyle: const TextStyle(color: Colors.grey)),
+                        ),
+                      )
+                    ]),
                     Container(
                       padding: const EdgeInsets.only(top: 10),
                       width: 300,
@@ -171,8 +258,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         child: OutlinedButton(
                           onPressed: () async => {
                             if (await NodeJSManager.createUser(
-                                "${firstnameController.text + nameController.text}",
-                                passwordController.text) ==
+                                    "${firstnameController.text + nameController.text}",
+                                    passwordController.text) ==
                                 200)
                               {
                                 Navigator.of(context)
@@ -187,12 +274,12 @@ class _RegisterPageState extends State<RegisterPage> {
                               style: TextStyle(color: Colors.black)),
                         )),
                   ],
-                )
+                ),
               ],
-            )
-          ],
-        ),
-      ),
+            ),
+          ),
+        ],
+      )),
     );
   }
 }
