@@ -31,12 +31,13 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Column(
         children: <Widget>[
           Container(
+            padding: EdgeInsets.only(bottom: 10),
             width: 150,
-            height: 150,
+            height: 160,
             child: Image.asset("assets/logo.png"),
           ),
           SizedBox(
-            height: 550,
+            height: 540,
             child: ListView(
               shrinkWrap: true,
               children: [
@@ -44,9 +45,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      padding: const EdgeInsets.only(top: 40, right: 10),
+                      padding: const EdgeInsets.only(top: 20, right: 10),
                       width: 150,
-                      height: 150,
                       child: TextFormField(
                         cursorColor: Colors.grey,
                         controller: firstnameController,
@@ -66,9 +66,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.only(top: 40, left: 10),
+                      padding: const EdgeInsets.only(top: 20, left: 10),
                       width: 150,
-                      height: 150,
                       child: TextFormField(
                         cursorColor: Colors.grey,
                         controller: nameController,
@@ -92,7 +91,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 Column(
                   children: [
                     Container(
-                      padding: const EdgeInsets.only(top: 0),
+                      padding: const EdgeInsets.only(top: 20),
                       width: 300,
                       child: TextFormField(
                         controller: adressController,
@@ -252,9 +251,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                     Container(
-                        padding: const EdgeInsets.only(top: 40),
+                        padding: const EdgeInsets.only(top: 20),
                         width: 150,
-                        height: 75,
+                        height: 55,
                         child: OutlinedButton(
                           onPressed: () async => {
                             if (await NodeJSManager.createUser(
