@@ -7,7 +7,7 @@ const { authenticate, use } = require('passport')
 var functions = {
     addNew : function(req,res) {
         if((!req.body.name) || (!req.body.password)) {
-            res.json({success:false,msg:"Remplisez tout"})
+            res.json({success:false,msg:"Remplisez tout defaut"})
         }
         else{
             var newUser= User({
@@ -49,9 +49,9 @@ var functions = {
         if(req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer'){
             var token = req.headers.authorization.split(' ')[1]
             var decodedToken = jwt.decode(token,config.secret) 
-            return res.json({success : true , msg : "hello " + decodedToken.name + " mdp : " + decodedToken.password})
+            return res.json({success : true , msg : "hello " + decodedToken.name + " mdp : " + decodedToken.password,value:decodedToken})
         }else {
-            return res.json({success:false, msg:'No Headers'})
+            return res.json({success:false, msg:'No Headers',value:null})
         }
     }
 }

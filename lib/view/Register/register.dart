@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/Controller/NodeJSManager.dart';
+import 'package:my_app/Controller/Particulier/ParticulierController.dart';
 import 'package:my_app/view/Login/selectionPage.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -14,13 +15,14 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     var firstnameController = TextEditingController();
+    var usernameController = TextEditingController();
     var nameController = TextEditingController();
     var passwordController = TextEditingController();
     var telephoneController = TextEditingController();
     var adressController = TextEditingController();
-    var codePostaleController = TextEditingController();
-    var adresseController = TextEditingController();
-    var villeController = TextEditingController();
+    var PostalCodeController = TextEditingController();
+    var emailController = TextEditingController();
+    var cityController = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -94,7 +96,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       padding: const EdgeInsets.only(top: 20),
                       width: 300,
                       child: TextFormField(
-                        controller: adressController,
+                        controller: usernameController,
                         cursorColor: Colors.grey,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -134,7 +136,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       padding: const EdgeInsets.only(top: 10),
                       width: 300,
                       child: TextFormField(
-                        controller: adressController,
+                        controller: emailController,
                         cursorColor: Colors.grey,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -155,7 +157,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       width: 300,
                       child: TextFormField(
                         cursorColor: Colors.grey,
-                        controller: adresseController,
+                        controller: adressController,
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(90.0),
@@ -175,7 +177,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         width: 170,
                         child: TextFormField(
                           cursorColor: Colors.grey,
-                          controller: villeController,
+                          controller: cityController,
                           decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(90.0),
@@ -195,7 +197,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         width: 130,
                         child: TextFormField(
                           cursorColor: Colors.grey,
-                          controller: codePostaleController,
+                          controller: PostalCodeController,
                           decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(90.0),
@@ -256,9 +258,15 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: 55,
                         child: OutlinedButton(
                           onPressed: () async => {
-                            if (await NodeJSManager.createUser(
+                            if (await ParticulierController.createParticulier(
                                     "${firstnameController.text + nameController.text}",
-                                    passwordController.text) ==
+                                    passwordController.text,
+                                    emailController.text,
+                                    usernameController.text,
+                                    telephoneController.text,
+                                    cityController.text,
+                                    adressController.text,
+                                    PostalCodeController.text) ==
                                 200)
                               {
                                 Navigator.of(context)
