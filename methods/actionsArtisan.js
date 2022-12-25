@@ -6,25 +6,24 @@ const { authenticate, use } = require('passport')
 
 var functions = {
     addNew : function(req,res) {
-        res.json(req.body.name,req.body.password,req.body.username,req.body.telephone,req.body.mail,req.body.siret,req.body.mobilite)
-        if((!req.body.name) || (!req.body.password) || (!req.body.username) || (!req.body.telephone)||(!req.body.mail) || (!req.body.siret)||(!req.body.mobilite) ||(!req.body.adress) ||(!req.body.domaine)||(!req.body.entreprise)) {
-            res.json({success:false,msg:"Remplisez tout artistans "})
+        if((!req.body.name) || (!req.body.username) || (!req.body.telephone) || (!req.body.email) || (!req.body.siret) || (!req.body.mobilite) || (!req.body.adress) || (!req.body.domaine) || (!req.body.entreprise) || (!req.body.password) ) {
+            res.json({success:false,msg:"veuillez remplir tous les champs"})
         }
         else{
             var newArtisan= Artisan({
-                name:req.body.name,
-                password:req.body.password,
-                username:req.body.username,
-                telephone:req.body.telephone,
-                email:req.body.mail,
-                siret:req.body.siret,
-                mobilite:req.body.mobilite,
-                adress:req.body.adress,
-                domaine:req.body.domaine,
-                entreprise:req.body.entreprise,
-                picture:req.body.picture,
-                note:req.body.note,
-                chantier:req.body.chantier,
+                name : req.body.name,
+                username : req.body.username,
+                telephone : req.body.telephone,
+                email : req.body.email,
+                picture : req.body.picture,
+                siret : req.body.siret,
+                mobilite : req.body.mobilite,
+                adress: req.body.adress,
+                domaine : req.body.domaine,
+                entreprise : req.body.entreprise,
+                note : req.body.note,
+                chantier : req.body.chantier,
+                password : req.body.password
             })
             newArtisan.save(function(err,newArtisan){
                 if(err){
@@ -41,7 +40,7 @@ var functions = {
         }, function(err,artisan){
             if(err) throw err
             if(!artisan) {
-                res.status(403).send({success:false,msg:'Authenticate failed, User not found'})
+                return res.status(403).send({success:false,msg:'Authenticate failed, User not found'})
             }
             else {
                 artisan.comparePassword(req.body.password, function(err,isMatch){

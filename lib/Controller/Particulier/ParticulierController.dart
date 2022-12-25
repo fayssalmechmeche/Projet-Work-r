@@ -25,7 +25,7 @@ class ParticulierController {
           'email': email,
           'username': username,
           'telephone': telephone,
-          'city' : city,
+          'city': city,
           'adress': adress,
           'postalCode': postalCode,
           'picture': 'n',
@@ -42,7 +42,8 @@ class ParticulierController {
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode(<String, String>{'email': email, 'password': password}));
+        body:
+            jsonEncode(<String, String>{'email': email, 'password': password}));
     print('Response status 200: ${response.statusCode}');
     print('Response body: ${response.body}');
 

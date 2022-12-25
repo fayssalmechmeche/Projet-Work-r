@@ -1,41 +1,40 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:http/http.dart' as http;
 
 class ArtisanController {
   static var url = "http://localhost:3000/";
 
   static Future<int> createArtisan(
-      String name,
-      String password,
-      String email,
-      String username,
-      String telephone,
-      String siret,
-      String mobilite,
-      String adress,
-      String domaine,
-      String entreprise,
-      String note,
-      String chantier) async {
+    String name,
+    String password,
+    String email,
+    String username,
+    String telephone,
+    String siret,
+    String adress,
+    String entreprise,
+  ) async {
     var response = await http.post(Uri.parse("${url}addArtisan"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(<String, String>{
           'name': name,
-          'password': password,
-          'email': email,
           'username': username,
           'telephone': telephone,
+          'email': email,
+          'picture': 'n',
           'siret': siret,
-          'mobilite': mobilite,
+          'mobilite': "n",
           'adress': adress,
-          'domaine': domaine,
+          'domaine': "n",
           'entreprise': entreprise,
-          'chantier': chantier,
-          'note': note
+          'note': "n",
+          'chantier': "n",
+          'password': password,
         }));
-    print('Response status 200: ${response.statusCode}');
+    print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
     return response.statusCode;
   }
@@ -45,8 +44,11 @@ class ArtisanController {
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode(<String, String>{'email': email, 'password': password}));
+        body:
+            jsonEncode(<String, String>{'email': email, 'password': password}));
 
+    print('Response status 200: ${response.statusCode}');
+    print('Response body: ${response.body}');
     return response.statusCode;
   }
 

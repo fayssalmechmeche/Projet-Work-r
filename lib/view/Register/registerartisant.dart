@@ -37,7 +37,7 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
     var AdressController = TextEditingController();
     var PostalCodeController = TextEditingController();
     var siretController = TextEditingController();
-    var domaineController   = SingleValueDropDownController();
+    var domaineController = SingleValueDropDownController();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -67,7 +67,6 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                       child: TextFormField(
                         cursorColor: Colors.grey,
                         controller: nameController,
-
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(90),
@@ -89,7 +88,6 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                       child: TextFormField(
                         cursorColor: Colors.grey,
                         controller: firstnameController,
-
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(90),
@@ -129,9 +127,6 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                         ),
                       ),
                     ),
-
-
-
                     Container(
                       padding: const EdgeInsets.only(top: 20),
                       width: 300,
@@ -215,7 +210,7 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                       padding: const EdgeInsets.only(top: 20),
                       width: 300,
                       child: TextFormField(
-                        controller: companyController ,
+                        controller: companyController,
                         cursorColor: Colors.grey,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -257,7 +252,6 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                           padding: const EdgeInsets.only(top: 20, right: 10),
                           width: 170,
                           child: TextFormField(
-
                             cursorColor: Colors.grey,
                             controller: CityController,
                             decoration: InputDecoration(
@@ -322,7 +316,6 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                       padding: const EdgeInsets.only(top: 20),
                       width: 300,
                       child: DecoratedBox(
-
                         decoration: BoxDecoration(
                           color: Colors
                               .white, //background color of dropdown button
@@ -332,20 +325,20 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                         child: Padding(
                           padding: EdgeInsets.only(left: 30, right: 30),
                           child: DropDownTextField(
-                            controller:domaineController ,
+                            controller: domaineController,
                             dropDownItemCount: items.length,
-
                             dropDownList: [
-
-
-                              DropDownValueModel(name: items[0].toString(), value: items[0]),
-                              DropDownValueModel(name: items[1].toString(), value: items[1]),
-                              DropDownValueModel(name: items[2].toString(), value: items[2]),
-                              DropDownValueModel(name: items[3].toString(), value: items[3]),
-                              DropDownValueModel(name: items[4].toString(), value: items[4]),
-
-                          ],
-
+                              DropDownValueModel(
+                                  name: items[0].toString(), value: items[0]),
+                              DropDownValueModel(
+                                  name: items[1].toString(), value: items[1]),
+                              DropDownValueModel(
+                                  name: items[2].toString(), value: items[2]),
+                              DropDownValueModel(
+                                  name: items[3].toString(), value: items[3]),
+                              DropDownValueModel(
+                                  name: items[4].toString(), value: items[4]),
+                            ],
                           ),
                         ),
                       ),
@@ -361,18 +354,17 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
             child: OutlinedButton(
               onPressed: () async {
                 if (await ArtisanController.createArtisan(
-                "${firstnameController.text + nameController.text}",
-                passwordController.text,
-                emailController.text,
-                usernameController.text,
-                telephoneController.text,
-                  siretController.text,'',
-                  AdressController.text,domaineController.toString(),companyController.text,'',''
-                ) ==
-                200)
-                {
-                Navigator.of(context)
-                    .pushNamed(SelectionPage.tag);
+                      "${firstnameController.text + nameController.text}",
+                      passwordController.text,
+                      emailController.text,
+                      usernameController.text,
+                      telephoneController.text,
+                      siretController.text,
+                      AdressController.text,
+                      companyController.text,
+                    ) ==
+                    200) {
+                  Navigator.of(context).pushNamed(SelectionPage.tag);
                 }
               },
               style: OutlinedButton.styleFrom(

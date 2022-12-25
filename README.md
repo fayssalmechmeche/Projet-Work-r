@@ -1,9 +1,8 @@
-# Work'r 
+# Work'r
 
 ![My Image](assets/logo.png)
 
-
-## Description 
+## Description
 
 Work'r est notre projet de fin d'année. C'est une application developpé en Flutter par un groupe de trois etudiants
 
@@ -13,11 +12,22 @@ Work'r est notre projet de fin d'année. C'est une application developpé en Flu
 
 Le but de Work'r est de simplifier la mise en relation entre les personnes qui veulent effectuer des travaux chez eux et les artisans adapté a leurs besoins.
 
-### Pourquoi Flutter ? 
+### Pourquoi Flutter ?
 
-Nous avons choisi Flutter afin que notre application soit dsponible à la fois sur IOS et Android 
+Nous avons choisi Flutter afin que notre application soit dsponible à la fois sur IOS et Android
 
+### Lancement de l'application
 
+npm start
 
+### Identifiant LocalHost
 
+Artisan :
 
+mail : artisan@artisan
+mdp : test1234
+
+Particulier :
+
+mail : admin@admin
+mdp : admin

@@ -51,8 +51,6 @@ var artisansSchema = new Schema({
         type:String,
         require:false
     },
-
-
     password : {
         type:String,
         require:true
