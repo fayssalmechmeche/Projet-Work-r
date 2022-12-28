@@ -47,5 +47,11 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>io.flutter.embedded_views_preview</key>
+	<true/>
+	<key>com.googlemaps.ios.api_key</key>
+	<string>AIzaSyAuac_gAmwDmvuLqZWn3AyIQGOS0rOwoz4</string>
+
+
 </dict>
 </plist>
