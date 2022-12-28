@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/view/Login/loginart.dart';
+import 'package:my_app/view/Msg/chat.dart';
 import 'package:my_app/view/Profile/editprofile.dart';
 import 'package:my_app/view/LunchPage/firstpage.dart';
 import 'package:my_app/view/Login/login.dart';
@@ -9,6 +10,7 @@ import 'package:my_app/view/Register/registerselection.dart';
 import 'package:my_app/view/Login/SelectionPage.dart';
 import 'package:my_app/view/Profile/profile.dart';
 import 'package:my_app/view/Register/register.dart';
+import 'package:my_app/view/Works/workfollow.dart';
 
 void main() {
   runApp(const MyApp());
@@ -40,6 +42,8 @@ class MyApp extends StatelessWidget {
         Profile.tag: (context) => const Profile(title: "profile"),
         EditProfile.tag: (context) => const EditProfile(),
         NavigationPage.tag: (context) => const NavigationPage(),
+        Chat.tag: (context) => const Chat(),
+        WorkFollow.tag: (context) => const WorkFollow(),
       },
     );
   }

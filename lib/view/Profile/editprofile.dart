@@ -13,6 +13,8 @@ class _EditProfileState extends State<EditProfile> {
   var mailController = TextEditingController();
   var passwordController = TextEditingController();
   var phoneController = TextEditingController();
+  var firstNameController = TextEditingController();
+  var lastNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +55,48 @@ class _EditProfileState extends State<EditProfile> {
                           padding: const EdgeInsets.only( left: 60),
                           child :
                           Column(
-                              children: const [
-                                Text("Jean-Paul", style: TextStyle(fontSize: 18)),
-                                Text("Blabla", style: TextStyle(fontSize: 18))
+                              children:  [
+                                Container(
+                                  width: 140,
+                                  height: 40,
+                                  child: TextFormField(
+                                    cursorColor: Colors.grey,
+                                    controller: firstNameController,
+                                    decoration:  InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(90.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(color: Colors.grey),
+                                          borderRadius: BorderRadius.circular(90.0),
+                                        ),
+                                        contentPadding: const EdgeInsets.all(10),
+                                        label: const Text("Prenom"),
+                                        labelStyle: const TextStyle(color: Colors.grey)
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  width: 140,
+                                  height: 50,
+                                  child: TextFormField(
+                                    cursorColor: Colors.grey,
+                                    controller: lastNameController,
+                                    decoration:  InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(90.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(color: Colors.grey),
+                                          borderRadius: BorderRadius.circular(90.0),
+                                        ),
+                                        contentPadding: const EdgeInsets.all(10),
+                                        label: const Text("Nom"),
+                                        labelStyle: const TextStyle(color: Colors.grey)
+                                    ),
+                                  ),
+                                ),
                               ]
                           ),
                         )

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:my_app/view/Profile/profile.dart';
-import 'package:my_app/view/Home/workfollow.dart';
-import 'package:my_app/view/Msg/chat.dart';
+import 'package:my_app/view/Works/listwork.dart';
+import 'package:my_app/view/Msg/listchat.dart';
 import 'package:my_app/view/Home/homepage.dart';
 import 'package:my_app/view/Map/map.dart';
 class NavigationPage extends StatefulWidget {
@@ -15,10 +15,10 @@ class NavigationPage extends StatefulWidget {
 class _NavigationPageState extends State<NavigationPage> {
   int _selectedIndex = 2;
   static final List<Widget> _NavScreens = <Widget> [
-    Chat(),
+    ListChat(),
     Map(),
     HomePage(title: "home"),
-    WorkFollow(),
+    ListWork(),
     Profile(title: "profile"),
 
 
