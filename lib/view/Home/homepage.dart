@@ -24,24 +24,24 @@ class _HomePageState extends State<HomePage> {
           children: [
             Container(
               padding: const EdgeInsets.only(left:20, right: 20),
-                decoration: const BoxDecoration(
-                  color: Colors.grey,
+                decoration:  BoxDecoration(
+                  color: Colors.grey.withOpacity(0.75),
                   shape: BoxShape.circle,
                 ),
                 child: IconButton(icon: const Icon(
             Icons.star, size: 20),  onPressed: () {  })),
           Container(
               padding: const EdgeInsets.only(left:20, right: 20),
-              decoration: const BoxDecoration(
-                color: Colors.grey,
+              decoration: BoxDecoration(
+                color: Colors.grey.withOpacity(0.75),
                 shape: BoxShape.circle,
               ),
               child: IconButton(icon: const Icon(
             Icons.home_repair_service_sharp, size: 20),  onPressed: () {  })),
               Container(
                   padding: const EdgeInsets.only(left:20, right: 20),
-                  decoration: const BoxDecoration(
-                    color: Colors.grey,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(0.75),
                     shape: BoxShape.circle,
                   ),
                   child: IconButton(icon: const Icon(
@@ -137,7 +137,8 @@ class _HomePageState extends State<HomePage> {
               ),
               borderRadius: BorderRadius.circular(40.0),
             ),
-            color: index % 2 == 0 ? Colors.white : Colors.grey,
+            elevation: 0,
+            color: Colors.yellow.withOpacity(0.5),
             child:
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -162,7 +163,7 @@ class _HomePageState extends State<HomePage> {
                       const Padding(
                           padding: EdgeInsets.only(top: 10), child: Text("Plombier", style: TextStyle(fontWeight: FontWeight.bold),)),
                     Padding(
-                          padding: const EdgeInsets.only(top: 10), child:RatingOfProfile()),
+                          padding: const EdgeInsets.only(top: 10), child:RatingOfProfile(0.9)),
                     ]
                 ),
               ],
@@ -170,28 +171,28 @@ class _HomePageState extends State<HomePage> {
         )
     );
   }
-  Widget RatingOfProfile() {
+  Widget RatingOfProfile(double rating) {
     return Row(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: const <Widget>[
+        children: <Widget>[
           DecoratedIcon(
-            icon: Icon(Icons.star, color: Colors.yellow, size: 16,),
+            icon: Icon(rating > 0 && rating <1 ? Icons.star_half:Icons.star, color: rating > 0  ? Colors.yellow: Colors.black, size: 16,),
             decoration: IconDecoration(border: IconBorder(color: Colors.black, width: 2)),
           ),
           DecoratedIcon(
-            icon: Icon(Icons.star, color: Colors.yellow, size: 16,),
+            icon: Icon(rating > 1.0 && rating <2.0 ? Icons.star_half:Icons.star, color: rating > 1  ? Colors.yellow: Colors.black, size: 16,),
             decoration: IconDecoration(border: IconBorder(color: Colors.black, width: 2)),
           ),
           DecoratedIcon(
-            icon: Icon(Icons.star, color: Colors.yellow, size: 16,),
+            icon: Icon(rating > 2.0 && rating <3.0 ? Icons.star_half:Icons.star, color: rating > 2  ? Colors.yellow: Colors.black, size: 16,),
             decoration: IconDecoration(border: IconBorder(color: Colors.black, width: 2)),
           ),
           DecoratedIcon(
-            icon: Icon(Icons.star, color: Colors.yellow, size: 16,),
+            icon: Icon(rating > 3.0 && rating <4.0 ? Icons.star_half : Icons.star, color: rating > 3  ? Colors.yellow: Colors.black, size: 16,),
             decoration: IconDecoration(border: IconBorder(color: Colors.black, width: 2)),
           ),
           DecoratedIcon(
-            icon: Icon(Icons.star, color: Colors.yellow, size: 16,),
+            icon: Icon(rating > 4.0 && rating <5.0 ? Icons.star_half:Icons.star, color: rating > 4  ? Colors.yellow: Colors.black, size: 16,),
             decoration: IconDecoration(border: IconBorder(color: Colors.black, width: 2)),
           ),
 
