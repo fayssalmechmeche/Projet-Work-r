@@ -43,10 +43,10 @@ class _ListWorkState extends State<ListWork> {
         },
         child:
         Card(
-            shape: const StadiumBorder( //<-- 3. SEE HERE
+            shape:  StadiumBorder( //<-- 3. SEE HERE
               side: BorderSide(
                 color: Colors.black,
-                width: 1.0,
+                width: index %2 == 0? 1.0 : 0.0,
               ),
             ),
             elevation: 10,
