@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/Controller/Artisan/ArtisanController.dart';
 import 'package:my_app/view/Navigation/NavigationPage.dart';
+import 'package:provider/provider.dart';
 import '../../Controller/NodeJSManager.dart';
+import '../../Controller/global.dart';
 
 class LoginArt extends StatefulWidget {
   const LoginArt({Key? key}) : super(key: key);
+
   static const tag = "/Loginart";
   @override
   _LoginArtState createState() => _LoginArtState();
@@ -16,6 +19,7 @@ class _LoginArtState extends State<LoginArt> {
   var emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final globalData = Provider.of<GlobalData>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -90,14 +94,27 @@ class _LoginArtState extends State<LoginArt> {
                   height: 65,
                   child: OutlinedButton(
                     onPressed: () async {
-                      print(await ArtisanController.authenticate(
-                          emailController.text, passwordController.text));
-                      if (await ArtisanController.authenticate(
-                          emailController.text, passwordController.text) ==
-                          200) {
-                        Navigator.of(context).pushNamed(NavigationPage.tag);
+                      var email = emailController.text;
+                      var password = passwordController.text;
+                      var authenticated = await ArtisanController.authenticate(
+                        emailController.text,
+                        passwordController.text,
+                      );
+                      if (authenticated.keys.contains("token")) {
+                        var decodedToken = await ArtisanController.getInfo(
+                            authenticated["token"]);
+
+                        globalData.setUser(decodedToken["msg"]);
+                        print(globalData.user["email"]);
+
+                        Navigator.pushNamed(context, NavigationPage.tag);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Email ou mot de passe incorrect'),
+                          ),
+                        );
                       }
-                      ;
                     },
                     style: OutlinedButton.styleFrom(
                       shape: const StadiumBorder(),

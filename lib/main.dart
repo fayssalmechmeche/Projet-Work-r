@@ -11,9 +11,17 @@ import 'package:my_app/view/Login/SelectionPage.dart';
 import 'package:my_app/view/Profile/profile.dart';
 import 'package:my_app/view/Register/register.dart';
 import 'package:my_app/view/Works/workfollow.dart';
+import 'package:provider/provider.dart';
+
+import 'Controller/global.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => GlobalData(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
