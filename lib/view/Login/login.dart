@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/Controller/Particulier/ParticulierController.dart';
 import 'package:my_app/view/Navigation/NavigationPage.dart';
+import 'package:provider/provider.dart';
 
 import '../../Controller/NodeJSManager.dart';
+import '../../Controller/global.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -17,6 +19,7 @@ class _LoginState extends State<Login> {
   var emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final globalData = Provider.of<GlobalData>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -91,14 +94,28 @@ class _LoginState extends State<Login> {
                 height: 65,
                 child: OutlinedButton(
                   onPressed: () async {
-                    print(await ParticulierController.authenticate(
-                        emailController.text, passwordController.text));
-                    if (await ParticulierController.authenticate(
-                        emailController.text, passwordController.text) ==
-                        200) {
-                      Navigator.of(context).pushNamed(NavigationPage.tag);
+                    var email = emailController.text;
+                    var password = passwordController.text;
+                    var authenticated =
+                        await ParticulierController.authenticate(
+                      emailController.text,
+                      passwordController.text,
+                    );
+                    if (authenticated.keys.contains("token")) {
+                      var decodedToken = await ParticulierController.getInfo(
+                          authenticated["token"]);
+
+                      globalData.setUser(decodedToken["msg"]);
+                      print(globalData.user["email"]);
+
+                      Navigator.pushNamed(context, NavigationPage.tag);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Email ou mot de passe incorrect'),
+                        ),
+                      );
                     }
-                    ;
                   },
                   style: OutlinedButton.styleFrom(
                     shape: const StadiumBorder(),

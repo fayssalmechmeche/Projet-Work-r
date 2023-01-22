@@ -46,12 +46,10 @@ var functions = {
       function (err, particulier) {
         if (err) throw err;
         if (!particulier) {
-          res
-            .status(403)
-            .send({
-              success: false,
-              msg: "Authenticate failed, User not found",
-            });
+          res.status(403).send({
+            success: false,
+            msg: "Authenticate failed, User not found",
+          });
         } else {
           particulier.comparePassword(
             req.body.password,
@@ -60,12 +58,10 @@ var functions = {
                 var token = jwt.encode(particulier, config.secret);
                 res.json({ success: true, token: token });
               } else {
-                return res
-                  .status(403)
-                  .send({
-                    success: false,
-                    msg: "Authenticate failed, Wrong password",
-                  });
+                return res.status(403).send({
+                  success: false,
+                  msg: "Authenticate failed, Wrong password",
+                });
               }
             }
           );
@@ -82,7 +78,7 @@ var functions = {
       var decodedToken = jwt.decode(token, config.secret);
       return res.json({
         success: true,
-        msg: "hello " + decodedToken.name + " mdp : " + decodedToken.password,
+        msg: decodedToken,
       });
     } else {
       return res.json({ success: false, msg: "No Headers" });

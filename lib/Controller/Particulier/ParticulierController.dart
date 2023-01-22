@@ -37,24 +37,43 @@ class ParticulierController {
     return response.statusCode;
   }
 
-  static Future<int> authenticate(String email, String password) async {
+  static Future<Map<String, dynamic>> authenticate(
+      String email, String password) async {
     var response = await http.post(Uri.parse("${url}authenticateParticulier"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body:
             jsonEncode(<String, String>{'email': email, 'password': password}));
-    print('Response status 200: ${response.statusCode}');
-    print('Response body: ${response.body}');
 
-    return response.statusCode;
+    // Vérifier que la réponse a un statut OK
+    if (response.statusCode == 200) {
+      // Parser le JSON reçu en réponse
+      print("connexion réussie Particulier Controller");
+      print(response.body);
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } else {
+      print("connexion échouée Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    }
   }
 
-  static Future<void> getInfo(String token) async {
+  static Future<Map<String, dynamic>> getInfo(String token) async {
     var response = await http
-        .post(Uri.parse("${url}getinfoParticulier"), headers: <String, String>{
+        .get(Uri.parse("${url}getinfoParticulier"), headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
-      'Authorization': 'Bearer : ${token}'
+      'Authorization': 'Bearer ${token}'
     });
+    if (response.statusCode == 200) {
+      print("getInfo réussie Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } else {
+      print("getInfo échouée Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    }
   }
 }
