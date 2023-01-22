@@ -14,4 +14,28 @@ class GlobalData with ChangeNotifier {
     this.user = user;
     notifyListeners();
   }
+
+  String getEmail() {
+    return user["email"];
+  }
+
+  String getName() {
+    return user["name"];
+  }
+
+  String getTelephone() {
+    return user["telephone"];
+  }
+
+  String getAdress() {
+    return user["adress"];
+  }
+
+  String getCity() {
+    return user["city"];
+  }
+
+  String getPostalCode() {
+    return user["postalCode"];
+  }
 }
