@@ -1,4 +1,4 @@
-var Particulier = require("../../model/particulier");
+var Particulier = require("../model/particulier");
 var jwt = require("jwt-simple");
 var config = require("../config/dbConfig");
 const { authenticate, use } = require("passport");

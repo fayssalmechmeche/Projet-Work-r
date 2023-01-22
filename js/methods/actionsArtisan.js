@@ -1,4 +1,4 @@
-var Particulier = require("../../model/particulier");
+var Artisan = require("../model/artisan");
 var jwt = require("jwt-simple");
 var config = require("../config/dbConfig");
 const { authenticate, use } = require("passport");
@@ -7,68 +7,70 @@ var functions = {
   addNew: function (req, res) {
     if (
       !req.body.name ||
-      !req.body.password ||
-      !req.body.email ||
       !req.body.username ||
       !req.body.telephone ||
-      !req.body.city ||
+      !req.body.email ||
+      !req.body.siret ||
+      !req.body.mobilite ||
       !req.body.adress ||
-      !req.body.postalCode
+      !req.body.domaine ||
+      !req.body.entreprise ||
+      !req.body.password
     ) {
-      res.json({ success: false, msg: "Remplisez tout particulier" });
+      res.json({ success: false, msg: "veuillez remplir tous les champs" });
     } else {
-      var newParticulier = Particulier({
+      var newArtisan = Artisan({
         name: req.body.name,
-        password: req.body.password,
-        email: req.body.email,
         username: req.body.username,
         telephone: req.body.telephone,
-        city: req.body.city,
-        adress: req.body.adress,
-        postalCode: req.body.postalCode,
+        email: req.body.email,
         picture: req.body.picture,
+        siret: req.body.siret,
+        mobilite: req.body.mobilite,
+        adress: req.body.adress,
+        domaine: req.body.domaine,
+        entreprise: req.body.entreprise,
+        note: req.body.note,
         chantier: req.body.chantier,
+        password: req.body.password,
       });
-      newParticulier.save(function (err, newParticulier) {
+      newArtisan.save(function (err, newArtisan) {
         if (err) {
-          res.json({ success: false, msg: "sauvegarde raté part" });
+          res.json({ success: false, msg: "sauvegarde raté artisans" });
         } else {
-          res.json({ success: true, msg: "sauvegarde réussi part" });
+          res.json({ success: true, msg: "sauvegarde réussi artisans" });
         }
       });
     }
   },
   authenticate: function (req, res) {
-    Particulier.findOne(
+    Artisan.findOne(
       {
         email: req.body.email,
       },
-      function (err, particulier) {
+      function (err, artisan) {
         if (err) throw err;
-        if (!particulier) {
-          res
+        if (!artisan) {
+          return res
             .status(403)
             .send({
               success: false,
               msg: "Authenticate failed, User not found",
             });
         } else {
-          particulier.comparePassword(
-            req.body.password,
-            function (err, isMatch) {
-              if (isMatch && !err) {
-                var token = jwt.encode(particulier, config.secret);
-                res.json({ success: true, token: token });
-              } else {
-                return res
-                  .status(403)
-                  .send({
-                    success: false,
-                    msg: "Authenticate failed, Wrong password",
-                  });
-              }
+          artisan.comparePassword(req.body.password, function (err, isMatch) {
+            if (isMatch && !err) {
+              var token = jwt.encode(artisan, config.secret);
+              res.json({ success: true, token: token });
+            } else {
+              return res
+                .status(403)
+                .send({
+                  success: false,
+                  msg: "Authenticate failed, Wrong password",
+                });
             }
-          );
+          });
         }
       }
     );

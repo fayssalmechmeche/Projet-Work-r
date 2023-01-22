@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const NavigationPage(),
+      home: const SelectionPage(),
       routes: {
         Login.tag: (context) => const Login(),
         LoginArt.tag: (context) => const LoginArt(),
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
             const RegisterSelectionPage(title: 'registerselection'),
         RegisterArtisan.tag: (context) =>
             const RegisterArtisan(title: "registerartisant"),
-        SelectionPage.tag: (context) => const SelectionPage(title: "Selection"),
+        SelectionPage.tag: (context) => const SelectionPage(),
         Profile.tag: (context) => const Profile(title: "profile"),
         EditProfile.tag: (context) => const EditProfile(),
         NavigationPage.tag: (context) => const NavigationPage(),
