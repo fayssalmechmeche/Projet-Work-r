@@ -26,9 +26,11 @@ class _NavigationPageState extends State<NavigationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          
           backgroundColor: Colors.transparent,
-          leading: const BackButton(color: Colors.black),
+          leading: const BackButton(
+            color: Colors.black,
+          ),
+          toolbarHeight: 35,
           elevation: 0,
         ),
         body: Center(child: _NavScreens.elementAt(_selectedIndex)),
