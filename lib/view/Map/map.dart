@@ -10,7 +10,8 @@ class Map extends StatefulWidget {
 
 class _MapState extends State<Map> {
   static const _initialPos =
-      CameraPosition(target: LatLng(37.773972, -122.431297), zoom: 11.5);
+      CameraPosition(target: LatLng(48.866667, 2.333333), zoom: 11.5);
+
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
@@ -18,7 +19,9 @@ class _MapState extends State<Map> {
         initialCameraPosition: _initialPos,
         zoomControlsEnabled: false,
         myLocationButtonEnabled: false,
+
       ),
+      
     );
   }
 }

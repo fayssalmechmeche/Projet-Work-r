@@ -5,6 +5,7 @@ import 'package:my_app/view/Works/listwork.dart';
 import 'package:my_app/view/Msg/listchat.dart';
 import 'package:my_app/view/Home/homepage.dart';
 import 'package:my_app/view/Map/map.dart';
+
 class NavigationPage extends StatefulWidget {
   const NavigationPage({Key? key}) : super(key: key);
   static const tag = "/nav";
@@ -14,28 +15,24 @@ class NavigationPage extends StatefulWidget {
 
 class _NavigationPageState extends State<NavigationPage> {
   int _selectedIndex = 2;
-  static final List<Widget> _NavScreens = <Widget> [
+  static final List<Widget> _NavScreens = <Widget>[
     ListChat(),
     Map(),
     HomePage(title: "home"),
     ListWork(),
     Profile(title: "profile"),
-
-
   ];
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
         appBar: AppBar(
+          
           backgroundColor: Colors.transparent,
-          leading: const BackButton(
-              color: Colors.black
-          ),
+          leading: const BackButton(color: Colors.black),
           elevation: 0,
         ),
-        body:  Center(child: _NavScreens.elementAt(_selectedIndex)),
-        bottomNavigationBar:
-        GNav(
+        body: Center(child: _NavScreens.elementAt(_selectedIndex)),
+        bottomNavigationBar: GNav(
           gap: 8,
           tabBackgroundColor: Colors.yellow.withOpacity(0.5),
           tabs: const [
@@ -46,12 +43,11 @@ class _NavigationPageState extends State<NavigationPage> {
             GButton(icon: Icons.account_circle),
           ],
           selectedIndex: _selectedIndex,
-          onTabChange: (index){
+          onTabChange: (index) {
             setState(() {
               _selectedIndex = index;
             });
           },
-        )
-    );
+        ));
   }
 }
