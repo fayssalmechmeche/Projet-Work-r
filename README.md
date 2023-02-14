@@ -29,5 +29,5 @@ mdp : test1234
 
 Particulier :
 
-mail : admin@admin
-mdp : admin
+mail : particulier@particulier
+mdp : particulier

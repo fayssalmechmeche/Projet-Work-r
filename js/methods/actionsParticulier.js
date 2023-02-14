@@ -2,6 +2,8 @@ var Particulier = require("../model/particulier");
 var jwt = require("jwt-simple");
 var config = require("../config/dbConfig");
 const { authenticate, use } = require("passport");
+const mysqlConnection = require("../config/db");
+const bcrypt = require("bcrypt");
 
 var functions = {
   addNew: function (req, res) {
@@ -15,25 +17,28 @@ var functions = {
       !req.body.adress ||
       !req.body.postalCode
     ) {
-      res.json({ success: false, msg: "Remplisez tout particulier" });
+      res.json({ success: false, msg: "veuillez remplir tous les champs" });
     } else {
-      var newParticulier = Particulier({
-        name: req.body.name,
-        password: req.body.password,
-        email: req.body.email,
-        username: req.body.username,
-        telephone: req.body.telephone,
-        city: req.body.city,
-        adress: req.body.adress,
-        postalCode: req.body.postalCode,
-        picture: req.body.picture,
-        chantier: req.body.chantier,
-      });
-      newParticulier.save(function (err, newParticulier) {
-        if (err) {
-          res.json({ success: false, msg: "sauvegarde raté part" });
+      const hashedPassword = bcrypt.hashSync(req.body.password, 10);
+      console.log(
+        "particulier : " + req.body.name,
+        req.body.password,
+        req.body.email,
+        req.body.username,
+        req.body.telephone,
+        req.body.city,
+        req.body.adress,
+        req.body.postalCode,
+        req.body.picture,
+        req.body.chantier
+      );
+      const queryString = `INSERT INTO particuliers (name, password, email, username, telephone, city, adress, postalCode, picture, chantier)
+      VALUES ('${req.body.name}', '${hashedPassword}', '${req.body.email}', '${req.body.username}', '${req.body.telephone}', '${req.body.city}', '${req.body.adress}', '${req.body.postalCode}', '${req.body.picture}', '${req.body.chantier}')`;
+      mysqlConnection.query(queryString, function (err, rows, fields) {
+        if (!err) {
+          res.json({ success: true, msg: "Particulier sauvegardé" });
         } else {
-          res.json({ success: true, msg: "sauvegarde réussi part" });
+          res.json({ success: false, msg: "Particulier non sauvegardé" });
         }
       });
     }
