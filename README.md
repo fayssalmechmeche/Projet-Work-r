@@ -18,7 +18,7 @@ Nous avons choisi Flutter afin que notre application soit dsponible à la fois s
 
 ### Lancement de l'application
 
-npm i 
+npm i
 npm start
 flutter run
 
@@ -34,9 +34,9 @@ Particulier :
 mail : particulier@particulier
 mdp : particulier
 
-Database : 
+Database :
 host: "localhost",
-  user: "root",
-  password: "",
-  database: "workrdb",
+user: "root",
+password: "",
+database: "workrdb",
 });
