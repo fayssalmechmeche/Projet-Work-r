@@ -78,6 +78,9 @@ artisansSchema.pre('save',function(next){
     }
 })
 
+
+//fais moi une fonction qui enregistre un artisan sur la table artisans de la base de donnée en hashant le mot de passe avec bcrypt
+
 artisansSchema.methods.comparePassword = function(password,cb){
     bcrypt.compare(password,this.password,function(err,isMatch){
         if(err){

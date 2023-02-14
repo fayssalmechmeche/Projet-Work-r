@@ -35,15 +35,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const Login(),
+      home: const RegisterSelectionPage(),
       routes: {
         Login.tag: (context) => const Login(),
         LoginArt.tag: (context) => const LoginArt(),
         RegisterPage.tag: (context) => const RegisterPage(
               title: "register",
             ),
-        RegisterSelectionPage.tag: (context) =>
-            const RegisterSelectionPage(title: 'registerselection'),
+        RegisterSelectionPage.tag: (context) => const RegisterSelectionPage(),
         RegisterArtisan.tag: (context) =>
             const RegisterArtisan(title: "registerartisant"),
         SelectionPage.tag: (context) => const SelectionPage(),

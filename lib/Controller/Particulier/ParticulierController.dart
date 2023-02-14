@@ -59,7 +59,8 @@ class ParticulierController {
       return jsonResponse;
     }
   }
-
+  
+  
   static Future<Map<String, dynamic>> getInfo(String token) async {
     var response = await http
         .get(Uri.parse("${url}getinfoParticulier"), headers: <String, String>{
