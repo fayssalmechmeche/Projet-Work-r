@@ -18,7 +18,9 @@ Nous avons choisi Flutter afin que notre application soit dsponible à la fois s
 
 ### Lancement de l'application
 
+npm i 
 npm start
+flutter run
 
 ### Identifiant LocalHost
 
@@ -31,3 +33,10 @@ Particulier :
 
 mail : particulier@particulier
 mdp : particulier
+
+Database : 
+host: "localhost",
+  user: "root",
+  password: "",
+  database: "workrdb",
+});
