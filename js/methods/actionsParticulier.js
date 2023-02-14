@@ -43,26 +43,37 @@ var functions = {
       });
     }
   },
+  // une fonction pour authentifier un particulier sur la base de donnée mysql avec son email et son mot de passe et renvoyer un token si l'authentification est réussie et un message d'erreur si elle échoue
   authenticate: function (req, res) {
-    Particulier.findOne(
-      {
-        email: req.body.email,
-      },
-      function (err, particulier) {
-        if (err) throw err;
-        if (!particulier) {
-          res.status(403).send({
+    console.log("email : " + req.body.email);
+    console.log("password : " + req.body.password);
+
+    mysqlConnection.query(
+      "SELECT * FROM particuliers WHERE email = ?",
+      req.body.email,
+      function (error, results, fields) {
+        console.log("results : " + results[0].email);
+        // Si l'authentification échoue, renvoyer un message d'erreur
+        if (error || results[0] === undefined) {
+          console.log("error : " + error);
+          return res.status(403).send({
             success: false,
-            msg: "Authenticate failed, User not found",
+            message: "Authentification échouée. Email introuvable.",
           });
+
+          // Si l'authentification réussie, renvoyer un token
         } else {
-          particulier.comparePassword(
+          console.log("results : " + results[0].password);
+          bcrypt.compare(
             req.body.password,
+            results[0].password,
             function (err, isMatch) {
               if (isMatch && !err) {
-                var token = jwt.encode(particulier, config.secret);
+                console.log("results : " + results[0]);
+                var token = jwt.encode(results[0], config.secret);
                 res.json({ success: true, token: token });
               } else {
+                console.log("error : " + err);
                 return res.status(403).send({
                   success: false,
                   msg: "Authenticate failed, Wrong password",
