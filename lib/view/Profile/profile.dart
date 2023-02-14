@@ -16,14 +16,24 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     final globalData = Provider.of<GlobalData>(context);
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        leading: const BackButton(
+          color: Colors.black,
+        ),
+        title: const Text(
+          "Mon espace",
+          style: TextStyle(
+            color: Colors.black,
+          ),
+
+        ),
+        toolbarHeight: 45,
+        elevation: 0,
+      ),
       body: SafeArea(
         child: Column(children: [
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            const Text(
-              "Profile",
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            ),
-          ]),
+          
           Container(
               padding: const EdgeInsets.only(top: 30, left: 40),
               child: Row(children: [

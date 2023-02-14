@@ -11,9 +11,22 @@ class _ListChatState extends State<ListChat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        leading: const BackButton(
+          color: Colors.black,
+        ),
+        title: Text(
+          "Mes conversations",
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+        toolbarHeight: 35,
+        elevation: 0,
+      ),
       body:  Column( mainAxisAlignment: MainAxisAlignment.start,
           children: [
-         const Padding(padding: EdgeInsets.only(bottom: 20),child: Text("Mes conversations", style: TextStyle(fontSize: 18),),),
         Expanded(
         child: SizedBox(
             height: 200.0,

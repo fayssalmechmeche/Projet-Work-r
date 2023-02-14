@@ -25,14 +25,6 @@ class _NavigationPageState extends State<NavigationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          leading: const BackButton(
-            color: Colors.black,
-          ),
-          toolbarHeight: 35,
-          elevation: 0,
-        ),
         body: Center(child: _NavScreens.elementAt(_selectedIndex)),
         bottomNavigationBar: GNav(
           gap: 8,
