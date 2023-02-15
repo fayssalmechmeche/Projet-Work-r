@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 
 class GlobalData with ChangeNotifier {
@@ -10,8 +12,9 @@ class GlobalData with ChangeNotifier {
     notifyListeners();
   }
 
-  void setUser(Map<String, dynamic> user) {
+  void setUser(Map<String, dynamic> user, int role) {
     this.user = user;
+    this.user['role'] = role;
     notifyListeners();
   }
 
@@ -19,8 +22,16 @@ class GlobalData with ChangeNotifier {
     return user["email"];
   }
 
+  int getRole() {
+    return user['role'];
+  }
+
   String getName() {
     return user["name"];
+  }
+
+  String getLastName() {
+    return user["lastname"];
   }
 
   String getPhone() {

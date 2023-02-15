@@ -104,7 +104,7 @@ class _LoginArtState extends State<LoginArt> {
                         var decodedToken = await ArtisanController.getInfo(
                             authenticated["token"]);
 
-                        globalData.setUser(decodedToken["msg"]);
+                        globalData.setUser(decodedToken["msg"], 0);
                         print(globalData.user);
 
                         Navigator.pushNamed(context, NavigationPage.tag);

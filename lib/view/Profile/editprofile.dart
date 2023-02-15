@@ -26,7 +26,8 @@ class _EditProfileState extends State<EditProfile> {
     phoneController.text = globalData.getPhone();
     cityController.text = globalData.getCity();
     postalCodeController.text = globalData.getPostalCode();
-
+    firstNameController.text = globalData.getName();
+    lastNameController.text = globalData.getLastName();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -202,7 +203,9 @@ class _EditProfileState extends State<EditProfile> {
               width: 160,
               height: 105,
               child: OutlinedButton(
-                onPressed: () {},
+                onPressed: () {
+                  if (globalData.getRole() == 1) {}
+                },
                 style: OutlinedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(0),

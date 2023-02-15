@@ -105,7 +105,7 @@ class _LoginState extends State<Login> {
                       var decodedToken = await ParticulierController.getInfo(
                           authenticated["token"]);
 
-                      globalData.setUser(decodedToken["msg"]);
+                      globalData.setUser(decodedToken["msg"], 1);
                       print(globalData.user["email"]);
 
                       Navigator.pushNamed(context, NavigationPage.tag);
