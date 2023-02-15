@@ -9,6 +9,7 @@ var functions = {
   addNew: function (req, res) {
     if (
       !req.body.name ||
+      !req.body.lastname ||
       !req.body.username ||
       !req.body.telephone ||
       !req.body.email ||
@@ -22,8 +23,8 @@ var functions = {
       res.json({ success: false, msg: "veuillez remplir tous les champs" });
     } else {
       const hashedPassword = bcrypt.hashSync(req.body.password, 10);
-      const queryString = `INSERT INTO artisans (name, username, telephone, email, picture, siret, mobilite, adress, domaine, entreprise, note, chantier, password) 
-      VALUES ('${req.body.name}', '${req.body.username}', '${req.body.telephone}', '${req.body.email}', '${req.body.picture}', '${req.body.siret}', '${req.body.mobilite}', '${req.body.adress}', '${req.body.domaine}', '${req.body.entreprise}', '${req.body.note}', '${req.body.chantier}', '${hashedPassword}')`;
+      const queryString = `INSERT INTO artisans (name,lastname, username, telephone, email, picture, siret, mobilite, adress, domaine, entreprise, note, chantier, password) 
+      VALUES ('${req.body.name}','${req.body.lastname}', '${req.body.username}', '${req.body.telephone}', '${req.body.email}', '${req.body.picture}', '${req.body.siret}', '${req.body.mobilite}', '${req.body.adress}', '${req.body.domaine}', '${req.body.entreprise}', '${req.body.note}', '${req.body.chantier}', '${hashedPassword}')`;
 
       mysqlConnection.query(queryString, function (err, rows, fields) {
         if (!err) {

@@ -9,6 +9,7 @@ var functions = {
   addNew: function (req, res) {
     if (
       !req.body.name ||
+      !req.body.lastname ||
       !req.body.password ||
       !req.body.email ||
       !req.body.username ||
@@ -32,8 +33,8 @@ var functions = {
         req.body.picture,
         req.body.chantier
       );
-      const queryString = `INSERT INTO particuliers (name, password, email, username, telephone, city, adress, postalCode, picture, chantier)
-      VALUES ('${req.body.name}', '${hashedPassword}', '${req.body.email}', '${req.body.username}', '${req.body.telephone}', '${req.body.city}', '${req.body.adress}', '${req.body.postalCode}', '${req.body.picture}', '${req.body.chantier}')`;
+      const queryString = `INSERT INTO particuliers (name, lastname, password, email, username, telephone, city, adress, postalCode, picture, chantier)
+      VALUES ('${req.body.name}', '${req.body.lastname}', '${hashedPassword}', '${req.body.email}', '${req.body.username}', '${req.body.telephone}', '${req.body.city}', '${req.body.adress}', '${req.body.postalCode}', '${req.body.picture}', '${req.body.chantier}')`;
       mysqlConnection.query(queryString, function (err, rows, fields) {
         if (!err) {
           res.json({ success: true, msg: "Particulier sauvegardé" });

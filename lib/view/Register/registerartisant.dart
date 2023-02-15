@@ -354,7 +354,8 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
             child: OutlinedButton(
               onPressed: () async {
                 if (await ArtisanController.createArtisan(
-                      "${firstnameController.text + nameController.text}",
+                      firstnameController.text,
+                      nameController.text,
                       passwordController.text,
                       emailController.text,
                       usernameController.text,

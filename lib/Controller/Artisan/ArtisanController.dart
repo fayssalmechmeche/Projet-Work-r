@@ -7,6 +7,7 @@ class ArtisanController {
 
   static Future<int> createArtisan(
     String name,
+    String lastname,
     String password,
     String email,
     String username,
@@ -21,6 +22,7 @@ class ArtisanController {
         },
         body: jsonEncode(<String, String>{
           'name': name,
+          'lastname': lastname,
           'username': username,
           'telephone': telephone,
           'email': email,

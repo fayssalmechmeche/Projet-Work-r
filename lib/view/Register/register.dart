@@ -252,7 +252,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                     ),
-
                   ],
                 ),
               ],
@@ -265,19 +264,17 @@ class _RegisterPageState extends State<RegisterPage> {
               child: OutlinedButton(
                 onPressed: () async => {
                   if (await ParticulierController.createParticulier(
-                      "${firstnameController.text + nameController.text}",
-                      passwordController.text,
-                      emailController.text,
-                      usernameController.text,
-                      telephoneController.text,
-                      cityController.text,
-                      adressController.text,
-                      PostalCodeController.text) ==
+                          firstnameController.text,
+                          nameController.text,
+                          passwordController.text,
+                          emailController.text,
+                          usernameController.text,
+                          telephoneController.text,
+                          cityController.text,
+                          adressController.text,
+                          PostalCodeController.text) ==
                       200)
-                    {
-                      Navigator.of(context)
-                          .pushNamed(SelectionPage.tag)
-                    }
+                    {Navigator.of(context).pushNamed(SelectionPage.tag)}
                 },
                 style: OutlinedButton.styleFrom(
                   shape: const StadiumBorder(),

@@ -8,6 +8,7 @@ class ParticulierController {
 
   static Future<int> createParticulier(
     String name,
+    String lastname,
     String password,
     String email,
     String username,
@@ -22,6 +23,7 @@ class ParticulierController {
         },
         body: jsonEncode(<String, String>{
           'name': name,
+          'lastname': lastname,
           'password': password,
           'email': email,
           'username': username,
@@ -81,6 +83,7 @@ class ParticulierController {
   static Future<Map<String, dynamic>> updateParticulier(
     int id,
     String name,
+    String lastname,
     String password,
     String email,
     String username,
@@ -96,6 +99,7 @@ class ParticulierController {
         body: jsonEncode(<String, String>{
           'id': id.toString(),
           'name': name,
+          'lastname': lastname,
           'password': password,
           'email': email,
           'username': username,
