@@ -23,7 +23,7 @@ class GlobalData with ChangeNotifier {
     return user["name"];
   }
 
-  String getTelephone() {
+  String getPhone() {
     return user["telephone"];
   }
 

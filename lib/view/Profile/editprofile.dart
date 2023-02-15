@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import '../../Controller/global.dart';
+import 'package:provider/provider.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -12,10 +11,9 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   var adresseController = TextEditingController();
-  var villeController = TextEditingController();
-  var codePostaleController = TextEditingController();
+  var cityController = TextEditingController();
+  var postalCodeController = TextEditingController();
   var mailController = TextEditingController();
-  var passwordController = TextEditingController();
   var phoneController = TextEditingController();
   var firstNameController = TextEditingController();
   var lastNameController = TextEditingController();
@@ -23,6 +21,12 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     final globalData = Provider.of<GlobalData>(context);
+    adresseController.text = globalData.getAdress();
+    mailController.text = globalData.getEmail();
+    phoneController.text = globalData.getPhone();
+    cityController.text = globalData.getCity();
+    postalCodeController.text = globalData.getPostalCode();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -121,7 +125,7 @@ class _EditProfileState extends State<EditProfile> {
               width: 210,
               child: TextFormField(
                 cursorColor: Colors.grey,
-                controller: villeController,
+                controller: cityController,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(90.0),
@@ -140,7 +144,7 @@ class _EditProfileState extends State<EditProfile> {
               width: 120,
               child: TextFormField(
                 cursorColor: Colors.grey,
-                controller: codePostaleController,
+                controller: postalCodeController,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(90.0),
@@ -179,25 +183,6 @@ class _EditProfileState extends State<EditProfile> {
             width: 330,
             child: TextFormField(
               cursorColor: Colors.grey,
-              controller: passwordController,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(90.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(90.0),
-                  ),
-                  contentPadding: const EdgeInsets.all(10),
-                  label: const Text("Mot de passe"),
-                  labelStyle: const TextStyle(color: Colors.grey)),
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.only(top: 20),
-            width: 330,
-            child: TextFormField(
-              cursorColor: Colors.grey,
               controller: phoneController,
               decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -213,10 +198,9 @@ class _EditProfileState extends State<EditProfile> {
             ),
           ),
           Container(
-              padding: const EdgeInsets.only(
-                  top: 40, bottom: 15, right: 15, left: 15),
+              padding: const EdgeInsets.only(top: 80, right: 15, left: 15),
               width: 160,
-              height: 85,
+              height: 105,
               child: OutlinedButton(
                 onPressed: () {},
                 style: OutlinedButton.styleFrom(

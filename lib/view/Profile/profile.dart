@@ -111,7 +111,7 @@ class _ProfileState extends State<Profile> {
                       padding: EdgeInsets.only(top: 20, bottom: 10),
                       child: Text("Téléphone", style: TextStyle(fontSize: 18)),
                     ),
-                    Text(globalData.getTelephone(),
+                    Text(globalData.getPhone(),
                         style: TextStyle(fontSize: 16, color: Colors.grey)),
                   ])),
           Container(
