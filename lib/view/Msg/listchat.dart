@@ -91,7 +91,7 @@ class _ListChatState extends State<ListChat> {
                         padding: EdgeInsets.only(left: 150),
                         height: 50,
                         width: 50,
-                        child: Icon(Icons.arrow_forward))
+                        child: Icon(Icons.arrow_forward_ios))
                   ],
                 )
             )

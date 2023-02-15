@@ -10,6 +10,7 @@ import 'package:my_app/view/Register/registerselection.dart';
 import 'package:my_app/view/Login/SelectionPage.dart';
 import 'package:my_app/view/Profile/profile.dart';
 import 'package:my_app/view/Register/register.dart';
+import 'package:my_app/view/Works/addwork.dart';
 import 'package:my_app/view/Works/workfollow.dart';
 import 'package:provider/provider.dart';
 
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
         NavigationPage.tag: (context) => const NavigationPage(),
         Chat.tag: (context) => const Chat(),
         WorkFollow.tag: (context) => const WorkFollow(),
+        AddWork.tag: (context) => const AddWork(),
       },
     );
   }
