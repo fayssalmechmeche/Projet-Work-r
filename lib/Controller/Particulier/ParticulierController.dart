@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:ffi';
+import 'dart:math';
 import 'package:http/http.dart' as http;
 
 class ParticulierController {
@@ -59,8 +60,7 @@ class ParticulierController {
       return jsonResponse;
     }
   }
-  
-  
+
   static Future<Map<String, dynamic>> getInfo(String token) async {
     var response = await http
         .get(Uri.parse("${url}getinfoParticulier"), headers: <String, String>{
@@ -73,6 +73,49 @@ class ParticulierController {
       return jsonResponse;
     } else {
       print("getInfo échouée Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    }
+  }
+
+  static Future<Map<String, dynamic>> updateParticulier(
+    int id,
+    String name,
+    String password,
+    String email,
+    String username,
+    String telephone,
+    String city,
+    String adress,
+    String postalCode,
+  ) async {
+    var response = await http.post(Uri.parse("${url}updateParticulier"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'id': id.toString(),
+          'name': name,
+          'password': password,
+          'email': email,
+          'username': username,
+          'telephone': telephone,
+          'city': city,
+          'adress': adress,
+          'postalCode': postalCode,
+          'picture': 'n',
+          'chantier': 'n',
+        }));
+    print('Response status 200: ${response.statusCode}');
+    print('Response body: ${response.body}');
+    if (response.statusCode == 200) {
+      // Parser le JSON reçu en réponse
+      print("connexion réussie Particulier Controller");
+      print(response.body);
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } else {
+      print("connexion échouée Particulier Controller");
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse;
     }

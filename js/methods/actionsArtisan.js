@@ -92,5 +92,14 @@ var functions = {
       return res.json({ success: false, msg: "No Headers" });
     }
   },
+  getAllArtisans: function (req, res) {
+    mysqlConnection.query(
+      "SELECT * FROM artisans",
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ success: true, msg: results });
+      }
+    );
+  },
 };
 module.exports = functions;

@@ -100,5 +100,36 @@ var functions = {
       return res.json({ success: false, msg: "No Headers" });
     }
   },
+  updateParticulier: function (req, res) {
+    mysqlConnection.query(
+      "UPDATE particuliers SET name = ?, email = ?, username = ?, telephone = ?, city = ?, adress = ?, postalCode = ?, picture = ?, chantier = ? WHERE id = ?",
+      [
+        req.body.name,
+        req.body.email,
+        req.body.username,
+        req.body.telephone,
+        req.body.city,
+        req.body.adress,
+        req.body.postalCode,
+        req.body.picture,
+        req.body.chantier,
+        req.body.id,
+      ],
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ success: true, msg: results });
+      }
+    );
+  },
+
+  getAllArtisans: function (req, res) {
+    mysqlConnection.query(
+      "SELECT * FROM artisans",
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ success: true, msg: results });
+      }
+    );
+  },
 };
 module.exports = functions;

@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const NavigationPage(),
+      home: const SelectionPage(),
       routes: {
         Login.tag: (context) => const Login(),
         LoginArt.tag: (context) => const LoginArt(),

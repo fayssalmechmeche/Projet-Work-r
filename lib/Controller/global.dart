@@ -32,10 +32,16 @@ class GlobalData with ChangeNotifier {
   }
 
   String getCity() {
-    return user["city"];
+    if (user["city"] == null)
+      return "inconnu";
+    else
+      return user["city"];
   }
 
   String getPostalCode() {
-    return user["postalCode"];
+    if (user["postalCode"] == null)
+      return "inconnu";
+    else
+      return user["postalCode"];
   }
 }

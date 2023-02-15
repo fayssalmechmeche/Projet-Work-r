@@ -105,7 +105,7 @@ class _LoginArtState extends State<LoginArt> {
                             authenticated["token"]);
 
                         globalData.setUser(decodedToken["msg"]);
-                        print(globalData.user["email"]);
+                        print(globalData.user);
 
                         Navigator.pushNamed(context, NavigationPage.tag);
                       } else {

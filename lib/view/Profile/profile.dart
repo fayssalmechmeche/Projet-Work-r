@@ -26,14 +26,12 @@ class _ProfileState extends State<Profile> {
           style: TextStyle(
             color: Colors.black,
           ),
-
         ),
         toolbarHeight: 45,
         elevation: 0,
       ),
       body: SafeArea(
         child: Column(children: [
-          
           Container(
               padding: const EdgeInsets.only(top: 30, left: 40),
               child: Row(children: [
