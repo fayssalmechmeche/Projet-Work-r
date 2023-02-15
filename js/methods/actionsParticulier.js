@@ -103,7 +103,7 @@ var functions = {
   },
   updateParticulier: function (req, res) {
     mysqlConnection.query(
-      "UPDATE particuliers SET name = ?, email = ?, username = ?, telephone = ?, city = ?, adress = ?, postalCode = ?, picture = ?, chantier = ? WHERE id = ?",
+      "UPDATE particuliers SET name = ?, email = ?, username = ?, telephone = ?, city = ?, adress = ?, postalCode = ?, picture = ?, chantier = ? WHERE _id = ?",
       [
         req.body.name,
         req.body.email,

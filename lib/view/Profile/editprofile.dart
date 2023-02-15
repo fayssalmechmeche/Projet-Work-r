@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/Controller/Particulier/ParticulierController.dart';
 import '../../Controller/global.dart';
 import 'package:provider/provider.dart';
 
@@ -204,7 +205,20 @@ class _EditProfileState extends State<EditProfile> {
               height: 105,
               child: OutlinedButton(
                 onPressed: () {
-                  if (globalData.getRole() == 1) {}
+                  if (globalData.getRole() == 1) {
+                    ParticulierController.updateParticulier(
+                      globalData.getId(),
+                      firstNameController.text,
+                      lastNameController.text,
+                      globalData.getPassword(),
+                      mailController.text,
+                      globalData.getUsername(),
+                      phoneController.text,
+                      cityController.text,
+                      adresseController.text,
+                      postalCodeController.text,
+                    );
+                  }
                 },
                 style: OutlinedButton.styleFrom(
                     shape: RoundedRectangleBorder(

@@ -22,6 +22,18 @@ class GlobalData with ChangeNotifier {
     return user["email"];
   }
 
+  int getId() {
+    return user["_id"];
+  }
+
+  String getPassword() {
+    return user["password"];
+  }
+
+  String getUsername() {
+    return user["username"];
+  }
+
   int getRole() {
     return user['role'];
   }
