@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/view/Home/homepage.dart';
 import 'package:my_app/view/Login/loginart.dart';
 import 'package:my_app/view/Msg/chat.dart';
 import 'package:my_app/view/Profile/editprofile.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const SelectionPage(),
+      home: const NavigationPage(),
       routes: {
         Login.tag: (context) => const Login(),
         LoginArt.tag: (context) => const LoginArt(),

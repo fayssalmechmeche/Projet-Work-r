@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/view/Works/workfollow.dart';
-
-<<<<<<< Updated upstream
-=======
 import 'addwork.dart';
->>>>>>> Stashed changes
+
 class ListWork extends StatefulWidget {
   const ListWork({Key? key}) : super(key: key);
 
@@ -16,38 +13,22 @@ class _ListWorkState extends State<ListWork> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-<<<<<<< Updated upstream
-        body: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-      const Padding(
-        padding: EdgeInsets.only(bottom: 20),
-        child: Text(
-          "Mes chantiers",
-          style: TextStyle(fontSize: 18),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          leading: const BackButton(
+            color: Colors.black,
+          ),
+          title: Text(
+            "Mes chantiers",
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
+          toolbarHeight: 35,
+          elevation: 0,
         ),
-      ),
-      Expanded(
-          child: SizedBox(
-              height: 200.0,
-              child: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: 100,
-                        width: 350,
-                        child: CardChat(index),
-                      ),
-                    ],
-                  );
-                },
-              )))
-    ]));
-=======
         body:  Column( mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const Padding(padding: EdgeInsets.only(bottom: 20),child: Text("Mes chantiers", style: TextStyle(fontSize: 20),),),
               Visibility(
                 visible:true,
                 child: SizedBox(height: 50, width: 350, child: addWork(),),
@@ -55,7 +36,6 @@ class _ListWorkState extends State<ListWork> {
               ListTest()
             ])
     );
->>>>>>> Stashed changes
   }
   Widget addWork(){
     return  GestureDetector(
@@ -79,10 +59,6 @@ class _ListWorkState extends State<ListWork> {
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children:  <Widget> [
-
-<<<<<<< Updated upstream
-  Widget CardChat(int index) {
-=======
             Container( padding: const EdgeInsets.only(left:45), child:
             Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,7 +97,6 @@ class _ListWorkState extends State<ListWork> {
 
   }
   Widget CardChat(int index){
->>>>>>> Stashed changes
     return GestureDetector(
         onTap: () {
           Navigator.of(context).pushNamed(WorkFollow.tag);
@@ -142,22 +117,6 @@ class _ListWorkState extends State<ListWork> {
             color: index % 2 == 0 ? Colors.white : Colors.grey,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
-<<<<<<< Updated upstream
-              children: <Widget>[
-                Container(
-                  padding: const EdgeInsets.only(left: 40),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Padding(
-                            padding: EdgeInsets.all(10),
-                            child: Text("Plombier")),
-                        Padding(
-                            padding: EdgeInsets.all(10),
-                            child: Text("10/12/2022"))
-                      ]),
-=======
               children:  <Widget> [
                 Padding(padding: const EdgeInsets.only(left:20), child:
                 Container(
@@ -179,7 +138,6 @@ class _ListWorkState extends State<ListWork> {
                         Padding(padding: EdgeInsets.all(5), child: Text("Achevé le 10/12/2022"))
                       ]
                   ),
->>>>>>> Stashed changes
                 ),
                 Container(
                     padding: const EdgeInsets.only(left: 70),
