@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/Controller/Particulier/ParticulierController.dart';
+import 'package:my_app/view/Profile/profile.dart';
 import '../../Controller/global.dart';
 import 'package:provider/provider.dart';
 
@@ -18,6 +19,7 @@ class _EditProfileState extends State<EditProfile> {
   var phoneController = TextEditingController();
   var firstNameController = TextEditingController();
   var lastNameController = TextEditingController();
+  var passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,7 @@ class _EditProfileState extends State<EditProfile> {
     postalCodeController.text = globalData.getPostalCode();
     firstNameController.text = globalData.getName();
     lastNameController.text = globalData.getLastName();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -200,6 +203,25 @@ class _EditProfileState extends State<EditProfile> {
             ),
           ),
           Container(
+            padding: const EdgeInsets.only(top: 20),
+            width: 330,
+            child: TextFormField(
+              cursorColor: Colors.grey,
+              controller: passwordController,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(90.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(90.0),
+                  ),
+                  contentPadding: const EdgeInsets.all(10),
+                  label: const Text("Mot de passe"),
+                  labelStyle: const TextStyle(color: Colors.grey)),
+            ),
+          ),
+          Container(
               padding: const EdgeInsets.only(top: 80, right: 15, left: 15),
               width: 160,
               height: 105,
@@ -210,7 +232,7 @@ class _EditProfileState extends State<EditProfile> {
                       globalData.getId(),
                       firstNameController.text,
                       lastNameController.text,
-                      globalData.getPassword(),
+                      passwordController.text,
                       mailController.text,
                       globalData.getUsername(),
                       phoneController.text,
@@ -218,6 +240,27 @@ class _EditProfileState extends State<EditProfile> {
                       adresseController.text,
                       postalCodeController.text,
                     );
+                    var user = {
+                      '_id': globalData.getId(),
+                      'name': firstNameController.text,
+                      'lastname': lastNameController.text,
+                      'password': passwordController.text,
+                      'email': mailController.text,
+                      'username': globalData.getUsername(),
+                      'telephone': phoneController.text,
+                      'city': cityController.text,
+                      'adress': adresseController.text,
+                      'postalCode': postalCodeController.text,
+                      'picture': 'n',
+                      'chantier': 'n',
+                    };
+
+                    globalData.setUser(user, 1);
+                    Navigator.of(context).pushNamed(Profile.tag);
+                    const snackBar = SnackBar(
+                      content: Text('Profile has been edited !'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
                 },
                 style: OutlinedButton.styleFrom(

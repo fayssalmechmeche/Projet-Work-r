@@ -102,10 +102,13 @@ var functions = {
     }
   },
   updateParticulier: function (req, res) {
+    const hashedPassword = bcrypt.hashSync(req.body.password, 10);
     mysqlConnection.query(
-      "UPDATE particuliers SET name = ?, email = ?, username = ?, telephone = ?, city = ?, adress = ?, postalCode = ?, picture = ?, chantier = ? WHERE _id = ?",
+      "UPDATE particuliers SET name = ?, password = ?,lastname = ?, email = ?, username = ?, telephone = ?, city = ?, adress = ?, postalCode = ?, picture = ?, chantier = ? WHERE _id = ?",
       [
         req.body.name,
+        hashedPassword,
+        req.body.lastname,
         req.body.email,
         req.body.username,
         req.body.telephone,
@@ -118,7 +121,7 @@ var functions = {
       ],
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
-        res.json({ success: true, msg: results });
+        res.json({ success: true, msg: results, });
       }
     );
   },
