@@ -53,7 +53,6 @@ var functions = {
       "SELECT * FROM particuliers WHERE email = ?",
       req.body.email,
       function (error, results, fields) {
-        console.log("results : " + results[0].email);
         // Si l'authentification échoue, renvoyer un message d'erreur
         if (error || results[0] === undefined) {
           console.log("error : " + error);
@@ -103,10 +102,10 @@ var functions = {
   },
   updateParticulier: function (req, res) {
     var hashedPassword;
-    if(req.body.password != null ) {
+    if (req.body.password != null) {
       hashedPassword = bcrypt.hashSync(req.body.password, 10);
-    }else{
-       hashedPassword = req.body.password;
+    } else {
+      hashedPassword = req.body.password;
     }
     mysqlConnection.query(
       "UPDATE particuliers SET name = ?, password = IFNULL(?, password),lastname = ?, email = ?, username = ?, telephone = ?, city = ?, adress = ?, postalCode = ?, picture = ?, chantier = ? WHERE _id = ?",
@@ -126,7 +125,7 @@ var functions = {
       ],
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
-        res.json({ success: true, msg: results, });
+        res.json({ success: true, msg: results });
       }
     );
   },

@@ -44,8 +44,8 @@ var functions = {
     mysqlConnection.query(
       "SELECT * FROM artisans WHERE email = ?",
       req.body.email,
-      function (error, results, fields) {
-        console.log("results : " + results[0].email);
+
+      (error, results) => {
         // Si l'authentification échoue, renvoyer un message d'erreur
         if (error || results[0] === undefined) {
           console.log("error : " + error);
