@@ -17,11 +17,13 @@ class _AddWorkState extends State<AddWork> {
   var phoneController = TextEditingController();
   var firstNameController = TextEditingController();
   var lastNameController = TextEditingController();
-  String? _dropdownvalue;
-  List<String> name = [
+  String? _dropdownvalue1;
+  List<String> hometype = [
     'Maison',
     'Appartement',
   ];
+  String? _dropdownvalue2;
+  List<String> category = ['Electricité', 'Plomberie', 'Maçonnerie'];
 
   @override
   Widget build(BuildContext context) {
@@ -52,14 +54,39 @@ class _AddWorkState extends State<AddWork> {
                 ),
                 contentPadding: const EdgeInsets.all(2),
               ),
-              items: name.map((value) {
+              items: hometype.map((value) {
                 return DropdownMenuItem<String>(
                     child: Text(value), value: value);
               }).toList(),
-              value: _dropdownvalue,
+              value: _dropdownvalue1,
               onChanged: (String? newValue) {
                 setState(() {
-                  _dropdownvalue = newValue;
+                  _dropdownvalue1 = newValue;
+                });
+              },
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.only(top: 20),
+            width: 330,
+            child: DropdownButtonFormField<String?>(
+              hint: const Text('Categorie'),
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(30.0),
+                  ),
+                ),
+                contentPadding: const EdgeInsets.all(2),
+              ),
+              items: category.map((value) {
+                return DropdownMenuItem<String>(
+                    child: Text(value), value: value);
+              }).toList(),
+              value: _dropdownvalue2,
+              onChanged: (String? newValue) {
+                setState(() {
+                  _dropdownvalue2 = newValue;
                 });
               },
             ),
@@ -79,50 +106,11 @@ class _AddWorkState extends State<AddWork> {
                     borderRadius: BorderRadius.circular(90.0),
                   ),
                   contentPadding: const EdgeInsets.all(10),
-                  label: const Text("Adresse"),
+                  label: const Text("Budget"),
                   labelStyle: const TextStyle(color: Colors.grey)),
             ),
           ),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Container(
-              padding: const EdgeInsets.only(top: 20, right: 20),
-              width: 210,
-              child: TextFormField(
-                cursorColor: Colors.grey,
-                controller: villeController,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(90.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(90.0),
-                    ),
-                    contentPadding: const EdgeInsets.all(10),
-                    label: const Text("Ville"),
-                    labelStyle: const TextStyle(color: Colors.grey)),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(top: 20),
-              width: 120,
-              child: TextFormField(
-                cursorColor: Colors.grey,
-                controller: codePostaleController,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(90.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(90.0),
-                    ),
-                    contentPadding: const EdgeInsets.all(10),
-                    label: const Text("Code Postale"),
-                    labelStyle: const TextStyle(color: Colors.grey)),
-              ),
-            )
-          ]),
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: []),
           Container(
             padding: const EdgeInsets.only(top: 20),
             width: 330,
@@ -137,46 +125,8 @@ class _AddWorkState extends State<AddWork> {
                     borderSide: const BorderSide(color: Colors.grey),
                     borderRadius: BorderRadius.circular(90.0),
                   ),
-                  contentPadding: const EdgeInsets.all(10),
-                  label: const Text("Mail"),
-                  labelStyle: const TextStyle(color: Colors.grey)),
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.only(top: 20),
-            width: 330,
-            child: TextFormField(
-              cursorColor: Colors.grey,
-              controller: passwordController,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(90.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(90.0),
-                  ),
-                  contentPadding: const EdgeInsets.all(10),
-                  label: const Text("Mot de passe"),
-                  labelStyle: const TextStyle(color: Colors.grey)),
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.only(top: 20),
-            width: 330,
-            child: TextFormField(
-              cursorColor: Colors.grey,
-              controller: phoneController,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(90.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(90.0),
-                  ),
-                  contentPadding: const EdgeInsets.all(10),
-                  label: const Text("Téléphone"),
+                  contentPadding: const EdgeInsets.all(100),
+                  label: const Text("Description"),
                   labelStyle: const TextStyle(color: Colors.grey)),
             ),
           ),
@@ -193,7 +143,7 @@ class _AddWorkState extends State<AddWork> {
                     ),
                     foregroundColor: Colors.green,
                     side: const BorderSide(color: Colors.green)),
-                child: const Text('Sauvegarder',
+                child: const Text('Accepter',
                     style: TextStyle(color: Colors.black)),
               )),
         ]),
