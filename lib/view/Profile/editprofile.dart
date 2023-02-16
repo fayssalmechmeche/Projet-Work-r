@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/Controller/Artisan/ArtisanController.dart';
 import 'package:my_app/Controller/Particulier/ParticulierController.dart';
 import 'package:my_app/view/Profile/profile.dart';
 import '../../Controller/global.dart';
@@ -20,18 +21,29 @@ class _EditProfileState extends State<EditProfile> {
   var firstNameController = TextEditingController();
   var lastNameController = TextEditingController();
   var passwordController = TextEditingController();
+  var entrepriseController = TextEditingController();
+  var siretController = TextEditingController();
+  var mobiliteController = TextEditingController();
+  var domaineController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final globalData = Provider.of<GlobalData>(context);
     adresseController.text = globalData.getAdress();
     mailController.text = globalData.getEmail();
-    phoneController.text = globalData.getPhone();
-    cityController.text = globalData.getCity();
-    postalCodeController.text = globalData.getPostalCode();
     firstNameController.text = globalData.getName();
     lastNameController.text = globalData.getLastName();
-
+    phoneController.text = globalData.getPhone();
+    if (globalData.getRole() == 1) {
+      cityController.text = globalData.getCity();
+      postalCodeController.text = globalData.getPostalCode();
+    }
+    if (globalData.getRole() == 0) {
+      entrepriseController.text = globalData.getEntreprise();
+      siretController.text = globalData.getSiret();
+      mobiliteController.text = globalData.getMobilite();
+      domaineController.text = globalData.getDomaine();
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -125,44 +137,86 @@ class _EditProfileState extends State<EditProfile> {
             ),
           ),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Container(
-              padding: const EdgeInsets.only(top: 20, right: 20),
-              width: 210,
-              child: TextFormField(
-                cursorColor: Colors.grey,
-                controller: cityController,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(90.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(90.0),
-                    ),
-                    contentPadding: const EdgeInsets.all(10),
-                    label: const Text("Ville"),
-                    labelStyle: const TextStyle(color: Colors.grey)),
+            if (globalData.getRole() == 1)
+              Container(
+                padding: const EdgeInsets.only(top: 20, right: 20),
+                width: 210,
+                child: TextFormField(
+                  cursorColor: Colors.grey,
+                  controller: cityController,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(90.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(90.0),
+                      ),
+                      contentPadding: const EdgeInsets.all(10),
+                      label: const Text("Ville"),
+                      labelStyle: const TextStyle(color: Colors.grey)),
+                ),
               ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(top: 20),
-              width: 120,
-              child: TextFormField(
-                cursorColor: Colors.grey,
-                controller: postalCodeController,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(90.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(90.0),
-                    ),
-                    contentPadding: const EdgeInsets.all(10),
-                    label: const Text("Code Postale"),
-                    labelStyle: const TextStyle(color: Colors.grey)),
+            if (globalData.getRole() == 0)
+              Container(
+                padding: const EdgeInsets.only(top: 20, right: 20),
+                width: 210,
+                child: TextFormField(
+                  cursorColor: Colors.grey,
+                  controller: mobiliteController,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(90.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(90.0),
+                      ),
+                      contentPadding: const EdgeInsets.all(10),
+                      label: const Text("Mobilité"),
+                      labelStyle: const TextStyle(color: Colors.grey)),
+                ),
               ),
-            )
+            if (globalData.getRole() == 1)
+              Container(
+                padding: const EdgeInsets.only(top: 20),
+                width: 120,
+                child: TextFormField(
+                  cursorColor: Colors.grey,
+                  controller: postalCodeController,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(90.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(90.0),
+                      ),
+                      contentPadding: const EdgeInsets.all(10),
+                      label: const Text("Code Postale"),
+                      labelStyle: const TextStyle(color: Colors.grey)),
+                ),
+              ),
+            if (globalData.getRole() == 0)
+              Container(
+                padding: const EdgeInsets.only(top: 20),
+                width: 120,
+                child: TextFormField(
+                  cursorColor: Colors.grey,
+                  controller: domaineController,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(90.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(90.0),
+                      ),
+                      contentPadding: const EdgeInsets.all(10),
+                      label: const Text("Domaine"),
+                      labelStyle: const TextStyle(color: Colors.grey)),
+                ),
+              ),
           ]),
           Container(
             padding: const EdgeInsets.only(top: 20),
@@ -278,6 +332,52 @@ class _EditProfileState extends State<EditProfile> {
                     Navigator.pop(context);
                     const snackBar = SnackBar(
                       content: Text('Profile has been edited !'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                  if (globalData.getRole() == 0 && error == false) {
+                    print(globalData.getId());
+                    print(firstNameController.text);
+                    print(lastNameController.text);
+                    print(passwordController.text);
+                    print(mailController.text);
+                    print(globalData.getUsername());
+                    print(phoneController.text);
+                    print(adresseController.text);
+                    print(entrepriseController.text);
+                    print(domaineController.text);
+
+                    ArtisanController.updateArtisan(
+                      globalData.getId(),
+                      firstNameController.text,
+                      lastNameController.text,
+                      "artisan",
+                      mailController.text,
+                      globalData.getUsername(),
+                      phoneController.text,
+                      adresseController.text,
+                      entrepriseController.text,
+                    );
+                    var user = {
+                      '_id': globalData.getId(),
+                      'name': firstNameController.text,
+                      'lastname': lastNameController.text,
+                      'email': mailController.text,
+                      'username': globalData.getUsername(),
+                      'telephone': phoneController.text,
+                      'adress': adresseController.text,
+                      'domaine': domaineController.text,
+                      'entreprise': entrepriseController.text,
+                      'mobilite': mobiliteController.text,
+                      'siret': siretController.text,
+                      'picture': 'n',
+                      'chantier': 'n',
+                    };
+
+                    globalData.setUser(user, 0);
+                    Navigator.pop(context);
+                    const snackBar = SnackBar(
+                      content: Text('Votre profil a été modifié !'),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }

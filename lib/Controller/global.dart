@@ -27,11 +27,17 @@ class GlobalData with ChangeNotifier {
   }
 
   String getPassword() {
-    return user["password"];
+    if (user["password"] == null)
+      return "inconnu";
+    else
+      return user["password"];
   }
 
   String getUsername() {
-    return user["username"];
+    if (user["username"] == null)
+      return "inconnu";
+    else
+      return user["username"];
   }
 
   int getRole() {
@@ -39,19 +45,31 @@ class GlobalData with ChangeNotifier {
   }
 
   String getName() {
-    return user["name"];
+    if (user["name"] == null)
+      return "inconnu";
+    else
+      return user["name"];
   }
 
   String getLastName() {
-    return user["lastname"];
+    if (user["lastname"] == null)
+      return "inconnu";
+    else
+      return user["lastname"];
   }
 
   String getPhone() {
-    return user["telephone"];
+    if (user["telephone"] == null)
+      return "inconnu";
+    else
+      return user["telephone"];
   }
 
   String getAdress() {
-    return user["adress"];
+    if (user["adress"] == null)
+      return "inconnu";
+    else
+      return user["adress"];
   }
 
   String getCity() {
@@ -66,5 +84,40 @@ class GlobalData with ChangeNotifier {
       return "inconnu";
     else
       return user["postalCode"];
+  }
+
+  String getEntreprise() {
+    if (user["entreprise"] == null)
+      return "inconnu";
+    else
+      return user["entreprise"];
+  }
+
+  String getSiret() {
+    if (user["siret"] == null)
+      return "inconnu";
+    else
+      return user["siret"];
+  }
+
+  String getDomaine() {
+    if (user["domaine"] == null)
+      return "inconnu";
+    else
+      return user["domaine"];
+  }
+
+  String getPicture() {
+    if (user["picture"] == null)
+      return "https://www.woolha.com/media/2020/03/eevee.png";
+    else
+      return user["picture"];
+  }
+
+  String getMobilite() {
+    if (user["mobilite"] == null)
+      return "inconnu";
+    else
+      return user["mobilite"];
   }
 }

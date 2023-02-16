@@ -45,3 +45,4 @@ app.*.map.json
 /android/app/release
 package-lock.json
 yarn.lock
+js/config/db.js

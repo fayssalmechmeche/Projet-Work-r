@@ -93,6 +93,34 @@ var functions = {
       return res.json({ success: false, msg: "No Headers" });
     }
   },
+  updateArtisan: function (req, res) {
+    var hashedPassword;
+    if (req.body.password != null) {
+      hashedPassword = bcrypt.hashSync(req.body.password, 10);
+    } else {
+      hashedPassword = req.body.password;
+    }
+    mysqlConnection.query(
+      "UPDATE artisans SET name = ?, lastname = ?, password = ?, email = ?, entreprise = ?, username = ?, telephone = ?, adress = ?, picture = ?, chantier = ? WHERE _id = ?",
+      [
+        req.body.name,
+        req.body.lastname,
+        hashedPassword,
+        req.body.email,
+        req.body.entreprise,
+        req.body.username,
+        req.body.telephone,
+        req.body.adress,
+        req.body.picture,
+        req.body.chantier,
+        req.body.id,
+      ],
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ success: true, msg: results });
+      }
+    );
+  },
   getAllArtisans: function (req, res) {
     mysqlConnection.query(
       "SELECT * FROM artisans",

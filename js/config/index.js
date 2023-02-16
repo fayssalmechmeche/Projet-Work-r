@@ -19,6 +19,7 @@ router.get("/getinfo", actions.getInfo);
 
 router.post("/addArtisan", actionsArtisan.addNew);
 router.post("/authenticateArtisan", actionsArtisan.authenticate);
+router.post("/updateArtisan", actionsArtisan.updateArtisan);
 router.get("/getinfoArtisan", actionsArtisan.getInfo);
 
 router.post("/addParticulier", actionsParticulier.addNew);

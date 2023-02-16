@@ -50,7 +50,11 @@ class _ProfileState extends State<Profile> {
                   padding: const EdgeInsets.only(left: 60),
                   child: Column(children: [
                     Text(globalData.getName() + "  " + globalData.getLastName(),
-                        style: TextStyle(fontSize: 18))
+                        style: TextStyle(fontSize: 18)),
+                    if (globalData.getRole() == 0)
+                      Text(globalData.getEntreprise(),
+                          style:
+                              TextStyle(fontSize: 18, color: Colors.red[900])),
                   ]),
                 )
               ])),
@@ -69,38 +73,91 @@ class _ProfileState extends State<Profile> {
                       Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                              padding: const EdgeInsets.only(
-                                  top: 20, right: 20, bottom: 10),
-                              width: 210,
-                              child: const Text("Ville",
-                                  style: TextStyle(fontSize: 18)),
-                            ),
-                            Text(globalData.getCity(),
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.grey)),
+                            if (globalData.getRole() == 1)
+                              Container(
+                                padding: const EdgeInsets.only(
+                                    top: 20, right: 20, bottom: 10),
+                                width: 210,
+                                child: const Text("Ville",
+                                    style: TextStyle(fontSize: 18)),
+                              ),
+                            if (globalData.getRole() == 1)
+                              Text(globalData.getCity(),
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.grey)),
+                            if (globalData.getRole() == 0)
+                              Container(
+                                padding: const EdgeInsets.only(
+                                    top: 20, right: 20, bottom: 10),
+                                width: 210,
+                                child: const Text("Mobilité",
+                                    style: TextStyle(fontSize: 18)),
+                              ),
+                            if (globalData.getRole() == 0)
+                              Text(globalData.getMobilite(),
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.grey)),
                           ]),
                       Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            if (globalData.getRole() == 0)
+                              Container(
+                                padding:
+                                    const EdgeInsets.only(top: 20, bottom: 10),
+                                width: 120,
+                                child: const Text("Domaine",
+                                    style: TextStyle(fontSize: 18)),
+                              ),
+                            if (globalData.getRole() == 0)
+                              Text(globalData.getDomaine(),
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.grey)),
+                            if (globalData.getRole() == 1)
+                              Container(
+                                padding:
+                                    const EdgeInsets.only(top: 20, bottom: 10),
+                                width: 120,
+                                child: const Text("Code Postale",
+                                    style: TextStyle(fontSize: 18)),
+                              ),
+                            if (globalData.getRole() == 1)
+                              Text(globalData.getPostalCode(),
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.grey)),
+                          ]),
+                    ]),
+                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
                             Container(
-                              padding:
-                                  const EdgeInsets.only(top: 20, bottom: 10),
-                              width: 120,
-                              child: const Text("Code Postale",
+                              padding: const EdgeInsets.only(
+                                  top: 20, right: 20, bottom: 10),
+                              width: 210,
+                              child: const Text("Mail",
                                   style: TextStyle(fontSize: 18)),
                             ),
-                            Text(globalData.getPostalCode(),
+                            Text(globalData.getEmail(),
                                 style: TextStyle(
                                     fontSize: 16, color: Colors.grey)),
                           ]),
+                      if (globalData.getRole() == 0)
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                padding:
+                                    const EdgeInsets.only(top: 20, bottom: 10),
+                                width: 120,
+                                child: const Text("Siret",
+                                    style: TextStyle(fontSize: 18)),
+                              ),
+                              Text(globalData.getSiret(),
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.grey)),
+                            ]),
                     ]),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 20, bottom: 10),
-                      child: Text("Mail", style: TextStyle(fontSize: 18)),
-                    ),
-                    Text(globalData.getEmail(),
-                        style: TextStyle(fontSize: 16, color: Colors.grey)),
                     const Padding(
                       padding: EdgeInsets.only(top: 20, bottom: 10),
                       child:

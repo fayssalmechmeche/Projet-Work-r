@@ -94,4 +94,47 @@ class ArtisanController {
       return jsonResponse;
     }
   }
+
+  static Future<Map<String, dynamic>> updateArtisan(
+    int id,
+    String name,
+    String lastname,
+    String password,
+    String email,
+    String username,
+    String telephone,
+    String adress,
+    String entreprise,
+  ) async {
+    var response = await http.post(Uri.parse("${url}updateArtisan"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String?>{
+          'id': id.toString(),
+          'name': name,
+          'lastname': lastname,
+          'password': password,
+          'email': email,
+          'username': username,
+          'telephone': telephone,
+          'adress': adress,
+          'entreprise': entreprise,
+          'picture': 'n',
+          'chantier': 'n',
+        }));
+    print('Response status 200: ${response.statusCode}');
+    print('Response body: ${response.body}');
+    if (response.statusCode == 200) {
+      // Parser le JSON reçu en réponse
+      print("connexion réussie Artisan Controller");
+      print(response.body);
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } else {
+      print("connexion échouée Artisan Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    }
+  }
 }
