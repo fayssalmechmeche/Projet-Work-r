@@ -227,12 +227,20 @@ class _EditProfileState extends State<EditProfile> {
               height: 105,
               child: OutlinedButton(
                 onPressed: () {
+                  var passwordFinal;
+                  if (passwordController.text == "" ||
+                      passwordController.text == " ") {
+                    passwordFinal = null;
+                  } else {
+                    passwordFinal = passwordController.text;
+                  }
+
                   if (globalData.getRole() == 1) {
                     ParticulierController.updateParticulier(
                       globalData.getId(),
                       firstNameController.text,
                       lastNameController.text,
-                      passwordController.text,
+                      passwordFinal,
                       mailController.text,
                       globalData.getUsername(),
                       phoneController.text,

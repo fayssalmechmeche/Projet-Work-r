@@ -84,7 +84,7 @@ class ParticulierController {
     int id,
     String name,
     String lastname,
-    String password,
+    String? password,
     String email,
     String username,
     String telephone,
@@ -96,7 +96,7 @@ class ParticulierController {
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode(<String, String>{
+        body: jsonEncode(<String, String?>{
           'id': id.toString(),
           'name': name,
           'lastname': lastname,

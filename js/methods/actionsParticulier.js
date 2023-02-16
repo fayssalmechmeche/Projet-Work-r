@@ -102,9 +102,14 @@ var functions = {
     }
   },
   updateParticulier: function (req, res) {
-    const hashedPassword = bcrypt.hashSync(req.body.password, 10);
+    var hashedPassword;
+    if(req.body.password != null ) {
+      hashedPassword = bcrypt.hashSync(req.body.password, 10);
+    }else{
+       hashedPassword = req.body.password;
+    }
     mysqlConnection.query(
-      "UPDATE particuliers SET name = ?, password = ?,lastname = ?, email = ?, username = ?, telephone = ?, city = ?, adress = ?, postalCode = ?, picture = ?, chantier = ? WHERE _id = ?",
+      "UPDATE particuliers SET name = ?, password = IFNULL(?, password),lastname = ?, email = ?, username = ?, telephone = ?, city = ?, adress = ?, postalCode = ?, picture = ?, chantier = ? WHERE _id = ?",
       [
         req.body.name,
         hashedPassword,
