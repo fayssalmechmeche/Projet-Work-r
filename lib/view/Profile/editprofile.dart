@@ -227,6 +227,17 @@ class _EditProfileState extends State<EditProfile> {
               height: 105,
               child: OutlinedButton(
                 onPressed: () {
+                  bool error = false;
+                  bool emailValid =
+                      RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
+                          .hasMatch(mailController.text);
+                  if (emailValid == false) {
+                    error = true;
+                    const snackBar = SnackBar(
+                      content: Text('Error in email!'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
                   var passwordFinal;
                   if (passwordController.text == "" ||
                       passwordController.text == " ") {
@@ -235,7 +246,7 @@ class _EditProfileState extends State<EditProfile> {
                     passwordFinal = passwordController.text;
                   }
 
-                  if (globalData.getRole() == 1) {
+                  if (globalData.getRole() == 1 && error == false) {
                     ParticulierController.updateParticulier(
                       globalData.getId(),
                       firstNameController.text,
@@ -264,7 +275,7 @@ class _EditProfileState extends State<EditProfile> {
                     };
 
                     globalData.setUser(user, 1);
-                    Navigator.of(context).pushNamed(Profile.tag);
+                    Navigator.pop(context);
                     const snackBar = SnackBar(
                       content: Text('Profile has been edited !'),
                     );

@@ -23,6 +23,7 @@ class _RegisterPageState extends State<RegisterPage> {
     var PostalCodeController = TextEditingController();
     var emailController = TextEditingController();
     var cityController = TextEditingController();
+    bool emailValid;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -262,19 +263,31 @@ class _RegisterPageState extends State<RegisterPage> {
               width: 150,
               height: 55,
               child: OutlinedButton(
-                onPressed: () async => {
-                  if (await ParticulierController.createParticulier(
-                          firstnameController.text,
-                          nameController.text,
-                          passwordController.text,
-                          emailController.text,
-                          usernameController.text,
-                          telephoneController.text,
-                          cityController.text,
-                          adressController.text,
-                          PostalCodeController.text) ==
-                      200)
-                    {Navigator.of(context).pushNamed(SelectionPage.tag)}
+                onPressed: () {
+                  bool error = false;
+                  bool emailValid =
+                      RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
+                          .hasMatch(emailController.text);
+                  if (emailValid == false) {
+                    error = true;
+                    const snackBar = SnackBar(
+                      content: Text(
+                          'Error in email ! please select a correct email'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                  if (error == false) {
+                    createParticulierAwait(
+                        firstnameController.text,
+                        nameController.text,
+                        passwordController.text,
+                        emailController.text,
+                        usernameController.text,
+                        telephoneController.text,
+                        cityController.text,
+                        adressController.text,
+                        PostalCodeController.text);
+                  }
                 },
                 style: OutlinedButton.styleFrom(
                   shape: const StadiumBorder(),
@@ -286,5 +299,14 @@ class _RegisterPageState extends State<RegisterPage> {
         ],
       )),
     );
+  }
+
+  Future createParticulierAwait(firstname, name, password, email, username,
+      phone, city, adress, postalCode) async {
+    if (await ParticulierController.createParticulier(firstname, name, password,
+            email, username, phone, city, adress, postalCode) ==
+        200) {
+      Navigator.of(context).pushNamed(SelectionPage.tag);
+    }
   }
 }
