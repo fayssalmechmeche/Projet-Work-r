@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:icon_decoration/icon_decoration.dart';
 import 'package:my_app/Controller/global.dart';
+import 'package:my_app/view/Works/listworkartisan.dart';
 import 'package:provider/provider.dart';
 import '../../Controller/global.dart';
 
@@ -56,15 +57,23 @@ class _HomePageState extends State<HomePage> {
                       icon: const Icon(Icons.star, size: 20),
                       onPressed: () {})),
               Container(
-                  padding: const EdgeInsets.only(left: 20, right: 20),
-                  decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.75),
-                    shape: BoxShape.circle,
-                  ),
-                  child: IconButton(
-                      icon:
-                          const Icon(Icons.home_repair_service_sharp, size: 20),
-                      onPressed: () {})),
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                decoration: BoxDecoration(
+                  color: Colors.grey.withOpacity(0.75),
+                  shape: BoxShape.circle,
+                ),
+                child: IconButton(
+                  icon: const Icon(Icons.home_repair_service_sharp, size: 20),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ListWorkArtisan(),
+                      ),
+                    );
+                  },
+                ),
+              ),
               Container(
                   padding: const EdgeInsets.only(left: 20, right: 20),
                   decoration: BoxDecoration(

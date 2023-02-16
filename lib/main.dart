@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/view/Home/homepage.dart';
 import 'package:my_app/view/Login/loginart.dart';
-
 import 'package:my_app/view/Msg/chat.dart';
 import 'package:my_app/view/Profile/editprofile.dart';
 import 'package:my_app/view/LunchPage/firstpage.dart';
@@ -13,7 +12,9 @@ import 'package:my_app/view/Login/SelectionPage.dart';
 import 'package:my_app/view/Profile/profile.dart';
 import 'package:my_app/view/Register/register.dart';
 import 'package:my_app/view/Works/addwork.dart';
+import 'package:my_app/view/Works/listworkartisan.dart';
 import 'package:my_app/view/Works/workfollow.dart';
+import 'package:my_app/view/Works/workproposition.dart';
 import 'package:provider/provider.dart';
 
 import 'Controller/global.dart';
@@ -55,6 +56,8 @@ class MyApp extends StatelessWidget {
         Chat.tag: (context) => const Chat(),
         WorkFollow.tag: (context) => const WorkFollow(),
         AddWork.tag: (context) => const AddWork(),
+        ListWorkArtisan.tag: (context) => const ListWorkArtisan(),
+        WorkProposition.tag: (context) => const WorkProposition(),
       },
     );
   }
