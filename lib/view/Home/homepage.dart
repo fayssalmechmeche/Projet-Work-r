@@ -62,24 +62,25 @@ class _HomePageState extends State<HomePage> {
                   child: IconButton(
                       icon: const Icon(Icons.star, size: 20),
                       onPressed: () {})),
-              Container(
-                padding: const EdgeInsets.only(left: 20, right: 20),
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.75),
-                  shape: BoxShape.circle,
+              if (globalData.getRole() == 0)
+                Container(
+                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(0.75),
+                    shape: BoxShape.circle,
+                  ),
+                  child: IconButton(
+                    icon: const Icon(Icons.home_repair_service_sharp, size: 20),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ListWorkArtisan(),
+                        ),
+                      );
+                    },
+                  ),
                 ),
-                child: IconButton(
-                  icon: const Icon(Icons.home_repair_service_sharp, size: 20),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ListWorkArtisan(),
-                      ),
-                    );
-                  },
-                ),
-              ),
               Container(
                   padding: const EdgeInsets.only(left: 20, right: 20),
                   decoration: BoxDecoration(
