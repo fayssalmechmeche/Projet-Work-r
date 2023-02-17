@@ -336,22 +336,11 @@ class _EditProfileState extends State<EditProfile> {
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
                   if (globalData.getRole() == 0 && error == false) {
-                    print(globalData.getId());
-                    print(firstNameController.text);
-                    print(lastNameController.text);
-                    print(passwordController.text);
-                    print(mailController.text);
-                    print(globalData.getUsername());
-                    print(phoneController.text);
-                    print(adresseController.text);
-                    print(entrepriseController.text);
-                    print(domaineController.text);
-
                     ArtisanController.updateArtisan(
                       globalData.getId(),
                       firstNameController.text,
                       lastNameController.text,
-                      "artisan",
+                      passwordFinal,
                       mailController.text,
                       globalData.getUsername(),
                       phoneController.text,

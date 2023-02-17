@@ -20,8 +20,14 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        leading: const BackButton(
-          color: Colors.black,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.logout,
+            color: Colors.red,
+          ),
         ),
         title: const Text(
           "Home",

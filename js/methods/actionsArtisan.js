@@ -38,8 +38,7 @@ var functions = {
 
   // une fonction pour authentifier un particulier sur la base de donnée mysql avec son email et son mot de passe et renvoyer un token si l'authentification est réussie et un message d'erreur si elle échoue
   authenticate: function (req, res) {
-    console.log("email : " + req.body.email);
-    console.log("password : " + req.body.password);
+   
 
     mysqlConnection.query(
       "SELECT * FROM artisans WHERE email = ?",
@@ -101,7 +100,7 @@ var functions = {
       hashedPassword = req.body.password;
     }
     mysqlConnection.query(
-      "UPDATE artisans SET name = ?, lastname = ?, password = ?, email = ?, entreprise = ?, username = ?, telephone = ?, adress = ?, picture = ?, chantier = ? WHERE _id = ?",
+      "UPDATE artisans SET name = ?, lastname = ?, password = IFNULL(?, password), email = ?, entreprise = ?, username = ?, telephone = ?, adress = ?, picture = ?, chantier = ? WHERE _id = ?",
       [
         req.body.name,
         req.body.lastname,

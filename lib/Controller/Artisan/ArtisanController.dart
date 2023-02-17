@@ -99,7 +99,7 @@ class ArtisanController {
     int id,
     String name,
     String lastname,
-    String password,
+    String? password,
     String email,
     String username,
     String telephone,
