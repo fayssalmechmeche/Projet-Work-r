@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class WorkProposition extends StatefulWidget {
@@ -31,7 +33,7 @@ class _WorkPropositionState extends State<WorkProposition> {
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.only(left: 35, top: 25),
+                padding: const EdgeInsets.only(left: 35, top: 15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -60,7 +62,7 @@ class _WorkPropositionState extends State<WorkProposition> {
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.only(left: 35, top: 25),
+                padding: const EdgeInsets.only(left: 35, top: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -89,7 +91,7 @@ class _WorkPropositionState extends State<WorkProposition> {
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.only(left: 35, top: 25),
+                padding: const EdgeInsets.only(left: 35, top: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -179,6 +181,47 @@ class _WorkPropositionState extends State<WorkProposition> {
           Row(
             children: [
               Container(
+                padding: const EdgeInsets.only(left: 35, top: 15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Photos",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Container(
+              height: 115,
+              child: ListView.builder(
+                itemCount: 5,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 100,
+                              child: Picture(index),
+                            ),
+                          ],
+                        )
+                      ]);
+                },
+              )),
+          Row(
+            children: [
+              Container(
                 padding: const EdgeInsets.only(left: 35, top: 25),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -205,7 +248,76 @@ class _WorkPropositionState extends State<WorkProposition> {
               ),
             ],
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: const EdgeInsets.only(
+                    top: 15, right: 15, bottom: 40, left: 15),
+
+                width: 160,
+                height: 85,
+                child: OutlinedButton(
+                  onPressed: () {},
+                  style: OutlinedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0),
+                      ),
+                      foregroundColor: Colors.green,
+                      side: const BorderSide(color: Colors.red)),
+                  child: const Text('Refuser',
+                      style: TextStyle(color: Colors.black)),
+                ),
+              ),
+              Container(
+                  padding: const EdgeInsets.only(
+                      top: 15, bottom: 40, right: 15, left: 15),
+
+                  width: 160,
+                  height: 85,
+                  child: OutlinedButton(
+                    onPressed: () {},
+                    style: OutlinedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(0),
+                        ),
+                        foregroundColor: Colors.green,
+                        side: const BorderSide(color: Colors.green)),
+                    child: const Text('Accepter',
+                        style: TextStyle(color: Colors.black)),
+                  )),
+            ],
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget Picture(int index) {
+    return GestureDetector(
+      onTap: () {
+        const snackBar = SnackBar(
+          content: Text('Agrandi la photo'),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      },
+      child: Container(
+        margin: const EdgeInsets.only(left: 5, top: 10),
+        height: 100,
+        width: 100,
+        decoration: BoxDecoration(
+          color: Colors.grey,
+          border: Border.all(
+            style: BorderStyle.solid,
+            color: Colors.black,
+            width: 2,
+          ),
+          borderRadius: BorderRadius.circular(100),
+          image: DecorationImage(
+            image: AssetImage("assets/ouvrier.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
       ),
     );
   }
