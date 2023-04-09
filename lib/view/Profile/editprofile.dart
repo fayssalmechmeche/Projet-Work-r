@@ -1,9 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:my_app/Controller/Artisan/ArtisanController.dart';
 import 'package:my_app/Controller/Particulier/ParticulierController.dart';
 import 'package:my_app/view/Profile/profile.dart';
 import '../../Controller/global.dart';
 import 'package:provider/provider.dart';
+import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -26,9 +31,36 @@ class _EditProfileState extends State<EditProfile> {
   var mobiliteController = TextEditingController();
   var domaineController = TextEditingController();
 
+  late String _imageName;
+
+  Future<void> _getImageFromGallery() async {
+    final pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+    );
+
+    if (pickedFile != null) {
+      final directory = await getApplicationDocumentsDirectory();
+      String fileName = path.basename(_imageName);
+      final newPath = '${directory.path}/$fileName';
+      final newFile = await File(pickedFile.path).copy(newPath);
+      setState(() {
+        _imageName = newFile.path;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    final globalData = Provider.of<GlobalData>(context, listen: false);
+    _imageName = globalData.getPicture();
+    print(_imageName);
+  }
+
   @override
   Widget build(BuildContext context) {
     final globalData = Provider.of<GlobalData>(context);
+    var imagePicture = _imageName;
     adresseController.text = globalData.getAdress();
     mailController.text = globalData.getEmail();
     firstNameController.text = globalData.getName();
@@ -64,12 +96,31 @@ class _EditProfileState extends State<EditProfile> {
                 Container(
                   width: 120,
                   height: 120,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                        image: NetworkImage(
-                            "https://images.unsplash.com/photo-1669178082499-341906b2ab28?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDN8dG93SlpGc2twR2d8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60"),
-                        fit: BoxFit.fill),
+                      image: _imageName != null
+                          ? Image.asset(_imageName).image
+                          : NetworkImage(
+                              "https://avatars.githubusercontent.com/u/77855537?s=40&v=4"),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+                Container(
+                  child: GestureDetector(
+                    onTap: _getImageFromGallery,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.black54,
+                      ),
+                      child: const Icon(
+                        Icons.add,
+                        color: Colors.white,
+                        size: 40,
+                      ),
+                    ),
                   ),
                 ),
                 Container(
@@ -312,6 +363,7 @@ class _EditProfileState extends State<EditProfile> {
                       cityController.text,
                       adresseController.text,
                       postalCodeController.text,
+                      _imageName,
                     );
                     var user = {
                       '_id': globalData.getId(),
@@ -324,7 +376,7 @@ class _EditProfileState extends State<EditProfile> {
                       'city': cityController.text,
                       'adress': adresseController.text,
                       'postalCode': postalCodeController.text,
-                      'picture': 'n',
+                      'picture': _imageName,
                       'chantier': 'n',
                     };
 

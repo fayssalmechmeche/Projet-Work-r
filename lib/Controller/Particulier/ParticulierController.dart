@@ -91,6 +91,7 @@ class ParticulierController {
     String city,
     String adress,
     String postalCode,
+    String picture,
   ) async {
     var response = await http.post(Uri.parse("${url}updateParticulier"),
         headers: <String, String>{
@@ -107,7 +108,7 @@ class ParticulierController {
           'city': city,
           'adress': adress,
           'postalCode': postalCode,
-          'picture': 'n',
+          'picture': picture,
           'chantier': 'n',
         }));
     print('Response status 200: ${response.statusCode}');

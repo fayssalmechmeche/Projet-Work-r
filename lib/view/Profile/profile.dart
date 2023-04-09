@@ -44,11 +44,13 @@ class _ProfileState extends State<Profile> {
                 Container(
                   width: 120,
                   height: 120,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                        image: NetworkImage(
-                            "https://images.unsplash.com/photo-1669178082499-341906b2ab28?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDN8dG93SlpGc2twR2d8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60"),
+                        image: globalData.getPicture() != null
+                            ? Image.asset(globalData.getPicture()).image
+                            : NetworkImage(
+                                "https://avatars.githubusercontent.com/u/77855537?s=40&v=4"),
                         fit: BoxFit.fill),
                   ),
                 ),
