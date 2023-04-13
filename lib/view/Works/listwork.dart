@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/view/Works/workfollow.dart';
+import 'package:provider/provider.dart';
+import '../../Controller/Particulier/ParticulierController.dart';
+import '../../Controller/global.dart';
 import 'addwork.dart';
 
 class ListWork extends StatefulWidget {
@@ -12,6 +15,9 @@ class ListWork extends StatefulWidget {
 class _ListWorkState extends State<ListWork> {
   @override
   Widget build(BuildContext context) {
+    final globalData = Provider.of<GlobalData>(context);
+
+    final chantiers = ParticulierController.getChantierById(globalData.getId());
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -42,7 +48,7 @@ class _ListWorkState extends State<ListWork> {
               child: addWork(),
             ),
           ),
-          ListTest()
+          chantiersList(chantiers)
         ]));
   }
 
@@ -88,25 +94,22 @@ class _ListWorkState extends State<ListWork> {
             )));
   }
 
-  Widget ListTest() {
-    return Expanded(
-        child: SizedBox(
-            height: 200.0,
-            child: ListView.builder(
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: 100,
-                      width: 350,
-                      child: CardChat(index),
-                    ),
-                  ],
-                );
-              },
-            )));
+  Widget chantiersList(chantiers) {
+    return FutureBuilder(
+      future: chantiers,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          return Expanded(
+              child: ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return CardChat(index);
+                  }));
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
+    );
   }
 
   Widget CardChat(int index) {

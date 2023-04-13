@@ -26,5 +26,10 @@ router.post("/addParticulier", actionsParticulier.addNew);
 router.post("/updateParticulier", actionsParticulier.updateParticulier);
 router.post("/authenticateParticulier", actionsParticulier.authenticate);
 router.get("/getinfoParticulier", actionsParticulier.getInfo);
+router.post("/addChantier", actionsParticulier.addChantier);
+router.get(
+  "/getAllChantiersByParticulier",
+  actionsParticulier.getAllChantiersByParticulier
+);
 
 module.exports = router;

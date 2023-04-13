@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/Controller/global.dart';
+import 'package:provider/provider.dart';
+
+import '../../Controller/Particulier/ParticulierController.dart';
 
 class AddWork extends StatefulWidget {
   const AddWork({Key? key}) : super(key: key);
@@ -9,14 +13,8 @@ class AddWork extends StatefulWidget {
 }
 
 class _AddWorkState extends State<AddWork> {
-  var adresseController = TextEditingController();
-  var villeController = TextEditingController();
-  var codePostaleController = TextEditingController();
-  var mailController = TextEditingController();
-  var passwordController = TextEditingController();
-  var phoneController = TextEditingController();
-  var firstNameController = TextEditingController();
-  var lastNameController = TextEditingController();
+  var budgetController = TextEditingController();
+  var descriptionController = TextEditingController();
   String? _dropdownvalue1;
   List<String> hometype = [
     'Maison',
@@ -27,6 +25,7 @@ class _AddWorkState extends State<AddWork> {
 
   @override
   Widget build(BuildContext context) {
+    final globalData = Provider.of<GlobalData>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -96,7 +95,7 @@ class _AddWorkState extends State<AddWork> {
             width: 330,
             child: TextFormField(
               cursorColor: Colors.grey,
-              controller: adresseController,
+              controller: budgetController,
               decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(90.0),
@@ -116,7 +115,7 @@ class _AddWorkState extends State<AddWork> {
             width: 330,
             child: TextFormField(
               cursorColor: Colors.grey,
-              controller: mailController,
+              controller: descriptionController,
               decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(90.0),
@@ -136,7 +135,14 @@ class _AddWorkState extends State<AddWork> {
               width: 160,
               height: 85,
               child: OutlinedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  await ParticulierController.createChantier(
+                      "Nom du chantier",
+                      "Type du chantier",
+                      "Budget",
+                      "Description",
+                      globalData.getId());
+                },
                 style: OutlinedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(0),
@@ -145,7 +151,7 @@ class _AddWorkState extends State<AddWork> {
                     side: const BorderSide(color: Colors.green)),
                 child: const Text('Accepter',
                     style: TextStyle(color: Colors.black)),
-              )),
+              ))
         ]),
       ),
     );

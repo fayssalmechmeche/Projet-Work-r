@@ -130,9 +130,36 @@ var functions = {
     );
   },
 
-  getAllArtisans: function (req, res) {
+  addChantier(req, res) {
     mysqlConnection.query(
-      "SELECT * FROM artisans",
+      "INSERT INTO chantier (name, type, budget, description, particulierID) VALUES (?, ?, ?, ?, ?)",
+      [
+        req.body.name,
+        req.body.type,
+        req.body.budget,
+        req.body.description,
+        req.body.particulierID,
+      ],
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ success: true, msg: results });
+      }
+    );
+  },
+  getAllChantiersByParticulier(req, res) {
+    mysqlConnection.query(
+      "SELECT * FROM chantier WHERE particulierID = ?",
+      req.body.particulierID,
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ success: true, msg: results });
+      }
+    );
+  },
+
+  getAllParticuliers: function (req, res) {
+    mysqlConnection.query(
+      "SELECT * FROM particuliers",
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
         res.json({ success: true, msg: results });

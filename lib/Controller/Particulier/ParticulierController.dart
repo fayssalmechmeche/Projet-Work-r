@@ -125,4 +125,53 @@ class ParticulierController {
       return jsonResponse;
     }
   }
+
+  static Future<Map<String, dynamic>> createChantier(
+    String name,
+    String type,
+    String budget,
+    String description,
+    int particulierID,
+  ) async {
+    var response = await http.post(Uri.parse("${url}addChantier"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'name': name,
+          'type': type,
+          'budget': budget,
+          'description': description,
+          'particulierID': particulierID.toString(),
+        }));
+
+    if (response.statusCode == 200) {
+      // Parser le JSON reçu en réponse
+      print("creation de chantier réussie Particulier Controller");
+      print(response.body);
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } else {
+      print("creation de chantier échoué Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    }
+  }
+
+  static Future<Map<String, dynamic>> getChantierById(int particulierId) async {
+    var response = await http.get(
+        Uri.parse("${url}getAllChantiersByParticulier"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        });
+    if (response.statusCode == 200) {
+      print("getChantierById réussie Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } else {
+      print("getChantierById échouée Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    }
+  }
 }
