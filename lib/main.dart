@@ -14,6 +14,7 @@ import 'package:my_app/view/Profile/profile.dart';
 import 'package:my_app/view/Register/register.dart';
 import 'package:my_app/view/Works/addwork.dart';
 import 'package:my_app/view/Works/workfollow.dart';
+import 'package:my_app/view/Works/listworkartisan.dart';
 import 'package:my_app/view/Works/workproposition.dart';
 import 'package:provider/provider.dart';
 
@@ -57,7 +58,7 @@ class MyApp extends StatelessWidget {
         WorkFollow.tag: (context) => const WorkFollow(),
         AddWork.tag: (context) => const AddWork(),
         DevisFollow.tag: (context) => const DevisFollow(),
-        //ListWorkArtisan.tag: (context) => const ListWorkArtisan(),
+        ListWorkArtisan.tag: (context) => const ListWorkArtisan(),
         WorkProposition.tag: (context) => const WorkProposition(),
       },
     );

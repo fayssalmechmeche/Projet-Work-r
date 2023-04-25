@@ -31,5 +31,6 @@ router.get(
   "/getAllChantiersByParticulier",
   actionsParticulier.getAllChantiersByParticulier
 );
+router.get("/getWorkByStatus", actionsArtisan.getWorkByStatus);
 
 module.exports = router;
