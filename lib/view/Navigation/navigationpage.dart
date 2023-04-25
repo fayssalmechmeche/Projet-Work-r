@@ -4,7 +4,7 @@ import 'package:my_app/view/Profile/profile.dart';
 import 'package:my_app/view/Works/listwork.dart';
 import 'package:my_app/view/Msg/listchat.dart';
 import 'package:my_app/view/Home/homepage.dart';
-import 'package:my_app/view/Map/map.dart';
+import 'package:my_app/view/ListDevis/ListProduction.dart';
 
 class NavigationPage extends StatefulWidget {
   const NavigationPage({Key? key}) : super(key: key);
@@ -17,10 +17,13 @@ class _NavigationPageState extends State<NavigationPage> {
   int _selectedIndex = 2;
   static final List<Widget> _NavScreens = <Widget>[
     ListChat(),
-    Map(),
-    HomePage(title: "home"),
+    ListProposition(),
+     const HomePage(title: "home"),
     ListWork(),
     Profile(title: "profile"),
+    
+
+
   ];
   @override
   Widget build(BuildContext context) {
