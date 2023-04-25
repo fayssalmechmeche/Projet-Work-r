@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_app/view/Works/workfollow.dart';
+import 'package:my_app/view/ListDevis/devis.dart';
 import 'package:provider/provider.dart';
 import '../../Controller/Particulier/ParticulierController.dart';
 import '../../Controller/global.dart';
-
 
 class ListProposition extends StatefulWidget {
   const ListProposition({Key? key}) : super(key: key);
@@ -52,8 +51,6 @@ class _ListPropositionState extends State<ListProposition> {
         ]));
   }
 
-  
-
   Widget chantiersList(chantiers) {
     return FutureBuilder(
       future: chantiers,
@@ -75,7 +72,7 @@ class _ListPropositionState extends State<ListProposition> {
   Widget CardChat(int index) {
     return GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed(WorkFollow.tag);
+          Navigator.of(context).pushNamed(DevisFollow.tag);
           const snackBar = SnackBar(
             content: Text('Works page have been lunched'),
           );
@@ -90,7 +87,7 @@ class _ListPropositionState extends State<ListProposition> {
               ),
             ),
             elevation: 10,
-            color: index % 2 == 0 ? Colors.white : Colors.grey,
+            color: index % 4 == 0 ? Colors.white : Colors.grey,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -100,7 +97,7 @@ class _ListPropositionState extends State<ListProposition> {
                     width: 20.0,
                     height: 20.0,
                     decoration: const BoxDecoration(
-                      color: Colors.green,
+                      color: Colors.orange,
                       shape: BoxShape.circle,
                     ),
                   ),
@@ -113,7 +110,7 @@ class _ListPropositionState extends State<ListProposition> {
                       children: const [
                         Padding(
                             padding: EdgeInsets.all(5),
-                            child: Text("Nom du Chantier",
+                            child: Text("Nom du Devis",
                                 style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold))),
@@ -123,7 +120,7 @@ class _ListPropositionState extends State<ListProposition> {
                             child: Text("Plomberie")),
                         Padding(
                             padding: EdgeInsets.all(5),
-                            child: Text("Achevé le 10/12/2022"))
+                            child: Text("reçu le 10/12/2022"))
                       ]),
                 ),
                 Container(
