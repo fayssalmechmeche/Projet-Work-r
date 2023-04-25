@@ -129,5 +129,20 @@ var functions = {
       }
     );
   },
+
+  getWorkByStatus: function (req, res) {
+
+    mysqlConnection.query(
+      "SELECT * FROM chantier WHERE state = ? ",
+      req.headers.state,
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({  results: results });
+        console.log(results);
+
+      }
+    
+    );
+  }
 };
 module.exports = functions;

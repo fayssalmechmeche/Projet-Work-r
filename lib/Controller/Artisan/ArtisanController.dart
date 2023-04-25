@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:ffi';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ArtisanController {
@@ -133,6 +134,27 @@ class ArtisanController {
       return jsonResponse;
     } else {
       print("connexion échouée Artisan Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    }
+  }
+
+  static Future<Map<String, dynamic>> getWorkByStatus(state) async {
+    var response = await http.get(
+      Uri.parse("${url}getWorkByStatus"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'state': state.toString(),
+      },
+    );
+
+    if (response.statusCode == 200) {
+      print("getWorkByStatus réussie Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      print(response.body);
+      return jsonResponse;
+    } else {
+      print("getWorkByStatus échouée Particulier Controller");
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse;
     }
