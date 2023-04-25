@@ -18,6 +18,7 @@ class _ListWorkState extends State<ListWork> {
     final globalData = Provider.of<GlobalData>(context);
 
     final chantiers = ParticulierController.getChantierById(globalData.getId());
+    print(chantiers.toString());
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -99,11 +100,12 @@ class _ListWorkState extends State<ListWork> {
       future: chantiers,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
+          print(snapshot.data['results'].length);
           return Expanded(
               child: ListView.builder(
-                  itemCount: snapshot.data.length,
+                  itemCount: snapshot.data['results'].length,
                   itemBuilder: (BuildContext context, int index) {
-                    return CardChat(index);
+                    return CardChat(index, snapshot.data['results'][index]);
                   }));
         } else {
           return const Center(child: CircularProgressIndicator());
@@ -112,7 +114,8 @@ class _ListWorkState extends State<ListWork> {
     );
   }
 
-  Widget CardChat(int index) {
+  Widget CardChat(int index, data) {
+    //print(data);
     return GestureDetector(
         onTap: () {
           Navigator.of(context).pushNamed(WorkFollow.tag);
@@ -160,7 +163,8 @@ class _ListWorkState extends State<ListWork> {
                         Padding(
                             padding: EdgeInsets.only(
                                 left: 5, right: 2, top: 2, bottom: 2),
-                            child: Text("Plomberie")),
+                            child: Text(""),
+                        ),
                         Padding(
                             padding: EdgeInsets.all(5),
                             child: Text("Achevé le 10/12/2022"))

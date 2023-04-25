@@ -161,11 +161,15 @@ class ParticulierController {
   }
 
   static Future<Map<String, dynamic>> getChantierById(int particulierId) async {
-    var response = await http.get(
-        Uri.parse("${url}getAllChantiersByParticulier"),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        });
+    print(particulierId.toString());
+    var response =
+        await http.get(Uri.parse("${url}getAllChantiersByParticulier"),
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+              'particulierID': particulierId.toString() 
+            },
+            );
+
     if (response.statusCode == 200) {
       print("getChantierById réussie Particulier Controller");
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);

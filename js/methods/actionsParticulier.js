@@ -148,12 +148,14 @@ var functions = {
     );
   },
   getAllChantiersByParticulier(req, res) {
+    console.log(req.headers.particulierid)
     mysqlConnection.query(
       "SELECT * FROM chantier WHERE particulierID = ?",
-      req.body.particulierID,
+      req.headers.particulierid,
       function (error, results, fields) {
+        console.log(results)
         if (error) return res.json({ success: false, msg: error });
-        res.json({ success: true, msg: results });
+        res.json({results: results});
       }
     );
   },

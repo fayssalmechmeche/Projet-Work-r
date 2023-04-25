@@ -159,10 +159,11 @@ class _AddWorkState extends State<AddWork> {
               child: OutlinedButton(
                 onPressed: () async {
                   await ParticulierController.createChantier(
-                      "Nom du chantier", //nameController.text
-                      "Type du chantier", // _dropdownvalue1!
-                      "Budget", //budgetController.text
-                      "Description", // descriptionController.text
+                      nameController.text, //nameController.text
+                      _dropdownvalue1!, // _dropdownvalue1!
+                      _dropdownvalue2!, // _dropdownvalue2!
+                      budgetController.text, //budgetController.text
+                      descriptionController.text, // descriptionController.text
                       globalData.getId());
                 },
                 style: OutlinedButton.styleFrom(
