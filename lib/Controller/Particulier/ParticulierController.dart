@@ -129,6 +129,7 @@ class ParticulierController {
   static Future<Map<String, dynamic>> createChantier(
     String name,
     String type,
+    String category,
     String budget,
     String description,
     int particulierID,
@@ -140,6 +141,7 @@ class ParticulierController {
         body: jsonEncode(<String, String>{
           'name': name,
           'type': type,
+          'category': category,
           'budget': budget,
           'description': description,
           'particulierID': particulierID.toString(),

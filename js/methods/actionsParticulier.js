@@ -132,10 +132,11 @@ var functions = {
 
   addChantier(req, res) {
     mysqlConnection.query(
-      "INSERT INTO chantier (name, type, budget, description, particulierID) VALUES (?, ?, ?, ?, ?)",
+      "INSERT INTO chantier (name, type, category, budget, description, particulierID) VALUES (?, ?, ?, ?, ?, ?)",
       [
         req.body.name,
         req.body.type,
+        req.body.category,
         req.body.budget,
         req.body.description,
         req.body.particulierID,
