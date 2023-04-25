@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:icon_decoration/icon_decoration.dart';
 import 'package:my_app/Controller/global.dart';
-import 'package:my_app/view/Works/listworkartisan.dart';
+import 'package:my_app/view/Works/ListWork.dart';
 import 'package:provider/provider.dart';
 import '../../Controller/global.dart';
 
@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const ListWorkArtisan(),
+                          builder: (context) => const ListWork(),
                         ),
                       );
                     },

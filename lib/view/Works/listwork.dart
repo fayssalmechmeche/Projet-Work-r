@@ -41,6 +41,7 @@ class _ListWorkState extends State<ListWork> {
           elevation: 0,
         ),
         body: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+          if (globalData.getRole() == 1)
           Visibility(
             visible: true,
             child: SizedBox(
