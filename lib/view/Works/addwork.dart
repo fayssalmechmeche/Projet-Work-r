@@ -163,6 +163,7 @@ class _AddWorkState extends State<AddWork> {
                       "Type du chantier", // _dropdownvalue1!
                       "Budget", //budgetController.text
                       "Description", // descriptionController.text
+                      "Categorie", // _dropdownvalue2!
                       globalData.getId());
                 },
                 style: OutlinedButton.styleFrom(
