@@ -157,15 +157,31 @@ class _AddWorkState extends State<AddWork> {
               width: 160,
               height: 85,
               child: OutlinedButton(
-                onPressed: () async {
-                  await ParticulierController.createChantier(
-
-                      nameController.text, //nameController.text
-                      _dropdownvalue1!, // _dropdownvalue1!
-                      _dropdownvalue2!, // _dropdownvalue2!
-                      budgetController.text, //budgetController.text
-                      descriptionController.text, // descriptionController.text
-                      globalData.getId());
+                onPressed: () {
+                  bool error = false;
+                  if (nameController.text == "" ||
+                      budgetController.text == "" ||
+                      descriptionController.text == "" ||
+                      _dropdownvalue1 == null ||
+                      _dropdownvalue2 == null) {
+                    error = true;
+                  }
+                  if (error == false) {
+                    ParticulierController.createChantier(
+                        nameController.text, //nameController.text
+                        _dropdownvalue1!, // _dropdownvalue1!
+                        _dropdownvalue2!, // _dropdownvalue2!
+                        budgetController.text, //budgetController.text
+                        descriptionController
+                            .text, // descriptionController.text
+                        globalData.getId());
+                    Navigator.pop(context);
+                  }else{
+                    const snackBar = SnackBar(
+                      content: Text('Attention à bien remplir le formulaire !'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
                 },
                 style: OutlinedButton.styleFrom(
                     shape: RoundedRectangleBorder(
