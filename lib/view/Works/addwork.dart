@@ -13,6 +13,7 @@ class AddWork extends StatefulWidget {
 }
 
 class _AddWorkState extends State<AddWork> {
+  var nameController = TextEditingController();
   var budgetController = TextEditingController();
   var descriptionController = TextEditingController();
   String? _dropdownvalue1;
@@ -42,6 +43,25 @@ class _AddWorkState extends State<AddWork> {
           ]),
           Container(
             padding: const EdgeInsets.only(top: 40),
+            width: 330,
+            child: TextFormField(
+              cursorColor: Colors.grey,
+              controller: nameController,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(90.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(90.0),
+                  ),
+                  contentPadding: const EdgeInsets.all(10),
+                  label: const Text("Nom du chantier"),
+                  labelStyle: const TextStyle(color: Colors.grey)),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.only(top: 20),
             width: 330,
             child: DropdownButtonFormField<String?>(
               hint: const Text('Type de logement'),
@@ -114,6 +134,8 @@ class _AddWorkState extends State<AddWork> {
             padding: const EdgeInsets.only(top: 20),
             width: 330,
             child: TextFormField(
+              minLines: 1,
+              maxLines: 7,
               cursorColor: Colors.grey,
               controller: descriptionController,
               decoration: InputDecoration(
@@ -122,9 +144,9 @@ class _AddWorkState extends State<AddWork> {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: const BorderSide(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(90.0),
+                    borderRadius: BorderRadius.circular(9.0),
                   ),
-                  contentPadding: const EdgeInsets.all(100),
+                  contentPadding: const EdgeInsets.all(10),
                   label: const Text("Description"),
                   labelStyle: const TextStyle(color: Colors.grey)),
             ),
@@ -137,10 +159,10 @@ class _AddWorkState extends State<AddWork> {
               child: OutlinedButton(
                 onPressed: () async {
                   await ParticulierController.createChantier(
-                      "Nom du chantier",
-                      "Type du chantier",
-                      "Budget",
-                      "Description",
+                      "Nom du chantier", //nameController.text
+                      "Type du chantier", // _dropdownvalue1!
+                      "Budget", //budgetController.text
+                      "Description", // descriptionController.text
                       globalData.getId());
                 },
                 style: OutlinedButton.styleFrom(
