@@ -132,11 +132,12 @@ var functions = {
 
   addChantier(req, res) {
     mysqlConnection.query(
-      "INSERT INTO chantier (name, type, category, budget, description, particulierID) VALUES (?, ?, ?, ?, ?, ?)",
+      "INSERT INTO chantier (name, type, category, state, budget, description, particulierID) VALUES (?, ?, ?, ?, ?, ?, ?)",
       [
         req.body.name,
         req.body.type,
         req.body.category,
+        req.body.state,
         req.body.budget,
         req.body.description,
         req.body.particulierID,
@@ -148,14 +149,14 @@ var functions = {
     );
   },
   getAllChantiersByParticulier(req, res) {
-    console.log(req.headers.particulierid)
+    console.log(req.headers.particulierid);
     mysqlConnection.query(
       "SELECT * FROM chantier WHERE particulierID = ?",
       req.headers.particulierid,
       function (error, results, fields) {
-        console.log(results)
+        console.log(results);
         if (error) return res.json({ success: false, msg: error });
-        res.json({results: results});
+        res.json({ results: results });
       }
     );
   },
