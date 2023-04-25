@@ -26,12 +26,12 @@ class _ListWorkState extends State<ListWork> {
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.logout,
               color: Colors.red,
             ),
           ),
-          title: Text(
+          title: const Text(
             "Mes chantiers",
             style: TextStyle(
               color: Colors.black,
@@ -100,7 +100,7 @@ class _ListWorkState extends State<ListWork> {
       future: chantiers,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
-          print(snapshot.data['results'].length);
+          print(snapshot.data['results'][0]["name"]);
           return Expanded(
               child: ListView.builder(
                   itemCount: snapshot.data['results'].length,
@@ -115,7 +115,7 @@ class _ListWorkState extends State<ListWork> {
   }
 
   Widget CardChat(int index, data) {
-    //print(data);
+    print(data['category']);
     return GestureDetector(
         onTap: () {
           Navigator.of(context).pushNamed(WorkFollow.tag);
@@ -153,19 +153,19 @@ class _ListWorkState extends State<ListWork> {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Padding(
-                            padding: EdgeInsets.all(5),
-                            child: Text("Nom du Chantier",
-                                style: TextStyle(
+                      children:  [
+                         Padding(
+                            padding: const EdgeInsets.all(5),
+                            child: Text("${data['name']}",
+                                style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold))),
                         Padding(
-                            padding: EdgeInsets.only(
-                                left: 5, right: 2, top: 2, bottom: 2),
-                            child: Text(""),
+                          padding: const EdgeInsets.only(
+                              left: 5, right: 2, top: 2, bottom: 2),
+                          child: Text("${data['category']}"),
                         ),
-                        Padding(
+                        const Padding(
                             padding: EdgeInsets.all(5),
                             child: Text("Achevé le 10/12/2022"))
                       ]),
