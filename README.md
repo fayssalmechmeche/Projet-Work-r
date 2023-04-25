@@ -26,12 +26,12 @@ flutter run
 
 Artisan :
 
-mail : artisan@artisan
+mail : artisan@artisan.com
 mdp : artisan
 
 Particulier :
 
-mail : particulier@particulier
+mail : particulier@particulier.com
 mdp : particulier
 
 Database :
@@ -40,5 +40,3 @@ user: "root",
 password: "",
 database: "workrdb",
 });
-
-
