@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:my_app/Controller/global.dart';
 import 'package:provider/provider.dart';
 
@@ -114,6 +115,10 @@ class _AddWorkState extends State<AddWork> {
             padding: const EdgeInsets.only(top: 20),
             width: 330,
             child: TextFormField(
+              keyboardType: TextInputType.number,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly
+              ],
               cursorColor: Colors.grey,
               controller: budgetController,
               decoration: InputDecoration(
@@ -176,7 +181,7 @@ class _AddWorkState extends State<AddWork> {
                             .text, // descriptionController.text
                         globalData.getId());
                     Navigator.pop(context);
-                  }else{
+                  } else {
                     const snackBar = SnackBar(
                       content: Text('Attention à bien remplir le formulaire !'),
                     );
