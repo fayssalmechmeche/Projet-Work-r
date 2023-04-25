@@ -159,6 +159,7 @@ class _AddWorkState extends State<AddWork> {
               child: OutlinedButton(
                 onPressed: () async {
                   await ParticulierController.createChantier(
+
                       nameController.text, //nameController.text
                       _dropdownvalue1!, // _dropdownvalue1!
                       _dropdownvalue2!, // _dropdownvalue2!
