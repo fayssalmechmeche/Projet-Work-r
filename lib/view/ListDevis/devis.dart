@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/Controller/global.dart';
+import 'package:provider/provider.dart';
+
 
 class DevisFollow extends StatefulWidget {
   const DevisFollow({Key? key}) : super(key: key);
@@ -11,6 +13,7 @@ class DevisFollow extends StatefulWidget {
 class _DevisFollowState extends State<DevisFollow> {
   @override
   Widget build(BuildContext context) {
+    final globalData = Provider.of<GlobalData>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -100,14 +103,18 @@ class _DevisFollowState extends State<DevisFollow> {
                   ElevatedButton(
                     onPressed: () {},
                     child: Text(
+                      
                       "Télécharger",
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
                   SizedBox(height: 20),
+                  if(globalData.getRole() == 1)
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: 
+                    [
+
                       ElevatedButton(
                         onPressed: () {},
                         child: Text(
@@ -124,6 +131,7 @@ class _DevisFollowState extends State<DevisFollow> {
                         ),
                       ),
                       SizedBox(width: 20),
+
                       ElevatedButton(
                         onPressed: () {},
                         child: Text(
