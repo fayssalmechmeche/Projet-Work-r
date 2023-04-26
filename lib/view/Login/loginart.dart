@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:my_app/Controller/Artisan/ArtisanController.dart';
 import 'package:my_app/view/Navigation/NavigationPage.dart';
 import 'package:provider/provider.dart';
-import '../../Controller/NodeJSManager.dart';
 import '../../Controller/global.dart';
 
 class LoginArt extends StatefulWidget {

@@ -124,7 +124,7 @@ class _EditProfileState extends State<EditProfile> {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.only(left: 60),
+                  padding: const EdgeInsets.only(left: 30),
                   child: Column(children: [
                     Container(
                       width: 140,
