@@ -42,14 +42,14 @@ class _ListWorkState extends State<ListWork> {
         ),
         body: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
           if (globalData.getRole() == 1)
-          Visibility(
-            visible: true,
-            child: SizedBox(
-              height: 50,
-              width: 350,
-              child: addWork(),
+            Visibility(
+              visible: true,
+              child: SizedBox(
+                height: 50,
+                width: 350,
+                child: addWork(),
+              ),
             ),
-          ),
           chantiersList(chantiers)
         ]));
   }
@@ -126,49 +126,45 @@ class _ListWorkState extends State<ListWork> {
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         },
         child: Card(
-            shape: StadiumBorder(
+            shape: const StadiumBorder(
               //<-- 3. SEE HERE
               side: BorderSide(
                 color: Colors.black,
-                width: index % 2 == 0 ? 1.0 : 0.0,
+                width:  1.0 , //index % 2 == 0 ? 1.0 : 0.0,
               ),
             ),
             elevation: 10,
-            color: index % 2 == 0 ? Colors.white : Colors.grey,
+            color: index % 2 == 0 ? Colors.white : const Color.fromARGB(255, 190, 188, 188), //index % 2 == 0 ? Colors.white : Colors.grey,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Container(
-                    width: 20.0,
-                    height: 20.0,
-                    decoration: const BoxDecoration(
-                      color: Colors.green,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                ),
+                    padding: const EdgeInsets.only(left: 20),
+                    child: statusCircleColor(data)),
                 Container(
                   padding: const EdgeInsets.only(left: 25),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children:  [
-                         Padding(
+                      children: [
+                        Container(
+                            width: 200,
                             padding: const EdgeInsets.all(5),
                             child: Text("${data['name']}",
+                                overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold))),
-                        Padding(
+                        Container(
+                          width: 200,
                           padding: const EdgeInsets.only(
                               left: 5, right: 2, top: 2, bottom: 2),
                           child: Text("${data['category']}"),
                         ),
-                        const Padding(
-                            padding: EdgeInsets.all(5),
-                            child: Text("Achevé le 10/12/2022"))
+                        Container(
+                            width: 200,
+                            padding: const EdgeInsets.all(5),
+                            child: statusCard(data))
                       ]),
                 ),
                 Container(
@@ -178,5 +174,47 @@ class _ListWorkState extends State<ListWork> {
                     child: const Icon(Icons.arrow_forward_ios))
               ],
             )));
+  }
+
+  //affichage du status du projet dans le liste
+  Widget statusCard(data) {
+    if (data['state'] == 0) {
+      return const Text('En recherche d\'un artisan');
+    } else if (data['state'] == 1) {
+      return const Text('En cours');
+    } else {
+      return const Text('Terminé');
+    }
+  }
+
+  Widget statusCircleColor(data) {
+    if (data['state'] == 0) {
+      return Container(
+        width: 20.0,
+        height: 20.0,
+        decoration: const BoxDecoration(
+          color: Colors.orange,
+          shape: BoxShape.circle,
+        ),
+      );
+    } else if (data['state'] == 1) {
+      return Container(
+        width: 20.0,
+        height: 20.0,
+        decoration: const BoxDecoration(
+          color: Colors.green,
+          shape: BoxShape.circle,
+        ),
+      );
+    } else {
+      return const SizedBox(
+        width: 20.0,
+        height: 20.0,
+        child: Icon(
+          Icons.check_outlined,
+          color: Colors.green,
+        ),
+      );
+    }
   }
 }
