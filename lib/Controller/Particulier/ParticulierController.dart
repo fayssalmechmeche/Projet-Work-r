@@ -2,6 +2,10 @@ import 'dart:convert';
 import 'dart:ffi';
 import 'dart:math';
 import 'package:http/http.dart' as http;
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server.dart';
+import 'package:mailer/smtp_server/gmail.dart';
+import 'package:my_app/Controller/Artisan/ArtisanController.dart';
 
 class ParticulierController {
   static var url = "http://localhost:3000/";
@@ -152,7 +156,42 @@ class ParticulierController {
       // Parser le JSON reçu en réponse
       print("creation de chantier réussie Particulier Controller");
       print(response.body);
+
+      var artisans = await ArtisanController.getAllArtisan();
+
+      for (var artisan in artisans['results']) {
+        String email = artisan['email'];
+        print(email);
+
+        // Envoie un email à cet email
+        final smtpServer =
+            gmail("workr.professionel@gmail.com", "khimpyseszmipezx");
+
+        final message = Message()
+          ..from = Address("workr.professionel@gmail.com", 'L\'équipe Workr')
+          ..recipients.add(email)
+          ..subject = 'Nouveau chantier : ${category}}'
+          ..text = 'Un nouveau chantier a été créé par un particulier. \n\n';
+
+        try {
+          final sendReport = await send(message, smtpServer);
+        } on MailerException catch (e) {
+          print('Message not sent.');
+          for (var p in e.problems) {
+            print('Problem: ${p.code}: ${p.msg}');
+          }
+        }
+      }
+
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+
+      // Use the SmtpServer class to configure an SMTP server:
+      // final smtpServer = SmtpServer('smtp.domain.com');
+      // See the named arguments of SmtpServer for further configuration
+      // options.
+
+      // Create our message.
+
       return jsonResponse;
     } else {
       print("creation de chantier échoué Particulier Controller");

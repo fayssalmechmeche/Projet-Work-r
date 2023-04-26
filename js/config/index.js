@@ -21,6 +21,8 @@ router.post("/addArtisan", actionsArtisan.addNew);
 router.post("/authenticateArtisan", actionsArtisan.authenticate);
 router.post("/updateArtisan", actionsArtisan.updateArtisan);
 router.get("/getinfoArtisan", actionsArtisan.getInfo);
+router.get("/getWorkByStatus", actionsArtisan.getWorkByStatus);
+router.get("/getAllArtisan", actionsArtisan.getAllArtisan);
 
 router.post("/addParticulier", actionsParticulier.addNew);
 router.post("/updateParticulier", actionsParticulier.updateParticulier);
@@ -31,6 +33,5 @@ router.get(
   "/getAllChantiersByParticulier",
   actionsParticulier.getAllChantiersByParticulier
 );
-router.get("/getWorkByStatus", actionsArtisan.getWorkByStatus);
 
 module.exports = router;
