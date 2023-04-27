@@ -34,7 +34,7 @@ class _ListWorkArtisanState extends State<ListWorkArtisan> {
         elevation: 0,
       ),
       body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [chantiersList(chantiers)]),
     );
   }
@@ -43,14 +43,18 @@ class _ListWorkArtisanState extends State<ListWorkArtisan> {
     return FutureBuilder(
       future: chantiers,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.hasData) {
-          print(snapshot.data['results'][0]["name"]);
-          return Expanded(
-              child: ListView.builder(
-                  itemCount: snapshot.data['results'].length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return cardChantier(index , snapshot.data['results'][index]);
-                  }));
+       if (snapshot.hasData) {
+          if (snapshot.data['results'].length != 0) {
+            print(snapshot.data['results'].length);
+            return Expanded(
+                child: ListView.builder(
+                    itemCount: snapshot.data['results'].length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return cardChantier(index, snapshot.data['results'][index]);
+                    }));
+          } else {
+             return Center(child:Column(mainAxisAlignment: MainAxisAlignment.center,children: [Text("Aucune proposition de chantier")],) );
+          }
         } else {
           return const Center(child: CircularProgressIndicator());
         }
