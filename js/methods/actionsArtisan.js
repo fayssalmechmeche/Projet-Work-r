@@ -38,8 +38,6 @@ var functions = {
 
   // une fonction pour authentifier un particulier sur la base de donnée mysql avec son email et son mot de passe et renvoyer un token si l'authentification est réussie et un message d'erreur si elle échoue
   authenticate: function (req, res) {
-   
-
     mysqlConnection.query(
       "SELECT * FROM artisans WHERE email = ?",
       req.body.email,
@@ -120,29 +118,59 @@ var functions = {
       }
     );
   },
-  getAllArtisans: function (req, res) {
+  getAllArtisan: function (req, res) {
     mysqlConnection.query(
       "SELECT * FROM artisans",
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
-        res.json({ success: true, msg: results });
+        res.json({ results: results });
+        console.log(results);
+      }
+    );
+  },
+  getRecentArtisan: function (req, res) {
+    mysqlConnection.query(
+      "SELECT * FROM artisans ORDER BY _id DESC",
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ results: results });
+        console.log(results);
+      }
+    );
+  },
+  getArtisanById: function (req, res) {
+    mysqlConnection.query(
+      "SELECT * FROM artisans WHERE _id = ?",
+      req.headers.id,
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ results: results });
+        console.log(results);
+      }
+    );
+  },
+  getArtisanByDomaine: function (req, res) {
+    mysqlConnection.query(
+      "SELECT * FROM artisans WHERE domaine = ?",
+      req.headers.domaine,
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ results: results });
+        console.log(results);
       }
     );
   },
 
   getWorkByStatus: function (req, res) {
-
     mysqlConnection.query(
       "SELECT * FROM chantier WHERE state = ? ",
       req.headers.state,
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
-        res.json({  results: results });
+        res.json({ results: results });
         console.log(results);
-
       }
-    
     );
-  }
+  },
 };
 module.exports = functions;

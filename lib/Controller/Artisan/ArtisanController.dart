@@ -14,7 +14,9 @@ class ArtisanController {
     String username,
     String telephone,
     String siret,
+    String mobilite,
     String adress,
+    String domaine,
     String entreprise,
   ) async {
     var response = await http.post(Uri.parse("${url}addArtisan"),
@@ -27,14 +29,14 @@ class ArtisanController {
           'username': username,
           'telephone': telephone,
           'email': email,
-          'picture': 'n',
+          'picture': 'null',
           'siret': siret,
-          'mobilite': "n",
+          'mobilite': mobilite,
           'adress': adress,
-          'domaine': "n",
+          'domaine': domaine,
           'entreprise': entreprise,
-          'note': "n",
-          'chantier': "n",
+          'note': "0",
+          'chantier': "null",
           'password': password,
         }));
     print('Response status: ${response.statusCode}');
@@ -158,5 +160,28 @@ class ArtisanController {
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse;
     }
+  }
+
+  static Future<Map<String, dynamic>> getAllArtisan() {
+    return http.get(Uri.parse("${url}getAllArtisan"), headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    }).then((http.Response response) {
+      print("getAllArtisan réussie Artisan Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+
+      return jsonResponse;
+    });
+  }
+
+  static Future<Map<String, dynamic>> getRecentArtisan() {
+    return http
+        .get(Uri.parse("${url}getRecentArtisan"), headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    }).then((http.Response response) {
+      print("getRecentArtisan réussie Artisan Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+
+      return jsonResponse;
+    });
   }
 }
