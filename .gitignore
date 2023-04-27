@@ -47,3 +47,4 @@ package-lock.json
 yarn.lock
 js/config/db.js
 js/config/db.js
+pubspec.lock
