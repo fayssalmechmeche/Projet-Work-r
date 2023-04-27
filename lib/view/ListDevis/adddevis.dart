@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:my_app/Controller/global.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
 
-import '../../Controller/Particulier/ParticulierController.dart';
-
-class AddWork extends StatefulWidget {
-  const AddWork({Key? key}) : super(key: key);
-  static const tag = "/AddWork";
-
+class AddDevis extends StatefulWidget {
+  const AddDevis({super.key});
+  static const tag = "/AddDevis";
   @override
-  State<AddWork> createState() => _AddWorkState();
+  State<AddDevis> createState() => _AddDevisState();
 }
 
-class _AddWorkState extends State<AddWork> {
+class _AddDevisState extends State<AddDevis> {
   var nameController = TextEditingController();
   var budgetController = TextEditingController();
   var descriptionController = TextEditingController();
@@ -27,7 +24,6 @@ class _AddWorkState extends State<AddWork> {
 
   @override
   Widget build(BuildContext context) {
-    final globalData = Provider.of<GlobalData>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -38,31 +34,12 @@ class _AddWorkState extends State<AddWork> {
         child: Column(children: [
           Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
             Text(
-              "Nouveau chantier",
+              "Nouveau devis",
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
           ]),
           Container(
             padding: const EdgeInsets.only(top: 40),
-            width: 330,
-            child: TextFormField(
-              cursorColor: Colors.grey,
-              controller: nameController,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(90.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(90.0),
-                  ),
-                  contentPadding: const EdgeInsets.all(10),
-                  label: const Text("Nom du chantier"),
-                  labelStyle: const TextStyle(color: Colors.grey)),
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.only(top: 20),
             width: 330,
             child: DropdownButtonFormField<String?>(
               hint: const Text('Type de logement'),
@@ -112,6 +89,25 @@ class _AddWorkState extends State<AddWork> {
             ),
           ),
           Container(
+              padding: const EdgeInsets.only(top: 20),
+              width: 330,
+              child: OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                  ),
+                  side: const BorderSide(width: 1, color: Colors.grey),
+                  foregroundColor: Colors.yellow,
+                ),
+                onPressed: () {},
+                child: const Text(
+                  '+ Ajouter un devis format PDF +',
+                  style: TextStyle(
+                    color: Colors.grey,
+                  ),
+                ),
+              )),
+          Container(
             padding: const EdgeInsets.only(top: 20),
             width: 330,
             child: TextFormField(
@@ -134,7 +130,6 @@ class _AddWorkState extends State<AddWork> {
                   labelStyle: const TextStyle(color: Colors.grey)),
             ),
           ),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: []),
           Container(
             padding: const EdgeInsets.only(top: 20),
             width: 330,
@@ -172,14 +167,7 @@ class _AddWorkState extends State<AddWork> {
                     error = true;
                   }
                   if (error == false) {
-                    ParticulierController.createChantier(
-                        nameController.text, //nameController.text
-                        _dropdownvalue1!, // _dropdownvalue1!
-                        _dropdownvalue2!, // _dropdownvalue2!
-                        budgetController.text, //budgetController.text
-                        descriptionController
-                            .text, // descriptionController.text
-                        globalData.getId());
+                    //AddDevisToBdd
                     Navigator.pop(context);
                   } else {
                     const snackBar = SnackBar(
@@ -194,7 +182,7 @@ class _AddWorkState extends State<AddWork> {
                     ),
                     foregroundColor: Colors.green,
                     side: const BorderSide(color: Colors.green)),
-                child: const Text('Accepter',
+                child: const Text('Confirmer',
                     style: TextStyle(color: Colors.black)),
               ))
         ]),
