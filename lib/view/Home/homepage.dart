@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:icon_decoration/icon_decoration.dart';
+import 'package:my_app/Controller/Artisan/ArtisanController.dart';
 import 'package:my_app/Controller/global.dart';
 import 'package:my_app/view/Works/ListWork.dart';
 import 'package:my_app/view/Works/listworkartisan.dart';
@@ -18,6 +19,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final globalData = Provider.of<GlobalData>(context);
+    final allArtisan = ArtisanController.getAllArtisan();
+    final recentArtisan = ArtisanController.getRecentArtisan();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -104,23 +107,7 @@ class _HomePageState extends State<HomePage> {
               thickness: 1,
               height: 30,
             ),
-            Container(
-                height: 115,
-                child: ListView.builder(
-                  itemCount: 10,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: 195,
-                          child: CardChat(index),
-                        ),
-                      ],
-                    );
-                  },
-                )),
+            Container(height: 115, child: ArtisanList(allArtisan)),
             const Divider(
               color: Colors.black,
               thickness: 1,
@@ -140,21 +127,7 @@ class _HomePageState extends State<HomePage> {
             ),
             Container(
                 height: 115,
-                child: ListView.builder(
-                  itemCount: 10,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: 195,
-                          child: CardChat(index),
-                        ),
-                      ],
-                    );
-                  },
-                )),
+                child: ArtisanList(recentArtisan)),
             const Divider(
               color: Colors.black,
               thickness: 1,
@@ -174,26 +147,35 @@ class _HomePageState extends State<HomePage> {
             ),
             Container(
                 height: 115,
-                child: ListView.builder(
-                  itemCount: 10,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: 195,
-                          child: CardChat(index),
-                        ),
-                      ],
-                    );
-                  },
-                ))
+                child: ArtisanList(allArtisan))
           ]),
     );
   }
 
-  Widget CardChat(int index) {
+  Widget ArtisanList(artisans) {
+    return FutureBuilder(
+      future: artisans,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          print(snapshot.data['results'][1]);
+          return ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: snapshot.data['results'].length,
+              itemBuilder: (BuildContext context, int index) {
+                return  SizedBox(
+                          width: 195,
+                          child: CardArtisan(index, snapshot.data['results'][index] ),
+                        );
+              });
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
+    );
+  }
+
+
+  Widget CardArtisan(int index, data) {
     return GestureDetector(
         onTap: () {
           const snackBar = SnackBar(
@@ -227,14 +209,14 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  const Padding(
+                   Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: Text("Phillipe")),
-                  const Text("Robert"),
-                  const Padding(
+                      child: Text(data['lastname'])),
+                   Text(data['name']),
+                  Padding(
                       padding: EdgeInsets.only(top: 10),
                       child: Text(
-                        "Plombier",
+                        data['domaine'],
                         style: TextStyle(fontWeight: FontWeight.bold),
                       )),
                   Padding(
