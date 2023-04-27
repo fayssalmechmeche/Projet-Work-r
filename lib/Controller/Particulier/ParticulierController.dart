@@ -152,7 +152,7 @@ class ParticulierController {
           'type': type,
           'category': category,
           'budget': budget,
-          'state': 1,
+          'state': 0,
           'description': description,
           'particulierID': particulierID.toString(),
         }));
