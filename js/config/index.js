@@ -24,6 +24,10 @@ router.get("/getinfoArtisan", actionsArtisan.getInfo);
 router.get("/getWorkByStatus", actionsArtisan.getWorkByStatus);
 router.get("/getAllArtisan", actionsArtisan.getAllArtisan);
 router.get("/getRecentArtisan", actionsArtisan.getRecentArtisan);
+router.get(
+  "/getAllChantiersByArtisan",
+  actionsArtisan.getAllChantiersByArtisan
+);
 
 router.post("/addParticulier", actionsParticulier.addNew);
 router.post("/updateParticulier", actionsParticulier.updateParticulier);
