@@ -170,4 +170,16 @@ class ArtisanController {
       return jsonResponse;
     });
   }
+
+  static Future<Map<String, dynamic>> getRecentArtisan() {
+    return http
+        .get(Uri.parse("${url}getRecentArtisan"), headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    }).then((http.Response response) {
+      print("getRecentArtisan réussie Artisan Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+
+      return jsonResponse;
+    });
+  }
 }

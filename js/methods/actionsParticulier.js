@@ -160,13 +160,40 @@ var functions = {
       }
     );
   },
+  getFavoriteArtisanOfParticulier(req, res) {
+    console.log(req.headers.particulierid);
+    mysqlConnection.query(
+      "SELECT * FROM artisans WHERE _id IN (SELECT artisanID FROM favoris WHERE particulierID = ?)",
+      req.headers.particulierid,
+      function (error, results, fields) {
+        console.log(results);
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ results: results });
+      }
+    );
+  },
+  addFavoriteArtisanToParticulier(req, res) {
+    const particulierId = req.body.particulierId;
+    const artisanId = req.body.artisanId;
 
+    mysqlConnection.query(
+      "UPDATE particuliers SET favoris = CONCAT(favoris, ', ', ?) WHERE id = ?",
+      [artisanId, particulierId],
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({
+          success: true,
+          msg: "Artisan ajouté aux favoris du particulier",
+        });
+      }
+    );
+  },
   getAllParticuliers: function (req, res) {
     mysqlConnection.query(
       "SELECT * FROM particuliers",
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
-        res.json({ success: true, msg: results });
+        res.json({ results });
       }
     );
   },

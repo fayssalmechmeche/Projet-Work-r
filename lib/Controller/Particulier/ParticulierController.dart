@@ -220,4 +220,27 @@ class ParticulierController {
       return jsonResponse;
     }
   }
+
+  static Future<Map<String, dynamic>> addFavoriteArtisanToParticulier(
+      int ParticulierId, int ArtisanId) async {
+    var response =
+        await http.post(Uri.parse("${url}addFavoriteArtisanToParticulier"),
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: jsonEncode(<String, dynamic>{
+              'particulierID': ParticulierId.toString(),
+              'artisanID': ArtisanId.toString(),
+            }));
+
+    if (response.statusCode == 200) {
+      print("addFavoriteArtisanToParticulier réussie Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } else {
+      print("addFavoriteArtisanToParticulier échouée Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    }
+  }
 }

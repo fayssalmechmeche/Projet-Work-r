@@ -128,6 +128,38 @@ var functions = {
       }
     );
   },
+  getRecentArtisan: function (req, res) {
+    mysqlConnection.query(
+      "SELECT * FROM artisans ORDER BY _id DESC",
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ results: results });
+        console.log(results);
+      }
+    );
+  },
+  getArtisanById: function (req, res) {
+    mysqlConnection.query(
+      "SELECT * FROM artisans WHERE _id = ?",
+      req.headers.id,
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ results: results });
+        console.log(results);
+      }
+    );
+  },
+  getArtisanByDomaine: function (req, res) {
+    mysqlConnection.query(
+      "SELECT * FROM artisans WHERE domaine = ?",
+      req.headers.domaine,
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ results: results });
+        console.log(results);
+      }
+    );
+  },
 
   getWorkByStatus: function (req, res) {
     mysqlConnection.query(
