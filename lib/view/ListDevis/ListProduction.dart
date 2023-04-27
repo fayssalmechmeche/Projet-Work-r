@@ -70,9 +70,12 @@ class _ListPropositionState extends State<ListProposition> {
   }
 
   Widget CardChat(int index) {
+    final globalData = Provider.of<GlobalData>(context);
     return GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed(DevisFollow.tag);
+          if (globalData.getRole() == 1) {
+            Navigator.of(context).pushNamed(DevisFollow.tag);
+          }
           const snackBar = SnackBar(
             content: Text('Works page have been lunched'),
           );
