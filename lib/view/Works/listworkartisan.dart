@@ -63,11 +63,7 @@ class _ListWorkArtisanState extends State<ListWorkArtisan> {
   Widget cardChantier(int index , data) {
     return GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed(WorkProposition.tag);
-          const snackBar = SnackBar(
-            content: Text('Propositons page have been lunched'),
-          );
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          Navigator.of(context).pushNamed(WorkProposition.tag, arguments: data);
         },
         child: Card(
             shape: StadiumBorder(

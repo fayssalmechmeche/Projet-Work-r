@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/view/Home/homepage.dart';
+import 'package:my_app/view/ListDevis/adddevis.dart';
 import 'package:my_app/view/ListDevis/devis.dart';
 import 'package:my_app/view/Login/loginart.dart';
 import 'package:my_app/view/Msg/chat.dart';
@@ -60,6 +61,7 @@ class MyApp extends StatelessWidget {
         DevisFollow.tag: (context) => const DevisFollow(),
         ListWorkArtisan.tag: (context) => const ListWorkArtisan(),
         WorkProposition.tag: (context) => const WorkProposition(),
+        AddDevis.tag: (context) => const AddDevis(),
       },
     );
   }
