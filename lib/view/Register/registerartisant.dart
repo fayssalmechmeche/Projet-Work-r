@@ -1,6 +1,8 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:dropdown_textfield/dropdown_textfield.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:my_app/Controller/Artisan/ArtisanController.dart';
 
 import '../Login/SelectionPage.dart';
@@ -15,29 +17,22 @@ class RegisterArtisan extends StatefulWidget {
 
 class _RegisterArtisanState extends State<RegisterArtisan> {
   @override
-  String dropdownvalue = 'Domaine';
-
-  var items = [
-    'Domaine',
-    'Plombier',
-    'Maçon',
-    'Carreleur',
-    'Electricien',
-  ];
-
-  Widget build(BuildContext context) {
-    var firstnameController = TextEditingController();
+  
+var firstnameController = TextEditingController();
     var usernameController = TextEditingController();
     var nameController = TextEditingController();
     var passwordController = TextEditingController();
     var emailController = TextEditingController();
-    var telephoneController = TextEditingController();
+    var phoneController = TextEditingController();
     var companyController = TextEditingController();
     var CityController = TextEditingController();
     var AdressController = TextEditingController();
     var PostalCodeController = TextEditingController();
     var siretController = TextEditingController();
-    var domaineController = SingleValueDropDownController();
+String? _dropdownvalue1;
+  List<String> category = ['Electricité', 'Plomberie', 'Maçonnerie'];
+  Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -131,7 +126,11 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                       padding: const EdgeInsets.only(top: 20),
                       width: 300,
                       child: TextFormField(
-                        controller: telephoneController,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        controller: phoneController,
                         cursorColor: Colors.grey,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -273,6 +272,10 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                           padding: const EdgeInsets.only(top: 20),
                           width: 130,
                           child: TextFormField(
+                            keyboardType: TextInputType.number,
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
                             cursorColor: Colors.grey,
                             controller: PostalCodeController,
                             decoration: InputDecoration(
@@ -296,6 +299,10 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                       padding: const EdgeInsets.only(top: 20),
                       width: 300,
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         controller: siretController,
                         cursorColor: Colors.grey,
                         decoration: InputDecoration(
@@ -315,32 +322,26 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                     Container(
                       padding: const EdgeInsets.only(top: 20),
                       width: 300,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: Colors
-                              .white, //background color of dropdown button
-                          border: Border.all(color: Colors.grey, width: 1),
-                          borderRadius: BorderRadius.circular(90),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 30, right: 30),
-                          child: DropDownTextField(
-                            controller: domaineController,
-                            dropDownItemCount: items.length,
-                            dropDownList: [
-                              DropDownValueModel(
-                                  name: items[0].toString(), value: items[0]),
-                              DropDownValueModel(
-                                  name: items[1].toString(), value: items[1]),
-                              DropDownValueModel(
-                                  name: items[2].toString(), value: items[2]),
-                              DropDownValueModel(
-                                  name: items[3].toString(), value: items[3]),
-                              DropDownValueModel(
-                                  name: items[4].toString(), value: items[4]),
-                            ],
+                      child: DropdownButtonFormField<String?>(
+                        hint: const Text('Type de logement'),
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(30.0),
+                            ),
                           ),
+                          contentPadding: const EdgeInsets.all(2),
                         ),
+                        items: category.map((value) {
+                          return DropdownMenuItem<String>(
+                              child: Text(value), value: value);
+                        }).toList(),
+                        value: _dropdownvalue1,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            _dropdownvalue1 = newValue;
+                          });
+                        },
                       ),
                     ),
                   ],
@@ -359,9 +360,11 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                       passwordController.text,
                       emailController.text,
                       usernameController.text,
-                      telephoneController.text,
+                      phoneController.text,
                       siretController.text,
+                      'test',
                       AdressController.text,
+                      _dropdownvalue1!,
                       companyController.text,
                     ) ==
                     200) {
