@@ -55,6 +55,7 @@ class _ProfileState extends State<Profile> {
                   ),
                 ),
                 Container(
+                  width: 200,
                   padding: const EdgeInsets.only(left: 60),
                   child: Column(children: [
                     Text(globalData.getName() + "  " + globalData.getLastName(),
