@@ -39,4 +39,30 @@ host: "localhost",
 user: "root",
 password: "",
 database: "workrdb",
-});
+
+
+#### Comment lancer les test 
+
+Pour lancer les tests de artisanController il faut lancer la commande suivante : 
+
+```bash
+flutter test test/artisanController_test.dart
+```
+
+Pour lancer les tests de particulierController il faut lancer la commande suivante : 
+
+```bash
+flutter test test/particulierController_test.dart
+```
+
+Pour lancer les test de l'affichage de la page SelectionPage 
+
+```bash
+flutter test test/selectionPage_test.dart
+```
+
+Pour lancer les test de l'affichage de la page loginart
+
+```bash 
+flutter test test/loginart_test.dart
+```
