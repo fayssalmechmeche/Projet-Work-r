@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/view/Works/workfollow.dart';
 import 'package:provider/provider.dart';
+import '../../Controller/Artisan/ArtisanController.dart';
 import '../../Controller/Particulier/ParticulierController.dart';
 import '../../Controller/global.dart';
 import 'addwork.dart';
@@ -16,8 +17,16 @@ class _ListWorkState extends State<ListWork> {
   @override
   Widget build(BuildContext context) {
     final globalData = Provider.of<GlobalData>(context);
+    var chantiers;
+    if (globalData.getRole() == 1) {
+      chantiers =
+          ParticulierController.getChantierById(globalData.getId());
+    }
+    if (globalData.getRole() == 0) {
+      chantiers =
+          ArtisanController.getChantierById(globalData.getId());
+    }
 
-    final chantiers = ParticulierController.getChantierById(globalData.getId());
     print(chantiers.toString());
     return Scaffold(
         appBar: AppBar(
@@ -111,7 +120,11 @@ class _ListWorkState extends State<ListWork> {
                       return CardChat(index, snapshot.data['results'][index]);
                     }));
           } else {
-             return Center(child:Column(mainAxisAlignment: MainAxisAlignment.center,children: [Text("Aucun chantier disponible")],) );
+            return Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [Text("Aucun chantier disponible")],
+            ));
           }
         } else {
           return const Center(child: CircularProgressIndicator());
