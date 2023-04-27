@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 class ArtisanController {
   static var url = "http://localhost:3000/";
 
+  // crea artisan
   static Future<int> createArtisan(
     String name,
     String lastname,
@@ -57,6 +58,7 @@ class ArtisanController {
   //   return jsonDecode(response.body);
   // }
 
+  // authentification artisan
   static Future<Map<String, dynamic>> authenticate(
       String email, String password) async {
     // Envoyer une requête à la fonction Node.js
@@ -81,6 +83,7 @@ class ArtisanController {
     }
   }
 
+  // get info by token artisan
   static Future<Map<String, dynamic>> getInfo(String token) async {
     var response = await http
         .get(Uri.parse("${url}getinfoArtisan"), headers: <String, String>{
@@ -98,6 +101,7 @@ class ArtisanController {
     }
   }
 
+  // update artisan
   static Future<Map<String, dynamic>> updateArtisan(
     int id,
     String name,
@@ -141,6 +145,7 @@ class ArtisanController {
     }
   }
 
+  // get work by state artisan
   static Future<Map<String, dynamic>> getWorkByStatus(state) async {
     var response = await http.get(
       Uri.parse("${url}getWorkByStatus"),
@@ -162,6 +167,7 @@ class ArtisanController {
     }
   }
 
+  // get All Artisan
   static Future<Map<String, dynamic>> getAllArtisan() {
     return http.get(Uri.parse("${url}getAllArtisan"), headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
@@ -173,6 +179,7 @@ class ArtisanController {
     });
   }
 
+  // get recent Artisan
   static Future<Map<String, dynamic>> getRecentArtisan() {
     return http
         .get(Uri.parse("${url}getRecentArtisan"), headers: <String, String>{
@@ -185,6 +192,7 @@ class ArtisanController {
     });
   }
 
+  // get Work By Artisan
   static Future<Map<String, dynamic>> getChantierById(int artisanId) async {
     print(artisanId.toString());
     var response = await http.get(

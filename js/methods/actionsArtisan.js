@@ -6,6 +6,7 @@ const mysqlConnection = require("../config/db");
 const bcrypt = require("bcrypt");
 
 var functions = {
+  // add new artisan
   addNew: function (req, res) {
     if (
       !req.body.name ||
@@ -36,7 +37,7 @@ var functions = {
     }
   },
 
-  // une fonction pour authentifier un particulier sur la base de donnée mysql avec son email et son mot de passe et renvoyer un token si l'authentification est réussie et un message d'erreur si elle échoue
+  // a function to authenticate an artisan on the mysql database with his email and password and return a token if the authentication is successful and an error message if it fails
   authenticate: function (req, res) {
     mysqlConnection.query(
       "SELECT * FROM artisans WHERE email = ?",
@@ -75,6 +76,8 @@ var functions = {
       }
     );
   },
+
+  // a function to get the information of an artisan with the jwt token and return his information
   getInfo: function (req, res) {
     if (
       req.headers.authorization &&
@@ -90,6 +93,8 @@ var functions = {
       return res.json({ success: false, msg: "No Headers" });
     }
   },
+
+  // a function to update the information of an artisan from the mysql database with his id and return his information if the update is successful and an error message if it fails
   updateArtisan: function (req, res) {
     var hashedPassword;
     if (req.body.password != null) {
@@ -118,6 +123,8 @@ var functions = {
       }
     );
   },
+
+  // a function to get all the artisans from the mysql database and return them
   getAllArtisan: function (req, res) {
     mysqlConnection.query(
       "SELECT * FROM artisans",
@@ -128,9 +135,11 @@ var functions = {
       }
     );
   },
+
+  // a function to get the 5 most recent artisans from the mysql database and return them
   getRecentArtisan: function (req, res) {
     mysqlConnection.query(
-      "SELECT * FROM artisans ORDER BY _id DESC",
+      "SELECT * FROM artisans ORDER BY _id DESC LIMIT 5",
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
         res.json({ results: results });
@@ -138,6 +147,8 @@ var functions = {
       }
     );
   },
+
+  // a function to get an artisan from the mysql database with his id and return him
   getArtisanById: function (req, res) {
     mysqlConnection.query(
       "SELECT * FROM artisans WHERE _id = ?",
@@ -149,6 +160,8 @@ var functions = {
       }
     );
   },
+
+  // a function to get an artisan from the mysql database with his doamine and return him
   getArtisanByDomaine: function (req, res) {
     mysqlConnection.query(
       "SELECT * FROM artisans WHERE domaine = ?",
@@ -161,6 +174,7 @@ var functions = {
     );
   },
 
+  // a function to get an work from the mysql database where the state is equal to the state in the header and return it
   getWorkByStatus: function (req, res) {
     mysqlConnection.query(
       "SELECT * FROM chantier WHERE state = ? ",
@@ -172,6 +186,8 @@ var functions = {
       }
     );
   },
+
+  // a function to get an work from the mysql database with artisanID and return it
   getAllChantiersByArtisan(req, res) {
     console.log(req.headers.artisanid);
     mysqlConnection.query(
