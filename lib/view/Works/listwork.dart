@@ -40,7 +40,7 @@ class _ListWorkState extends State<ListWork> {
           toolbarHeight: 45,
           elevation: 0,
         ),
-        body: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+        body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           if (globalData.getRole() == 1)
             Visibility(
               visible: true,
@@ -100,14 +100,19 @@ class _ListWorkState extends State<ListWork> {
     return FutureBuilder(
       future: chantiers,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
+        print(snapshot.hasData);
         if (snapshot.hasData) {
-          print(snapshot.data['results'][0]["name"]);
-          return Expanded(
-              child: ListView.builder(
-                  itemCount: snapshot.data['results'].length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return CardChat(index, snapshot.data['results'][index]);
-                  }));
+          if (snapshot.data['results'].length != 0) {
+            print(snapshot.data['results'].length);
+            return Expanded(
+                child: ListView.builder(
+                    itemCount: snapshot.data['results'].length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return CardChat(index, snapshot.data['results'][index]);
+                    }));
+          } else {
+             return Center(child:Column(mainAxisAlignment: MainAxisAlignment.center,children: [Text("Aucun chantier disponible")],) );
+          }
         } else {
           return const Center(child: CircularProgressIndicator());
         }
@@ -130,11 +135,14 @@ class _ListWorkState extends State<ListWork> {
               //<-- 3. SEE HERE
               side: BorderSide(
                 color: Colors.black,
-                width:  1.0 , //index % 2 == 0 ? 1.0 : 0.0,
+                width: 1.0, //index % 2 == 0 ? 1.0 : 0.0,
               ),
             ),
             elevation: 10,
-            color: index % 2 == 0 ? Colors.white : const Color.fromARGB(255, 190, 188, 188), //index % 2 == 0 ? Colors.white : Colors.grey,
+            color: index % 2 == 0
+                ? Colors.white
+                : const Color.fromARGB(255, 190, 188,
+                    188), //index % 2 == 0 ? Colors.white : Colors.grey,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
