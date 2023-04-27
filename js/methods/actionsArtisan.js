@@ -172,5 +172,17 @@ var functions = {
       }
     );
   },
+  getAllChantiersByArtisan(req, res) {
+    console.log(req.headers.artisanid);
+    mysqlConnection.query(
+      "SELECT * FROM chantier WHERE artisanID = ?",
+      req.headers.artisanid,
+      function (error, results, fields) {
+        console.log(results);
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ results: results });
+      }
+    );
+  },
 };
 module.exports = functions;
