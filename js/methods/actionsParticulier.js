@@ -6,6 +6,7 @@ const mysqlConnection = require("../config/db");
 const bcrypt = require("bcrypt");
 
 var functions = {
+  // add new particulier
   addNew: function (req, res) {
     if (
       !req.body.name ||
@@ -44,7 +45,8 @@ var functions = {
       });
     }
   },
-  // une fonction pour authentifier un particulier sur la base de donnée mysql avec son email et son mot de passe et renvoyer un token si l'authentification est réussie et un message d'erreur si elle échoue
+
+  // a function to authenticate a particulier
   authenticate: function (req, res) {
     console.log("email : " + req.body.email);
     console.log("password : " + req.body.password);
@@ -53,7 +55,7 @@ var functions = {
       "SELECT * FROM particuliers WHERE email = ?",
       req.body.email,
       function (error, results, fields) {
-        // Si l'authentification échoue, renvoyer un message d'erreur
+        // if the email is not found
         if (error || results[0] === undefined) {
           console.log("error : " + error);
           return res.status(403).send({
@@ -61,7 +63,7 @@ var functions = {
             message: "Authentification échouée. Email introuvable.",
           });
 
-          // Si l'authentification réussie, renvoyer un token
+          // IF THE EMAIL IS FOUND
         } else {
           console.log("results : " + results[0].password);
           bcrypt.compare(
@@ -85,6 +87,8 @@ var functions = {
       }
     );
   },
+
+  // if the token is valid, return the user's info
   getInfo: function (req, res) {
     if (
       req.headers.authorization &&
@@ -100,6 +104,8 @@ var functions = {
       return res.json({ success: false, msg: "No Headers" });
     }
   },
+
+  // update a particulier
   updateParticulier: function (req, res) {
     var hashedPassword;
     if (req.body.password != null) {
@@ -130,6 +136,7 @@ var functions = {
     );
   },
 
+  // add a new chantier
   addChantier(req, res) {
     mysqlConnection.query(
       "INSERT INTO chantier (name, type, category, state, budget, description, particulierID) VALUES (?, ?, ?, ?, ?, ?, ?)",
@@ -148,6 +155,8 @@ var functions = {
       }
     );
   },
+
+  // get all chantiers by particulier
   getAllChantiersByParticulier(req, res) {
     console.log(req.headers.particulierid);
     mysqlConnection.query(
@@ -160,6 +169,8 @@ var functions = {
       }
     );
   },
+
+  // get favorite artisans of a particulier
   getFavoriteArtisanOfParticulier(req, res) {
     console.log(req.headers.particulierid);
     mysqlConnection.query(
@@ -172,6 +183,8 @@ var functions = {
       }
     );
   },
+
+  // add a favorite artisan to a particulier
   addFavoriteArtisanToParticulier(req, res) {
     const particulierId = req.body.particulierId;
     const artisanId = req.body.artisanId;
@@ -188,6 +201,8 @@ var functions = {
       }
     );
   },
+
+  // get all artisans
   getAllParticuliers: function (req, res) {
     mysqlConnection.query(
       "SELECT * FROM particuliers",

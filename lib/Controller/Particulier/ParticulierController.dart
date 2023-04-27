@@ -10,6 +10,7 @@ import 'package:my_app/Controller/Artisan/ArtisanController.dart';
 class ParticulierController {
   static var url = "http://localhost:3000/";
 
+  // create particulier
   static Future<int> createParticulier(
     String name,
     String lastname,
@@ -44,6 +45,7 @@ class ParticulierController {
     return response.statusCode;
   }
 
+  // authenticate particulier
   static Future<Map<String, dynamic>> authenticate(
       String email, String password) async {
     var response = await http.post(Uri.parse("${url}authenticateParticulier"),
@@ -67,6 +69,7 @@ class ParticulierController {
     }
   }
 
+  // get info by token particulier
   static Future<Map<String, dynamic>> getInfo(String token) async {
     var response = await http
         .get(Uri.parse("${url}getinfoParticulier"), headers: <String, String>{
@@ -84,6 +87,7 @@ class ParticulierController {
     }
   }
 
+  // update particulier
   static Future<Map<String, dynamic>> updateParticulier(
     int id,
     String name,
@@ -130,6 +134,7 @@ class ParticulierController {
     }
   }
 
+  // create chantier
   static Future<Map<String, dynamic>> createChantier(
     String name,
     String type,
@@ -200,6 +205,7 @@ class ParticulierController {
     }
   }
 
+  // get chantier by id particulier
   static Future<Map<String, dynamic>> getChantierById(int particulierId) async {
     print(particulierId.toString());
     var response = await http.get(
@@ -221,6 +227,7 @@ class ParticulierController {
     }
   }
 
+  // add favorite artisan to particulier
   static Future<Map<String, dynamic>> addFavoriteArtisanToParticulier(
       int ParticulierId, int ArtisanId) async {
     var response =
