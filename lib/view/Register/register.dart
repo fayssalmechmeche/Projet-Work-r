@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:my_app/Controller/NodeJSManager.dart';
 import 'package:my_app/Controller/Particulier/ParticulierController.dart';
 import 'package:my_app/view/Login/selectionPage.dart';
@@ -18,6 +19,7 @@ class _RegisterPageState extends State<RegisterPage> {
     var usernameController = TextEditingController();
     var nameController = TextEditingController();
     var passwordController = TextEditingController();
+    var confirmPasswordController = TextEditingController();
     var telephoneController = TextEditingController();
     var adressController = TextEditingController();
     var PostalCodeController = TextEditingController();
@@ -117,6 +119,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       padding: const EdgeInsets.only(top: 20),
                       width: 300,
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         controller: telephoneController,
                         cursorColor: Colors.grey,
                         decoration: InputDecoration(
@@ -197,6 +203,10 @@ class _RegisterPageState extends State<RegisterPage> {
                         padding: const EdgeInsets.only(top: 20),
                         width: 130,
                         child: TextFormField(
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
                           cursorColor: Colors.grey,
                           controller: PostalCodeController,
                           decoration: InputDecoration(
@@ -238,6 +248,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       padding: const EdgeInsets.only(top: 20),
                       width: 300,
                       child: TextFormField(
+                        controller: confirmPasswordController,
                         cursorColor: Colors.grey,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -276,6 +287,31 @@ class _RegisterPageState extends State<RegisterPage> {
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
+                  if (passwordController.text !=
+                      confirmPasswordController.text) {
+                    error = true;
+                    const snackBar = SnackBar(
+                      content: Text(
+                          'La confirmation de mot de passe et le mot de passe ne sont pas identique !'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+
+                  if (nameController.text == "" ||
+                      firstnameController.text == "" ||
+                      usernameController.text == "" ||
+                      telephoneController.text == "" ||
+                      cityController.text == "" ||
+                      adressController.text == "" ||
+                      PostalCodeController.text == "" ||
+                      passwordController.text == "" ||
+                      emailController.text == "") {
+                    error = true;
+                    const snackBar = SnackBar(
+                      content: Text('Des champs sont vides !'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
                   if (error == false) {
                     createParticulierAwait(
                         firstnameController.text,
@@ -288,6 +324,11 @@ class _RegisterPageState extends State<RegisterPage> {
                         adressController.text,
                         PostalCodeController.text);
                   }
+                  const snackBar = SnackBar(
+                    content:
+                        Text('Inscription réussi ! vous pouvez vous connecter'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 },
                 style: OutlinedButton.styleFrom(
                   shape: const StadiumBorder(),
