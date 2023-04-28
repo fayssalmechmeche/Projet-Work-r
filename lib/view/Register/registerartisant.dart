@@ -322,7 +322,7 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                       padding: const EdgeInsets.only(top: 20),
                       width: 300,
                       child: DropdownButtonFormField<String?>(
-                        hint: const Text('Type de logement'),
+                        hint: const Text('Type d\'entreprise'),
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(
