@@ -20,9 +20,7 @@ class _FirstPageState extends State<FirstPage> {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          // Ajouter un SingleChildScrollView ici
           child: Center(
-            // Remplacez Row par Center
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
