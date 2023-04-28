@@ -18,12 +18,9 @@ class _NavigationPageState extends State<NavigationPage> {
   static final List<Widget> _NavScreens = <Widget>[
     ListChat(),
     ListProposition(),
-     const HomePage(title: "home"),
+    const HomePage(title: "home"),
     ListWork(),
     Profile(title: "profile"),
-    
-
-
   ];
   @override
   Widget build(BuildContext context) {
