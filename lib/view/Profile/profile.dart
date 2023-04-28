@@ -147,9 +147,14 @@ class _ProfileState extends State<Profile> {
                               child: const Text("Mail",
                                   style: TextStyle(fontSize: 18)),
                             ),
-                            Text(globalData.getEmail(),
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.grey)),
+                            Container(
+                              padding: const EdgeInsets.only(
+                                  top: 20, right: 20, bottom: 10),
+                              width: 210,
+                              child: Text(globalData.getEmail(),
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.grey)),
+                            ),
                           ]),
                       if (globalData.getRole() == 0)
                         Column(
