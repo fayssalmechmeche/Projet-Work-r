@@ -44,7 +44,7 @@ var functions = {
       req.body.email,
 
       (error, results) => {
-        // Si l'authentification échoue, renvoyer un message d'erreur
+        // If authentification fail, return error message
         if (error || results[0] === undefined) {
           console.log("error : " + error);
           return res.status(403).send({
@@ -52,7 +52,7 @@ var functions = {
             message: "Authentification échouée. Email introuvable.",
           });
 
-          // Si l'authentification réussie, renvoyer un token
+          // if authentification success, return token
         } else {
           console.log("results : " + results[0].password);
           bcrypt.compare(

@@ -16,22 +16,20 @@ class RegisterArtisan extends StatefulWidget {
 
 class _RegisterArtisanState extends State<RegisterArtisan> {
   @override
-  
-var firstnameController = TextEditingController();
-    var usernameController = TextEditingController();
-    var nameController = TextEditingController();
-    var passwordController = TextEditingController();
-    var emailController = TextEditingController();
-    var phoneController = TextEditingController();
-    var companyController = TextEditingController();
-    var CityController = TextEditingController();
-    var AdressController = TextEditingController();
-    var PostalCodeController = TextEditingController();
-    var siretController = TextEditingController();
-String? _dropdownvalue1;
+  var firstnameController = TextEditingController();
+  var usernameController = TextEditingController();
+  var nameController = TextEditingController();
+  var passwordController = TextEditingController();
+  var emailController = TextEditingController();
+  var phoneController = TextEditingController();
+  var companyController = TextEditingController();
+  var CityController = TextEditingController();
+  var AdressController = TextEditingController();
+  var PostalCodeController = TextEditingController();
+  var siretController = TextEditingController();
+  String? _dropdownvalue1;
   List<String> category = ['Electricité', 'Plomberie', 'Maçonnerie'];
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
