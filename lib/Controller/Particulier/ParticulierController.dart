@@ -40,8 +40,8 @@ class ParticulierController {
           'chantier': 'n',
         }));
 
-    print('Response status 200: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    //print('Response status 200: ${response.statusCode}');
+    //print('Response body: ${response.body}');
     return response.statusCode;
   }
 
@@ -58,12 +58,12 @@ class ParticulierController {
     // Vérifier que la réponse a un statut OK
     if (response.statusCode == 200) {
       // Parser le JSON reçu en réponse
-      print("connexion réussie Particulier Controller");
-      print(response.body);
+      //print("connexion réussie Particulier Controller");
+      //print(response.body);
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse;
     } else {
-      print("connexion échouée Particulier Controller");
+      //print("connexion échouée Particulier Controller");
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse;
     }
@@ -77,11 +77,11 @@ class ParticulierController {
       'Authorization': 'Bearer ${token}'
     });
     if (response.statusCode == 200) {
-      print("getInfo réussie Particulier Controller");
+      //print("getInfo réussie Particulier Controller");
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse;
     } else {
-      print("getInfo échouée Particulier Controller");
+      //print("getInfo échouée Particulier Controller");
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse;
     }
@@ -119,16 +119,16 @@ class ParticulierController {
           'picture': picture,
           'chantier': 'n',
         }));
-    print('Response status 200: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    //print('Response status 200: ${response.statusCode}');
+    //print('Response body: ${response.body}');
     if (response.statusCode == 200) {
       // Parser le JSON reçu en réponse
-      print("connexion réussie Particulier Controller");
-      print(response.body);
+      //print("connexion réussie Particulier Controller");
+      //print(response.body);
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse;
     } else {
-      print("connexion échouée Particulier Controller");
+      //print("connexion échouée Particulier Controller");
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse;
     }
@@ -159,14 +159,14 @@ class ParticulierController {
 
     if (response.statusCode == 200) {
       // Parser le JSON reçu en réponse
-      print("creation de chantier réussie Particulier Controller");
-      print(response.body);
+      //print("creation de chantier réussie Particulier Controller");
+      //print(response.body);
 
       var artisans = await ArtisanController.getAllArtisan();
 
       for (var artisan in artisans['results']) {
         String email = artisan['email'];
-        print(email);
+        //print(email);
 
         // Envoie un email à cet email
         final smtpServer =
@@ -181,9 +181,9 @@ class ParticulierController {
         try {
           final sendReport = await send(message, smtpServer);
         } on MailerException catch (e) {
-          print('Message not sent.');
+          //print('Message not sent.');
           for (var p in e.problems) {
-            print('Problem: ${p.code}: ${p.msg}');
+            //print('Problem: ${p.code}: ${p.msg}');
           }
         }
       }
@@ -199,7 +199,7 @@ class ParticulierController {
 
       return jsonResponse;
     } else {
-      print("creation de chantier échoué Particulier Controller");
+      //print("creation de chantier échoué Particulier Controller");
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse;
     }
@@ -207,7 +207,7 @@ class ParticulierController {
 
   // get chantier by id particulier
   static Future<Map<String, dynamic>> getChantierById(int particulierId) async {
-    print(particulierId.toString());
+    //print(particulierId.toString());
     var response = await http.get(
       Uri.parse("${url}getAllChantiersByParticulier"),
       headers: <String, String>{
@@ -217,11 +217,11 @@ class ParticulierController {
     );
 
     if (response.statusCode == 200) {
-      print("getChantierById réussie Particulier Controller");
+      //print("getChantierById réussie Particulier Controller");
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse;
     } else {
-      print("getChantierById échouée Particulier Controller");
+      //print("getChantierById échouée Particulier Controller");
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse;
     }
@@ -241,11 +241,11 @@ class ParticulierController {
             }));
 
     if (response.statusCode == 200) {
-      print("addFavoriteArtisanToParticulier réussie Particulier Controller");
+      //print("addFavoriteArtisanToParticulier réussie Particulier Controller");
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse;
     } else {
-      print("addFavoriteArtisanToParticulier échouée Particulier Controller");
+      //print("addFavoriteArtisanToParticulier échouée Particulier Controller");
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse;
     }

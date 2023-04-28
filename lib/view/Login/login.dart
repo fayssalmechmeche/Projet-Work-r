@@ -106,7 +106,7 @@ class _LoginState extends State<Login> {
                           authenticated["token"]);
 
                       globalData.setUser(decodedToken["msg"], 1);
-                      print(globalData.user["email"]);
+                      //print(globalData.user["email"]);
 
                       Navigator.pushNamed(context, NavigationPage.tag);
                     } else {
@@ -130,7 +130,7 @@ class _LoginState extends State<Login> {
                 padding: EdgeInsets.only(top: 15),
                 child: GestureDetector(
                   onTap: () {
-                    print('Text Clicked');
+                    //print('Text Clicked');
                   },
                   child: const Text('Mot de passe oublié ?'),
                 ),

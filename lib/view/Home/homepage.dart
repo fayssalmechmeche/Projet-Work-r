@@ -21,6 +21,7 @@ class _HomePageState extends State<HomePage> {
     final globalData = Provider.of<GlobalData>(context);
     final allArtisan = ArtisanController.getAllArtisan();
     final recentArtisan = ArtisanController.getRecentArtisan();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
