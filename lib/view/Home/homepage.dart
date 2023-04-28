@@ -21,6 +21,7 @@ class _HomePageState extends State<HomePage> {
     final globalData = Provider.of<GlobalData>(context);
     final allArtisan = ArtisanController.getAllArtisan();
     final recentArtisan = ArtisanController.getRecentArtisan();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -153,16 +154,23 @@ class _HomePageState extends State<HomePage> {
       future: artisans,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
-          print(snapshot.data['results'][1]);
-          return ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: snapshot.data['results'].length,
-              itemBuilder: (BuildContext context, int index) {
-                return SizedBox(
-                  width: 195,
-                  child: CardArtisan(index, snapshot.data['results'][index]),
-                );
-              });
+          if (snapshot.data['results'].length >= 0) {
+            return ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: snapshot.data['results'].length,
+                itemBuilder: (BuildContext context, int index) {
+                  return SizedBox(
+                    width: 195,
+                    child: CardArtisan(index, snapshot.data['results'][index]),
+                  );
+                });
+          } else {
+            return Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [Text("Aucun Artisan")],
+            ));
+          }
         } else {
           return const Center(child: CircularProgressIndicator());
         }

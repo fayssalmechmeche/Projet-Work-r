@@ -15,7 +15,7 @@ class _WorkPropositionState extends State<WorkProposition> {
   @override
   Widget build(BuildContext context) {
     final data = ModalRoute.of(context)!.settings.arguments as Map;
-    print(data);
+    //print(data);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -39,7 +39,7 @@ class _WorkPropositionState extends State<WorkProposition> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.only( top: 25), 
+              padding: const EdgeInsets.only(top: 25),
               height: 600,
               child: ListView(shrinkWrap: true, children: [
                 Row(
@@ -87,7 +87,7 @@ class _WorkPropositionState extends State<WorkProposition> {
                             ),
                           ),
                           const SizedBox(height: 5),
-                           Text(
+                          Text(
                             data["category"],
                             style: TextStyle(
                               fontSize: 15,
@@ -116,7 +116,7 @@ class _WorkPropositionState extends State<WorkProposition> {
                             ),
                           ),
                           const SizedBox(height: 5),
-                           Text(
+                          Text(
                             data["type"],
                             style: TextStyle(
                               fontSize: 15,
@@ -145,7 +145,7 @@ class _WorkPropositionState extends State<WorkProposition> {
                             ),
                           ),
                           const SizedBox(height: 5),
-                           Text(
+                          Text(
                             data["date"],
                             style: TextStyle(
                               fontSize: 15,
@@ -175,9 +175,9 @@ class _WorkPropositionState extends State<WorkProposition> {
                               ),
                             ),
                             const SizedBox(height: 18),
-                             Text(
-                               data["description"],
-                               style: TextStyle(
+                            Text(
+                              data["description"],
+                              style: TextStyle(
                                 fontSize: 15,
                                 color: Colors.grey,
                                 fontWeight: FontWeight.bold,
@@ -247,7 +247,7 @@ class _WorkPropositionState extends State<WorkProposition> {
                             ),
                           ),
                           const SizedBox(height: 5),
-                           Text(
+                          Text(
                             data["budget"],
                             style: TextStyle(
                               fontSize: 18,

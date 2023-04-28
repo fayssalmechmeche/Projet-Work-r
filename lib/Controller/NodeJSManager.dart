@@ -10,8 +10,8 @@ class NodeJSManager {
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(<String, String>{'name': name, 'password': password}));
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    //print('Response status: ${response.statusCode}');
+    //print('Response body: ${response.body}');
     return response.statusCode;
   }
 
@@ -22,8 +22,8 @@ class NodeJSManager {
         },
         body: jsonEncode(<String, String>{'name': name, 'password': password}));
 
-    // print('Response status: ${response.statusCode}');
-    // print('Response body: ${response.body}');
+    // //print('Response status: ${response.statusCode}');
+    // //print('Response body: ${response.body}');
 
     return response.statusCode;
   }
@@ -35,8 +35,8 @@ class NodeJSManager {
         },
         body: jsonEncode(<String, String>{'name': name, 'password': password}));
 
-    // print('Response status: ${response.statusCode}');
-    // print('Response body: ${response.body}');
+    // //print('Response status: ${response.statusCode}');
+    // //print('Response body: ${response.body}');
 
     return response.statusCode;
   }

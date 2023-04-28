@@ -19,15 +19,13 @@ class _ListWorkState extends State<ListWork> {
     final globalData = Provider.of<GlobalData>(context);
     var chantiers;
     if (globalData.getRole() == 1) {
-      chantiers =
-          ParticulierController.getChantierById(globalData.getId());
+      chantiers = ParticulierController.getChantierById(globalData.getId());
     }
     if (globalData.getRole() == 0) {
-      chantiers =
-          ArtisanController.getChantierById(globalData.getId());
+      chantiers = ArtisanController.getChantierById(globalData.getId());
     }
 
-    print(chantiers.toString());
+    //print(chantiers.toString());
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -109,10 +107,10 @@ class _ListWorkState extends State<ListWork> {
     return FutureBuilder(
       future: chantiers,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        print(snapshot.hasData);
+        //print(snapshot.hasData);
         if (snapshot.hasData) {
           if (snapshot.data['results'].length != 0) {
-            print(snapshot.data['results'].length);
+            //print(snapshot.data['results'].length);
             return Expanded(
                 child: ListView.builder(
                     itemCount: snapshot.data['results'].length,
@@ -134,7 +132,7 @@ class _ListWorkState extends State<ListWork> {
   }
 
   Widget CardChat(int index, data) {
-    print(data['category']);
+    //print(data['category']);
     return GestureDetector(
         onTap: () {
           Navigator.of(context).pushNamed(WorkFollow.tag);

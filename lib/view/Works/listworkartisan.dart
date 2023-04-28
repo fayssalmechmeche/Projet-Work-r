@@ -43,17 +43,22 @@ class _ListWorkArtisanState extends State<ListWorkArtisan> {
     return FutureBuilder(
       future: chantiers,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-       if (snapshot.hasData) {
+        if (snapshot.hasData) {
           if (snapshot.data['results'].length != 0) {
-            print(snapshot.data['results'].length);
+            //print(snapshot.data['results'].length);
             return Expanded(
                 child: ListView.builder(
                     itemCount: snapshot.data['results'].length,
                     itemBuilder: (BuildContext context, int index) {
-                      return cardChantier(index, snapshot.data['results'][index]);
+                      return cardChantier(
+                          index, snapshot.data['results'][index]);
                     }));
           } else {
-             return Center(child:Column(mainAxisAlignment: MainAxisAlignment.center,children: [Text("Aucune proposition de chantier")],) );
+            return Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [Text("Aucune proposition de chantier")],
+            ));
           }
         } else {
           return const Center(child: CircularProgressIndicator());
@@ -62,9 +67,7 @@ class _ListWorkArtisanState extends State<ListWorkArtisan> {
     );
   }
 
-
-
-  Widget cardChantier(int index , data) {
+  Widget cardChantier(int index, data) {
     return GestureDetector(
         onTap: () {
           Navigator.of(context).pushNamed(WorkProposition.tag, arguments: data);
@@ -97,18 +100,18 @@ class _ListWorkArtisanState extends State<ListWorkArtisan> {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children:  [
+                      children: [
                         Padding(
                             padding: const EdgeInsets.all(5),
                             child: Text("${data['name']}",
                                 style: const TextStyle(
                                     fontSize: 10,
                                     fontWeight: FontWeight.bold))),
-                         Padding(
+                        Padding(
                             padding: EdgeInsets.only(
                                 left: 5, right: 2, top: 2, bottom: 2),
                             child: Text("${data['category']}")),
-                         Padding(
+                        Padding(
                             padding: EdgeInsets.all(5),
                             child: Text("Reçu le ${data['date']}"))
                       ]),

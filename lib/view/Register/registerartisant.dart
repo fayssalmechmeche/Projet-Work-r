@@ -353,6 +353,18 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
             width: 130,
             child: OutlinedButton(
               onPressed: () async {
+                bool error = false;
+                bool emailValid =
+                    RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
+                        .hasMatch(emailController.text);
+                if (emailValid == false) {
+                  error = true;
+                  const snackBar = SnackBar(
+                    content:
+                        Text('Error in email ! please select a correct email'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
                 if (firstnameController.text.isEmpty ||
                     nameController.text.isEmpty ||
                     passwordController.text.isEmpty ||
@@ -365,33 +377,43 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                     PostalCodeController.text.isEmpty ||
                     companyController.text.isEmpty ||
                     _dropdownvalue1 == null) {
+                  error = true;
                   const snackBar = SnackBar(
                     content: Text('Des champs sont vides !'),
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 }
+
                 if (passwordController.text !=
                     confirmationPasswordController.text) {
+                  error = true;
                   const snackBar = SnackBar(
                     content: Text('Les mots de passe ne sont pas identiques !'),
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 }
-                if (await ArtisanController.createArtisan(
-                      firstnameController.text,
-                      nameController.text,
-                      passwordController.text,
-                      emailController.text,
-                      usernameController.text,
-                      phoneController.text,
-                      siretController.text,
-                      'test',
-                      AdressController.text,
-                      _dropdownvalue1!,
-                      companyController.text,
-                    ) ==
-                    200) {
-                  Navigator.of(context).pushNamed(SelectionPage.tag);
+                if (error == false) {
+                  if (await ArtisanController.createArtisan(
+                        firstnameController.text,
+                        nameController.text,
+                        passwordController.text,
+                        emailController.text,
+                        usernameController.text,
+                        phoneController.text,
+                        siretController.text,
+                        'test',
+                        AdressController.text,
+                        _dropdownvalue1!,
+                        companyController.text,
+                      ) ==
+                      200) {
+                    const snackBar = SnackBar(
+                      content: Text(
+                          'Inscription réussi ! vous pouvez vous connecter'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    Navigator.of(context).pushNamed(SelectionPage.tag);
+                  }
                 }
               },
               style: OutlinedButton.styleFrom(

@@ -54,7 +54,7 @@ class _EditProfileState extends State<EditProfile> {
     super.initState();
     final globalData = Provider.of<GlobalData>(context, listen: false);
     _imageName = globalData.getPicture();
-    print(_imageName);
+    //print(_imageName);
   }
 
   @override

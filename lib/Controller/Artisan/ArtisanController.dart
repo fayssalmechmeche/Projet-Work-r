@@ -40,8 +40,8 @@ class ArtisanController {
           'chantier': "null",
           'password': password,
         }));
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    //print('Response status: ${response.statusCode}');
+    //print('Response body: ${response.body}');
     return response.statusCode;
   }
 
@@ -54,7 +54,7 @@ class ArtisanController {
   //       body:
   //           jsonEncode(<String, String>{'email': email, 'password': password}));
 
-  //   print(jsonDecode(response.body));
+  //   //print(jsonDecode(response.body));
   //   return jsonDecode(response.body);
   // }
 
@@ -72,12 +72,12 @@ class ArtisanController {
     // Vérifier que la réponse a un statut OK
     if (response.statusCode == 200) {
       // Parser le JSON reçu en réponse
-      print("connexion réussie Artisan Controller");
-      print(response.body);
+      //print("connexion réussie Artisan Controller");
+      //print(response.body);
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse;
     } else {
-      print("connexion échouée Artisan Controller");
+      //print("connexion échouée Artisan Controller");
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse;
     }
@@ -91,11 +91,11 @@ class ArtisanController {
       'Authorization': 'Bearer ${token}'
     });
     if (response.statusCode == 200) {
-      print("getInfo réussie Artisan Controller");
+      //print("getInfo réussie Artisan Controller");
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse;
     } else {
-      print("getInfo échouée Artisan Controller");
+      //print("getInfo échouée Artisan Controller");
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse;
     }
@@ -130,16 +130,16 @@ class ArtisanController {
           'picture': 'n',
           'chantier': 'n',
         }));
-    print('Response status 200: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    //print('Response status 200: ${response.statusCode}');
+    //print('Response body: ${response.body}');
     if (response.statusCode == 200) {
       // Parser le JSON reçu en réponse
-      print("connexion réussie Artisan Controller");
-      print(response.body);
+      //print("connexion réussie Artisan Controller");
+      //print(response.body);
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse;
     } else {
-      print("connexion échouée Artisan Controller");
+      //print("connexion échouée Artisan Controller");
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse;
     }
@@ -156,12 +156,12 @@ class ArtisanController {
     );
 
     if (response.statusCode == 200) {
-      print("getWorkByStatus réussie Particulier Controller");
+      //print("getWorkByStatus réussie Particulier Controller");
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
-      print(response.body);
+      //print(response.body);
       return jsonResponse;
     } else {
-      print("getWorkByStatus échouée Particulier Controller");
+      //print("getWorkByStatus échouée Particulier Controller");
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse;
     }
@@ -172,7 +172,7 @@ class ArtisanController {
     return http.get(Uri.parse("${url}getAllArtisan"), headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     }).then((http.Response response) {
-      print("getAllArtisan réussie Artisan Controller");
+      //print("getAllArtisan réussie Artisan Controller");
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
 
       return jsonResponse;
@@ -185,7 +185,7 @@ class ArtisanController {
         .get(Uri.parse("${url}getRecentArtisan"), headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     }).then((http.Response response) {
-      print("getRecentArtisan réussie Artisan Controller");
+      //print("getRecentArtisan réussie Artisan Controller");
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
 
       return jsonResponse;
@@ -194,7 +194,7 @@ class ArtisanController {
 
   // get Work By Artisan
   static Future<Map<String, dynamic>> getChantierById(int artisanId) async {
-    print(artisanId.toString());
+    //print(artisanId.toString());
     var response = await http.get(
       Uri.parse("${url}getAllChantiersByArtisan"),
       headers: <String, String>{
@@ -204,11 +204,11 @@ class ArtisanController {
     );
 
     if (response.statusCode == 200) {
-      print("getChantierById réussie Artisan Controller");
+      //print("getChantierById réussie Artisan Controller");
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse;
     } else {
-      print("getChantierById échouée Artisan Controller");
+      //print("getChantierById échouée Artisan Controller");
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse;
     }
