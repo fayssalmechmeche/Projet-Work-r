@@ -20,6 +20,7 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
   var usernameController = TextEditingController();
   var nameController = TextEditingController();
   var passwordController = TextEditingController();
+  var confirmationPasswordController = TextEditingController();
   var emailController = TextEditingController();
   var phoneController = TextEditingController();
   var companyController = TextEditingController();
@@ -187,6 +188,7 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                       padding: const EdgeInsets.only(top: 20),
                       width: 300,
                       child: TextFormField(
+                        controller: confirmationPasswordController,
                         cursorColor: Colors.grey,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -351,6 +353,30 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
             width: 130,
             child: OutlinedButton(
               onPressed: () async {
+                if (firstnameController.text.isEmpty ||
+                    nameController.text.isEmpty ||
+                    passwordController.text.isEmpty ||
+                    emailController.text.isEmpty ||
+                    usernameController.text.isEmpty ||
+                    phoneController.text.isEmpty ||
+                    siretController.text.isEmpty ||
+                    AdressController.text.isEmpty ||
+                    CityController.text.isEmpty ||
+                    PostalCodeController.text.isEmpty ||
+                    companyController.text.isEmpty ||
+                    _dropdownvalue1 == null) {
+                  const snackBar = SnackBar(
+                    content: Text('Des champs sont vides !'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+                if (passwordController.text !=
+                    confirmationPasswordController.text) {
+                  const snackBar = SnackBar(
+                    content: Text('Les mots de passe ne sont pas identiques !'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
                 if (await ArtisanController.createArtisan(
                       firstnameController.text,
                       nameController.text,

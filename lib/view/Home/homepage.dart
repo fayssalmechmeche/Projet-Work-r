@@ -125,9 +125,7 @@ class _HomePageState extends State<HomePage> {
               thickness: 1,
               height: 30,
             ),
-            Container(
-                height: 115,
-                child: ArtisanList(recentArtisan)),
+            Container(height: 115, child: ArtisanList(recentArtisan)),
             const Divider(
               color: Colors.black,
               thickness: 1,
@@ -145,9 +143,7 @@ class _HomePageState extends State<HomePage> {
               thickness: 1,
               height: 30,
             ),
-            Container(
-                height: 115,
-                child: ArtisanList(allArtisan))
+            Container(height: 115, child: ArtisanList(allArtisan))
           ]),
     );
   }
@@ -162,10 +158,10 @@ class _HomePageState extends State<HomePage> {
               scrollDirection: Axis.horizontal,
               itemCount: snapshot.data['results'].length,
               itemBuilder: (BuildContext context, int index) {
-                return  SizedBox(
-                          width: 195,
-                          child: CardArtisan(index, snapshot.data['results'][index] ),
-                        );
+                return SizedBox(
+                  width: 195,
+                  child: CardArtisan(index, snapshot.data['results'][index]),
+                );
               });
         } else {
           return const Center(child: CircularProgressIndicator());
@@ -173,7 +169,6 @@ class _HomePageState extends State<HomePage> {
       },
     );
   }
-
 
   Widget CardArtisan(int index, data) {
     return GestureDetector(
@@ -209,10 +204,10 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                   Padding(
+                  Padding(
                       padding: EdgeInsets.only(top: 10),
                       child: Text(data['lastname'])),
-                   Text(data['name']),
+                  Text(data['name']),
                   Padding(
                       padding: EdgeInsets.only(top: 10),
                       child: Text(
@@ -221,7 +216,7 @@ class _HomePageState extends State<HomePage> {
                       )),
                   Padding(
                       padding: const EdgeInsets.only(top: 10),
-                      child: RatingOfProfile(0.9)),
+                      child: RatingOfProfile(double.parse(data['note']))),
                 ]),
               ],
             )));
