@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:my_app/Controller/Artisan/ArtisanController.dart';
+import 'package:provider/provider.dart';
+
+import '../../Controller/global.dart';
 
 class AddDevis extends StatefulWidget {
   const AddDevis({super.key});
@@ -24,6 +28,9 @@ class _AddDevisState extends State<AddDevis> {
 
   @override
   Widget build(BuildContext context) {
+    final data = ModalRoute.of(context)!.settings.arguments as Map;
+    final globalData = Provider.of<GlobalData>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -159,8 +166,7 @@ class _AddDevisState extends State<AddDevis> {
               child: OutlinedButton(
                 onPressed: () {
                   bool error = false;
-                  if (nameController.text == "" ||
-                      budgetController.text == "" ||
+                  if (budgetController.text == "" ||
                       descriptionController.text == "" ||
                       _dropdownvalue1 == null ||
                       _dropdownvalue2 == null) {
@@ -168,6 +174,14 @@ class _AddDevisState extends State<AddDevis> {
                   }
                   if (error == false) {
                     //AddDevisToBdd
+                    ArtisanController.createDevis(
+                        globalData.getId(),
+                        data['particulierID'],
+                        data['id'],
+                        _dropdownvalue1,
+                        _dropdownvalue2,
+                        budgetController.text,
+                        descriptionController.text);
                     Navigator.pop(context);
                   } else {
                     const snackBar = SnackBar(

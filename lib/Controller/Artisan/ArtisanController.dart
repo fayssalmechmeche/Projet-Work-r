@@ -213,4 +213,29 @@ class ArtisanController {
       return jsonResponse;
     }
   }
+
+  // create a devis for a work
+  static Future<Map<String, dynamic>> createDevis(artisanID, particulierID,
+      workID, type, category, price, description) async {
+    return await http
+        .post(Uri.parse("${url}createDevis"),
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: jsonEncode(<String, String>{
+              'artisanID': artisanID.toString(),
+              'particulierID': particulierID.toString(),
+              'workID': workID.toString(),
+              'type': type,
+              'category': category,
+              'price': price,
+              'description': description,
+            }))
+        .then((http.Response response) {
+      //print("createDevis réussie Artisan Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+
+      return jsonResponse;
+    });
+  }
 }

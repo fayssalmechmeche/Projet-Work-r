@@ -51,11 +51,17 @@ router.get(
   actionsArtisan.getAllChantiersByArtisan
 );
 
+// create Devis to Chantier
+
+router.post("/createDevis", actionsArtisan.createDevis);
+
 // insert new particulier
 router.post("/addParticulier", actionsParticulier.addNew);
 
 // update particulier
 router.post("/updateParticulier", actionsParticulier.updateParticulier);
+
+router.get("/getParticulierById", actionsParticulier.getParticulierById);
 
 // authenticate particulier
 router.post("/authenticateParticulier", actionsParticulier.authenticate);
@@ -71,5 +77,6 @@ router.get(
   "/getAllChantiersByParticulier",
   actionsParticulier.getAllChantiersByParticulier
 );
+router.get("/getAllDevis", actionsParticulier.getAllDevis);
 
 module.exports = router;

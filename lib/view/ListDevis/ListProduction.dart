@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/Controller/Artisan/ArtisanController.dart';
 import 'package:my_app/view/ListDevis/devis.dart';
 import 'package:provider/provider.dart';
 import '../../Controller/Particulier/ParticulierController.dart';
@@ -16,8 +17,16 @@ class _ListPropositionState extends State<ListProposition> {
   @override
   Widget build(BuildContext context) {
     final globalData = Provider.of<GlobalData>(context);
+    var devis;
+    if (globalData.getRole() == 1) {
+      devis = ParticulierController.getAllDevis(globalData.getId());
+      print(devis);
+    }
+    if (globalData.getRole() == 0) {
+      // final devis = ArtisanController.getAllDevis(globalData.getId());
+      // print(devis);
+    }
 
-    final chantiers = ParticulierController.getChantierById(globalData.getId());
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -47,21 +56,31 @@ class _ListPropositionState extends State<ListProposition> {
               width: 350,
             ),
           ),
-          chantiersList(chantiers)
+          chantiersList(devis)
         ]));
   }
 
-  Widget chantiersList(chantiers) {
+  Widget chantiersList(devis) {
     return FutureBuilder(
-      future: chantiers,
+      future: devis,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
+        //print(snapshot.hasData);
         if (snapshot.hasData) {
-          return Expanded(
-              child: ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return CardChat(index);
-                  }));
+          if (snapshot.data['results'].length != 0) {
+            //print(snapshot.data['results'].length);
+            return Expanded(
+                child: ListView.builder(
+                    itemCount: snapshot.data['results'].length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return CardChat(index, snapshot.data['results'][index]);
+                    }));
+          } else {
+            return Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [Text("Aucun chantier disponible")],
+            ));
+          }
         } else {
           return const Center(child: CircularProgressIndicator());
         }
@@ -69,12 +88,12 @@ class _ListPropositionState extends State<ListProposition> {
     );
   }
 
-  Widget CardChat(int index) {
+  Widget CardChat(int index, data) {
     final globalData = Provider.of<GlobalData>(context);
     return GestureDetector(
         onTap: () {
           if (globalData.getRole() == 1) {
-            Navigator.of(context).pushNamed(DevisFollow.tag);
+            Navigator.of(context).pushNamed(DevisFollow.tag, arguments: data);
           }
           const snackBar = SnackBar(
             content: Text('Works page have been lunched'),
@@ -110,20 +129,20 @@ class _ListPropositionState extends State<ListProposition> {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Padding(
                             padding: EdgeInsets.all(5),
-                            child: Text("Nom du Devis",
+                            child: Text(data["type"],
                                 style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold))),
                         Padding(
                             padding: EdgeInsets.only(
                                 left: 5, right: 2, top: 2, bottom: 2),
-                            child: Text("Plomberie")),
+                            child: Text(data["category"])),
                         Padding(
                             padding: EdgeInsets.all(5),
-                            child: Text("reçu le 10/12/2022"))
+                            child: Text(data["price"]))
                       ]),
                 ),
                 Container(

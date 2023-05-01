@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/Controller/Artisan/ArtisanController.dart';
+import 'package:my_app/Controller/Particulier/ParticulierController.dart';
 import 'package:my_app/Controller/global.dart';
 import 'package:provider/provider.dart';
-
 
 class DevisFollow extends StatefulWidget {
   const DevisFollow({Key? key}) : super(key: key);
@@ -13,7 +14,16 @@ class DevisFollow extends StatefulWidget {
 class _DevisFollowState extends State<DevisFollow> {
   @override
   Widget build(BuildContext context) {
+    final data = ModalRoute.of(context)!.settings.arguments as Map;
     final globalData = Provider.of<GlobalData>(context);
+
+    print(data['id']);
+
+    final particulier = ParticulierController.getParticulierById(data['id']);
+    print(particulier);
+
+    // final artisan = ArtisanController.getArtisan(globalData.getId());
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -103,52 +113,50 @@ class _DevisFollowState extends State<DevisFollow> {
                   ElevatedButton(
                     onPressed: () {},
                     child: Text(
-                      
                       "Télécharger",
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
                   SizedBox(height: 20),
-                  if(globalData.getRole() == 1)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: 
-                    [
-
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: Text(
-                          "Accepter",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.green,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
+                  if (globalData.getRole() == 1)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {},
+                          child: Text(
+                            "Accepter",
+                            style: TextStyle(color: Colors.white),
                           ),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 30, vertical: 10),
-                        ),
-                      ),
-                      SizedBox(width: 20),
-
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: Text(
-                          "Refuser",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.red,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.green,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                            ),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 30, vertical: 10),
                           ),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 30, vertical: 10),
                         ),
-                      ),
-                    ],
-                  ),
+                        SizedBox(width: 20),
+                        ElevatedButton(
+                          onPressed: () {
+                            // ParticulierController.refuseDevis(globalData.getId(), data['id'])
+                          },
+                          child: Text(
+                            "Refuser",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.red,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                            ),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 30, vertical: 10),
+                          ),
+                        ),
+                      ],
+                    ),
                 ],
               ),
             ),

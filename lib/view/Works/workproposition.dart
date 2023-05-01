@@ -288,7 +288,8 @@ class _WorkPropositionState extends State<WorkProposition> {
                   height: 85,
                   child: OutlinedButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamed(AddDevis.tag);
+                      Navigator.of(context)
+                          .pushNamed(AddDevis.tag, arguments: data);
                     },
                     style: OutlinedButton.styleFrom(
                         shape: RoundedRectangleBorder(

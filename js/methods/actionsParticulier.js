@@ -202,10 +202,46 @@ var functions = {
     );
   },
 
+  getAllDevis(req, res) {
+    console.log(req.headers.particulierid);
+    mysqlConnection.query(
+      "SELECT * FROM devis WHERE particulierID = ?",
+      req.headers.particulierid,
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ results });
+      }
+    );
+  },
+
+  refuseDevis(req, res) {
+    console.log(req.body.particulierID);
+    console.log(req.body.devisID);
+    mysqlConnection.query(
+      "UPDATE devis SET particulier_refuses = CONCAT(particulier_refuses, ?) WHERE _id = ?",
+      [req.body.particulierID, req.body.devisID],
+      function (error, results, fields) {
+        console.log(results);
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ results: results });
+      }
+    );
+  },
+
   // get all artisans
   getAllParticuliers: function (req, res) {
     mysqlConnection.query(
       "SELECT * FROM particuliers",
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ results });
+      }
+    );
+  },
+  getParticulierById: function (req, res) {
+    mysqlConnection.query(
+      "SELECT * FROM particuliers WHERE _id = ?",
+      req.headers.id,
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
         res.json({ results });

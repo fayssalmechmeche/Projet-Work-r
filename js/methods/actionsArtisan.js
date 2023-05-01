@@ -200,5 +200,40 @@ var functions = {
       }
     );
   },
+
+  refuseChantier(req, res) {
+    console.log(req.body.artisanID);
+    console.log(req.body.workID);
+    mysqlConnection.query(
+      "UPDATE chantier SET artisans_refuses = CONCAT(artisans_refuses, ?) WHERE _id = ?",
+      [req.body.artisanID, req.body.workID],
+      function (error, results, fields) {
+        console.log(results);
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ results: results });
+      }
+    );
+  },
+
+  // a function to create a pdf to a chantier
+  createDevis(req, res) {
+    console.log(req.body);
+    mysqlConnection.query(
+      "INSERT INTO devis (particulierID, artisanID, workID, type, category, price, description) VALUES (?, ?, ?, ?, ?, ?, ?)",
+      [
+        req.body.particulierID,
+        req.body.artisanID,
+        req.body.workID,
+        req.body.type,
+        req.body.category,
+        req.body.price,
+        req.body.description,
+      ],
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ success: true, msg: results });
+      }
+    );
+  },
 };
 module.exports = functions;
