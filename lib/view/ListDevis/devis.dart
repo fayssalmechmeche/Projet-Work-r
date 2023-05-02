@@ -135,7 +135,7 @@ class _DevisFollowState extends State<DevisFollow> {
                           ),
                         ),
                         SizedBox(height: 20),
-                        if (globalData.getRole() == 1)
+                        if (globalData.getRole() == 1 && data["state"] < 3)
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -198,7 +198,7 @@ class _DevisFollowState extends State<DevisFollow> {
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 30, vertical: 10),
                                 ),
-                              ),
+                              )
                             ],
                           ),
                       ],
