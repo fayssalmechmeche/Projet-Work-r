@@ -190,7 +190,7 @@ var functions = {
     const artisanId = req.body.artisanId;
 
     mysqlConnection.query(
-      "UPDATE particuliers SET favoris = CONCAT(favoris, ', ', ?) WHERE id = ?",
+      "UPDATE particuliers SET favoris = CONCAT(IFNULL(favoris,''), ',', ?) WHERE id = ?",
       [artisanId, particulierId],
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
@@ -205,7 +205,7 @@ var functions = {
   getAllDevis(req, res) {
     console.log(req.headers.particulierid);
     mysqlConnection.query(
-      "SELECT * FROM devis WHERE particulierID = ?",
+      "SELECT * FROM devis WHERE particulierID = ? AND particulier_refuses NOT LIKE CONCAT('%,', particulierID, ',%') AND particulier_refuses NOT LIKE CONCAT(particulierID, ',%') AND particulier_refuses NOT LIKE CONCAT('%,', particulierID)",
       req.headers.particulierid,
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
@@ -218,12 +218,12 @@ var functions = {
     console.log(req.body.particulierID);
     console.log(req.body.devisID);
     mysqlConnection.query(
-      "UPDATE devis SET particulier_refuses = CONCAT(particulier_refuses, ?) WHERE _id = ?",
+      "UPDATE devis SET particulier_refuses = CONCAT(IFNULL(particulier_refuses, ''),',', ?) WHERE id = ?",
       [req.body.particulierID, req.body.devisID],
       function (error, results, fields) {
         console.log(results);
         if (error) return res.json({ success: false, msg: error });
-        res.json({ results: results });
+        res.json({ success: true, msg: "Devis refusé" });
       }
     );
   },

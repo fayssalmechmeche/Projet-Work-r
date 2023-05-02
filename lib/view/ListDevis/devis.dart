@@ -156,8 +156,20 @@ class _DevisFollowState extends State<DevisFollow> {
                               ),
                               SizedBox(width: 20),
                               ElevatedButton(
-                                onPressed: () {
-                                  // ParticulierController.refuseDevis(globalData.getId(), data['id'])
+                                onPressed: () async {
+                                  final response =
+                                      await ParticulierController.refuseDevis(
+                                          int.tryParse(data['particulierID'])!,
+                                          data['id']);
+
+                                  if (response["success"] == true) {
+                                    Navigator.pop(context);
+                                  } else {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(
+                                      content: Text(response["msg"]),
+                                    ));
+                                  }
                                 },
                                 child: Text(
                                   "Refuser",
