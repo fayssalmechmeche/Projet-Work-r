@@ -316,4 +316,28 @@ class ParticulierController {
       return jsonResponse;
     }
   }
+
+  static Future<Map<String, dynamic>> accepteDevis(
+      int particulierID, int devisID, int workID) async {
+    var response = await http.post(Uri.parse("${url}accepteDevis"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'devisID': devisID.toString(),
+          'particulierID': particulierID.toString(),
+          'workID': workID.toString(),
+        }));
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      //print("getChantierById réussie Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } else {
+      //print("getChantierById échouée Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    }
+  }
 }

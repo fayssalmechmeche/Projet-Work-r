@@ -72,7 +72,9 @@ class _ListPropositionState extends State<ListProposition> {
                 child: ListView.builder(
                     itemCount: snapshot.data['results'].length,
                     itemBuilder: (BuildContext context, int index) {
-                      return CardChat(index, snapshot.data['results'][index]);
+                      if (snapshot.data['results'][index]['state'] != 0) {
+                        return CardChat(index, snapshot.data['results'][index]);
+                      }
                     }));
           } else {
             return Center(
@@ -114,16 +116,8 @@ class _ListPropositionState extends State<ListProposition> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Container(
-                    width: 20.0,
-                    height: 20.0,
-                    decoration: const BoxDecoration(
-                      color: Colors.orange,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                ),
+                    padding: const EdgeInsets.only(left: 20),
+                    child: statusCircleColor(data)),
                 Container(
                   padding: const EdgeInsets.only(left: 25),
                   child: Column(
@@ -152,5 +146,36 @@ class _ListPropositionState extends State<ListProposition> {
                     child: const Icon(Icons.arrow_forward_ios))
               ],
             )));
+  }
+
+  Widget statusCircleColor(data) {
+    if (data['state'] == 1) {
+      return Container(
+        width: 20.0,
+        height: 20.0,
+        decoration: const BoxDecoration(
+          color: Colors.orange,
+          shape: BoxShape.circle,
+        ),
+      );
+    } else if (data['state'] == 2) {
+      return Container(
+        width: 20.0,
+        height: 20.0,
+        decoration: const BoxDecoration(
+          color: Colors.green,
+          shape: BoxShape.circle,
+        ),
+      );
+    } else {
+      return const SizedBox(
+        width: 20.0,
+        height: 20.0,
+        child: Icon(
+          Icons.check_outlined,
+          color: Colors.green,
+        ),
+      );
+    }
   }
 }

@@ -140,7 +140,22 @@ class _DevisFollowState extends State<DevisFollow> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  final response =
+                                      await ParticulierController.accepteDevis(
+                                          int.tryParse(data['particulierID'])!,
+                                          data['id'],
+                                          int.tryParse(data['workID'])!);
+
+                                  if (response["success"] == true) {
+                                    Navigator.pop(context);
+                                  } else {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(
+                                      content: Text(response["msg"]),
+                                    ));
+                                  }
+                                },
                                 child: Text(
                                   "Accepter",
                                   style: TextStyle(color: Colors.white),

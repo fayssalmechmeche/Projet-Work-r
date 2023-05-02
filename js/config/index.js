@@ -83,4 +83,6 @@ router.get(
 router.get("/getAllDevis", actionsParticulier.getAllDevis);
 
 router.post("/refuseDevis", actionsParticulier.refuseDevis);
+
+router.post("/accepteDevis", actionsParticulier.acceptDevis);
 module.exports = router;
