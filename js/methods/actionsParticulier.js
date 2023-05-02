@@ -233,9 +233,10 @@ var functions = {
     console.log(req.body.particulierID);
     console.log(req.body.devisID);
     console.log(req.body.workID);
+    console.log(req.body.artisanID);
     mysqlConnection.query(
-      "UPDATE chantier SET state = 1 WHERE id = ?",
-      req.body.devisID
+      "UPDATE chantier SET state = 1, artisanID = ? WHERE id = ?",
+      [req.body.artisanID, req.body.workID]
     );
     mysqlConnection.query(
       "UPDATE devis SET state = 3 WHERE id = ? AND particulierID = ?",

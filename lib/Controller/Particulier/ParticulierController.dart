@@ -318,7 +318,7 @@ class ParticulierController {
   }
 
   static Future<Map<String, dynamic>> accepteDevis(
-      int particulierID, int devisID, int workID) async {
+      int particulierID, int devisID, int workID, int artisanID) async {
     var response = await http.post(Uri.parse("${url}accepteDevis"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -327,6 +327,7 @@ class ParticulierController {
           'devisID': devisID.toString(),
           'particulierID': particulierID.toString(),
           'workID': workID.toString(),
+          'artisanID': artisanID.toString(),
         }));
     print(response.body);
 

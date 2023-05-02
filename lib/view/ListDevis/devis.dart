@@ -145,7 +145,8 @@ class _DevisFollowState extends State<DevisFollow> {
                                       await ParticulierController.accepteDevis(
                                           int.tryParse(data['particulierID'])!,
                                           data['id'],
-                                          int.tryParse(data['workID'])!);
+                                          int.tryParse(data['workID'])!,
+                                          int.tryParse(data['artisanID'])!);
 
                                   if (response["success"] == true) {
                                     Navigator.pop(context);
