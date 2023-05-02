@@ -42,6 +42,9 @@ router.get("/getWorkByStatus", actionsArtisan.getWorkByStatus);
 // get All Artisan
 router.get("/getAllArtisan", actionsArtisan.getAllArtisan);
 
+// get Artisan By Id
+router.get("/getArtisanById", actionsArtisan.getArtisanById);
+
 // get Recent Artisan
 router.get("/getRecentArtisan", actionsArtisan.getRecentArtisan);
 

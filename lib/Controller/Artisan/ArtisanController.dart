@@ -145,6 +145,27 @@ class ArtisanController {
     }
   }
 
+  static Future<Map<String, dynamic>> getArtisanById(int id) async {
+    var response = await http.get(
+      Uri.parse("${url}getArtisanById"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'id': id.toString(),
+      },
+    );
+
+    if (response.statusCode == 200) {
+      //print("getArtisanById réussie Artisan Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      //print(response.body);
+      return jsonResponse;
+    } else {
+      //print("getArtisanById échouée Artisan Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    }
+  }
+
   // get work by state artisan
   static Future<Map<String, dynamic>> getWorkByStatus(state) async {
     var response = await http.get(
