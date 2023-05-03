@@ -1,7 +1,13 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:my_app/Controller/Artisan/ArtisanController.dart';
 import 'package:my_app/view/ListDevis/adddevis.dart';
+import 'package:my_app/view/Works/listworkartisan.dart';
+import 'package:my_app/view/Works/workfollow.dart';
+import 'package:provider/provider.dart';
+
+import '../../Controller/global.dart';
 
 class WorkProposition extends StatefulWidget {
   const WorkProposition({Key? key}) : super(key: key);
@@ -15,6 +21,7 @@ class _WorkPropositionState extends State<WorkProposition> {
   @override
   Widget build(BuildContext context) {
     final data = ModalRoute.of(context)!.settings.arguments as Map;
+    var globalData = Provider.of<GlobalData>(context);
     //print(data);
     return Scaffold(
       appBar: AppBar(
@@ -270,7 +277,12 @@ class _WorkPropositionState extends State<WorkProposition> {
                 width: 160,
                 height: 85,
                 child: OutlinedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    var response = ArtisanController.refuseChantier(
+                        globalData.getId(), data["id"]);
+
+                    Navigator.of(context).pushNamed(ListWorkArtisan.tag);
+                  },
                   style: OutlinedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(0),

@@ -235,6 +235,25 @@ class ArtisanController {
     }
   }
 
+  static Future<Map<String, dynamic>> refuseChantier(
+      int artisanID, int workID) async {
+    return await http
+        .post(Uri.parse("${url}refuseChantier"),
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: jsonEncode(<String, String>{
+              'artisanID': artisanID.toString(),
+              'workID': workID.toString(),
+            }))
+        .then((http.Response response) {
+      //print("refuseChantier réussie Artisan Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+
+      return jsonResponse;
+    });
+  }
+
   // create a devis for a work
   static Future<Map<String, dynamic>> createDevis(artisanID, particulierID,
       workID, type, category, price, description) async {

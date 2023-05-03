@@ -177,7 +177,7 @@ var functions = {
   // a function to get an work from the mysql database where the state is equal to the state in the header and return it
   getWorkByStatus: function (req, res) {
     mysqlConnection.query(
-      "SELECT * FROM chantier WHERE state = ? ",
+      "SELECT * FROM chantier WHERE state = ? AND artisan_refuses NOT LIKE CONCAT('%,', ?, ',%') AND artisan_refuses NOT LIKE CONCAT(?, ',%') AND artisan_refuses NOT LIKE CONCAT('%,', ?)",
       req.headers.state,
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
@@ -205,12 +205,12 @@ var functions = {
     console.log(req.body.artisanID);
     console.log(req.body.workID);
     mysqlConnection.query(
-      "UPDATE chantier SET artisans_refuses = CONCAT(artisans_refuses, ?) WHERE _id = ?",
+      "UPDATE chantier SET artisans_refuses = CONCAT(IFNULL(artisans_refuses, ''),',', ?) WHERE id = ?",
       [req.body.artisanID, req.body.workID],
       function (error, results, fields) {
         console.log(results);
         if (error) return res.json({ success: false, msg: error });
-        res.json({ results: results });
+        res.json({ success: true, msg: results });
       }
     );
   },

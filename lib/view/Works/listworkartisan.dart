@@ -17,7 +17,7 @@ class _ListWorkArtisanState extends State<ListWorkArtisan> {
   @override
   Widget build(BuildContext context) {
     final globalData = Provider.of<GlobalData>(context);
-    final chantiers = ArtisanController.getWorkByStatus(0);
+    final chantiers = ArtisanController.getWorkByStatus(1);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
