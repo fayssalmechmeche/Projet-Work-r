@@ -58,7 +58,11 @@ router.get(
 
 router.post("/createDevis", actionsArtisan.createDevis);
 
+router.get("/getAllDevis", actionsArtisan.getAllDevis);
+
 router.post("/refuseChantier", actionsArtisan.refuseChantier);
+
+///////////////////////////Particulier//////////////////////////////
 
 // insert new particulier
 router.post("/addParticulier", actionsParticulier.addNew);

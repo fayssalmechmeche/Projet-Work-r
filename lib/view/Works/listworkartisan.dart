@@ -44,6 +44,13 @@ class _ListWorkArtisanState extends State<ListWorkArtisan> {
       future: chantiers,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
+          if (snapshot.data['results'] == null) {
+            return Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [Text("Aucune proposition de chantier")],
+            ));
+          }
           if (snapshot.data['results'].length != 0) {
             //print(snapshot.data['results'].length);
             return Expanded(

@@ -23,8 +23,8 @@ class _ListPropositionState extends State<ListProposition> {
       print(devis);
     }
     if (globalData.getRole() == 0) {
-      // final devis = ArtisanController.getAllDevis(globalData.getId());
-      // print(devis);
+      devis = ArtisanController.getAllDevis(globalData.getId());
+      print(devis);
     }
 
     return Scaffold(
@@ -66,6 +66,14 @@ class _ListPropositionState extends State<ListProposition> {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         //print(snapshot.hasData);
         if (snapshot.hasData) {
+          if (snapshot.data['results'] == null) {
+            print(snapshot.data);
+            return Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [Text("Aucune proposition de chantier")],
+            ));
+          }
           if (snapshot.data['results'].length != 0) {
             //print(snapshot.data['results'].length);
             return Expanded(

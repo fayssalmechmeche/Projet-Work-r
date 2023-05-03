@@ -235,5 +235,18 @@ var functions = {
       }
     );
   },
+
+  // a function to get all the devis from the mysql database and return them
+  getAllDevis(req, res) {
+    console.log(req.headers.artisanid);
+    mysqlConnection.query(
+      "SELECT * FROM devis WHERE artisanID = ? AND state != 0",
+      req.headers.artisanid,
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ results });
+      }
+    );
+  },
 };
 module.exports = functions;

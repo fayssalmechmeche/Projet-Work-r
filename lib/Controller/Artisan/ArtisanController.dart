@@ -278,4 +278,25 @@ class ArtisanController {
       return jsonResponse;
     });
   }
+
+  static Future<Map<String, dynamic>> getAllDevis(int artisanID) async {
+    var response = await http.get(
+      Uri.parse("${url}getAllDevis"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'artisanID': artisanID.toString()
+      },
+    );
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      //print("getChantierById réussie Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } else {
+      //print("getChantierById échouée Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    }
+  }
 }
