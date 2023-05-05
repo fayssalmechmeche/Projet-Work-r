@@ -8,6 +8,7 @@ import 'package:my_app/view/Profile/editprofile.dart';
 import 'package:my_app/view/LunchPage/firstpage.dart';
 import 'package:my_app/view/Login/login.dart';
 import 'package:my_app/view/Navigation/NavigationPage.dart';
+import 'package:my_app/view/Profile/profileother.dart';
 import 'package:my_app/view/Register/registerartisant.dart';
 import 'package:my_app/view/Register/registerselection.dart';
 import 'package:my_app/view/Login/SelectionPage.dart';
@@ -70,6 +71,7 @@ class MyApp extends StatelessWidget {
         Task.tag: (context) => const Task(),
         TaskEdit.tag: (context) => const TaskEdit(),
         ListTasks.tag: (context) => const ListTasks(),
+        ProfileOther.tag:(context) => const ProfileOther()
       },
     );
   }

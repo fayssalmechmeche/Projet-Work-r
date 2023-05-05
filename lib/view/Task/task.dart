@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:my_app/view/Task/taskedit.dart';
+import 'package:provider/provider.dart';
+
+import '../../Controller/global.dart';
 
 class Task extends StatefulWidget {
   const Task({super.key});
@@ -13,6 +16,7 @@ class Task extends StatefulWidget {
 class _TaskState extends State<Task> {
   @override
   Widget build(BuildContext context) {
+    final globalData = Provider.of<GlobalData>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -216,23 +220,24 @@ class _TaskState extends State<Task> {
             ],
           ),
         ),
-         Container(
-              padding: const EdgeInsets.only(top: 20 ),
+        if (globalData.getRole() == 0)
+          Container(
+              padding: const EdgeInsets.only(top: 20),
               width: 120,
               height: 40,
-            child: OutlinedButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(TaskEdit.tag);
-              },
-              style: OutlinedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(0),
-                  ),
-                  foregroundColor: Colors.green,
-                  side: const BorderSide(color: Colors.green)),
-              child: const Text('Modifier',
-                  style: TextStyle(color: Colors.black)),
-            )),
+              child: OutlinedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(TaskEdit.tag);
+                },
+                style: OutlinedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(0),
+                    ),
+                    foregroundColor: Colors.green,
+                    side: const BorderSide(color: Colors.green)),
+                child: const Text('Modifier',
+                    style: TextStyle(color: Colors.black)),
+              )),
       ]),
     );
   }
