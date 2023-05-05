@@ -36,8 +36,8 @@ class ParticulierController {
           'city': city,
           'adress': adress,
           'postalCode': postalCode,
-          'picture': 'n',
-          'chantier': 'n',
+          'picture': 'null',
+          'chantier': 'null',
         }));
 
     //print('Response status 200: ${response.statusCode}');
@@ -117,7 +117,7 @@ class ParticulierController {
           'adress': adress,
           'postalCode': postalCode,
           'picture': picture,
-          'chantier': 'n',
+          'chantier': 'null',
         }));
     //print('Response status 200: ${response.statusCode}');
     //print('Response body: ${response.body}');

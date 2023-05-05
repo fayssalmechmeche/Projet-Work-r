@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:icon_decoration/icon_decoration.dart';
 import 'package:my_app/Controller/Artisan/ArtisanController.dart';
 import 'package:my_app/Controller/global.dart';
+import 'package:my_app/view/Profile/profileother.dart';
 import 'package:my_app/view/Works/ListWork.dart';
 import 'package:my_app/view/Works/listworkartisan.dart';
 import 'package:provider/provider.dart';
@@ -181,10 +182,7 @@ class _HomePageState extends State<HomePage> {
   Widget CardArtisan(int index, data) {
     return GestureDetector(
         onTap: () {
-          const snackBar = SnackBar(
-            content: Text('Page message have been lunched'),
-          );
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          Navigator.of(context).pushNamed(ProfileOther.tag, arguments: data);
         },
         child: Card(
             shape: RoundedRectangleBorder(

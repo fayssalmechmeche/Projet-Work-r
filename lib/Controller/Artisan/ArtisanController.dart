@@ -127,8 +127,8 @@ class ArtisanController {
           'telephone': telephone,
           'adress': adress,
           'entreprise': entreprise,
-          'picture': 'n',
-          'chantier': 'n',
+          'picture': 'null',
+          'chantier': 'null',
         }));
     //print('Response status 200: ${response.statusCode}');
     //print('Response body: ${response.body}');

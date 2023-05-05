@@ -1,20 +1,25 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:my_app/view/Profile/editprofile.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
 
 import '../../Controller/global.dart';
 
-class Profile extends StatefulWidget {
-  const Profile({Key? key, required String title}) : super(key: key);
-  static const tag = "/Profile";
+class ProfileOther extends StatefulWidget {
+  const ProfileOther({super.key});
+  static const tag = "/ProfileOther";
   @override
-  State<Profile> createState() => _ProfileState();
+  State<ProfileOther> createState() => _ProfileOtherState();
 }
 
-class _ProfileState extends State<Profile> {
+class _ProfileOtherState extends State<ProfileOther> {
   @override
   Widget build(BuildContext context) {
+    final data = ModalRoute.of(context)!.settings.arguments as Map;
     final globalData = Provider.of<GlobalData>(context);
+    print(data);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -23,12 +28,12 @@ class _ProfileState extends State<Profile> {
             Navigator.pop(context);
           },
           icon: Icon(
-            Icons.logout,
-            color: Colors.red,
+            Icons.arrow_back_ios,
+            color: Colors.black,
           ),
         ),
         title: const Text(
-          "Mon espace",
+          "Profile",
           style: TextStyle(
             color: Colors.black,
           ),
@@ -47,9 +52,9 @@ class _ProfileState extends State<Profile> {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                        image: globalData.getPicture() != "null"
-                            ? Image.asset(globalData.getPicture()).image
-                            : NetworkImage(
+                        image: data["picture"] != "null"
+                            ? Image.asset(data["picture"]).image
+                            :  NetworkImage(
                                 "https://avatars.githubusercontent.com/u/77855537?s=40&v=4"),
                         fit: BoxFit.fill),
                   ),
@@ -58,10 +63,10 @@ class _ProfileState extends State<Profile> {
                   width: 200,
                   padding: const EdgeInsets.only(left: 60),
                   child: Column(children: [
-                    Text(globalData.getName() + "  " + globalData.getLastName(),
+                    Text(data['name'] + "  " + data['lastname'],
                         style: TextStyle(fontSize: 18)),
                     if (globalData.getRole() == 0)
-                      Text(globalData.getEntreprise(),
+                      Text(data['entreprise'],
                           style:
                               TextStyle(fontSize: 18, color: Colors.red[900])),
                   ]),
@@ -76,7 +81,7 @@ class _ProfileState extends State<Profile> {
                       padding: EdgeInsets.only(top: 40, bottom: 10),
                       child: Text("Adresse", style: TextStyle(fontSize: 18)),
                     ),
-                    Text(globalData.getAdress(),
+                    Text(data['adress'],
                         style: TextStyle(fontSize: 16, color: Colors.grey)),
                     Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                       Column(
@@ -91,7 +96,7 @@ class _ProfileState extends State<Profile> {
                                     style: TextStyle(fontSize: 18)),
                               ),
                             if (globalData.getRole() == 1)
-                              Text(globalData.getCity(),
+                              Text(data['city'],
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.grey)),
                             if (globalData.getRole() == 0)
@@ -103,7 +108,7 @@ class _ProfileState extends State<Profile> {
                                     style: TextStyle(fontSize: 18)),
                               ),
                             if (globalData.getRole() == 0)
-                              Text(globalData.getMobilite(),
+                              Text(data['mobilite'],
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.grey)),
                           ]),
@@ -119,7 +124,7 @@ class _ProfileState extends State<Profile> {
                                     style: TextStyle(fontSize: 18)),
                               ),
                             if (globalData.getRole() == 0)
-                              Text(globalData.getDomaine(),
+                              Text(data['domaine'],
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.grey)),
                             if (globalData.getRole() == 1)
@@ -131,7 +136,7 @@ class _ProfileState extends State<Profile> {
                                     style: TextStyle(fontSize: 18)),
                               ),
                             if (globalData.getRole() == 1)
-                              Text(globalData.getPostalCode(),
+                              Text(data['postalCode'],
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.grey)),
                           ]),
@@ -142,20 +147,21 @@ class _ProfileState extends State<Profile> {
                           children: [
                             Container(
                               padding: const EdgeInsets.only(
-                                  top: 20, right: 20, bottom: 10),
+                                  top: 20, right: 20,),
                               width: 210,
                               child: const Text("Mail",
                                   style: TextStyle(fontSize: 18)),
                             ),
                             Container(
-                              padding:
-                                  const EdgeInsets.only(right: 20, bottom: 10),
+                              padding: const EdgeInsets.only(
+                                  top: 10, right: 20, bottom: 10),
                               width: 210,
-                              child: Text(globalData.getEmail(),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 3,
+                              child: Text(data['email'],
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 3,
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.grey)),
+                                    
                             ),
                           ]),
                       if (globalData.getRole() == 0)
@@ -169,23 +175,16 @@ class _ProfileState extends State<Profile> {
                                 child: const Text("Siret",
                                     style: TextStyle(fontSize: 18)),
                               ),
-                              Text(globalData.getSiret(),
+                              Text(data['siret'],
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.grey)),
                             ]),
                     ]),
                     const Padding(
                       padding: EdgeInsets.only(top: 20, bottom: 10),
-                      child:
-                          Text("Mot de passe", style: TextStyle(fontSize: 18)),
-                    ),
-                    const Text("**********",
-                        style: TextStyle(fontSize: 16, color: Colors.grey)),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 20, bottom: 10),
                       child: Text("Téléphone", style: TextStyle(fontSize: 18)),
                     ),
-                    Text(globalData.getPhone(),
+                    Text(data['telephone'],
                         style: TextStyle(fontSize: 16, color: Colors.grey)),
                   ])),
           Container(
@@ -194,16 +193,17 @@ class _ProfileState extends State<Profile> {
               width: 160,
               height: 85,
               child: OutlinedButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(EditProfile.tag);
-                },
+                onPressed: () {const snackBar = SnackBar(
+            content: Text('Redirection vers discussion'),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);},
                 style: OutlinedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(0),
                     ),
                     foregroundColor: Colors.green,
                     side: const BorderSide(color: Colors.green)),
-                child: const Text('Modification',
+                child: const Text('Contacter',
                     style: TextStyle(color: Colors.black)),
               )),
         ]),
