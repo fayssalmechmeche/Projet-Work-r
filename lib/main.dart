@@ -13,6 +13,10 @@ import 'package:my_app/view/Register/registerselection.dart';
 import 'package:my_app/view/Login/SelectionPage.dart';
 import 'package:my_app/view/Profile/profile.dart';
 import 'package:my_app/view/Register/register.dart';
+import 'package:my_app/view/Task/addtask.dart';
+import 'package:my_app/view/Task/listtasks.dart';
+import 'package:my_app/view/Task/task.dart';
+import 'package:my_app/view/Task/taskedit.dart';
 import 'package:my_app/view/Works/addwork.dart';
 import 'package:my_app/view/Works/workfollow.dart';
 import 'package:my_app/view/Works/listworkartisan.dart';
@@ -62,6 +66,10 @@ class MyApp extends StatelessWidget {
         ListWorkArtisan.tag: (context) => const ListWorkArtisan(),
         WorkProposition.tag: (context) => const WorkProposition(),
         AddDevis.tag: (context) => const AddDevis(),
+        AddTask.tag: (context) => const AddTask(),
+        Task.tag: (context) => const Task(),
+        TaskEdit.tag: (context) => const TaskEdit(),
+        ListTasks.tag: (context) => const ListTasks(),
       },
     );
   }
