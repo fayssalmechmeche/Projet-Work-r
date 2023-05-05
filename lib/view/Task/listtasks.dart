@@ -1,29 +1,25 @@
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/material.dart';
+import 'package:my_app/view/Task/task.dart';
 import 'package:my_app/view/Works/workfollow.dart';
 import 'package:provider/provider.dart';
 import '../../Controller/Artisan/ArtisanController.dart';
 import '../../Controller/Particulier/ParticulierController.dart';
 import '../../Controller/global.dart';
-import 'addwork.dart';
+import 'addtask.dart';
 
-class ListWork extends StatefulWidget {
-  const ListWork({Key? key}) : super(key: key);
-
+class ListTasks extends StatefulWidget {
+  const ListTasks({super.key});
+  static const tag = "/ListTasks";
   @override
-  State<ListWork> createState() => _ListWorkState();
+  State<ListTasks> createState() => _ListTasksState();
 }
 
-class _ListWorkState extends State<ListWork> {
+class _ListTasksState extends State<ListTasks> {
   @override
   Widget build(BuildContext context) {
     final globalData = Provider.of<GlobalData>(context);
-    var chantiers;
-    if (globalData.getRole() == 1) {
-      chantiers = ParticulierController.getChantierById(globalData.getId());
-    }
-    if (globalData.getRole() == 0) {
-      chantiers = ArtisanController.getChantierById(globalData.getId());
-    }
 
     //print(chantiers.toString());
     return Scaffold(
@@ -34,12 +30,12 @@ class _ListWorkState extends State<ListWork> {
               Navigator.pop(context);
             },
             icon: const Icon(
-              Icons.logout,
-              color: Colors.red,
+              Icons.arrow_back_ios,
+              color: Colors.black,
             ),
           ),
           title: const Text(
-            "Mes chantiers",
+            "Mes tâches",
             style: TextStyle(
               color: Colors.black,
             ),
@@ -48,27 +44,23 @@ class _ListWorkState extends State<ListWork> {
           elevation: 0,
         ),
         body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          if (globalData.getRole() == 1)
+          if (globalData.getRole() == 0)
             Visibility(
               visible: true,
               child: SizedBox(
                 height: 50,
                 width: 350,
-                child: addWork(),
+                child: addTask(),
               ),
             ),
-          chantiersList(chantiers)
+          tasksList()
         ]));
   }
 
-  Widget addWork() {
+  Widget addTask() {
     return GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed(AddWork.tag);
-          const snackBar = SnackBar(
-            content: Text('Works page have been lunched'),
-          );
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+           Navigator.of(context).pushNamed(AddTask.tag);
         },
         child: Card(
             shape: const StadiumBorder(
@@ -91,7 +83,7 @@ class _ListWorkState extends State<ListWork> {
                       children: const [
                         Padding(
                             padding: EdgeInsets.all(5),
-                            child: Text("Créer un nouveau chantier"))
+                            child: Text("Créer une nouvelle tâche"))
                       ]),
                 ),
                 Container(
@@ -103,83 +95,71 @@ class _ListWorkState extends State<ListWork> {
             )));
   }
 
-  Widget chantiersList(chantiers) {
-    return FutureBuilder(
-      future: chantiers,
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        //print(snapshot.hasData);
-        if (snapshot.hasData) {
-          if (snapshot.data['results'].length != 0) {
-            //print(snapshot.data['results'].length);
-            return Expanded(
-                child: ListView.builder(
-                    itemCount: snapshot.data['results'].length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return CardChat(index, snapshot.data['results'][index]);
-                    }));
-          } else {
-            return Center(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [Text("Aucun chantier disponible")],
-            ));
-          }
-        } else {
-          return const Center(child: CircularProgressIndicator());
-        }
-      },
-    );
+  Widget tasksList() {
+    return Expanded(
+        child: ListView.builder(
+            itemCount: 3,
+            itemBuilder: (BuildContext context, int index) {
+              return CardTask(index);
+            }));
   }
 
-  Widget CardChat(int index, data) {
+  Widget CardTask(int index) {
     //print(data['category']);
     return GestureDetector(
-        onTap: () {
-          Navigator.of(context).pushNamed(WorkFollow.tag);
-        },
-        child: Card(
-            shape: const StadiumBorder(
-              //<-- 3. SEE HERE
-              side: BorderSide(
-                color: Colors.black,
-                width: 1.0, //index % 2 == 0 ? 1.0 : 0.0,
-              ),
-            ),
-            elevation: 10,
-            color: index % 2 == 0
-                ? Colors.white
-                : const Color.fromARGB(255, 190, 188,
-                    188), //index % 2 == 0 ? Colors.white : Colors.grey,
-            child: Row(
+      onTap: () {
+        Navigator.of(context).pushNamed(Task.tag);
+      },
+      child: Card(
+        shape: RoundedRectangleBorder(
+          //<-- 3. SEE HERE
+          side: const BorderSide(
+            color: Colors.black,
+            width: 1.0,
+          ),
+          borderRadius: BorderRadius.circular(50.0),
+        ),
+        elevation: 0,
+        child:  Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Padding(
                     padding: const EdgeInsets.only(left: 20),
-                    child: statusCircleColor(data)),
+                    child:Container(
+        width: 20.0,
+        height: 20.0,
+        decoration: const BoxDecoration(
+          color: Colors.orange,
+          shape: BoxShape.circle,
+        ),
+      )),
                 Container(
                   padding: const EdgeInsets.only(left: 25),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        
                         Container(
+                              width: 200,
+                              padding: const EdgeInsets.all(5),
+                              child: Text("Nom d'une tâche",
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold))),
+                          Container(
                             width: 200,
-                            padding: const EdgeInsets.all(5),
-                            child: Text("${data['name']}",
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold))),
-                        Container(
-                          width: 200,
-                          padding: const EdgeInsets.only(
-                              left: 5, right: 2, top: 2, bottom: 2),
-                          child: Text("${data['category']}"),
-                        ),
-                        Container(
-                            width: 200,
-                            padding: const EdgeInsets.all(5),
-                            child: statusCard(data))
+                            padding: const EdgeInsets.only(
+                                left: 5, right: 2, top: 2, bottom: 2),
+                            child: Text("Plomberie"),
+                          ),
+                          Container(
+                              width: 200,
+                              padding: const EdgeInsets.all(5),
+                              child: Text(
+                                "En cours",
+                              ))
                       ]),
                 ),
                 Container(
@@ -188,7 +168,9 @@ class _ListWorkState extends State<ListWork> {
                     width: 50,
                     child: const Icon(Icons.arrow_forward_ios))
               ],
-            )));
+            )
+      ),
+    );
   }
 
   //affichage du status du projet dans le liste
