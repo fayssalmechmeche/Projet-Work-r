@@ -299,4 +299,108 @@ class ArtisanController {
       return jsonResponse;
     }
   }
+
+  ///////////////////////////////  TASK ///////////////////////////////
+
+  static Future<Map<String, dynamic>> getAllTaskFromWork(int workID) async {
+    var response = await http.get(
+      Uri.parse("${url}getAllTasks"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'workID': workID.toString()
+      },
+    );
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      //print("getChantierById réussie Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } else {
+      //print("getChantierById échouée Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    }
+  }
+
+  static Future<Map<String, dynamic>> createTask(
+    String name,
+    String type,
+    String startAt,
+    String endAt,
+    String description,
+    bool state,
+    int workID,
+  ) async {
+    return await http
+        .post(Uri.parse("${url}createTask"),
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: jsonEncode(<String, dynamic>{
+              'name': name,
+              'type': type,
+              'startat': startAt,
+              'endat': endAt,
+              'description': description,
+              'state': state,
+              'workID': workID.toString(),
+            }))
+        .then((http.Response response) {
+      //print("createTask réussie Artisan Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+
+      return jsonResponse;
+    });
+  }
+
+  static Future<Map<String, dynamic>> updateTask(
+    String name,
+    String type,
+    String startAt,
+    String endAt,
+    String description,
+    bool state,
+    int taskID,
+  ) async {
+    return await http
+        .post(Uri.parse("${url}updateTask"),
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: jsonEncode(<String, dynamic>{
+              'name': name,
+              'type': type,
+              'startat': startAt,
+              'endat': endAt,
+              'description': description,
+              'state': state,
+              'taskID': taskID,
+            }))
+        .then((http.Response response) {
+      //print("updateTask réussie Artisan Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+
+      return jsonResponse;
+    });
+  }
+
+  static Future<Map<String, dynamic>> deleteTask(
+    int taskID,
+  ) async {
+    return await http
+        .post(Uri.parse("${url}deleteTask"),
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: jsonEncode(<String, dynamic>{
+              'taskID': taskID,
+            }))
+        .then((http.Response response) {
+      //print("deleteTask réussie Artisan Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+
+      return jsonResponse;
+    });
+  }
 }

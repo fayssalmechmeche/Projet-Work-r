@@ -4,6 +4,7 @@ class GlobalData with ChangeNotifier {
   int _counter = 0;
   int get counter => _counter;
   Map<String, dynamic> user = {};
+  Map<String, dynamic> chantier = {};
 
   void incrementCounter() {
     _counter++;
@@ -117,5 +118,20 @@ class GlobalData with ChangeNotifier {
       return "inconnu";
     else
       return user["mobilite"];
+  }
+
+  //////////////////////////////// chantier ////////////////////////////////
+
+  void setChantier(Map<String, dynamic> chantier) {
+    this.chantier = chantier;
+    notifyListeners();
+  }
+
+  Map<String, dynamic> getChantier() {
+    return chantier;
+  }
+
+  int getIdChantier() {
+    return chantier["id"];
   }
 }

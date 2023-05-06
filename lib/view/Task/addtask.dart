@@ -2,6 +2,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:my_app/Controller/Artisan/ArtisanController.dart';
 import 'package:my_app/Controller/global.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
@@ -21,11 +22,12 @@ class _AddTaskState extends State<AddTask> {
   var dateStartController = TextEditingController();
   var dateEndController = TextEditingController();
   String? _dropdownvalue2;
-  List<String> category = ['Electricité', 'Plomberie', 'Maçonnerie'];
+  List<String> category = ['Principale', 'Secondaire', 'Autre'];
 
   @override
   Widget build(BuildContext context) {
     final globalData = Provider.of<GlobalData>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -120,7 +122,7 @@ class _AddTaskState extends State<AddTask> {
                           ),
                           textButtonTheme: TextButtonThemeData(
                             style: TextButton.styleFrom(
-                              primary: Colors.white, 
+                              primary: Colors.white,
                               foregroundColor: Colors.black,
                               // button text color
                             ),
@@ -171,11 +173,11 @@ class _AddTaskState extends State<AddTask> {
                     true, //set it true, so that user will not able to edit text
                 onTap: () async {
                   DateTime? pickedDate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime.now(),
-                      lastDate: DateTime(2101),
-                      builder: (context, child) {
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime.now(),
+                    lastDate: DateTime(2101),
+                    builder: (context, child) {
                       return Theme(
                         data: Theme.of(context).copyWith(
                           colorScheme: ColorScheme.light(
@@ -185,7 +187,7 @@ class _AddTaskState extends State<AddTask> {
                           ),
                           textButtonTheme: TextButtonThemeData(
                             style: TextButton.styleFrom(
-                              primary: Colors.white, 
+                              primary: Colors.white,
                               foregroundColor: Colors.black,
                               // button text color
                             ),
@@ -275,6 +277,19 @@ class _AddTaskState extends State<AddTask> {
                     error = true;
                   }
                   if (error == false) {
+                    ArtisanController.createTask(
+                        nameTaskController.text,
+                        _dropdownvalue2!,
+                        dateStartController.text,
+                        dateEndController.text,
+                        descriptionController.text,
+                        false,
+                        globalData.getIdChantier());
+                    const snackBar = SnackBar(
+                      content: Text('Tâche ajoutée !'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
                     Navigator.pop(context);
                   } else {
                     const snackBar = SnackBar(

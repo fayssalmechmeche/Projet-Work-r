@@ -75,6 +75,7 @@ class _ListWorkArtisanState extends State<ListWorkArtisan> {
   }
 
   Widget cardChantier(int index, data) {
+    final globalData = Provider.of<GlobalData>(context);
     return GestureDetector(
         onTap: () {
           Navigator.of(context).pushNamed(WorkProposition.tag, arguments: data);

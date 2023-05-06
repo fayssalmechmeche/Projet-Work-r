@@ -248,5 +248,68 @@ var functions = {
       }
     );
   },
+
+  ///////////////////////////task////////////////////////////
+
+  // a function to get all the tasks from the mysql database and return them
+  getAllTasks(req, res) {
+    mysqlConnection.query(
+      "SELECT * FROM tache where workID = ?",
+      req.headers.workid,
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ results });
+      }
+    );
+  },
+
+  createTask(req, res) {
+    mysqlConnection.query(
+      "INSERT INTO tache (name, type, start_at, end_at, description, state, workID) VALUES (?, ?, ?, ?, ?, ?, ?)",
+      [
+        req.body.name,
+        req.body.type,
+        req.body.startat,
+        req.body.endat,
+        req.body.description,
+        req.body.state,
+        req.body.workID,
+      ],
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ success: true, msg: results });
+      }
+    );
+  },
+
+  updateTask(req, res) {
+    mysqlConnection.query(
+      "UPDATE tache SET name = ?, type = ?, start_at = ?, end_at = ?, description = ?, state = ? WHERE id = ?",
+      [
+        req.body.name,
+        req.body.type,
+        req.body.startat,
+        req.body.endat,
+        req.body.description,
+        req.body.state,
+        req.body.taskID,
+      ],
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ success: true, msg: results });
+      }
+    );
+  },
+
+  deleteTask(req, res) {
+    mysqlConnection.query(
+      "DELETE FROM task WHERE id = ?",
+      req.body.taskID,
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ success: true, msg: results });
+      }
+    );
+  },
 };
 module.exports = functions;

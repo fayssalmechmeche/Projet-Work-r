@@ -141,8 +141,11 @@ class _ListWorkState extends State<ListWork> {
 
   Widget CardChat(int index, data) {
     //print(data['category']);
+    final globalData = Provider.of<GlobalData>(context);
     return GestureDetector(
         onTap: () {
+          globalData.setChantier(data);
+
           Navigator.of(context).pushNamed(WorkFollow.tag);
         },
         child: Card(

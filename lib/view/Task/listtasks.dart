@@ -20,6 +20,13 @@ class _ListTasksState extends State<ListTasks> {
   @override
   Widget build(BuildContext context) {
     final globalData = Provider.of<GlobalData>(context);
+    var tasks;
+    // if (globalData.getRole() == 1) {
+    //   taks = ParticulierController.getTaskById(globalData.getId());
+    // }
+    if (globalData.getRole() == 0) {
+      tasks = ArtisanController.getAllTaskFromWork(globalData.getIdChantier());
+    }
 
     //print(chantiers.toString());
     return Scaffold(
@@ -53,14 +60,14 @@ class _ListTasksState extends State<ListTasks> {
                 child: addTask(),
               ),
             ),
-          tasksList()
+          tasksList(tasks)
         ]));
   }
 
   Widget addTask() {
     return GestureDetector(
         onTap: () {
-           Navigator.of(context).pushNamed(AddTask.tag);
+          Navigator.of(context).pushNamed(AddTask.tag);
         },
         child: Card(
             shape: const StadiumBorder(
@@ -95,81 +102,105 @@ class _ListTasksState extends State<ListTasks> {
             )));
   }
 
-  Widget tasksList() {
-    return Expanded(
-        child: ListView.builder(
-            itemCount: 3,
-            itemBuilder: (BuildContext context, int index) {
-              return CardTask(index);
-            }));
+  Widget tasksList(tasks) {
+    return FutureBuilder(
+      future: tasks,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        //print(snapshot.hasData);
+        if (snapshot.hasData) {
+          if (snapshot.data['results'] == null) {
+            print(snapshot.data);
+            return Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [Text("Aucune proposition de chantier")],
+            ));
+          }
+          if (snapshot.data['results'].length != 0) {
+            //print(snapshot.data['results'].length);
+            return Expanded(
+                child: ListView.builder(
+                    itemCount: snapshot.data['results'].length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return CardTask(index, snapshot.data['results'][index]);
+                    }));
+          } else {
+            return Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [Text("Aucun chantier disponible")],
+            ));
+          }
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
+    );
   }
 
-  Widget CardTask(int index) {
+  Widget CardTask(int index, data) {
     //print(data['category']);
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pushNamed(Task.tag);
       },
       child: Card(
-        shape: RoundedRectangleBorder(
-          //<-- 3. SEE HERE
-          side: const BorderSide(
-            color: Colors.black,
-            width: 1.0,
+          shape: RoundedRectangleBorder(
+            //<-- 3. SEE HERE
+            side: const BorderSide(
+              color: Colors.black,
+              width: 1.0,
+            ),
+            borderRadius: BorderRadius.circular(50.0),
           ),
-          borderRadius: BorderRadius.circular(50.0),
-        ),
-        elevation: 0,
-        child:  Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child:Container(
-        width: 20.0,
-        height: 20.0,
-        decoration: const BoxDecoration(
-          color: Colors.orange,
-          shape: BoxShape.circle,
-        ),
-      )),
-                Container(
-                  padding: const EdgeInsets.only(left: 25),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        
-                        Container(
-                              width: 200,
-                              padding: const EdgeInsets.all(5),
-                              child: Text("Nom d'une tâche",
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold))),
-                          Container(
-                            width: 200,
-                            padding: const EdgeInsets.only(
-                                left: 5, right: 2, top: 2, bottom: 2),
-                            child: Text("Plomberie"),
-                          ),
-                          Container(
-                              width: 200,
-                              padding: const EdgeInsets.all(5),
-                              child: Text(
-                                "En cours",
-                              ))
-                      ]),
-                ),
-                Container(
-                    padding: const EdgeInsets.only(left: 70),
-                    height: 50,
-                    width: 50,
-                    child: const Icon(Icons.arrow_forward_ios))
-              ],
-            )
-      ),
+          elevation: 0,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Container(
+                    width: 20.0,
+                    height: 20.0,
+                    decoration: const BoxDecoration(
+                      color: Colors.orange,
+                      shape: BoxShape.circle,
+                    ),
+                  )),
+              Container(
+                padding: const EdgeInsets.only(left: 25),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                          width: 200,
+                          padding: const EdgeInsets.all(5),
+                          child: Text("Nom d'une tâche",
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold))),
+                      Container(
+                        width: 200,
+                        padding: const EdgeInsets.only(
+                            left: 5, right: 2, top: 2, bottom: 2),
+                        child: Text("Plomberie"),
+                      ),
+                      Container(
+                          width: 200,
+                          padding: const EdgeInsets.all(5),
+                          child: Text(
+                            "En cours",
+                          ))
+                    ]),
+              ),
+              Container(
+                  padding: const EdgeInsets.only(left: 70),
+                  height: 50,
+                  width: 50,
+                  child: const Icon(Icons.arrow_forward_ios))
+            ],
+          )),
     );
   }
 
