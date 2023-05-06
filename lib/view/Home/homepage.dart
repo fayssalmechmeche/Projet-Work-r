@@ -155,6 +155,14 @@ class _HomePageState extends State<HomePage> {
       future: artisans,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
+          if (snapshot.data['results'] == null) {
+            print(snapshot.data);
+            return Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [Text("Aucun artisan trouvé")],
+            ));
+          }
           if (snapshot.data['results'].length >= 0) {
             return ListView.builder(
                 scrollDirection: Axis.horizontal,

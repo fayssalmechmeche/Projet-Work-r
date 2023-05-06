@@ -109,6 +109,14 @@ class _ListWorkState extends State<ListWork> {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         //print(snapshot.hasData);
         if (snapshot.hasData) {
+          if (snapshot.data['results'] == null) {
+            print(snapshot.data);
+            return Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [Text("Aucune proposition de chantier")],
+            ));
+          }
           if (snapshot.data['results'].length != 0) {
             //print(snapshot.data['results'].length);
             return Expanded(
