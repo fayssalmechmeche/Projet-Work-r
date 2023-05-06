@@ -142,7 +142,7 @@ class _ListTasksState extends State<ListTasks> {
     //print(data['category']);
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(Task.tag);
+        Navigator.of(context).pushNamed(Task.tag, arguments: data);
       },
       child: Card(
           shape: RoundedRectangleBorder(
@@ -159,14 +159,7 @@ class _ListTasksState extends State<ListTasks> {
             children: <Widget>[
               Padding(
                   padding: const EdgeInsets.only(left: 20),
-                  child: Container(
-                    width: 20.0,
-                    height: 20.0,
-                    decoration: const BoxDecoration(
-                      color: Colors.orange,
-                      shape: BoxShape.circle,
-                    ),
-                  )),
+                  child: statusCircleColor(data["state"])),
               Container(
                 padding: const EdgeInsets.only(left: 25),
                 child: Column(
@@ -176,7 +169,7 @@ class _ListTasksState extends State<ListTasks> {
                       Container(
                           width: 200,
                           padding: const EdgeInsets.all(5),
-                          child: Text("Nom d'une tâche",
+                          child: Text(data['name'],
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold))),
@@ -184,14 +177,13 @@ class _ListTasksState extends State<ListTasks> {
                         width: 200,
                         padding: const EdgeInsets.only(
                             left: 5, right: 2, top: 2, bottom: 2),
-                        child: Text("Plomberie"),
+                        child: Text(data['type']),
                       ),
                       Container(
-                          width: 200,
-                          padding: const EdgeInsets.all(5),
-                          child: Text(
-                            "En cours",
-                          ))
+                        width: 200,
+                        padding: const EdgeInsets.all(5),
+                        child: statusCard(data["state"]),
+                      )
                     ]),
               ),
               Container(
@@ -206,9 +198,7 @@ class _ListTasksState extends State<ListTasks> {
 
   //affichage du status du projet dans le liste
   Widget statusCard(data) {
-    if (data['state'] == 0) {
-      return const Text('En recherche d\'un artisan');
-    } else if (data['state'] == 1) {
+    if (data == 0) {
       return const Text('En cours');
     } else {
       return const Text('Terminé');
@@ -216,7 +206,7 @@ class _ListTasksState extends State<ListTasks> {
   }
 
   Widget statusCircleColor(data) {
-    if (data['state'] == 0) {
+    if (data == 0) {
       return Container(
         width: 20.0,
         height: 20.0,
@@ -225,22 +215,13 @@ class _ListTasksState extends State<ListTasks> {
           shape: BoxShape.circle,
         ),
       );
-    } else if (data['state'] == 1) {
+    } else {
       return Container(
         width: 20.0,
         height: 20.0,
         decoration: const BoxDecoration(
           color: Colors.green,
           shape: BoxShape.circle,
-        ),
-      );
-    } else {
-      return const SizedBox(
-        width: 20.0,
-        height: 20.0,
-        child: Icon(
-          Icons.check_outlined,
-          color: Colors.green,
         ),
       );
     }

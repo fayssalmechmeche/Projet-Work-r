@@ -17,6 +17,7 @@ class _TaskState extends State<Task> {
   @override
   Widget build(BuildContext context) {
     final globalData = Provider.of<GlobalData>(context);
+    final data = ModalRoute.of(context)!.settings.arguments as Map;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -27,11 +28,11 @@ class _TaskState extends State<Task> {
         elevation: 0,
       ),
       body: Column(children: [
-        const Center(
+        Center(
           child: Text(
-            "Nom de la tâche",
+            data['name'],
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
               color: Colors.black,
@@ -63,8 +64,8 @@ class _TaskState extends State<Task> {
                         ),
                         Container(
                           padding: const EdgeInsets.only(top: 10),
-                          child: const Text(
-                            "Plomberie",
+                          child: Text(
+                            data['type'],
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.grey,
@@ -74,7 +75,7 @@ class _TaskState extends State<Task> {
                         Container(
                           padding: const EdgeInsets.only(top: 15),
                           child: const Text(
-                            "Date prévisionnelle de début",
+                            "Date de début",
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 16,
@@ -83,8 +84,8 @@ class _TaskState extends State<Task> {
                         ),
                         Container(
                           padding: const EdgeInsets.only(top: 10),
-                          child: const Text(
-                            "01/01/2000",
+                          child: Text(
+                            data['start_at'],
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.grey,
@@ -94,7 +95,7 @@ class _TaskState extends State<Task> {
                         Container(
                           padding: const EdgeInsets.only(top: 15),
                           child: const Text(
-                            "Date réelle de début",
+                            "Date de fin",
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 16,
@@ -103,8 +104,8 @@ class _TaskState extends State<Task> {
                         ),
                         Container(
                           padding: const EdgeInsets.only(top: 10),
-                          child: const Text(
-                            "01/01/2000",
+                          child: Text(
+                            data['end_at'],
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.grey,
@@ -113,47 +114,7 @@ class _TaskState extends State<Task> {
                         ),
                         Container(
                           padding: const EdgeInsets.only(top: 15),
-                          child: const Text(
-                            "Date prévisionnelle de fin",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: const Text(
-                            "01/01/2000",
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(top: 15),
-                          child: const Text(
-                            "Date réelle de fin",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: const Text(
-                            "01/01/2000",
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(top: 15),
-                          child: const Text(
+                          child: Text(
                             "Description",
                             style: TextStyle(
                               color: Colors.black,
@@ -164,48 +125,8 @@ class _TaskState extends State<Task> {
                         Container(
                           padding: const EdgeInsets.only(top: 10),
                           width: 300,
-                          child: const Text(
-                            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(top: 15),
-                          child: const Text(
-                            "Budget prévisionnel",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: const Text(
-                            "1500",
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(top: 15),
-                          child: const Text(
-                            "Budget réalisé",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: const Text(
-                            "1470",
+                          child: Text(
+                            data['description'],
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.grey,
