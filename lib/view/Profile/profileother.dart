@@ -65,7 +65,7 @@ class _ProfileOtherState extends State<ProfileOther> {
                   child: Column(children: [
                     Text(data['name'] + "  " + data['lastname'],
                         style: TextStyle(fontSize: 18)),
-                    if (globalData.getRole() == 0)
+                    
                       Text(data['entreprise'],
                           style:
                               TextStyle(fontSize: 18, color: Colors.red[900])),
@@ -87,19 +87,7 @@ class _ProfileOtherState extends State<ProfileOther> {
                       Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            if (globalData.getRole() == 1)
-                              Container(
-                                padding: const EdgeInsets.only(
-                                    top: 20, right: 20, bottom: 10),
-                                width: 210,
-                                child: const Text("Ville",
-                                    style: TextStyle(fontSize: 18)),
-                              ),
-                            if (globalData.getRole() == 1)
-                              Text(data['city'],
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.grey)),
-                            if (globalData.getRole() == 0)
+                            
                               Container(
                                 padding: const EdgeInsets.only(
                                     top: 20, right: 20, bottom: 10),
@@ -107,7 +95,7 @@ class _ProfileOtherState extends State<ProfileOther> {
                                 child: const Text("Mobilité",
                                     style: TextStyle(fontSize: 18)),
                               ),
-                            if (globalData.getRole() == 0)
+                           
                               Text(data['mobilite'],
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.grey)),
@@ -115,7 +103,7 @@ class _ProfileOtherState extends State<ProfileOther> {
                       Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            if (globalData.getRole() == 0)
+                           
                               Container(
                                 padding:
                                     const EdgeInsets.only(top: 20, bottom: 10),
@@ -123,22 +111,11 @@ class _ProfileOtherState extends State<ProfileOther> {
                                 child: const Text("Domaine",
                                     style: TextStyle(fontSize: 18)),
                               ),
-                            if (globalData.getRole() == 0)
+                            
                               Text(data['domaine'],
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.grey)),
-                            if (globalData.getRole() == 1)
-                              Container(
-                                padding:
-                                    const EdgeInsets.only(top: 20, bottom: 10),
-                                width: 120,
-                                child: const Text("Code Postale",
-                                    style: TextStyle(fontSize: 18)),
-                              ),
-                            if (globalData.getRole() == 1)
-                              Text(data['postalCode'],
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.grey)),
+                            
                           ]),
                     ]),
                     Row(mainAxisAlignment: MainAxisAlignment.start, children: [
@@ -164,7 +141,7 @@ class _ProfileOtherState extends State<ProfileOther> {
                                     
                             ),
                           ]),
-                      if (globalData.getRole() == 0)
+                      
                         Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
