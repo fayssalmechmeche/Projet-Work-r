@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:icon_decoration/icon_decoration.dart';
 import 'package:my_app/Controller/Artisan/ArtisanController.dart';
+import 'package:my_app/Controller/Particulier/ParticulierController.dart';
 import 'package:my_app/Controller/global.dart';
 import 'package:my_app/view/Profile/profileother.dart';
 import 'package:my_app/view/Works/ListWork.dart';
@@ -22,6 +23,9 @@ class _HomePageState extends State<HomePage> {
     final globalData = Provider.of<GlobalData>(context);
     final allArtisan = ArtisanController.getAllArtisan();
     final recentArtisan = ArtisanController.getRecentArtisan();
+    final FavoriteArtisans =
+        ParticulierController.getFavoriteArtisanOfParticulier(
+            globalData.getId());
 
     return Scaffold(
       appBar: AppBar(
@@ -145,7 +149,7 @@ class _HomePageState extends State<HomePage> {
               thickness: 1,
               height: 30,
             ),
-            Container(height: 115, child: ArtisanList(allArtisan))
+            Container(height: 115, child: ArtisanList(FavoriteArtisans))
           ]),
     );
   }

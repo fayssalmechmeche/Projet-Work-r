@@ -273,6 +273,30 @@ class ParticulierController {
     }
   }
 
+  // get favorite artisan by particulier
+  static Future<Map<String, dynamic>> getFavoriteArtisanOfParticulier(
+      int particulierid) async {
+    print(particulierid.toString());
+    var response = await http.get(
+      Uri.parse("${url}getFavoriteArtisanOfParticulier"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'particulierID': particulierid.toString()
+      },
+    );
+
+    if (response.statusCode == 200) {
+      print(response.body);
+      //print("getFavoriteArtisanOfParticulier réussie Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } else {
+      //print("getFavoriteArtisanOfParticulier échouée Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    }
+  }
+
   static Future<Map<String, dynamic>> getAllDevis(int particulierID) async {
     var response = await http.get(
       Uri.parse("${url}getAllDevis"),

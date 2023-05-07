@@ -101,4 +101,9 @@ router.post(
   "/addFavoriteArtisanToParticulier",
   actionsParticulier.addFavoriteArtisanToParticulier
 );
+
+router.get(
+  "/getFavoriteArtisanOfParticulier",
+  actionsParticulier.getFavoriteArtisanOfParticulier
+);
 module.exports = router;

@@ -174,7 +174,7 @@ var functions = {
   getFavoriteArtisanOfParticulier(req, res) {
     console.log(req.headers.particulierid);
     mysqlConnection.query(
-      "SELECT * FROM artisans WHERE _id IN (SELECT artisanID FROM favoris WHERE particulierID = ?)",
+      "SELECT * FROM artisans WHERE FIND_IN_SET(_id, (SELECT favorite FROM particuliers WHERE _id = ?))",
       req.headers.particulierid,
       function (error, results, fields) {
         console.log(results);
@@ -187,7 +187,7 @@ var functions = {
   // add a favorite artisan to a particulier
   addFavoriteArtisanToParticulier(req, res) {
     const particulierId = req.body.particulierID;
-    const artisanId = req.body.particulierID;
+    const artisanId = req.body.artisanID;
 
     mysqlConnection.query(
       "UPDATE particuliers SET favorite = CONCAT(IFNULL(favorite,''), ',', ?) WHERE _id = ?",
