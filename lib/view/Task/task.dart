@@ -148,7 +148,8 @@ class _TaskState extends State<Task> {
               height: 40,
               child: OutlinedButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(TaskEdit.tag);
+                  Navigator.of(context)
+                      .pushNamed(TaskEdit.tag, arguments: data);
                 },
                 style: OutlinedButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -161,5 +162,6 @@ class _TaskState extends State<Task> {
               )),
       ]),
     );
+    
   }
 }

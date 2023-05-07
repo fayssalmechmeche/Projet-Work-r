@@ -2,6 +2,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:my_app/Controller/Artisan/ArtisanController.dart';
 import 'package:my_app/Controller/global.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
@@ -15,20 +16,23 @@ class TaskEdit extends StatefulWidget {
 }
 
 class _TaskEditState extends State<TaskEdit> {
-  var nameTaskController = TextEditingController();
-  var budgetController = TextEditingController();
-  var budgetPlannedController = TextEditingController();
-  var descriptionController = TextEditingController();
-  var dateStartPlannedController = TextEditingController();
-  var dateEndPlannedController = TextEditingController();
-  var dateStartController = TextEditingController();
-  var dateEndController = TextEditingController();
-  String? _dropdownvalue2;
-  List<String> category = ['Electricité', 'Plomberie', 'Maçonnerie'];
+  var isSwitched = false;
 
   @override
   Widget build(BuildContext context) {
+    final data = ModalRoute.of(context)!.settings.arguments as Map;
     final globalData = Provider.of<GlobalData>(context);
+
+    var nameTaskController = TextEditingController();
+
+    var descriptionController =
+        TextEditingController(text: data["description"]);
+
+    var dateStartController = TextEditingController(text: data["start_at"]);
+    var dateEndController = TextEditingController(text: data["end_at"]);
+
+    List<String> category = ['Principale', 'Secondaire', 'Autre'];
+    String? _dropdownvalue2 = data['type'];
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -53,7 +57,7 @@ class _TaskEditState extends State<TaskEdit> {
                   width: 330,
                   child: TextFormField(
                     cursorColor: Colors.grey,
-                    controller: nameTaskController,
+                    controller: nameTaskController..text = data['name'],
                     decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(90.0),
@@ -92,71 +96,6 @@ class _TaskEditState extends State<TaskEdit> {
                     },
                   ),
                 ),
-                Container(
-                    padding: const EdgeInsets.only(top: 20),
-                    width: 330,
-                    child: Center(
-                        child: TextField(
-                      controller:
-                          dateStartPlannedController, //editing controller of this TextField
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(90.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(90.0),
-                          ),
-                          contentPadding: const EdgeInsets.all(10),
-                          label: const Text("Date prévisionnelle de début"),
-                          labelStyle: const TextStyle(color: Colors.grey)),
-                      readOnly:
-                          true, //set it true, so that user will not able to edit text
-                      onTap: () async {
-                        DateTime? pickedDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime.now(),
-                          lastDate: DateTime(2101),
-                          builder: (context, child) {
-                            return Theme(
-                              data: Theme.of(context).copyWith(
-                                colorScheme: ColorScheme.light(
-                                  primary: Colors.amberAccent, // <-- SEE HERE
-                                  onPrimary: Colors.white, // <-- SEE HERE
-                                  onSurface: Colors.black, // <-- SEE HERE
-                                ),
-                                textButtonTheme: TextButtonThemeData(
-                                  style: TextButton.styleFrom(
-                                    primary: Colors.white,
-                                    foregroundColor: Colors.black,
-                                    // button text color
-                                  ),
-                                ),
-                              ),
-                              child: child!,
-                            );
-                          },
-                        );
-
-                        if (pickedDate != null) {
-                          print(
-                              pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                          String formattedDate =
-                              DateFormat('yyyy-MM-dd').format(pickedDate);
-                          print(
-                              formattedDate); //formatted date output using intl package =>  2021-03-16
-                          //you can implement different kind of Date Format here according to your requirement
-
-                          setState(() {
-                            dateStartPlannedController.text =
-                                formattedDate; //set output date to TextField value.
-                          });
-                        } else {
-                          print("Date is not selected");
-                        }
-                      },
-                    ))),
                 Container(
                     padding: const EdgeInsets.only(top: 20),
                     width: 330,
@@ -228,71 +167,6 @@ class _TaskEditState extends State<TaskEdit> {
                     child: Center(
                         child: TextField(
                       controller:
-                          dateEndPlannedController, //editing controller of this TextField
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(90.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(90.0),
-                          ),
-                          contentPadding: const EdgeInsets.all(10),
-                          label: const Text("Date prévisionnelle de fin"),
-                          labelStyle: const TextStyle(color: Colors.grey)),
-                      readOnly:
-                          true, //set it true, so that user will not able to edit text
-                      onTap: () async {
-                        DateTime? pickedDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime.now(),
-                          lastDate: DateTime(2101),
-                          builder: (context, child) {
-                            return Theme(
-                              data: Theme.of(context).copyWith(
-                                colorScheme: ColorScheme.light(
-                                  primary: Colors.amberAccent, // <-- SEE HERE
-                                  onPrimary: Colors.white, // <-- SEE HERE
-                                  onSurface: Colors.black, // <-- SEE HERE
-                                ),
-                                textButtonTheme: TextButtonThemeData(
-                                  style: TextButton.styleFrom(
-                                    primary: Colors.white,
-                                    foregroundColor: Colors.black,
-                                    // button text color
-                                  ),
-                                ),
-                              ),
-                              child: child!,
-                            );
-                          },
-                        );
-
-                        if (pickedDate != null) {
-                          print(
-                              pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                          String formattedDate =
-                              DateFormat('yyyy-MM-dd').format(pickedDate);
-                          print(
-                              formattedDate); //formatted date output using intl package =>  2021-03-16
-                          //you can implement different kind of Date Format here according to your requirement
-
-                          setState(() {
-                            dateEndPlannedController.text =
-                                formattedDate; //set output date to TextField value.
-                          });
-                        } else {
-                          print("Date is not selected");
-                        }
-                      },
-                    ))),
-                Container(
-                    padding: const EdgeInsets.only(top: 20),
-                    width: 330,
-                    child: Center(
-                        child: TextField(
-                      controller:
                           dateEndController, //editing controller of this TextField
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -335,17 +209,11 @@ class _TaskEditState extends State<TaskEdit> {
                         );
 
                         if (pickedDate != null) {
-                          print(
-                              pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
                           String formattedDate =
                               DateFormat('yyyy-MM-dd').format(pickedDate);
-                          print(
-                              formattedDate); //formatted date output using intl package =>  2021-03-16
-                          //you can implement different kind of Date Format here according to your requirement
-
                           setState(() {
-                            dateEndController.text =
-                                formattedDate; //set output date to TextField value.
+                            dateEndController =
+                                TextEditingController(text: formattedDate);
                           });
                         } else {
                           print("Date is not selected");
@@ -374,51 +242,17 @@ class _TaskEditState extends State<TaskEdit> {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.only(top: 20),
-                  width: 330,
-                  child: TextFormField(
-                    keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
-                    cursorColor: Colors.grey,
-                    controller: budgetPlannedController,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(90.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(90.0),
-                        ),
-                        contentPadding: const EdgeInsets.all(10),
-                        label: const Text("Budget prévisionnel"),
-                        labelStyle: const TextStyle(color: Colors.grey)),
+                  child: SwitchListTile(
+                    title: const Text('Tâche terminé'),
+                    value: isSwitched,
+                    onChanged: (bool value) {
+                      setState(() {
+                        isSwitched = value;
+                      });
+                    },
+                    secondary: const Icon(Icons.flag),
                   ),
-                ),
-                Container(
-                  padding: const EdgeInsets.only(top: 20),
-                  width: 330,
-                  child: TextFormField(
-                    keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
-                    cursorColor: Colors.grey,
-                    controller: budgetController,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(90.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(90.0),
-                        ),
-                        contentPadding: const EdgeInsets.all(10),
-                        label: const Text("Budget réalisé"),
-                        labelStyle: const TextStyle(color: Colors.grey)),
-                  ),
-                ),
+                )
               ])),
           Container(
               padding: const EdgeInsets.only(
@@ -429,17 +263,27 @@ class _TaskEditState extends State<TaskEdit> {
                 onPressed: () {
                   bool error = false;
                   if (nameTaskController.text == "" ||
-                      budgetController.text == "" ||
-                      budgetPlannedController.text == "" ||
                       descriptionController.text == "" ||
                       dateStartController.text == "" ||
-                      dateStartPlannedController.text == "" ||
                       dateEndController.text == "" ||
-                      dateEndPlannedController.text == "" ||
                       _dropdownvalue2 == null) {
                     error = true;
                   }
                   if (error == false) {
+                    var response = ArtisanController.updateTask(
+                      nameTaskController.text,
+                      _dropdownvalue2!,
+                      dateStartController.text,
+                      dateEndController.text,
+                      descriptionController.text,
+                      isSwitched,
+                      data['id'],
+                    );
+                    const snackBar = SnackBar(
+                      content: Text('Tâche modifié !'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
                     Navigator.pop(context);
                   } else {
                     const snackBar = SnackBar(

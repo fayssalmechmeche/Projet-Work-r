@@ -55,6 +55,7 @@ router.get(
 );
 router.get("/getAllTasks", actionsArtisan.getAllTasks);
 router.post("/createTask", actionsArtisan.createTask);
+router.post("/updateTask", actionsArtisan.updateTask);
 
 // create Devis to Chantier
 
