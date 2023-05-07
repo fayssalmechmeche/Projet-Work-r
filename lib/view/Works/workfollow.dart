@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/Controller/Artisan/ArtisanController.dart';
 import 'package:my_app/view/Task/listtasks.dart';
+import 'package:provider/provider.dart';
+
+import '../../Controller/global.dart';
 
 class WorkFollow extends StatefulWidget {
   const WorkFollow({Key? key}) : super(key: key);
@@ -11,7 +15,19 @@ class WorkFollow extends StatefulWidget {
 class _WorkFollowState extends State<WorkFollow> {
   @override
   Widget build(BuildContext context) {
-    var _progressValue = 0.3;
+    Future<double> main() async {
+      var globalData = Provider.of<GlobalData>(context);
+      var chantiers = await ArtisanController.getAllTaskFromWork(
+          globalData.getIdChantier());
+      var chantiersDone = await ArtisanController.getAllTaskDoneFromWork(
+          globalData.getIdChantier());
+
+      double _progressValue =
+          chantiersDone["results"].length / chantiers["results"].length * 100;
+
+      return _progressValue;
+    }
+
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -37,7 +53,6 @@ class _WorkFollowState extends State<WorkFollow> {
                     width: 300,
                     child: Card(
                       shape: RoundedRectangleBorder(
-                        //<-- 3. SEE HERE
                         side: const BorderSide(
                           color: Colors.black,
                           width: 1.0,
@@ -48,22 +63,54 @@ class _WorkFollowState extends State<WorkFollow> {
                       child: Column(
                         children: <Widget>[
                           const Padding(
-                              padding: EdgeInsets.only(top: 10),
-                              child: Text('Avancement')),
-                          Container(
-                              padding: const EdgeInsets.only(top: 10),
-                              width: 250,
-                              height: 25,
-                              child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: LinearProgressIndicator(
-                                    backgroundColor: Colors.grey,
-                                    valueColor:
-                                        new AlwaysStoppedAnimation<Color>(
-                                            Colors.yellow),
-                                    value: _progressValue,
-                                  ))),
-                          Text('${(_progressValue * 100).round()}%'),
+                            padding: EdgeInsets.only(top: 10),
+                            child: Text('Avancement'),
+                          ),
+                          FutureBuilder<double>(
+                            future: main(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                // Le Future est en cours de chargement, vous pouvez afficher un indicateur de chargement ici si nécessaire.
+                                return CircularProgressIndicator();
+                              } else if (snapshot.hasError) {
+                                // Une erreur s'est produite lors du chargement du Future, vous pouvez afficher un message d'erreur ici si nécessaire.
+                                return Text('Erreur: ${snapshot.error}');
+                              } else {
+                                // Le Future s'est terminé avec succès, vous pouvez accéder à la valeur dans snapshot.data.
+                                double _progressValue = snapshot.data!;
+                                return Container(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  width: 250,
+                                  height: 25,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: LinearProgressIndicator(
+                                      backgroundColor: Colors.grey,
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                          Colors.yellow),
+                                      value: _progressValue,
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+                          FutureBuilder<double>(
+                            future: main(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const SizedBox();
+                              } else if (snapshot.hasError) {
+                                return Text('Erreur: ${snapshot.error}');
+                              } else {
+                                double _progressValue = snapshot.data!;
+                                return Text(
+                                    '${(_progressValue * 100).round()}%');
+                              }
+                            },
+                          ),
                         ],
                       ),
                     ),

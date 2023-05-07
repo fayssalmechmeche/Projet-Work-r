@@ -263,6 +263,17 @@ var functions = {
     );
   },
 
+  getAllTasksDone(req, res) {
+    mysqlConnection.query(
+      "SELECT * FROM tache where workID = ? AND state = 1",
+      req.headers.workid,
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ results });
+      }
+    );
+  },
+
   createTask(req, res) {
     mysqlConnection.query(
       "INSERT INTO tache (name, type, start_at, end_at, description, state, workID) VALUES (?, ?, ?, ?, ?, ?, ?)",

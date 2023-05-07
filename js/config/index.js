@@ -53,6 +53,7 @@ router.get(
   "/getAllChantiersByArtisan",
   actionsArtisan.getAllChantiersByArtisan
 );
+router.get("/getAllTasksDone", actionsArtisan.getAllTasksDone);
 router.get("/getAllTasks", actionsArtisan.getAllTasks);
 router.post("/createTask", actionsArtisan.createTask);
 router.post("/updateTask", actionsArtisan.updateTask);
