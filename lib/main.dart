@@ -48,6 +48,7 @@ class MyApp extends StatelessWidget {
       ),
       home: const FirstPage(title: 'Flutter Demo Home Page'),
       routes: {
+        HomePage.tag: (context) => const HomePage(),
         Login.tag: (context) => const Login(),
         LoginArt.tag: (context) => const LoginArt(),
         RegisterPage.tag: (context) => const RegisterPage(
@@ -71,7 +72,7 @@ class MyApp extends StatelessWidget {
         Task.tag: (context) => const Task(),
         TaskEdit.tag: (context) => const TaskEdit(),
         ListTasks.tag: (context) => const ListTasks(),
-        ProfileOther.tag:(context) => const ProfileOther()
+        ProfileOther.tag: (context) => const ProfileOther()
       },
     );
   }

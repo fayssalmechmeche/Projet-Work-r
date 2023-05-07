@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import '../../Controller/global.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key, required String title}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
   static const tag = "/home";
 
   @override

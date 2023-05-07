@@ -186,11 +186,11 @@ var functions = {
 
   // add a favorite artisan to a particulier
   addFavoriteArtisanToParticulier(req, res) {
-    const particulierId = req.body.particulierId;
-    const artisanId = req.body.artisanId;
+    const particulierId = req.body.particulierID;
+    const artisanId = req.body.particulierID;
 
     mysqlConnection.query(
-      "UPDATE particuliers SET favoris = CONCAT(IFNULL(favoris,''), ',', ?) WHERE id = ?",
+      "UPDATE particuliers SET favorite = CONCAT(IFNULL(favorite,''), ',', ?) WHERE _id = ?",
       [artisanId, particulierId],
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });

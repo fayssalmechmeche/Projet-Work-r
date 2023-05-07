@@ -96,4 +96,9 @@ router.get("/getAllDevis", actionsParticulier.getAllDevis);
 router.post("/refuseDevis", actionsParticulier.refuseDevis);
 
 router.post("/accepteDevis", actionsParticulier.acceptDevis);
+
+router.post(
+  "/addFavoriteArtisanToParticulier",
+  actionsParticulier.addFavoriteArtisanToParticulier
+);
 module.exports = router;

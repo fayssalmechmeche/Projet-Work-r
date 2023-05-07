@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:my_app/Controller/Particulier/ParticulierController.dart';
+import 'package:my_app/view/Home/homepage.dart';
 import 'package:provider/provider.dart';
 
 import '../../Controller/global.dart';
@@ -54,7 +56,7 @@ class _ProfileOtherState extends State<ProfileOther> {
                     image: DecorationImage(
                         image: data["picture"] != "null"
                             ? Image.asset(data["picture"]).image
-                            :  NetworkImage(
+                            : NetworkImage(
                                 "https://avatars.githubusercontent.com/u/77855537?s=40&v=4"),
                         fit: BoxFit.fill),
                   ),
@@ -65,10 +67,8 @@ class _ProfileOtherState extends State<ProfileOther> {
                   child: Column(children: [
                     Text(data['name'] + "  " + data['lastname'],
                         style: TextStyle(fontSize: 18)),
-                    
-                      Text(data['entreprise'],
-                          style:
-                              TextStyle(fontSize: 18, color: Colors.red[900])),
+                    Text(data['entreprise'],
+                        style: TextStyle(fontSize: 18, color: Colors.red[900])),
                   ]),
                 )
               ])),
@@ -87,35 +87,30 @@ class _ProfileOtherState extends State<ProfileOther> {
                       Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            
-                              Container(
-                                padding: const EdgeInsets.only(
-                                    top: 20, right: 20, bottom: 10),
-                                width: 210,
-                                child: const Text("Mobilité",
-                                    style: TextStyle(fontSize: 18)),
-                              ),
-                           
-                              Text(data['mobilite'],
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.grey)),
+                            Container(
+                              padding: const EdgeInsets.only(
+                                  top: 20, right: 20, bottom: 10),
+                              width: 210,
+                              child: const Text("Mobilité",
+                                  style: TextStyle(fontSize: 18)),
+                            ),
+                            Text(data['mobilite'],
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.grey)),
                           ]),
                       Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                           
-                              Container(
-                                padding:
-                                    const EdgeInsets.only(top: 20, bottom: 10),
-                                width: 120,
-                                child: const Text("Domaine",
-                                    style: TextStyle(fontSize: 18)),
-                              ),
-                            
-                              Text(data['domaine'],
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.grey)),
-                            
+                            Container(
+                              padding:
+                                  const EdgeInsets.only(top: 20, bottom: 10),
+                              width: 120,
+                              child: const Text("Domaine",
+                                  style: TextStyle(fontSize: 18)),
+                            ),
+                            Text(data['domaine'],
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.grey)),
                           ]),
                     ]),
                     Row(mainAxisAlignment: MainAxisAlignment.start, children: [
@@ -124,7 +119,9 @@ class _ProfileOtherState extends State<ProfileOther> {
                           children: [
                             Container(
                               padding: const EdgeInsets.only(
-                                  top: 20, right: 20,),
+                                top: 20,
+                                right: 20,
+                              ),
                               width: 210,
                               child: const Text("Mail",
                                   style: TextStyle(fontSize: 18)),
@@ -134,28 +131,26 @@ class _ProfileOtherState extends State<ProfileOther> {
                                   top: 10, right: 20, bottom: 10),
                               width: 210,
                               child: Text(data['email'],
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 3,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 3,
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.grey)),
-                                    
                             ),
                           ]),
-                      
-                        Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                padding:
-                                    const EdgeInsets.only(top: 20, bottom: 10),
-                                width: 120,
-                                child: const Text("Siret",
-                                    style: TextStyle(fontSize: 18)),
-                              ),
-                              Text(data['siret'],
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.grey)),
-                            ]),
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding:
+                                  const EdgeInsets.only(top: 20, bottom: 10),
+                              width: 120,
+                              child: const Text("Siret",
+                                  style: TextStyle(fontSize: 18)),
+                            ),
+                            Text(data['siret'],
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.grey)),
+                          ]),
                     ]),
                     const Padding(
                       padding: EdgeInsets.only(top: 20, bottom: 10),
@@ -170,10 +165,12 @@ class _ProfileOtherState extends State<ProfileOther> {
               width: 160,
               height: 85,
               child: OutlinedButton(
-                onPressed: () {const snackBar = SnackBar(
-            content: Text('Redirection vers discussion'),
-          );
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);},
+                onPressed: () {
+                  const snackBar = SnackBar(
+                    content: Text('Redirection vers discussion'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                },
                 style: OutlinedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(0),
@@ -181,6 +178,31 @@ class _ProfileOtherState extends State<ProfileOther> {
                     foregroundColor: Colors.green,
                     side: const BorderSide(color: Colors.green)),
                 child: const Text('Contacter',
+                    style: TextStyle(color: Colors.black)),
+              )),
+          Container(
+              padding: const EdgeInsets.only(
+                  top: 40, bottom: 15, right: 15, left: 15),
+              width: 160,
+              height: 85,
+              child: OutlinedButton(
+                onPressed: () async {
+                  var response = await ParticulierController
+                      .addFavoriteArtisanToParticulier(
+                          globalData.getId(), data['_id']);
+                  const snackBar = SnackBar(
+                    content: Text('Artisan ajouté aux favoris'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  Navigator.of(context).pushNamed(HomePage.tag);
+                },
+                style: OutlinedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(0),
+                    ),
+                    foregroundColor: Colors.red,
+                    side: const BorderSide(color: Colors.red)),
+                child: const Text('Ajouter aux favoris',
                     style: TextStyle(color: Colors.black)),
               )),
         ]),

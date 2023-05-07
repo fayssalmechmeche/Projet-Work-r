@@ -24,9 +24,8 @@ class _ListTasksState extends State<ListTasks> {
     // if (globalData.getRole() == 1) {
     //   taks = ParticulierController.getTaskById(globalData.getId());
     // }
-    if (globalData.getRole() == 0) {
-      tasks = ArtisanController.getAllTaskFromWork(globalData.getIdChantier());
-    }
+
+    tasks = ArtisanController.getAllTaskFromWork(globalData.getIdChantier());
 
     //print(chantiers.toString());
     return Scaffold(
