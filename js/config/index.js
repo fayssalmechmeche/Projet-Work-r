@@ -55,6 +55,7 @@ router.get(
 );
 router.get("/getAllTasksDone", actionsArtisan.getAllTasksDone);
 router.get("/getAllTasks", actionsArtisan.getAllTasks);
+router.get("/getLastTaskDone", actionsArtisan.getLastTaskDone);
 router.post("/createTask", actionsArtisan.createTask);
 router.post("/updateTask", actionsArtisan.updateTask);
 

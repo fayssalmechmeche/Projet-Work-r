@@ -15,7 +15,7 @@ class WorkFollow extends StatefulWidget {
 class _WorkFollowState extends State<WorkFollow> {
   @override
   Widget build(BuildContext context) {
-    Future<double> main() async {
+    Future<double> getProgressedValue() async {
       var globalData = Provider.of<GlobalData>(context);
       var chantiers = await ArtisanController.getAllTaskFromWork(
           globalData.getIdChantier());
@@ -23,9 +23,20 @@ class _WorkFollowState extends State<WorkFollow> {
           globalData.getIdChantier());
 
       double _progressValue =
-          chantiersDone["results"].length / chantiers["results"].length * 100;
+          chantiersDone["results"].length / chantiers["results"].length;
 
       return _progressValue;
+    }
+
+    Future<Map<String, dynamic>> getLastTask() async {
+      var globalData = Provider.of<GlobalData>(context);
+
+      var lastTask =
+          await ArtisanController.getLastTaskDone(globalData.getIdChantier());
+
+      var result = lastTask["results"][0];
+
+      return result;
     }
 
     return Scaffold(
@@ -67,7 +78,7 @@ class _WorkFollowState extends State<WorkFollow> {
                             child: Text('Avancement'),
                           ),
                           FutureBuilder<double>(
-                            future: main(),
+                            future: getProgressedValue(),
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
@@ -97,7 +108,7 @@ class _WorkFollowState extends State<WorkFollow> {
                             },
                           ),
                           FutureBuilder<double>(
-                            future: main(),
+                            future: getProgressedValue(),
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
@@ -122,7 +133,6 @@ class _WorkFollowState extends State<WorkFollow> {
                 width: 300,
                 child: Card(
                   shape: RoundedRectangleBorder(
-                    //<-- 3. SEE HERE
                     side: const BorderSide(
                       color: Colors.black,
                       width: 1.0,
@@ -130,35 +140,67 @@ class _WorkFollowState extends State<WorkFollow> {
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                   elevation: 0,
-                  child: Container(
-                    padding: const EdgeInsets.only(left: 25),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                              width: 225,
-                              padding: const EdgeInsets.all(5),
-                              child: Text("Récente tâche",
+                  child: FutureBuilder<Map<String, dynamic>>(
+                    future: getLastTask(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<Map<String, dynamic>> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        // La future est en cours de chargement, vous pouvez afficher un indicateur de chargement ici
+                        return Container(
+                          padding: const EdgeInsets.all(5),
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (snapshot.hasError) {
+                        // Une erreur s'est produite pendant le chargement de la future, vous pouvez afficher un message d'erreur ici
+                        return Container(
+                          padding: const EdgeInsets.all(5),
+                          child: Text(
+                              'Une erreur s\'est produite : ${snapshot.error}'),
+                        );
+                      } else {
+                        // La future s'est terminée avec succès, vous pouvez afficher les données ici
+                        final data = snapshot.data!;
+
+                        return Container(
+                          padding: const EdgeInsets.only(left: 25),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 225,
+                                padding: const EdgeInsets.all(5),
+                                child: Text(
+                                  "Récente tâche",
                                   overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold))),
-                          Container(
-                            width: 225,
-                            padding: const EdgeInsets.only(
-                                left: 5, right: 2, top: 2, bottom: 2),
-                            child: Text("date de création de la tâche"),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: 225,
+                                padding: const EdgeInsets.only(
+                                    left: 5, right: 2, top: 2, bottom: 2),
+                                child: Text(
+                                  "Date de création de la tâche : ${data['start_at']}",
+                                ),
+                              ),
+                              Container(
+                                width: 225,
+                                padding: const EdgeInsets.all(5),
+                                child: Text(
+                                  "Description : ${data['description']}",
+                                  maxLines: 3,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
                           ),
-                          Container(
-                              width: 225,
-                              padding: const EdgeInsets.all(5),
-                              child: Text(
-                                "Description : Et hanc quidem praeter oppida multa duae civitates exornant Seleucia opus Seleuci regis, et Claudiopolis quam deduxit coloniam Claudius Caesar. Isaura enim antehac nimium potens, olim subversa ut rebellatrix interneciva aegre vestigia claritudinis pristinae monstrat admodum pauca.",
-                                maxLines: 3,
-                                overflow: TextOverflow.ellipsis,
-                              ))
-                        ]),
+                        );
+                      }
+                    },
                   ),
                 ),
               ),

@@ -344,6 +344,27 @@ class ArtisanController {
     }
   }
 
+  static Future<Map<String, dynamic>> getLastTaskDone(int workID) async {
+    var response = await http.get(
+      Uri.parse("${url}getLastTaskDone"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'workID': workID.toString()
+      },
+    );
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      //print("getChantierById réussie Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } else {
+      //print("getChantierById échouée Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    }
+  }
+
   static Future<Map<String, dynamic>> createTask(
     String name,
     String type,
