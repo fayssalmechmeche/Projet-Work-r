@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/Controller/Artisan/ArtisanController.dart';
+import 'package:my_app/view/ListDevis/pdfdevis.dart';
 import 'package:my_app/view/Task/listtasks.dart';
 import 'package:provider/provider.dart';
 
@@ -259,6 +260,7 @@ class _WorkFollowState extends State<WorkFollow> {
                                 );
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(snackBar);
+                                Navigator.of(context).pushNamed(PdfDevis.tag);
                               },
                               child: Card(
                                 shape: RoundedRectangleBorder(

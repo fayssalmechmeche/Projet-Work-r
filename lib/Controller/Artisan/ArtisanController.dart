@@ -167,19 +167,21 @@ class ArtisanController {
   }
 
   // get work by state artisan
-  static Future<Map<String, dynamic>> getWorkByStatus(state) async {
+  static Future<Map<String, dynamic>> getWorkByStatus(
+      int state, int artisanID) async {
     var response = await http.get(
       Uri.parse("${url}getWorkByStatus"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'state': state.toString(),
+        'artisanID': artisanID.toString(),
       },
     );
 
     if (response.statusCode == 200) {
       //print("getWorkByStatus réussie Particulier Controller");
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
-      //print(response.body);
+      print(response.body);
       return jsonResponse;
     } else {
       //print("getWorkByStatus échouée Particulier Controller");

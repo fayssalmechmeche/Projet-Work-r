@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_app/view/Home/homepage.dart';
 import 'package:my_app/view/ListDevis/adddevis.dart';
 import 'package:my_app/view/ListDevis/devis.dart';
+import 'package:my_app/view/ListDevis/pdfdevis.dart';
 import 'package:my_app/view/Login/loginart.dart';
 import 'package:my_app/view/Msg/chat.dart';
 import 'package:my_app/view/Profile/editprofile.dart';
@@ -23,16 +24,25 @@ import 'package:my_app/view/Works/workfollow.dart';
 import 'package:my_app/view/Works/listworkartisan.dart';
 import 'package:my_app/view/Works/workproposition.dart';
 import 'package:provider/provider.dart';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'Controller/global.dart';
 
-void main() {
-  runApp(
-    ChangeNotifierProvider(
-      create: (context) => GlobalData(),
-      child: MyApp(),
-    ),
-  );
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
+    runApp(
+      ChangeNotifierProvider(
+        create: (context) => GlobalData(),
+        child: MyApp(),
+      ),
+    );
+  } catch (e) {
+    print('Erreur lors de l\'initialisation de Firebase: $e');
+    // Gérer l'erreur en conséquence
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -72,7 +82,8 @@ class MyApp extends StatelessWidget {
         Task.tag: (context) => const Task(),
         TaskEdit.tag: (context) => const TaskEdit(),
         ListTasks.tag: (context) => const ListTasks(),
-        ProfileOther.tag: (context) => const ProfileOther()
+        ProfileOther.tag: (context) => const ProfileOther(),
+        PdfDevis.tag: (context) => const PdfDevis(),
       },
     );
   }

@@ -1,8 +1,13 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:my_app/Controller/Artisan/ArtisanController.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import '../../Controller/global.dart';
@@ -25,6 +30,35 @@ class _AddDevisState extends State<AddDevis> {
   ];
   String? _dropdownvalue2;
   List<String> category = ['Electricité', 'Plomberie', 'Maçonnerie'];
+
+  PlatformFile? file;
+  UploadTask? uploadTask;
+  Future selectFile() async {
+    PermissionStatus status = await Permission.storage.request();
+    final resultFile = await FilePicker.platform.pickFiles();
+    if (resultFile == null) {
+      return;
+    }
+    print(resultFile.files.first.name);
+    setState(() {
+      file = resultFile.files.first;
+    });
+  }
+
+  Future uploadFile() async {
+    final path = 'pdf/${file!.name}';
+    final firebaseFile = File(file!.path!);
+
+    final ref = FirebaseStorage.instance.ref().child(path);
+    uploadTask = ref.putFile(firebaseFile);
+    final snap = await uploadTask!.whenComplete(() {});
+    final urlDownload = await snap.ref.getDownloadURL();
+    print('Download-Link: $urlDownload');
+
+    setState(() {
+      uploadTask = null;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +140,7 @@ class _AddDevisState extends State<AddDevis> {
                   side: const BorderSide(width: 1, color: Colors.grey),
                   foregroundColor: Colors.yellow,
                 ),
-                onPressed: () {},
+                onPressed: selectFile,
                 child: const Text(
                   '+ Ajouter un devis format PDF +',
                   style: TextStyle(
@@ -182,6 +216,9 @@ class _AddDevisState extends State<AddDevis> {
                         _dropdownvalue2,
                         budgetController.text,
                         descriptionController.text);
+                    //UploadFile
+                    uploadFile();
+
                     Navigator.pop(context);
                   } else {
                     const snackBar = SnackBar(

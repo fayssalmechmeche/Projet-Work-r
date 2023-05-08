@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1053430330602",
+    "project_id": "workr-1d91e",
+    "storage_bucket": "workr-1d91e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1053430330602:android:a2effde4a14690ee729393",
+        "android_client_info": {
+          "package_name": "com.example.my_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1053430330602-hua6m287d7nil92nmc6dl15da5tsip42.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwZn7gCMbxA7omZ66g2uX_UUmPjZVKfgE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1053430330602-hua6m287d7nil92nmc6dl15da5tsip42.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1053430330602-3rlvrgfl8d9jv4s0lknccjqb3p50s500.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.coding.workr"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
