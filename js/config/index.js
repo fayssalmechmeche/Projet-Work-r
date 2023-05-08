@@ -91,7 +91,7 @@ router.get(
   "/getAllChantiersByParticulier",
   actionsParticulier.getAllChantiersByParticulier
 );
-router.get("/getAllDevis", actionsParticulier.getAllDevis);
+router.get("/getAllDevisParticulier", actionsParticulier.getAllDevis);
 
 router.get("/getActifDevisByWork", actionsParticulier.getActifDevisByWork);
 

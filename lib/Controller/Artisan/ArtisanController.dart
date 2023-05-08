@@ -258,7 +258,7 @@ class ArtisanController {
 
   // create a devis for a work
   static Future<Map<String, dynamic>> createDevis(artisanID, particulierID,
-      workID, type, category, price, description) async {
+      workID, type, category, price, description, pdf) async {
     return await http
         .post(Uri.parse("${url}createDevis"),
             headers: <String, String>{
@@ -272,6 +272,7 @@ class ArtisanController {
               'category': category,
               'price': price,
               'description': description,
+              'pdf': pdf,
             }))
         .then((http.Response response) {
       //print("createDevis réussie Artisan Controller");

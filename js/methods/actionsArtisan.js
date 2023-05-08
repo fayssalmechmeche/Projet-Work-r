@@ -218,7 +218,7 @@ var functions = {
   createDevis(req, res) {
     console.log(req.body);
     mysqlConnection.query(
-      "INSERT INTO devis (particulierID, artisanID, workID, type, category, price, description) VALUES (?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO devis (particulierID, artisanID, workID, type, category, price, description, pdf, state) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         req.body.particulierID,
         req.body.artisanID,
@@ -227,6 +227,8 @@ var functions = {
         req.body.category,
         req.body.price,
         req.body.description,
+        req.body.pdf,
+        1,
       ],
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
@@ -234,8 +236,6 @@ var functions = {
       }
     );
   },
-
-  
 
   // a function to get all the devis from the mysql database and return them
   getAllDevis(req, res) {

@@ -215,7 +215,8 @@ class _AddDevisState extends State<AddDevis> {
                         _dropdownvalue1,
                         _dropdownvalue2,
                         budgetController.text,
-                        descriptionController.text);
+                        descriptionController.text,
+                        file!.name);
                     //UploadFile
                     uploadFile();
 
