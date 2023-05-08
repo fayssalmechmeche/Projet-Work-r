@@ -346,7 +346,13 @@ class _WorkFollowState extends State<WorkFollow> {
                                     );
                                   } else if (snapshot.hasError) {
                                     return Center(
-                                      child: Text('Erreur: ${snapshot.error}'),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text("Aucun devis"),
+                                        ],
+                                      ),
                                     );
                                   } else {
                                     return Center(
