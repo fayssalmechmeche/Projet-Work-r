@@ -83,7 +83,6 @@ class MyApp extends StatelessWidget {
         TaskEdit.tag: (context) => const TaskEdit(),
         ListTasks.tag: (context) => const ListTasks(),
         ProfileOther.tag: (context) => const ProfileOther(),
-        PdfDevis.tag: (context) => const PdfDevis(),
       },
     );
   }

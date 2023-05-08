@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:my_app/Controller/Artisan/ArtisanController.dart';
+import 'package:my_app/Controller/Particulier/ParticulierController.dart';
+import 'package:my_app/Controller/pdfAPI.dart';
 import 'package:my_app/view/ListDevis/pdfdevis.dart';
 import 'package:my_app/view/Task/listtasks.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +31,13 @@ class _WorkFollowState extends State<WorkFollow> {
           chantiersDone["results"].length / chantiers["results"].length;
 
       return _progressValue;
+    }
+
+    Future<String> getDevis() async {
+      var globalData = Provider.of<GlobalData>(context);
+      final devis = await ParticulierController.getActifDevisByWork(
+          globalData.getIdChantier());
+      return devis["results"][0]["pdf"];
     }
 
     Future<Map<String, dynamic>> getLastTask() async {
@@ -250,64 +261,89 @@ class _WorkFollowState extends State<WorkFollow> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         Container(
-                            width: 130,
-                            height: 130,
-                            child: GestureDetector(
-                              onTap: () {
-                                const snackBar = SnackBar(
-                                  content: Text(
-                                      'Redirection vers la page Mon Dossier'),
-                                );
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackBar);
-                                Navigator.of(context).pushNamed(PdfDevis.tag);
-                              },
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                  //<-- 3. SEE HERE
-                                  side: const BorderSide(
-                                    color: Colors.black,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(20.0),
+                          width: 130,
+                          height: 130,
+                          child: GestureDetector(
+                            onTap: () async {
+                              const snackBar = SnackBar(
+                                content: Text(
+                                    'Redirection vers la page Mon Dossier'),
+                              );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            },
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                side: const BorderSide(
+                                  color: Colors.black,
+                                  width: 1.0,
                                 ),
-                                elevation: 0,
-                                child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Container(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              elevation: 0,
+                              child: FutureBuilder<String>(
+                                future: getDevis(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<String> snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  } else if (snapshot.hasError) {
+                                    return Center(
+                                      child: Text('Erreur: ${snapshot.error}'),
+                                    );
+                                  } else {
+                                    final pdf = snapshot.data!;
+                                    return GestureDetector(
+                                      onTap: () async {
+                                        final url = "pdf/$pdf.pdf";
+                                        final file =
+                                            await pdfAPI.loadFirebase(url);
+                                        if (file == null) return;
+                                        openPDF(context, file);
+                                      },
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Container(
                                                 padding:
                                                     const EdgeInsets.all(5),
-                                                child: Text("Mon dossier",
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: const TextStyle(
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.bold))),
-                                            Center(
-                                              child: Icon(Icons.file_copy),
-                                            ),
-                                          ]),
-                                    ]),
+                                                child: Text(
+                                                  "Mon dossier",
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: const TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ),
+                                              Center(
+                                                child: Icon(Icons.file_copy),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }
+                                },
                               ),
-                            )),
+                            ),
+                          ),
+                        ),
                         Container(
                             width: 130,
                             height: 130,
                             child: GestureDetector(
-                              onTap: () {
-                                const snackBar = SnackBar(
-                                  content: Text(
-                                      'Redirection vers la page Discussion'),
-                                );
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackBar);
-                              },
+                              onTap: () async {},
                               child: Card(
                                 shape: RoundedRectangleBorder(
                                   //<-- 3. SEE HERE
@@ -347,4 +383,13 @@ class _WorkFollowState extends State<WorkFollow> {
           ),
         ));
   }
+}
+
+void openPDF(BuildContext context, File file) {
+  print("openPDF");
+  Navigator.of(context).push(
+    MaterialPageRoute(
+      builder: (context) => PdfDevis(file: file),
+    ),
+  );
 }

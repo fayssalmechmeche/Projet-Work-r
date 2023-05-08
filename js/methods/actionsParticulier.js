@@ -214,6 +214,17 @@ var functions = {
     );
   },
 
+  getActifDevisByWork(req, res) {
+    mysqlConnection.query(
+      "SELECT * FROM devis WHERE state = 1 AND workID = ?",
+      req.headers.workid,
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ results });
+      }
+    );
+  },
+
   refuseDevis(req, res) {
     console.log(req.body.particulierID);
     console.log(req.body.devisID);

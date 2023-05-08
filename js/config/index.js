@@ -93,6 +93,8 @@ router.get(
 );
 router.get("/getAllDevis", actionsParticulier.getAllDevis);
 
+router.get("/getActifDevisByWork", actionsParticulier.getActifDevisByWork);
+
 router.post("/refuseDevis", actionsParticulier.refuseDevis);
 
 router.post("/accepteDevis", actionsParticulier.acceptDevis);

@@ -235,6 +235,8 @@ var functions = {
     );
   },
 
+  
+
   // a function to get all the devis from the mysql database and return them
   getAllDevis(req, res) {
     console.log(req.headers.artisanid);
