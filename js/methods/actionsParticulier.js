@@ -216,7 +216,7 @@ var functions = {
 
   getActifDevisByWork(req, res) {
     mysqlConnection.query(
-      "SELECT * FROM devis WHERE state = 1 AND workID = ?",
+      "SELECT * FROM devis WHERE state = 3 AND workID = ?",
       req.headers.workid,
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });

@@ -30,6 +30,10 @@ class _WorkFollowState extends State<WorkFollow> {
       double _progressValue =
           chantiersDone["results"].length / chantiers["results"].length;
 
+      if (_progressValue.isNaN) {
+        return _progressValue = 1;
+      }
+
       return _progressValue;
     }
 
@@ -37,6 +41,7 @@ class _WorkFollowState extends State<WorkFollow> {
       var globalData = Provider.of<GlobalData>(context);
       final devis = await ParticulierController.getActifDevisByWork(
           globalData.getIdChantier());
+
       return devis["results"][0]["pdf"];
     }
 
@@ -102,6 +107,7 @@ class _WorkFollowState extends State<WorkFollow> {
                               } else {
                                 // Le Future s'est terminé avec succès, vous pouvez accéder à la valeur dans snapshot.data.
                                 double _progressValue = snapshot.data!;
+
                                 return Container(
                                   padding: const EdgeInsets.only(top: 10),
                                   width: 250,
@@ -122,15 +128,17 @@ class _WorkFollowState extends State<WorkFollow> {
                           FutureBuilder<double>(
                             future: getProgressedValue(),
                             builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
+                              if (snapshot.hasData) {
+                                if (snapshot.data != null) {
+                                  double _progressValue = snapshot.data!;
+                                  return Text(
+                                      '${(_progressValue * 100).round()}%');
+                                }
                                 return const SizedBox();
                               } else if (snapshot.hasError) {
                                 return Text('Erreur: ${snapshot.error}');
                               } else {
-                                double _progressValue = snapshot.data!;
-                                return Text(
-                                    '${(_progressValue * 100).round()}%');
+                                return const Text("?");
                               }
                             },
                           ),
@@ -156,61 +164,62 @@ class _WorkFollowState extends State<WorkFollow> {
                     future: getLastTask(),
                     builder: (BuildContext context,
                         AsyncSnapshot<Map<String, dynamic>> snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        // La future est en cours de chargement, vous pouvez afficher un indicateur de chargement ici
-                        return Container(
-                          padding: const EdgeInsets.all(5),
-                          child: CircularProgressIndicator(),
-                        );
-                      } else if (snapshot.hasError) {
-                        // Une erreur s'est produite pendant le chargement de la future, vous pouvez afficher un message d'erreur ici
-                        return Container(
-                          padding: const EdgeInsets.all(5),
-                          child: Text(
-                              'Une erreur s\'est produite : ${snapshot.error}'),
-                        );
-                      } else {
-                        // La future s'est terminée avec succès, vous pouvez afficher les données ici
-                        final data = snapshot.data!;
-
-                        return Container(
-                          padding: const EdgeInsets.only(left: 25),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                      if (snapshot.hasData) {
+                        if (snapshot.data == null) {
+                          print(snapshot.data);
+                          return Center(
+                              child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 225,
-                                padding: const EdgeInsets.all(5),
-                                child: Text(
-                                  "Récente tâche",
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
+                            children: [Text("Aucune proposition de chantier")],
+                          ));
+                        } else {
+                          final data = snapshot.data!;
+
+                          return Container(
+                            padding: const EdgeInsets.only(left: 25),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 225,
+                                  padding: const EdgeInsets.all(5),
+                                  child: Text(
+                                    "Récente tâche",
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                width: 225,
-                                padding: const EdgeInsets.only(
-                                    left: 5, right: 2, top: 2, bottom: 2),
-                                child: Text(
-                                  "Date de création de la tâche : ${data['start_at']}",
+                                Container(
+                                  width: 225,
+                                  padding: const EdgeInsets.only(
+                                      left: 5, right: 2, top: 2, bottom: 2),
+                                  child: Text(
+                                    "Date de création de la tâche : ${data['start_at']}",
+                                  ),
                                 ),
-                              ),
-                              Container(
-                                width: 225,
-                                padding: const EdgeInsets.all(5),
-                                child: Text(
-                                  "Description : ${data['description']}",
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
+                                Container(
+                                  width: 225,
+                                  padding: const EdgeInsets.all(5),
+                                  child: Text(
+                                    "Description : ${data['description']}",
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        );
+                              ],
+                            ),
+                          );
+                        }
+                      } else {
+                        return Center(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [Text("Aucun Tâche")],
+                        ));
                       }
                     },
                   ),
@@ -285,20 +294,22 @@ class _WorkFollowState extends State<WorkFollow> {
                                 future: getDevis(),
                                 builder: (BuildContext context,
                                     AsyncSnapshot<String> snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return Center(
-                                      child: CircularProgressIndicator(),
-                                    );
-                                  } else if (snapshot.hasError) {
-                                    return Center(
-                                      child: Text('Erreur: ${snapshot.error}'),
-                                    );
-                                  } else {
+                                  if (snapshot.hasData) {
+                                    if (snapshot.data == null) {
+                                      return Center(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text("Aucun devis"),
+                                          ],
+                                        ),
+                                      );
+                                    }
                                     final pdf = snapshot.data!;
                                     return GestureDetector(
                                       onTap: () async {
-                                        final url = "pdf/$pdf.pdf";
+                                        final url = "pdf/$pdf";
                                         final file =
                                             await pdfAPI.loadFirebase(url);
                                         if (file == null) return;
@@ -332,6 +343,14 @@ class _WorkFollowState extends State<WorkFollow> {
                                           ),
                                         ],
                                       ),
+                                    );
+                                  } else if (snapshot.hasError) {
+                                    return Center(
+                                      child: Text('Erreur: ${snapshot.error}'),
+                                    );
+                                  } else {
+                                    return Center(
+                                      child: CircularProgressIndicator(),
                                     );
                                   }
                                 },
