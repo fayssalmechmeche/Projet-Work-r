@@ -9,6 +9,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:my_app/Controller/Artisan/ArtisanController.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../Controller/global.dart';
 
@@ -33,6 +34,7 @@ class _AddDevisState extends State<AddDevis> {
 
   PlatformFile? file;
   UploadTask? uploadTask;
+  var fileName = 'aucun pdf';
   Future selectFile() async {
     PermissionStatus status = await Permission.storage.request();
     final resultFile = await FilePicker.platform.pickFiles();
@@ -46,7 +48,10 @@ class _AddDevisState extends State<AddDevis> {
   }
 
   Future uploadFile() async {
-    final path = 'pdf/${file!.name}';
+    final uuid = Uuid();
+    final uniqueId = uuid.v4();
+    fileName = 'pdf_$uniqueId.pdf';
+    final path = 'pdf/${fileName}';
     final firebaseFile = File(file!.path!);
 
     final ref = FirebaseStorage.instance.ref().child(path);
@@ -207,7 +212,9 @@ class _AddDevisState extends State<AddDevis> {
                     error = true;
                   }
                   if (error == false) {
+                    print(fileName);
                     //AddDevisToBdd
+                    uploadFile();
                     ArtisanController.createDevis(
                         globalData.getId(),
                         data['particulierID'],
@@ -216,9 +223,8 @@ class _AddDevisState extends State<AddDevis> {
                         _dropdownvalue2,
                         budgetController.text,
                         descriptionController.text,
-                        file!.name);
+                        fileName);
                     //UploadFile
-                    uploadFile();
 
                     Navigator.pop(context);
                   } else {
