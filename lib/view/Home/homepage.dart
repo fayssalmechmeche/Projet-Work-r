@@ -4,6 +4,8 @@ import 'package:my_app/Controller/Artisan/ArtisanController.dart';
 import 'package:my_app/Controller/Particulier/ParticulierController.dart';
 import 'package:my_app/Controller/global.dart';
 import 'package:my_app/view/Home/listfav.dart';
+import 'package:my_app/view/Home/search.dart';
+import 'package:my_app/view/Home/homepageart.dart';
 import 'package:my_app/view/Profile/profileother.dart';
 import 'package:my_app/view/Works/ListWork.dart';
 import 'package:my_app/view/Works/listworkartisan.dart';
@@ -84,27 +86,10 @@ class _HomePageState extends State<HomePage> {
                     ),
                     child: IconButton(
                         icon: const Icon(Icons.search, size: 20),
-                        onPressed: () {})),
-            ]),
-            if (globalData.getRole() == 0)
-              Container(
-                padding: const EdgeInsets.only(left: 20, right: 20),
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.75),
-                  shape: BoxShape.circle,
-                ),
-                child: IconButton(
-                  icon: const Icon(Icons.home_repair_service_sharp, size: 20),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ListWorkArtisan(),
-                      ),
-                    );
-                  },
-                ),
-              ),
+                        onPressed: () { Navigator.of(context).pushNamed(Search.tag);})),
+           
+           
+               ]),
             const Padding(
               padding: EdgeInsets.only(left: 20, top: 20),
               child: Text(

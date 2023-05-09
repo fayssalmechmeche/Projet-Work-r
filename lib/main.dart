@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/view/Home/homepage.dart';
 import 'package:my_app/view/Home/listfav.dart';
+import 'package:my_app/view/Home/search.dart';
+import 'package:my_app/view/Home/homepageart.dart';
 import 'package:my_app/view/ListDevis/adddevis.dart';
 import 'package:my_app/view/ListDevis/devis.dart';
 import 'package:my_app/view/ListDevis/pdfdevis.dart';
@@ -85,6 +87,8 @@ class MyApp extends StatelessWidget {
         ListTasks.tag: (context) => const ListTasks(),
         ListFav.tag: (context) => const ListFav(),
         ProfileOther.tag: (context) => const ProfileOther(),
+        Search.tag: (context) => const Search(),
+        HomePageArt.tag: (context) => const HomePageArt(),
       },
     );
   }
