@@ -363,7 +363,10 @@ class _WorkFollowState extends State<WorkFollow> {
                                 ),
                               );
                             } else if (snapshot.hasError) {
-                              return Card(
+                              return Container(
+                                width: 130,
+                                height: 130,
+                                child:Card(
                                   shape: RoundedRectangleBorder(
                                     side: const BorderSide(
                                       color: Colors.black,
@@ -380,7 +383,7 @@ class _WorkFollowState extends State<WorkFollow> {
                                         Text("Aucun devis"),
                                       ],
                                     ),
-                                  ));
+                                  )));
                             } else {
                               return Center(
                                 child: CircularProgressIndicator(),
