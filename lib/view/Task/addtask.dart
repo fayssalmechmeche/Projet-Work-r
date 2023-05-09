@@ -18,7 +18,6 @@ class AddTask extends StatefulWidget {
 
 class _AddTaskState extends State<AddTask> {
   var nameTaskController = TextEditingController();
-  var budgetController = TextEditingController();
   var descriptionController = TextEditingController();
   var dateStartController = TextEditingController();
   var dateEndController = TextEditingController();
@@ -239,29 +238,6 @@ class _AddTaskState extends State<AddTask> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.only(top: 20),
-            width: 330,
-            child: TextFormField(
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
-              ],
-              cursorColor: Colors.grey,
-              controller: budgetController,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(90.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(90.0),
-                  ),
-                  contentPadding: const EdgeInsets.all(10),
-                  label: const Text("Budget"),
-                  labelStyle: const TextStyle(color: Colors.grey)),
-            ),
-          ),
-          Container(
               padding: const EdgeInsets.only(
                   top: 40, bottom: 15, right: 15, left: 15),
               width: 160,
@@ -270,7 +246,6 @@ class _AddTaskState extends State<AddTask> {
                 onPressed: () {
                   bool error = false;
                   if (nameTaskController.text == "" ||
-                      budgetController.text == "" ||
                       descriptionController.text == "" ||
                       dateStartController.text == "" ||
                       dateEndController.text == "" ||

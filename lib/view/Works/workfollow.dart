@@ -26,12 +26,13 @@ class _WorkFollowState extends State<WorkFollow> {
           globalData.getIdChantier());
       var chantiersDone = await ArtisanController.getAllTaskDoneFromWork(
           globalData.getIdChantier());
-
-      double _progressValue =
-          chantiersDone["results"].length / chantiers["results"].length;
-
-      if (_progressValue.isNaN) {
-        return _progressValue = 1;
+      double _progressValue = 0;
+      if (chantiersDone["results"] != null && chantiers["results"] != null) {
+        _progressValue =
+            chantiersDone["results"].length / chantiers["results"].length;
+        if (_progressValue.isNaN) {
+          return _progressValue = 1;
+        }
       }
 
       return _progressValue;
@@ -103,7 +104,22 @@ class _WorkFollowState extends State<WorkFollow> {
                                 return CircularProgressIndicator();
                               } else if (snapshot.hasError) {
                                 // Une erreur s'est produite lors du chargement du Future, vous pouvez afficher un message d'erreur ici si nécessaire.
-                                return Text('Erreur: ${snapshot.error}');
+                                double _progressValue = 0;
+
+                                return Container(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  width: 250,
+                                  height: 25,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: LinearProgressIndicator(
+                                      backgroundColor: Colors.grey,
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                          Colors.yellow),
+                                      value: _progressValue,
+                                    ),
+                                  ),
+                                );
                               } else {
                                 // Le Future s'est terminé avec succès, vous pouvez accéder à la valeur dans snapshot.data.
                                 double _progressValue = snapshot.data!;
@@ -133,10 +149,15 @@ class _WorkFollowState extends State<WorkFollow> {
                                   double _progressValue = snapshot.data!;
                                   return Text(
                                       '${(_progressValue * 100).round()}%');
+                                } else {
+                                  double _progressValue = 0;
+                                  return Text(
+                                      '${(_progressValue * 100).round()}%');
                                 }
-                                return const SizedBox();
                               } else if (snapshot.hasError) {
-                                return Text('Erreur: ${snapshot.error}');
+                                double _progressValue = 0;
+                                return Text(
+                                    '${(_progressValue * 100).round()}%');
                               } else {
                                 return const Text("?");
                               }
@@ -166,7 +187,7 @@ class _WorkFollowState extends State<WorkFollow> {
                         AsyncSnapshot<Map<String, dynamic>> snapshot) {
                       if (snapshot.hasData) {
                         if (snapshot.data == null) {
-                          print(snapshot.data);
+                          //print(snapshot.data);
                           return Center(
                               child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -218,7 +239,7 @@ class _WorkFollowState extends State<WorkFollow> {
                         return Center(
                             child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [Text("Aucun Tâche")],
+                          children: [Text("Aucune Tâche")],
                         ));
                       }
                     },
@@ -231,7 +252,9 @@ class _WorkFollowState extends State<WorkFollow> {
                 height: 130,
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.of(context).pushNamed(ListTasks.tag);
+                    Navigator.of(context)
+                        .pushNamed(ListTasks.tag)
+                        .then((_) => setState(() {}));
                   },
                   child: Card(
                     shape: RoundedRectangleBorder(
@@ -269,100 +292,101 @@ class _WorkFollowState extends State<WorkFollow> {
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Container(
-                          width: 130,
-                          height: 130,
-                          child: GestureDetector(
-                            onTap: () async {
-                              const snackBar = SnackBar(
-                                content: Text(
-                                    'Redirection vers la page Mon Dossier'),
-                              );
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
-                            },
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                side: const BorderSide(
-                                  color: Colors.black,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(20.0),
-                              ),
-                              elevation: 0,
-                              child: FutureBuilder<String>(
-                                future: getDevis(),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<String> snapshot) {
-                                  if (snapshot.hasData) {
-                                    if (snapshot.data == null) {
-                                      return Center(
-                                        child: Column(
+                        FutureBuilder<String>(
+                          future: getDevis(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<String> snapshot) {
+                            if (snapshot.hasData) {
+                              if (snapshot.data == null) {
+                                return Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("Aucun devis"),
+                                    ],
+                                  ),
+                                );
+                              }
+                              final pdf = snapshot.data!;
+                              return Container(
+                                width: 130,
+                                height: 130,
+                                child: GestureDetector(
+                                  onTap: () async {
+                                    final url = "pdf/$pdf";
+                                    final file = await pdfAPI.loadFirebase(url);
+                                    if (file == null) return;
+                                    openPDF(context, file);
+                                    const snackBar = SnackBar(
+                                      content: Text(
+                                          'Redirection vers la page Mon Dossier'),
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                  },
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                      side: const BorderSide(
+                                        color: Colors.black,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    elevation: 0,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            Text("Aucun devis"),
-                                          ],
-                                        ),
-                                      );
-                                    }
-                                    final pdf = snapshot.data!;
-                                    return GestureDetector(
-                                      onTap: () async {
-                                        final url = "pdf/$pdf";
-                                        final file =
-                                            await pdfAPI.loadFirebase(url);
-                                        if (file == null) return;
-                                        openPDF(context, file);
-                                      },
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.all(5),
-                                                child: Text(
-                                                  "Mon dossier",
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: const TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
+                                            Container(
+                                              padding: const EdgeInsets.all(5),
+                                              child: Text(
+                                                "Mon dossier",
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               ),
-                                              Center(
-                                                child: Icon(Icons.file_copy),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  } else if (snapshot.hasError) {
-                                    return Center(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text("Aucun devis"),
-                                        ],
-                                      ),
-                                    );
-                                  } else {
-                                    return Center(
-                                      child: CircularProgressIndicator(),
-                                    );
-                                  }
-                                },
-                              ),
-                            ),
-                          ),
+                                            ),
+                                            Center(
+                                              child: Icon(Icons.file_copy),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            } else if (snapshot.hasError) {
+                              return Card(
+                                  shape: RoundedRectangleBorder(
+                                    side: const BorderSide(
+                                      color: Colors.black,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(20.0),
+                                  ),
+                                  elevation: 0,
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text("Aucun devis"),
+                                      ],
+                                    ),
+                                  ));
+                            } else {
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                          },
                         ),
                         Container(
                             width: 130,
