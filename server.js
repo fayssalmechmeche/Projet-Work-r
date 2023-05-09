@@ -19,9 +19,19 @@ app.use(routes);
 app.use(passport.initialize());
 require("./js/config/passport")(passport);
 
+// socket.io
+const http = require("http");
+const server = http.createServer(app);
+const io = require("socket.io")(server);
+//
+
 const PORT = process.env.PORT || 3000;
 
-app.listen(
+io.on("connection", (socket) => {
+  console.log("a user connected");
+});
+
+server.listen(
   PORT,
   console.log(`Server Running in ${process.env.NODE_ENV} mode on port ${PORT}`)
 );

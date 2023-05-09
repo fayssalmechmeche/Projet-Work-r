@@ -5,12 +5,13 @@ import 'package:my_app/Controller/Particulier/ParticulierController.dart';
 import 'package:my_app/Controller/global.dart';
 import 'package:my_app/view/Home/listfav.dart';
 import 'package:my_app/view/Home/search.dart';
-import 'package:my_app/view/Home/homepageart.dart';
+
 import 'package:my_app/view/Profile/profileother.dart';
-import 'package:my_app/view/Works/ListWork.dart';
-import 'package:my_app/view/Works/listworkartisan.dart';
+
 import 'package:provider/provider.dart';
-import '../../Controller/global.dart';
+
+// socket.Io
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -21,6 +22,32 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final IO.Socket socket = IO.io(
+      "http://localhost:3000",
+      IO.OptionBuilder()
+          .setTransports(['websocket']) // for Flutter or Dart VM
+          .disableAutoConnect() // disable auto-connection
+          .build());
+
+  _connectSocket() {
+    socket.connect();
+    socket.onConnect((data) {
+      print("socket connected");
+    });
+    socket.onDisconnect((data) {
+      print("socket disconnected");
+    });
+    socket.onConnectError((data) {
+      print("Socket connexion error: $data");
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _connectSocket();
+  }
+
   @override
   Widget build(BuildContext context) {
     final globalData = Provider.of<GlobalData>(context);
@@ -78,18 +105,18 @@ class _HomePageState extends State<HomePage> {
                         onPressed: () {
                           Navigator.of(context).pushNamed(ListFav.tag);
                         })),
-                Container(
-                    padding: const EdgeInsets.only(left: 20, right: 20),
-                    decoration: BoxDecoration(
-                      color: Colors.grey.withOpacity(0.75),
-                      shape: BoxShape.circle,
-                    ),
-                    child: IconButton(
-                        icon: const Icon(Icons.search, size: 20),
-                        onPressed: () { Navigator.of(context).pushNamed(Search.tag);})),
-           
-           
-               ]),
+              Container(
+                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(0.75),
+                    shape: BoxShape.circle,
+                  ),
+                  child: IconButton(
+                      icon: const Icon(Icons.search, size: 20),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(Search.tag);
+                      })),
+            ]),
             const Padding(
               padding: EdgeInsets.only(left: 20, top: 20),
               child: Text(
