@@ -1,47 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:icon_decoration/icon_decoration.dart';
-import 'package:my_app/Controller/Artisan/ArtisanController.dart';
-import 'package:my_app/Controller/Particulier/ParticulierController.dart';
-import 'package:my_app/Controller/global.dart';
-import 'package:my_app/view/Home/listfav.dart';
-import 'package:my_app/view/Profile/profileother.dart';
-import 'package:my_app/view/Works/ListWork.dart';
-import 'package:my_app/view/Works/listworkartisan.dart';
 import 'package:provider/provider.dart';
+
+import '../../Controller/Particulier/ParticulierController.dart';
 import '../../Controller/global.dart';
+import '../Profile/profileother.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
-  static const tag = "/home";
-
+class ListFav extends StatefulWidget {
+  const ListFav({super.key});
+static const tag = "/listFav";
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<ListFav> createState() => _ListFavState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _ListFavState extends State<ListFav> {
   @override
   Widget build(BuildContext context) {
     final globalData = Provider.of<GlobalData>(context);
-    final allArtisan = ArtisanController.getAllArtisan();
-    final recentArtisan = ArtisanController.getRecentArtisan();
     final FavoriteArtisans =
         ParticulierController.getFavoriteArtisanOfParticulier(
             globalData.getId());
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.logout,
-            color: Colors.red,
-          ),
+        leading: const BackButton(
+          color: Colors.black,
         ),
         title: const Text(
-          "Home",
+          "Liste des favoris",
           style: TextStyle(
             color: Colors.black,
           ),
@@ -49,117 +37,16 @@ class _HomePageState extends State<HomePage> {
         toolbarHeight: 35,
         elevation: 0,
       ),
-      body: Column(
+      body: Row(mainAxisAlignment: MainAxisAlignment.center, children: [ Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(bottom: 20),
-              child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  "Bienvenue ${globalData.getName()}",
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-            ),
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              if (globalData.getRole() == 1)
-                Container(
-                    padding: const EdgeInsets.only(left: 20, right: 20),
-                    decoration: BoxDecoration(
-                      color: Colors.grey.withOpacity(0.75),
-                      shape: BoxShape.circle,
-                    ),
-                    child: IconButton(
-                        icon: const Icon(Icons.star, size: 20),
-                        onPressed: () {
-                          Navigator.of(context).pushNamed(ListFav.tag);
-                        })),
-                Container(
-                    padding: const EdgeInsets.only(left: 20, right: 20),
-                    decoration: BoxDecoration(
-                      color: Colors.grey.withOpacity(0.75),
-                      shape: BoxShape.circle,
-                    ),
-                    child: IconButton(
-                        icon: const Icon(Icons.search, size: 20),
-                        onPressed: () {})),
-            ]),
-            if (globalData.getRole() == 0)
-              Container(
-                padding: const EdgeInsets.only(left: 20, right: 20),
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.75),
-                  shape: BoxShape.circle,
-                ),
-                child: IconButton(
-                  icon: const Icon(Icons.home_repair_service_sharp, size: 20),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ListWorkArtisan(),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            const Padding(
-              padding: EdgeInsets.only(left: 20, top: 20),
-              child: Text(
-                "Les artisans du moment",
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-            const Divider(
-              color: Colors.black,
-              thickness: 1,
-              height: 30,
-            ),
-            Container(height: 115, child: ArtisanList(allArtisan)),
-            const Divider(
-              color: Colors.black,
-              thickness: 1,
-              height: 30,
-            ),
-            const Padding(
-              padding: EdgeInsets.only(left: 20),
-              child: Text(
-                "Les nouveaux artisans",
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-            const Divider(
-              color: Colors.black,
-              thickness: 1,
-              height: 30,
-            ),
-            Container(height: 115, child: ArtisanList(recentArtisan)),
-            const Divider(
-              color: Colors.black,
-              thickness: 1,
-              height: 30,
-            ),
-            const Padding(
-              padding: EdgeInsets.only(left: 20),
-              child: Text(
-                "Vos artisans favoris",
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-            const Divider(
-              color: Colors.black,
-              thickness: 1,
-              height: 30,
-            ),
-            Container(height: 115, child: ArtisanList(FavoriteArtisans))
-          ]),
+          children: [Container(padding: EdgeInsets.only(top: 30),height: 740,width: 220,child: listOfFavArtisan(FavoriteArtisans))]),
+          ])
     );
   }
 
-  Widget ArtisanList(artisans) {
-    return FutureBuilder(
+  Widget listOfFavArtisan(artisans) {
+    return
+    FutureBuilder(
       future: artisans,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
@@ -173,11 +60,12 @@ class _HomePageState extends State<HomePage> {
           }
           if (snapshot.data['results'].length >= 0) {
             return ListView.builder(
-                scrollDirection: Axis.horizontal,
+                scrollDirection: Axis.vertical,
                 itemCount: snapshot.data['results'].length,
                 itemBuilder: (BuildContext context, int index) {
                   return SizedBox(
-                    width: 195,
+                    
+                    height: 120,
                     child: CardArtisan(index, snapshot.data['results'][index]),
                   );
                 });
