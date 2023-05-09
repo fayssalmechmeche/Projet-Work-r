@@ -107,7 +107,7 @@ class _ListPropositionState extends State<ListProposition> {
     return GestureDetector(
         onTap: () {
           if (globalData.getRole() == 1) {
-            Navigator.of(context).pushNamed(DevisFollow.tag, arguments: data);
+            Navigator.of(context).pushNamed(DevisFollow.tag, arguments: data).then((_) => setState(() {}));;
           }
           const snackBar = SnackBar(
             content: Text('Works page have been lunched'),

@@ -66,7 +66,7 @@ class _ListTasksState extends State<ListTasks> {
   Widget addTask() {
     return GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed(AddTask.tag);
+          Navigator.of(context).pushNamed(AddTask.tag).then((_) => setState(() {}));
         },
         child: Card(
             shape: const StadiumBorder(

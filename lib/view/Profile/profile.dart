@@ -195,7 +195,7 @@ class _ProfileState extends State<Profile> {
               height: 85,
               child: OutlinedButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(EditProfile.tag);
+                  Navigator.of(context).pushNamed(EditProfile.tag).then((_) => setState(() {}));
                 },
                 style: OutlinedButton.styleFrom(
                     shape: RoundedRectangleBorder(

@@ -194,7 +194,7 @@ class _ProfileOtherState extends State<ProfileOther> {
                     content: Text('Artisan ajouté aux favoris'),
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  Navigator.of(context).pushNamed(HomePage.tag);
+                  Navigator.pop(context);
                 },
                 style: OutlinedButton.styleFrom(
                     shape: RoundedRectangleBorder(

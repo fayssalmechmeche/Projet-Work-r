@@ -64,7 +64,7 @@ class _ListWorkState extends State<ListWork> {
   Widget addWork() {
     return GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed(AddWork.tag);
+          Navigator.of(context).pushNamed(AddWork.tag).then((_) => setState(() {}));
           const snackBar = SnackBar(
             content: Text('Works page have been lunched'),
           );
