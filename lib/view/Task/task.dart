@@ -149,7 +149,7 @@ class _TaskState extends State<Task> {
               child: OutlinedButton(
                 onPressed: () {
                   Navigator.of(context)
-                      .pushNamed(TaskEdit.tag, arguments: data);
+                      .pushNamed(TaskEdit.tag, arguments: data).then((_) => setState(() {}));
                 },
                 style: OutlinedButton.styleFrom(
                     shape: RoundedRectangleBorder(

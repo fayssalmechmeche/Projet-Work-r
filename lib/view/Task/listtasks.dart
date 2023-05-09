@@ -141,7 +141,7 @@ class _ListTasksState extends State<ListTasks> {
     //print(data['category']);
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(Task.tag, arguments: data);
+        Navigator.of(context).pushNamed(Task.tag, arguments: data).then((_) => setState(() {}));
       },
       child: Card(
           shape: RoundedRectangleBorder(
