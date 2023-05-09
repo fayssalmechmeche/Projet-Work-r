@@ -24,11 +24,27 @@ const http = require("http");
 const server = http.createServer(app);
 const io = require("socket.io")(server);
 //
+messages = [];
 
 const PORT = process.env.PORT || 3000;
 
 io.on("connection", (socket) => {
-  console.log("a user connected");
+  console.log("a user connected: ", socket.handshake.query.username);
+  socket.on(
+    "message",
+    (msg) => {
+      const message = {
+        message: msg.message,
+        senderUsername: msg.senderUsername,
+        sent_at: Date.now(),
+      };
+      messages.push(message);
+      io.emit("message", message);
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
 });
 
 server.listen(

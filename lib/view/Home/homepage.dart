@@ -22,12 +22,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final IO.Socket socket = IO.io(
-      "http://localhost:3000",
-      IO.OptionBuilder()
-          .setTransports(['websocket']) // for Flutter or Dart VM
-          .disableAutoConnect() // disable auto-connection
-          .build());
+  late IO.Socket socket;
+
+  _sendMessage() {
+    socket.emit(
+        "message", {"message": "Hello from Flutter", "sender": "fayssal"});
+    socket
+        .emit("message", {"message": "Bye from Flutter", "sender": "Jhon Doe"});
+  }
 
   _connectSocket() {
     socket.connect();
@@ -40,17 +42,31 @@ class _HomePageState extends State<HomePage> {
     socket.onConnectError((data) {
       print("Socket connexion error: $data");
     });
+    socket.on("message", (data) {
+      print("Message from SERVER: $data");
+    });
   }
 
   @override
   void initState() {
     super.initState();
+
+    socket = IO.io(
+        "http://localhost:3000",
+        IO.OptionBuilder()
+            .setTransports(['websocket'])
+            .setQuery({"username": "fayssal"}) // for Flutter or Dart VM
+            .disableAutoConnect() // disable auto-connection
+            .build());
+
     _connectSocket();
+    _sendMessage();
   }
 
   @override
   Widget build(BuildContext context) {
     final globalData = Provider.of<GlobalData>(context);
+    print(globalData.getUsername());
     final allArtisan = ArtisanController.getAllArtisan();
     final recentArtisan = ArtisanController.getRecentArtisan();
     final FavoriteArtisans =
