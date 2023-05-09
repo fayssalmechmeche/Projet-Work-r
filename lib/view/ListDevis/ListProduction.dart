@@ -75,7 +75,7 @@ class _ListPropositionState extends State<ListProposition> {
             return Center(
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [Text("Aucune proposition de chantier")],
+              children: [Text("Aucune proposition de devis")],
             ));
           }
           if (snapshot.data['results'].length != 0) {
