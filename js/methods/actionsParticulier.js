@@ -279,5 +279,18 @@ var functions = {
       }
     );
   },
+
+  /////////////////////////////// CONVERSATION ///////////////////////////////
+
+  getAllConversationsFromParticulier: function (req, res) {
+    mysqlConnection.query(
+      "SELECT * FROM conversation WHERE particulierID = ?",
+      req.headers.particulierid,
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json(results);
+      }
+    );
+  },
 };
 module.exports = functions;

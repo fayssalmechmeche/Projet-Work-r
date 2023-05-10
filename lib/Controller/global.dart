@@ -1,10 +1,22 @@
 import 'package:flutter/foundation.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class GlobalData with ChangeNotifier {
   int _counter = 0;
   int get counter => _counter;
   Map<String, dynamic> user = {};
   Map<String, dynamic> chantier = {};
+
+  IO.Socket? _socket;
+
+  IO.Socket? getSocket() {
+    return _socket;
+  }
+
+  void setSocket(IO.Socket socket) {
+    _socket = socket;
+    notifyListeners();
+  }
 
   void incrementCounter() {
     _counter++;

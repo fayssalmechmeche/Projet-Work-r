@@ -334,5 +334,20 @@ var functions = {
       }
     );
   },
+
+  ///////////////////////////conversation////////////////////////////
+
+  getAllConversationsFromArtisan: function (req, res) {
+    mysqlConnection.query(
+      "SELECT * FROM conversation WHERE artisanID = ?",
+      req.headers.artisanid,
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json(results);
+      }
+    );
+  },
+
+  
 };
 module.exports = functions;

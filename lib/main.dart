@@ -30,6 +30,7 @@ import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'Controller/global.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,11 +49,42 @@ Future<void> main() async {
   }
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  late IO.Socket socket;
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialisation du socket
+    socket = IO.io(
+        "http://localhost:3000",
+        IO.OptionBuilder()
+            .setTransports(['websocket']) // for Flutter or Dart VM
+            .disableAutoConnect() // disable auto-connection
+            .build());
+
+    // Connect to websocket
+    socket.connect();
+  }
+
+  @override
+  void dispose() {
+    socket.dispose(); // Déconnecte et libère les ressources du socket
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final globalData = Provider.of<GlobalData>(context);
+    globalData.setSocket(socket);
+    print('socket: ${globalData.getSocket()}');
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -61,7 +93,7 @@ class MyApp extends StatelessWidget {
       ),
       home: const FirstPage(title: 'Flutter Demo Home Page'),
       routes: {
-        HomePage.tag: (context) => const HomePage(),
+        HomePage.tag: (context) => HomePage(),
         Login.tag: (context) => const Login(),
         LoginArt.tag: (context) => const LoginArt(),
         RegisterPage.tag: (context) => const RegisterPage(
