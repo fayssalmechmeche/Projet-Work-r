@@ -122,6 +122,11 @@ router.get(
 
 ///////////////////////////Conversation//////////////////////////////
 
+router.get(
+  "/checkConversationExists",
+  actionsConversation.checkConversationExists
+);
+
 router.post("/createConversation", actionsConversation.createConversation);
 
 router.get(

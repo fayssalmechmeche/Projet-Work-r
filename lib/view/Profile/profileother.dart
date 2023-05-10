@@ -167,16 +167,33 @@ class _ProfileOtherState extends State<ProfileOther> {
               width: 160,
               height: 85,
               child: OutlinedButton(
-                onPressed: () {
-                  ConversationController.createConversation(
-                      globalData.getId(), data['_id'], "conversation");
-
-                  const snackBar = SnackBar(
-                    content: Text('Redirection vers discussion'),
+                onPressed: () async {
+                  bool conversationExists =
+                      await ConversationController.checkConversationExists(
+                    data['_id'],
+                    globalData.getId(),
                   );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  Navigator.pushNamed(context, Chat.tag,
-                      arguments: data['_id']);
+                  print("conversationExists");
+                  print(conversationExists);
+                  if (conversationExists == true) {
+                    // La conversation existe déjà, effectuer les actions appropriées
+                    const snackBar = SnackBar(
+                      content: Text('La conversation existe déjà'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    Navigator.pushNamed(context, Chat.tag,
+                        arguments: data['_id']);
+                  } else {
+                    // Créer une nouvelle conversation
+                    ConversationController.createConversation(
+                        data['_id'], globalData.getId(), "conversation");
+                    const snackBar = SnackBar(
+                      content: Text('Conversation créée'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    Navigator.pushNamed(context, Chat.tag,
+                        arguments: data['_id']);
+                  }
                 },
                 style: OutlinedButton.styleFrom(
                     shape: RoundedRectangleBorder(

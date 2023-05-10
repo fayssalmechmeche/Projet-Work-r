@@ -5,6 +5,25 @@ const mysqlConnection = require("../config/db");
 const bcrypt = require("bcrypt");
 
 var functions = {
+  checkConversationExists: function (req, res) {
+    const artisanID = req.headers.artisanid;
+    const particulierID = req.headers.particulierid;
+    console.log(artisanID);
+    console.log(particulierID);
+
+    mysqlConnection.query(
+      "SELECT COUNT(*) AS count FROM conversation WHERE artisanID = ? AND particulierID = ?",
+      [artisanID, particulierID],
+      function (error, results, fields) {
+        if (error) {
+          return res.json({ success: false, msg: error });
+        }
+
+        const count = results[0].count;
+        res.json({ exists: count > 0 });
+      }
+    );
+  },
   createConversation: function (req, res) {
     mysqlConnection.query(
       "INSERT INTO conversation (artisanID, particulierID, name) VALUES (?, ?, ?)",
@@ -27,7 +46,7 @@ var functions = {
       }
     );
   },
-  
+
   // Get all conversations
   getAllConversationFromArtisanAndParticulier: function (req, res) {
     mysqlConnection.query(

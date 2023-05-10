@@ -10,6 +10,24 @@ import 'package:my_app/Controller/Artisan/ArtisanController.dart';
 class ConversationController {
   static var url = "http://localhost:3000/";
 
+// checkConversationExists
+  static Future<bool> checkConversationExists(
+      int artisanID, int particulierID) async {
+    var response =
+        await http.get(Uri.parse("${url}checkConversationExists"), headers: {
+      "Content-Type": "application/json",
+      "artisanid": artisanID.toString(),
+      "particulierid": particulierID.toString(),
+    });
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse['exists'];
+    } else {
+      throw Exception('Failed to check conversation existence.');
+    }
+  }
+
   static Future<Map<String, dynamic>> createConversation(
       int artisanID, int particulierID, String name) async {
     var response =
@@ -49,6 +67,4 @@ class ConversationController {
       return jsonResponse;
     }
   }
-
-  
 }
