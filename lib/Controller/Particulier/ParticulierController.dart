@@ -386,4 +386,28 @@ class ParticulierController {
       return jsonResponse;
     }
   }
+
+  ///conversaition
+
+  static Future<Map<String, dynamic>> getAllConversationsFromParticulier(
+      int ParticulierID) async {
+    var response = await http.get(
+      Uri.parse("${url}getAllConversationsFromParticulier"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'particulierID': ParticulierID.toString()
+      },
+    );
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      //print("getChantierById réussie Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } else {
+      //print("getChantierById échouée Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    }
+  }
 }

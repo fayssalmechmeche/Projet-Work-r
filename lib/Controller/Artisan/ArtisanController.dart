@@ -45,19 +45,6 @@ class ArtisanController {
     return response.statusCode;
   }
 
-  // static Future<Map<String, dynamic>> authenticate(
-  //     String email, String password) async {
-  //   var response = await http.post(Uri.parse("${url}authenticateArtisan"),
-  //       headers: <String, String>{
-  //         'Content-Type': 'application/json; charset=UTF-8',
-  //       },
-  //       body:
-  //           jsonEncode(<String, String>{'email': email, 'password': password}));
-
-  //   //print(jsonDecode(response.body));
-  //   return jsonDecode(response.body);
-  // }
-
   // authentification artisan
   static Future<Map<String, dynamic>> authenticate(
       String email, String password) async {
@@ -447,5 +434,30 @@ class ArtisanController {
 
       return jsonResponse;
     });
+  }
+
+  ///////////////////////////////  CONVERSATION ///////////////////////////////
+  ///
+
+  static Future<Map<String, dynamic>> getAllConversationsFromArtisan(
+      int artisanID) async {
+    var response = await http.get(
+      Uri.parse("${url}getAllConversationsFromartisanID"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'artisanID': artisanID.toString()
+      },
+    );
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      //print("getChantierById réussie Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } else {
+      //print("getChantierById échouée Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    }
   }
 }

@@ -5,8 +5,10 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:my_app/Controller/Particulier/ParticulierController.dart';
 import 'package:my_app/view/Home/homepage.dart';
+import 'package:my_app/view/Msg/chat.dart';
 import 'package:provider/provider.dart';
 
+import '../../Controller/Conversation/ConversationController.dart';
 import '../../Controller/global.dart';
 
 class ProfileOther extends StatefulWidget {
@@ -166,10 +168,15 @@ class _ProfileOtherState extends State<ProfileOther> {
               height: 85,
               child: OutlinedButton(
                 onPressed: () {
+                  ConversationController.createConversation(
+                      globalData.getId(), data['_id'], "conversation");
+
                   const snackBar = SnackBar(
                     content: Text('Redirection vers discussion'),
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  Navigator.pushNamed(context, Chat.tag,
+                      arguments: data['_id']);
                 },
                 style: OutlinedButton.styleFrom(
                     shape: RoundedRectangleBorder(

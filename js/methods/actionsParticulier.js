@@ -288,7 +288,7 @@ var functions = {
       req.headers.particulierid,
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
-        res.json(results);
+        res.json({ results });
       }
     );
   },

@@ -2,6 +2,7 @@ const express = require("express");
 const actions = require("../methods/actions");
 const actionsArtisan = require("../methods/actionsArtisan");
 const actionsParticulier = require("../methods/actionsParticulier");
+const actionsConversation = require("../methods/actionsConversation");
 
 const router = express.Router();
 
@@ -67,6 +68,11 @@ router.get("/getAllDevis", actionsArtisan.getAllDevis);
 
 router.post("/refuseChantier", actionsArtisan.refuseChantier);
 
+router.get(
+  "/getAllConversationsFromArtisan",
+  actionsArtisan.getAllConversationsFromArtisan
+);
+
 ///////////////////////////Particulier//////////////////////////////
 
 // insert new particulier
@@ -108,4 +114,29 @@ router.get(
   "/getFavoriteArtisanOfParticulier",
   actionsParticulier.getFavoriteArtisanOfParticulier
 );
+
+router.get(
+  "/getAllConversationsFromParticulier",
+  actionsParticulier.getAllConversationsFromParticulier
+);
+
+///////////////////////////Conversation//////////////////////////////
+
+router.post("/createConversation", actionsConversation.createConversation);
+
+router.get(
+  "/getAllConversationFromArtisanAndParticulier",
+  actionsConversation.getAllConversationFromArtisanAndParticulier
+);
+
+router.get(
+  "/getAllMessagesForSenderFromConversation",
+  actionsConversation.getAllMessagesForSenderFromConversation
+);
+
+router.get(
+  "/getAllMessagesForReceiverFromConversation",
+  actionsConversation.getAllMessagesForReceiverFromConversation
+);
+
 module.exports = router;

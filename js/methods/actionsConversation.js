@@ -27,6 +27,18 @@ var functions = {
       }
     );
   },
+  
+  // Get all conversations
+  getAllConversationFromArtisanAndParticulier: function (req, res) {
+    mysqlConnection.query(
+      "SELECT * FROM conversation WHERE artisanID = ? AND particulierID = ?",
+      [req.headers.artisanid, req.headers.particulierid],
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json(results);
+      }
+    );
+  },
 
   getAllMessagesForSenderFromConversation: function (req, res) {
     mysqlConnection.query(
