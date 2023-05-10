@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:my_app/Controller/Artisan/ArtisanController.dart';
+import 'package:my_app/Controller/Conversation/ConversationController.dart';
 import 'package:my_app/Controller/Particulier/ParticulierController.dart';
 import 'package:my_app/Controller/pdfAPI.dart';
 import 'package:my_app/view/ListDevis/pdfdevis.dart';
+import 'package:my_app/view/Msg/chat.dart';
 import 'package:my_app/view/Task/listtasks.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +22,7 @@ class WorkFollow extends StatefulWidget {
 class _WorkFollowState extends State<WorkFollow> {
   @override
   Widget build(BuildContext context) {
+    var globalData = Provider.of<GlobalData>(context);
     Future<double> getProgressedValue() async {
       var globalData = Provider.of<GlobalData>(context);
       var chantiers = await ArtisanController.getAllTaskFromWork(
@@ -364,26 +367,27 @@ class _WorkFollowState extends State<WorkFollow> {
                               );
                             } else if (snapshot.hasError) {
                               return Container(
-                                width: 130,
-                                height: 130,
-                                child:Card(
-                                  shape: RoundedRectangleBorder(
-                                    side: const BorderSide(
-                                      color: Colors.black,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  elevation: 0,
-                                  child: Center(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text("Aucun devis"),
-                                      ],
-                                    ),
-                                  )));
+                                  width: 130,
+                                  height: 130,
+                                  child: Card(
+                                      shape: RoundedRectangleBorder(
+                                        side: const BorderSide(
+                                          color: Colors.black,
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
+                                      ),
+                                      elevation: 0,
+                                      child: Center(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text("Aucun devis"),
+                                          ],
+                                        ),
+                                      )));
                             } else {
                               return Center(
                                 child: CircularProgressIndicator(),
@@ -395,7 +399,29 @@ class _WorkFollowState extends State<WorkFollow> {
                             width: 130,
                             height: 130,
                             child: GestureDetector(
-                              onTap: () async {},
+                              onTap: () async {
+                                bool conversationExists =
+                                    await ConversationController
+                                        .checkChantierConversationExists(
+                                            globalData.getIdChantier());
+                                if (conversationExists) {
+                                  const snackBar = SnackBar(
+                                    content:
+                                        Text('La conversation existe déjà'),
+                                  );
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
+                                  Navigator.of(context).pushNamed(Chat.tag);
+                                } else {
+                                  await ConversationController
+                                      .createChantierConversation(
+                                          globalData.getIdChantier(),
+                                          globalData.getArtisanIdChantier(),
+                                          globalData
+                                              .getPartiuclierIdChantier());
+                                  Navigator.of(context).pushNamed(Chat.tag);
+                                }
+                              },
                               child: Card(
                                 shape: RoundedRectangleBorder(
                                   //<-- 3. SEE HERE

@@ -47,18 +47,6 @@ var functions = {
     );
   },
 
-  // Get all conversations
-  getAllConversationFromArtisanAndParticulier: function (req, res) {
-    mysqlConnection.query(
-      "SELECT * FROM conversation WHERE artisanID = ? AND particulierID = ?",
-      [req.headers.artisanid, req.headers.particulierid],
-      function (error, results, fields) {
-        if (error) return res.json({ success: false, msg: error });
-        res.json(results);
-      }
-    );
-  },
-
   getAllMessagesForSenderFromConversation: function (req, res) {
     mysqlConnection.query(
       "SELECT * FROM message WHERE conversationID = ? AND senderID = ? and sender_type = ?",
@@ -82,6 +70,44 @@ var functions = {
         req.headers.receiverid,
         req.headers.receivertype,
       ],
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json(results);
+      }
+    );
+  },
+
+  /////// CHANTIER CONVERSATION ///////
+
+  checkChantierConversationExists: function (req, res) {
+    mysqlConnection.query(
+      "SELECT COUNT(*) AS count FROM conversation_chantier WHERE workID = ?",
+      [req.headers.workid],
+      function (error, results, fields) {
+        if (error) {
+          return res.json({ success: false, msg: error });
+        }
+
+        const count = results[0].count;
+        res.json({ exists: count > 0 });
+      }
+    );
+  },
+  createChantierConversation: function (req, res) {
+    mysqlConnection.query(
+      "INSERT INTO conversation_chantier (artisanID, particulierID, workID) VALUES (?, ?, ?)",
+      [req.body.artisanID, req.body.particulierID, req.body.workID],
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json(results);
+      }
+    );
+  },
+
+  getOneConversationFromWork: function (req, res) {
+    mysqlConnection.query(
+      "SELECT * FROM conversation_chantier WHERE workID = ?",
+      [req.headers.workid],
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
         res.json(results);

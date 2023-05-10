@@ -144,4 +144,21 @@ router.get(
   actionsConversation.getAllMessagesForReceiverFromConversation
 );
 
+///////////////////////////CHANTIER Conversation//////////////////////////////
+
+router.get(
+  "/checkChantierConversationExists",
+  actionsConversation.checkChantierConversationExists
+);
+
+router.post(
+  "/createChantierConversation",
+  actionsConversation.createChantierConversation
+);
+
+router.get(
+  "/getOneConversationFromWork",
+  actionsConversation.getOneConversationFromWork
+);
+
 module.exports = router;

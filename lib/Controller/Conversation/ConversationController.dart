@@ -67,4 +67,39 @@ class ConversationController {
       return jsonResponse;
     }
   }
+
+  /////////////////////// CHANTIER CONVERSATION ///////////////////////
+  ///
+  static Future<Map<String, dynamic>> createChantierConversation(
+      int workID, String artisanID, String particulierID) async {
+    var response =
+        await http.post(Uri.parse("${url}createChantierConversation"), body: {
+      "workID": workID.toString(),
+      "artisanID": artisanID.toString(),
+      "particulierID": particulierID.toString(),
+    });
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } else {
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    }
+  }
+
+  static Future<bool> checkChantierConversationExists(int workID) async {
+    var response = await http
+        .get(Uri.parse("${url}checkChantierConversationExists"), headers: {
+      "Content-Type": "application/json",
+      "workid": workID.toString(),
+    });
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse['exists'];
+    } else {
+      throw Exception('Failed to check conversation existence.');
+    }
+  }
 }

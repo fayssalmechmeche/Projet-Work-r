@@ -146,4 +146,12 @@ class GlobalData with ChangeNotifier {
   int getIdChantier() {
     return chantier["id"];
   }
+
+  String getPartiuclierIdChantier() {
+    return chantier["particulierID"];
+  }
+
+  String getArtisanIdChantier() {
+    return chantier["artisanID"];
+  }
 }
