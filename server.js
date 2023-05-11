@@ -34,13 +34,9 @@ io.on("connection", (socket) => {
     "message",
     (msg) => {
       console.log("message: ", msg);
-      const message = {
-        message: msg.message,
-        senderUsername: msg.senderUsername,
-        sent_at: Date.now(),
-      };
-      messages.push(message);
-      io.emit("message", message);
+
+      messages.push(msg);
+      io.emit("message", msg);
     },
     (error) => {
       console.log(error);

@@ -28,6 +28,7 @@ import 'package:my_app/view/Works/listworkartisan.dart';
 import 'package:my_app/view/Works/workproposition.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'Controller/MessageProvider.dart';
 import 'firebase_options.dart';
 import 'Controller/global.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -38,8 +39,12 @@ Future<void> main() async {
     await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform);
     runApp(
-      ChangeNotifierProvider(
-        create: (context) => GlobalData(),
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => MessageProvider()),
+          ChangeNotifierProvider(create: (context) => GlobalData()),
+          // ...
+        ],
         child: MyApp(),
       ),
     );

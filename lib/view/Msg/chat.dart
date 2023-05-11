@@ -5,6 +5,7 @@ import 'package:my_app/Controller/Conversation/ConversationController.dart';
 import 'package:my_app/Controller/Particulier/ParticulierController.dart';
 import 'package:provider/provider.dart';
 
+import '../../Controller/MessageProvider.dart';
 import '../../Controller/global.dart';
 
 class Chat extends StatefulWidget {
@@ -38,24 +39,25 @@ class _ChatPageState extends State<Chat> {
   }
 
   Future<Map<String, dynamic>> getAllMessage() async {
+    final messageProvider = Provider.of<MessageProvider>(context);
+    messageProvider.clearMessages();
+
     var messages = await ConversationController.getAllMessageFromConversation(
         await getConversation());
-    print("messages");
-    print(messages["results"]);
 
     return messages;
   }
 
   @override
   Widget build(BuildContext context) {
+    final messageProvider = Provider.of<MessageProvider>(context);
     getAllMessage();
     getConversation();
     final data = ModalRoute.of(context)!.settings.arguments as Map;
     final globalData = Provider.of<GlobalData>(context);
     final socket = globalData.getSocket();
     socket!.on("message", (data) {
-      print("message");
-      setState(() {});
+      messageProvider.addMessage(data);
     });
 
     return SafeArea(
@@ -85,6 +87,7 @@ class _ChatPageState extends State<Chat> {
               return Center(child: Text('Erreur : ${snapshot.error}'));
             } else {
               final conversation = snapshot.data;
+              final messages = messageProvider.messages;
 
               return Column(
                 children: [
@@ -92,8 +95,9 @@ class _ChatPageState extends State<Chat> {
                     child: ListView.builder(
                       itemCount: snapshot.data!["results"].length,
                       itemBuilder: (context, index) {
-                        return _buildMessageItem(
-                            snapshot.data!["results"][index]);
+                        messageProvider
+                            .addMessage(snapshot.data!["results"][index]);
+                        return _buildMessageItem(messages[index]);
                       },
                     ),
                   ),
@@ -117,7 +121,9 @@ class _ChatPageState extends State<Chat> {
                               );
                               socket.emit('message', {
                                 "pseudo": globalData.getUsername(),
-                                "message": text
+                                "content": text,
+                                "senderID": globalData.getId(),
+                                "date": DateTime.now().toString()
                               });
                               inputController.clear();
                             },
@@ -135,7 +141,9 @@ class _ChatPageState extends State<Chat> {
                             );
                             socket.emit('message', {
                               "pseudo": globalData.getUsername(),
-                              "message": inputController.text
+                              "content": inputController.text,
+                              "senderID": globalData.getId(),
+                              "date": DateTime.now().toString()
                             });
                             inputController.clear();
                           },
@@ -154,12 +162,11 @@ class _ChatPageState extends State<Chat> {
 
   Widget _buildMessageItem(Map<String, dynamic> message) {
     final globalData = Provider.of<GlobalData>(context);
-    var pseudo;
 
     final isMyMessage = message["senderID"] == globalData.getId();
 
     final alignment =
-        isMyMessage ? CrossAxisAlignment.start : CrossAxisAlignment.end;
+        isMyMessage ? CrossAxisAlignment.end : CrossAxisAlignment.start;
     final backgroundColor =
         isMyMessage ? Colors.grey[300] : Colors.yellow.withOpacity(0.5);
     final textColor = isMyMessage ? Colors.black : Colors.black;
