@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:my_app/Controller/Artisan/ArtisanController.dart';
 import 'package:my_app/Controller/Conversation/ConversationController.dart';
+import 'package:my_app/Controller/Particulier/ParticulierController.dart';
 import 'package:provider/provider.dart';
 
 import '../../Controller/global.dart';
@@ -13,7 +16,6 @@ class Chat extends StatefulWidget {
 }
 
 class _ChatPageState extends State<Chat> {
-  List<Message> messages = [];
   final inputController = TextEditingController();
 
   var conversation;
@@ -22,19 +24,6 @@ class _ChatPageState extends State<Chat> {
   void initState() {
     super.initState();
     // Simulation des messages
-    messages = [
-      Message(sender: "John", text: "Salut !"),
-      Message(sender: "Alice", text: "Bonjour John !"),
-      Message(sender: "John", text: "Comment ça va ?"),
-      Message(sender: "Alice", text: "Je vais bien, merci ! Et toi ?"),
-      Message(sender: "John", text: "Ça va aussi."),
-    ];
-  }
-
-  void sendMessage(String text) {
-    setState(() {
-      messages.add(Message(sender: "John", text: text));
-    });
   }
 
   getConversation() async {
@@ -48,11 +37,13 @@ class _ChatPageState extends State<Chat> {
     } else {}
   }
 
-  getAllMessage() async {
+  Future<Map<String, dynamic>> getAllMessage() async {
     var messages = await ConversationController.getAllMessageFromConversation(
         await getConversation());
+    print("messages");
+    print(messages["results"]);
 
-    return messages["results"];
+    return messages;
   }
 
   @override
@@ -94,10 +85,10 @@ class _ChatPageState extends State<Chat> {
                 children: [
                   Expanded(
                     child: ListView.builder(
-                      itemCount: messages.length,
+                      itemCount: snapshot.data!["results"].length,
                       itemBuilder: (context, index) {
-                        final message = messages[index];
-                        return _buildMessageItem(message);
+                        return _buildMessageItem(
+                            snapshot.data!["results"][index]);
                       },
                     ),
                   ),
@@ -111,8 +102,15 @@ class _ChatPageState extends State<Chat> {
                             decoration: const InputDecoration(
                               hintText: "Écrire un message...",
                             ),
-                            onSubmitted: (text) {
-                              sendMessage(text);
+                            onSubmitted: (text) async {
+                              ConversationController.sendMessage(
+                                await getConversation(),
+                                globalData.getId(),
+                                globalData.getUsername(),
+                                globalData.getRole().toString(),
+                                text,
+                              );
+                              setState(() {});
                             },
                           ),
                         ),
@@ -120,11 +118,14 @@ class _ChatPageState extends State<Chat> {
                           icon: const Icon(Icons.send),
                           onPressed: () async {
                             await ConversationController.sendMessage(
-                              getConversation(),
+                              await getConversation(),
                               globalData.getId(),
+                              globalData.getUsername(),
                               globalData.getRole().toString(),
                               inputController.text,
                             );
+                            setState(() {});
+                            inputController.clear();
                           },
                         ),
                       ],
@@ -139,13 +140,20 @@ class _ChatPageState extends State<Chat> {
     );
   }
 
-  Widget _buildMessageItem(message) {
-    final isMyMessage = message.sender == "John";
+  Widget _buildMessageItem(Map<String, dynamic> message) {
+    final globalData = Provider.of<GlobalData>(context);
+    var pseudo;
+
+    final isMyMessage = message["senderID"] == globalData.getId();
+
     final alignment =
         isMyMessage ? CrossAxisAlignment.start : CrossAxisAlignment.end;
     final backgroundColor =
         isMyMessage ? Colors.grey[300] : Colors.yellow.withOpacity(0.5);
     final textColor = isMyMessage ? Colors.black : Colors.black;
+    DateTime date = DateTime.parse(message["date"]);
+
+    String formattedDate = DateFormat('dd-MM-yyyy à HH:mm:ss').format(date);
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -158,7 +166,7 @@ class _ChatPageState extends State<Chat> {
         crossAxisAlignment: alignment,
         children: [
           Text(
-            message.sender,
+            message["pseudo"] + " " + formattedDate,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: textColor,
@@ -166,18 +174,11 @@ class _ChatPageState extends State<Chat> {
           ),
           const SizedBox(height: 4),
           Text(
-            message.text,
+            message["content"],
             style: TextStyle(color: textColor),
           ),
         ],
       ),
     );
   }
-}
-
-class Message {
-  final String sender;
-  final String text;
-
-  Message({required this.sender, required this.text});
 }

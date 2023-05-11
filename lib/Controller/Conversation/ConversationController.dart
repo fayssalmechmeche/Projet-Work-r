@@ -104,10 +104,11 @@ class ConversationController {
   }
 
   static Future<Map<String, dynamic>> sendMessage(int conversationID,
-      int senderID, String sender_type, String content) async {
+      int senderID, String pseudo, String sender_type, String content) async {
     var response = await http.post(Uri.parse("${url}sendMessage"), body: {
       "conversationID": conversationID.toString(),
       "senderID": senderID.toString(),
+      "pseudo": pseudo,
       "sender_type": sender_type,
       "content": content,
     });

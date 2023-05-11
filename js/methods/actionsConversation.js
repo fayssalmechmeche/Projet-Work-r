@@ -117,10 +117,11 @@ var functions = {
 
   sendMessage: function (req, res) {
     mysqlConnection.query(
-      "INSERT INTO message (conversationID, senderID, sender_type, content) VALUES (?, ?, ?, ?)",
+      "INSERT INTO message (conversationID, senderID, pseudo, sender_type, content) VALUES (?, ?, ?, ?, ?)",
       [
         req.body.conversationID,
         req.body.senderID,
+        req.body.pseudo,
         req.body.sender_type,
         req.body.content,
       ],
