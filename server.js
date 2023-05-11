@@ -33,6 +33,7 @@ io.on("connection", (socket) => {
   socket.on(
     "message",
     (msg) => {
+      console.log("message: ", msg);
       const message = {
         message: msg.message,
         senderUsername: msg.senderUsername,

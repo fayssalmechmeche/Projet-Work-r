@@ -52,6 +52,11 @@ class _ChatPageState extends State<Chat> {
     getConversation();
     final data = ModalRoute.of(context)!.settings.arguments as Map;
     final globalData = Provider.of<GlobalData>(context);
+    final socket = globalData.getSocket();
+    socket!.on("message", (data) {
+      print("message");
+      setState(() {});
+    });
 
     return SafeArea(
       child: Scaffold(
@@ -110,7 +115,11 @@ class _ChatPageState extends State<Chat> {
                                 globalData.getRole().toString(),
                                 text,
                               );
-                              setState(() {});
+                              socket.emit('message', {
+                                "pseudo": globalData.getUsername(),
+                                "message": text
+                              });
+                              inputController.clear();
                             },
                           ),
                         ),
@@ -124,7 +133,10 @@ class _ChatPageState extends State<Chat> {
                               globalData.getRole().toString(),
                               inputController.text,
                             );
-                            setState(() {});
+                            socket.emit('message', {
+                              "pseudo": globalData.getUsername(),
+                              "message": inputController.text
+                            });
                             inputController.clear();
                           },
                         ),
