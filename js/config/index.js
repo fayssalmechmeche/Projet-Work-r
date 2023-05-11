@@ -161,4 +161,11 @@ router.get(
   actionsConversation.getOneConversationFromWork
 );
 
+router.post("/sendMessage", actionsConversation.sendMessage);
+
+router.get(
+  "/getAllMessagesFromConversation",
+  actionsConversation.getAllMessagesFromConversation
+);
+
 module.exports = router;

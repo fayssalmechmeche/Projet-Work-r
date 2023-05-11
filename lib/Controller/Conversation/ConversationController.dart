@@ -102,4 +102,56 @@ class ConversationController {
       throw Exception('Failed to check conversation existence.');
     }
   }
+
+  static Future<Map<String, dynamic>> sendMessage(int conversationID,
+      int senderID, String sender_type, String content) async {
+    var response = await http.post(Uri.parse("${url}sendMessage"), body: {
+      "conversationID": conversationID.toString(),
+      "senderID": senderID.toString(),
+      "sender_type": sender_type,
+      "content": content,
+    });
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } else {
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    }
+  }
+
+  static Future<Map<String, dynamic>> getOneConversationFromWork(
+      int workID) async {
+    var response = await http.get(Uri.parse("${url}getOneConversationFromWork"),
+        headers: {
+          "Content-Type": "application/json",
+          "workid": workID.toString()
+        });
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } else {
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    }
+  }
+
+  static Future<Map<String, dynamic>> getAllMessageFromConversation(
+      int conversationID) async {
+    var response = await http
+        .get(Uri.parse("${url}getAllMessagesFromConversation"), headers: {
+      "Content-Type": "application/json",
+      "conversationid": conversationID.toString()
+    });
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } else {
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    }
+  }
 }

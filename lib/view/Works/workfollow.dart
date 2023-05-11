@@ -411,15 +411,25 @@ class _WorkFollowState extends State<WorkFollow> {
                                   );
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(snackBar);
-                                  Navigator.of(context).pushNamed(Chat.tag);
+                                  Map<String, dynamic> arguments = {
+                                    'chantier': globalData.getChantier(),
+                                    'type': "private",
+                                  };
+                                  Navigator.of(context).pushNamed(Chat.tag,
+                                      arguments: arguments);
                                 } else {
+                                  Map<String, dynamic> arguments = {
+                                    'chantier': globalData.getChantier(),
+                                    'type': "private",
+                                  };
                                   await ConversationController
                                       .createChantierConversation(
                                           globalData.getIdChantier(),
                                           globalData.getArtisanIdChantier(),
                                           globalData
                                               .getPartiuclierIdChantier());
-                                  Navigator.of(context).pushNamed(Chat.tag);
+                                  Navigator.of(context).pushNamed(Chat.tag,
+                                      arguments: arguments);
                                 }
                               },
                               child: Card(

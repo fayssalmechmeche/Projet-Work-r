@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/Controller/Conversation/ConversationController.dart';
+import 'package:provider/provider.dart';
+
+import '../../Controller/global.dart';
 
 class Chat extends StatefulWidget {
   const Chat({Key? key}) : super(key: key);
@@ -11,6 +15,8 @@ class Chat extends StatefulWidget {
 class _ChatPageState extends State<Chat> {
   List<Message> messages = [];
   final inputController = TextEditingController();
+
+  var conversation;
 
   @override
   void initState() {
@@ -31,66 +37,109 @@ class _ChatPageState extends State<Chat> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        leading: const BackButton(
-          color: Colors.black,
-        ),
-        title: const Text(
-          "Chat",
-          style: TextStyle(
-            color: Colors.black,
-          ),
-        ),
-        toolbarHeight: 35,
-        elevation: 0,
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: messages.length,
-              itemBuilder: (context, index) {
-                final message = messages[index];
-                return _buildMessageItem(message);
-              },
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: inputController,
-                    decoration: const InputDecoration(
-                      hintText: "Écrire un message...",
-                    ),
-                    onSubmitted: (text) {
-                      sendMessage(text);
-                    },
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.send),
-                  onPressed: () {
-                    final text = sendMessage(
-                        inputController.text); // récupère le texte et l'envoie
-                  },
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    ));
+  getConversation() async {
+    final data = ModalRoute.of(context)!.settings.arguments as Map;
+
+    if (data["type"] == "private") {
+      conversation = await ConversationController.getOneConversationFromWork(
+          data["chantier"]["id"]);
+
+      return conversation["results"][0]["id"];
+    } else {}
   }
 
-  Widget _buildMessageItem(Message message) {
+  getAllMessage() async {
+    var messages = await ConversationController.getAllMessageFromConversation(
+        await getConversation());
+
+    return messages["results"];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    getAllMessage();
+    getConversation();
+    final data = ModalRoute.of(context)!.settings.arguments as Map;
+    final globalData = Provider.of<GlobalData>(context);
+
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          leading: const BackButton(
+            color: Colors.black,
+          ),
+          title: const Text(
+            "Chat",
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
+          toolbarHeight: 35,
+          elevation: 0,
+        ),
+        body: FutureBuilder<Map<String, dynamic>>(
+          future: getAllMessage(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              // En attente de la récupération de la conversation
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              // Erreur lors de la récupération de la conversation
+              return Center(child: Text('Erreur : ${snapshot.error}'));
+            } else {
+              final conversation = snapshot.data;
+
+              return Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: messages.length,
+                      itemBuilder: (context, index) {
+                        final message = messages[index];
+                        return _buildMessageItem(message);
+                      },
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: inputController,
+                            decoration: const InputDecoration(
+                              hintText: "Écrire un message...",
+                            ),
+                            onSubmitted: (text) {
+                              sendMessage(text);
+                            },
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.send),
+                          onPressed: () async {
+                            await ConversationController.sendMessage(
+                              getConversation(),
+                              globalData.getId(),
+                              globalData.getRole().toString(),
+                              inputController.text,
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            }
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMessageItem(message) {
     final isMyMessage = message.sender == "John";
     final alignment =
         isMyMessage ? CrossAxisAlignment.start : CrossAxisAlignment.end;

@@ -107,10 +107,37 @@ var functions = {
   getOneConversationFromWork: function (req, res) {
     mysqlConnection.query(
       "SELECT * FROM conversation_chantier WHERE workID = ?",
-      [req.headers.workid],
+      req.headers.workid,
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ results });
+      }
+    );
+  },
+
+  sendMessage: function (req, res) {
+    mysqlConnection.query(
+      "INSERT INTO message (conversationID, senderID, sender_type, content) VALUES (?, ?, ?, ?)",
+      [
+        req.body.conversationID,
+        req.body.senderID,
+        req.body.sender_type,
+        req.body.content,
+      ],
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
         res.json(results);
+      }
+    );
+  },
+
+  getAllMessagesFromConversation: function (req, res) {
+    mysqlConnection.query(
+      "SELECT * FROM message WHERE conversationID = ?",
+      req.headers.conversationid,
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ results });
       }
     );
   },
