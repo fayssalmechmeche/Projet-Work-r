@@ -25,6 +25,8 @@ class _ChatPageState extends State<Chat> {
   void initState() {
     super.initState();
     // Simulation des messages
+    getAllMessage();
+    getConversation();
   }
 
   getConversation() async {
@@ -67,8 +69,7 @@ class _ChatPageState extends State<Chat> {
   @override
   Widget build(BuildContext context) {
     final messageProvider = Provider.of<MessageProvider>(context);
-    getAllMessage();
-    getConversation();
+
     final data = ModalRoute.of(context)!.settings.arguments as Map;
     final globalData = Provider.of<GlobalData>(context);
     final socket = globalData.getSocket();
