@@ -337,7 +337,7 @@ var functions = {
 
   deleteTask(req, res) {
     mysqlConnection.query(
-      "DELETE FROM task WHERE id = ?",
+      "DELETE FROM tache WHERE id = ?",
       req.body.taskID,
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
