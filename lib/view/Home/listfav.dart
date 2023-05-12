@@ -10,7 +10,7 @@ import '../Profile/profileother.dart';
 
 class ListFav extends StatefulWidget {
   const ListFav({super.key});
-static const tag = "/listFav";
+  static const tag = "/listFav";
   @override
   State<ListFav> createState() => _ListFavState();
 }
@@ -23,35 +23,37 @@ class _ListFavState extends State<ListFav> {
         ParticulierController.getFavoriteArtisanOfParticulier(
             globalData.getId());
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        leading: const BackButton(
-          color: Colors.black,
-        ),
-        title: const Text(
-          "Liste des favoris",
-          style: TextStyle(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          leading: const BackButton(
             color: Colors.black,
           ),
+          title: const Text(
+            "Liste des favoris",
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
+          toolbarHeight: 35,
+          elevation: 0,
         ),
-        toolbarHeight: 35,
-        elevation: 0,
-      ),
-      body: Row(mainAxisAlignment: MainAxisAlignment.center, children: [ Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [Container(padding: EdgeInsets.only(top: 30),height: 740,width: 220,child: listOfFavArtisan(FavoriteArtisans))]),
-          ])
-    );
+        body: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+            Container(
+                padding: EdgeInsets.only(top: 30),
+                height: 740,
+                width: 220,
+                child: listOfFavArtisan(FavoriteArtisans))
+          ]),
+        ]));
   }
 
   Widget listOfFavArtisan(artisans) {
-    return
-    FutureBuilder(
+    return FutureBuilder(
       future: artisans,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data['results'] == null) {
-            print(snapshot.data);
             return Center(
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -64,7 +66,6 @@ class _ListFavState extends State<ListFav> {
                 itemCount: snapshot.data['results'].length,
                 itemBuilder: (BuildContext context, int index) {
                   return SizedBox(
-                    
                     height: 120,
                     child: CardArtisan(index, snapshot.data['results'][index]),
                   );

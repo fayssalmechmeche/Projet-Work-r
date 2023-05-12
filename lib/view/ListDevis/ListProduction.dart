@@ -18,17 +18,12 @@ class _ListPropositionState extends State<ListProposition> {
   Widget build(BuildContext context) {
     final globalData = Provider.of<GlobalData>(context);
     var devis;
-    print("role");
-    print(globalData.getRole());
-    print(globalData.getId());
+
     if (globalData.getRole() == 1) {
       devis = ParticulierController.getAllDevis(globalData.getId());
-      print(devis);
     }
     if (globalData.getRole() == 0) {
-      print("artisan");
       devis = ArtisanController.getAllDevis(globalData.getId());
-      print(devis);
     }
 
     return Scaffold(
@@ -71,7 +66,6 @@ class _ListPropositionState extends State<ListProposition> {
         //print(snapshot.hasData);
         if (snapshot.hasData) {
           if (snapshot.data['results'] == null) {
-            print(snapshot.data);
             return Center(
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

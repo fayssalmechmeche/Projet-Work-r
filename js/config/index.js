@@ -62,6 +62,7 @@ router.get("/getAllTasks", actionsArtisan.getAllTasks);
 router.get("/getLastTaskDone", actionsArtisan.getLastTaskDone);
 router.post("/createTask", actionsArtisan.createTask);
 router.post("/updateTask", actionsArtisan.updateTask);
+router.post("/deleteTask", actionsArtisan.deleteTask);
 
 // create Devis to Chantier
 
@@ -116,9 +117,19 @@ router.post(
   actionsParticulier.addFavoriteArtisanToParticulier
 );
 
+router.post(
+  "/removeFavoriteArtisanToParticulier",
+  actionsParticulier.removeFavoriteArtisanToParticulier
+);
+
 router.get(
   "/getFavoriteArtisanOfParticulier",
   actionsParticulier.getFavoriteArtisanOfParticulier
+);
+
+router.post(
+  "/checkFavoriteArtisanForParticulier",
+  actionsParticulier.checkFavoriteArtisanForParticulier
 );
 
 router.get(

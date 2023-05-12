@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_app/Controller/Artisan/ArtisanController.dart';
 import 'package:my_app/Controller/global.dart';
+import 'package:my_app/view/Task/listtasks.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import '../../Controller/Particulier/ParticulierController.dart';
@@ -144,21 +145,17 @@ class _TaskEditState extends State<TaskEdit> {
                         );
 
                         if (pickedDate != null) {
-                          print(
-                              pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                          //pickedDate output format => 2021-03-10 00:00:00.000
                           String formattedDate =
                               DateFormat('yyyy-MM-dd').format(pickedDate);
-                          print(
-                              formattedDate); //formatted date output using intl package =>  2021-03-16
+                          //formatted date output using intl package =>  2021-03-16
                           //you can implement different kind of Date Format here according to your requirement
 
                           setState(() {
                             dateStartController.text =
                                 formattedDate; //set output date to TextField value.
                           });
-                        } else {
-                          print("Date is not selected");
-                        }
+                        } else {}
                       },
                     ))),
                 Container(
@@ -299,6 +296,45 @@ class _TaskEditState extends State<TaskEdit> {
                     foregroundColor: Colors.green,
                     side: const BorderSide(color: Colors.green)),
                 child: const Text('Sauvegarder',
+                    style: TextStyle(color: Colors.black)),
+              )),
+          Container(
+              padding: const EdgeInsets.only(
+                  top: 30, bottom: 15, right: 15, left: 15),
+              width: 160,
+              height: 75,
+              child: OutlinedButton(
+                onPressed: () {
+                  bool error = false;
+                  if (nameTaskController.text == "" ||
+                      descriptionController.text == "" ||
+                      dateStartController.text == "" ||
+                      dateEndController.text == "" ||
+                      _dropdownvalue2 == null) {
+                    error = true;
+                  }
+                  if (error == false) {
+                    var response = ArtisanController.deleteTask(data['id']);
+                    const snackBar = SnackBar(
+                      content: Text('Tâche supprimé !'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+                    Navigator.of(context).pushNamed(ListTasks.tag);
+                  } else {
+                    const snackBar = SnackBar(
+                      content: Text('Attention à bien remplir le formulaire !'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                },
+                style: OutlinedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(0),
+                    ),
+                    foregroundColor: Colors.red,
+                    side: const BorderSide(color: Colors.red)),
+                child: const Text('Supprimer',
                     style: TextStyle(color: Colors.black)),
               ))
         ]),

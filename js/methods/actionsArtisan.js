@@ -46,7 +46,6 @@ var functions = {
       (error, results) => {
         // If authentification fail, return error message
         if (error || results[0] === undefined) {
-          console.log("error : " + error);
           return res.status(403).send({
             success: false,
             message: "Authentification échouée. Email introuvable.",
@@ -54,17 +53,14 @@ var functions = {
 
           // if authentification success, return token
         } else {
-          console.log("results : " + results[0].password);
           bcrypt.compare(
             req.body.password,
             results[0].password,
             function (err, isMatch) {
               if (isMatch && !err) {
-                console.log("results : " + results[0]);
                 var token = jwt.encode(results[0], config.secret);
                 res.json({ success: true, token: token });
               } else {
-                console.log("error : " + err);
                 return res.status(403).send({
                   success: false,
                   msg: "Authenticate failed, Wrong password",
@@ -131,7 +127,6 @@ var functions = {
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
         res.json({ results: results });
-        console.log(results);
       }
     );
   },
@@ -143,7 +138,6 @@ var functions = {
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
         res.json({ results: results });
-        console.log(results);
       }
     );
   },
@@ -156,7 +150,6 @@ var functions = {
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
         res.json({ results: results });
-        console.log(results);
       }
     );
   },
@@ -169,7 +162,6 @@ var functions = {
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
         res.json({ results: results });
-        console.log(results);
       }
     );
   },
@@ -188,12 +180,10 @@ var functions = {
 
   // a function to get an work from the mysql database with artisanID and return it
   getAllChantiersByArtisan(req, res) {
-    console.log(req.headers.artisanid);
     mysqlConnection.query(
       "SELECT * FROM chantier WHERE artisanID = ?",
       req.headers.artisanid,
       function (error, results, fields) {
-        console.log(results);
         if (error) return res.json({ success: false, msg: error });
         res.json({ results: results });
       }
@@ -201,13 +191,10 @@ var functions = {
   },
 
   refuseChantier(req, res) {
-    console.log(req.body.artisanID);
-    console.log(req.body.workID);
     mysqlConnection.query(
       "UPDATE chantier SET artisans_refuses = CONCAT(IFNULL(artisans_refuses, ''),',', ?) WHERE id = ?",
       [req.body.artisanID, req.body.workID],
       function (error, results, fields) {
-        console.log(results);
         if (error) return res.json({ success: false, msg: error });
         res.json({ success: true, msg: results });
       }
@@ -262,8 +249,6 @@ var functions = {
   },
 
   getDevisByStatus(req, res) {
-    console.log(req.headers.artisanid);
-    console.log(req.headers.state);
     mysqlConnection.query(
       "SELECT * FROM devis WHERE artisanID = ? AND state = ?",
       [req.headers.artisanid, req.headers.state],
@@ -350,7 +335,7 @@ var functions = {
 
   deleteTask(req, res) {
     mysqlConnection.query(
-      "DELETE FROM task WHERE id = ?",
+      "DELETE FROM tache WHERE id = ?",
       req.body.taskID,
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
