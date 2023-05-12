@@ -40,7 +40,7 @@ class _EditProfileState extends State<EditProfile> {
 
   PlatformFile? file;
   UploadTask? uploadTask;
-  var fileName = 'aucune image';
+  var fileName;
 
   Future selectFile() async {
     PermissionStatus status = await Permission.storage.request();
@@ -55,23 +55,21 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   Future uploadFile() async {
-    final uuid = Uuid();
-    final uniqueId = uuid.v4();
+    if (file != null) {
+      final uuid = Uuid();
+      final uniqueId = uuid.v4();
 
-    final path = 'pp/${uniqueId}';
-    final firebaseFile = File(file!.path!);
+      final path = 'pp/${uniqueId}';
+      final firebaseFile = File(file!.path!);
 
-    final ref = FirebaseStorage.instance.ref().child(path);
-    uploadTask = ref.putFile(firebaseFile);
-    final snap = await uploadTask!.whenComplete(() {});
-    final urlDownload = await snap.ref.getDownloadURL();
-    fileName = urlDownload;
-    print('Download-Link: $urlDownload');
-    print('Download-Link: $fileName');
-
-    setState(() {
-      uploadTask = null;
-    });
+      final ref = FirebaseStorage.instance.ref().child(path);
+      uploadTask = ref.putFile(firebaseFile);
+      final snap = await uploadTask!.whenComplete(() {});
+      final urlDownload = await snap.ref.getDownloadURL();
+      fileName = urlDownload;
+      print('Download-Link: $urlDownload');
+      print('Download-Link: $fileName');
+    }
   }
 
   @override
@@ -392,7 +390,7 @@ class _EditProfileState extends State<EditProfile> {
                       cityController.text,
                       adresseController.text,
                       postalCodeController.text,
-                      fileName,
+                      fileName ?? globalData.getPicture(),
                     );
                     var user = {
                       '_id': globalData.getId(),
@@ -405,7 +403,7 @@ class _EditProfileState extends State<EditProfile> {
                       'city': cityController.text,
                       'adress': adresseController.text,
                       'postalCode': postalCodeController.text,
-                      'picture': fileName,
+                      'picture': fileName ?? globalData.getPicture(),
                       'chantier': 'n',
                     };
 
@@ -419,16 +417,17 @@ class _EditProfileState extends State<EditProfile> {
                   if (globalData.getRole() == 0 && error == false) {
                     await uploadFile();
                     await ArtisanController.updateArtisan(
-                        globalData.getId(),
-                        firstNameController.text,
-                        lastNameController.text,
-                        passwordFinal,
-                        mailController.text,
-                        globalData.getUsername(),
-                        phoneController.text,
-                        adresseController.text,
-                        entrepriseController.text,
-                        fileName);
+                      globalData.getId(),
+                      firstNameController.text,
+                      lastNameController.text,
+                      passwordFinal,
+                      mailController.text,
+                      globalData.getUsername(),
+                      phoneController.text,
+                      adresseController.text,
+                      entrepriseController.text,
+                      fileName ?? globalData.getPicture(),
+                    );
                     var user = {
                       '_id': globalData.getId(),
                       'name': firstNameController.text,
@@ -441,7 +440,7 @@ class _EditProfileState extends State<EditProfile> {
                       'entreprise': entrepriseController.text,
                       'mobilite': mobiliteController.text,
                       'siret': siretController.text,
-                      'picture': fileName,
+                      'picture': fileName ?? globalData.getPicture(),
                       'chantier': 'n',
                     };
 
