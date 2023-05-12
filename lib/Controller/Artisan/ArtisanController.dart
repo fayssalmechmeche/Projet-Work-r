@@ -168,7 +168,7 @@ class ArtisanController {
     if (response.statusCode == 200) {
       //print("getWorkByStatus réussie Particulier Controller");
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
-      print(response.body);
+
       return jsonResponse;
     } else {
       //print("getWorkByStatus échouée Particulier Controller");
@@ -277,7 +277,6 @@ class ArtisanController {
         'artisanID': artisanID.toString()
       },
     );
-    print(response.body);
 
     if (response.statusCode == 200) {
       //print("getChantierById réussie Particulier Controller");
@@ -300,7 +299,6 @@ class ArtisanController {
         'state': state.toString(),
       },
     );
-    print(response.body);
 
     if (response.statusCode == 200) {
       //print("getChantierById réussie Particulier Controller");
@@ -323,7 +321,6 @@ class ArtisanController {
         'workID': workID.toString()
       },
     );
-    print(response.body);
 
     if (response.statusCode == 200) {
       //print("getChantierById réussie Particulier Controller");
@@ -344,7 +341,6 @@ class ArtisanController {
         'workID': workID.toString()
       },
     );
-    print(response.body);
 
     if (response.statusCode == 200) {
       //print("getChantierById réussie Particulier Controller");
@@ -365,7 +361,6 @@ class ArtisanController {
         'workID': workID.toString()
       },
     );
-    print(response.body);
 
     if (response.statusCode == 200) {
       //print("getChantierById réussie Particulier Controller");
@@ -471,7 +466,6 @@ class ArtisanController {
         'artisanID': artisanID.toString()
       },
     );
-    print(response.body);
 
     if (response.statusCode == 200) {
       //print("getChantierById réussie Particulier Controller");

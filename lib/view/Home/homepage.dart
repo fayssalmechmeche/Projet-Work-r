@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final globalData = Provider.of<GlobalData>(context);
-    print(globalData.getUsername());
+
     final allArtisan = ArtisanController.getAllArtisan();
     final recentArtisan = ArtisanController.getRecentArtisan();
     final FavoriteArtisans =
@@ -156,7 +156,6 @@ class _HomePageState extends State<HomePage> {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data['results'] == null) {
-            print(snapshot.data);
             return Center(
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

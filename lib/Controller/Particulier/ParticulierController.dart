@@ -273,10 +273,55 @@ class ParticulierController {
     }
   }
 
+  static Future<Map<String, dynamic>> removeFavoriteArtisanToParticulier(
+      int ParticulierId, int ArtisanId) async {
+    var response =
+        await http.post(Uri.parse("${url}removeFavoriteArtisanToParticulier"),
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: jsonEncode(<String, dynamic>{
+              'particulierID': ParticulierId.toString(),
+              'artisanID': ArtisanId.toString(),
+            }));
+
+    if (response.statusCode == 200) {
+      //print("addFavoriteArtisanToParticulier réussie Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } else {
+      //print("addFavoriteArtisanToParticulier échouée Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    }
+  }
+
+  static Future<bool> checkFavoriteArtisanForParticulier(
+      int particulierId, int artisanId) async {
+    var response = await http.post(
+      Uri.parse("${url}checkFavoriteArtisanForParticulier"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'particulierID': particulierId.toString(),
+        'artisanID': artisanId.toString(),
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      //print("checkFavoriteArtisanForParticulier réussie Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+
+      return jsonResponse['isFavorite'] ?? false;
+    } else {
+      throw Exception('Failed to check favorite artisan for particulier');
+    }
+  }
+
   // get favorite artisan by particulier
   static Future<Map<String, dynamic>> getFavoriteArtisanOfParticulier(
       int particulierid) async {
-    print(particulierid.toString());
     var response = await http.get(
       Uri.parse("${url}getFavoriteArtisanOfParticulier"),
       headers: <String, String>{
@@ -286,7 +331,6 @@ class ParticulierController {
     );
 
     if (response.statusCode == 200) {
-      print(response.body);
       //print("getFavoriteArtisanOfParticulier réussie Particulier Controller");
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse;
@@ -305,7 +349,6 @@ class ParticulierController {
         'particulierID': particulierID.toString()
       },
     );
-    print(response.body);
 
     if (response.statusCode == 200) {
       //print("getChantierById réussie Particulier Controller");
@@ -326,7 +369,6 @@ class ParticulierController {
         'workID': workID.toString()
       },
     );
-    print(response.body);
 
     if (response.statusCode == 200) {
       //print("getChantierById réussie Particulier Controller");
@@ -349,7 +391,6 @@ class ParticulierController {
           'devisID': devisID.toString(),
           'particulierID': particulierID.toString(),
         }));
-    print(response.body);
 
     if (response.statusCode == 200) {
       //print("getChantierById réussie Particulier Controller");
@@ -374,7 +415,6 @@ class ParticulierController {
           'workID': workID.toString(),
           'artisanID': artisanID.toString(),
         }));
-    print(response.body);
 
     if (response.statusCode == 200) {
       //print("getChantierById réussie Particulier Controller");
@@ -398,7 +438,6 @@ class ParticulierController {
         'particulierID': ParticulierID.toString()
       },
     );
-    print(response.body);
 
     if (response.statusCode == 200) {
       //print("getChantierById réussie Particulier Controller");

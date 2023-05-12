@@ -41,7 +41,7 @@ class _AddDevisState extends State<AddDevis> {
     if (resultFile == null) {
       return;
     }
-    print(resultFile.files.first.name);
+
     setState(() {
       file = resultFile.files.first;
     });

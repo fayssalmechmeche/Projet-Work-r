@@ -113,9 +113,19 @@ router.post(
   actionsParticulier.addFavoriteArtisanToParticulier
 );
 
+router.post(
+  "/removeFavoriteArtisanToParticulier",
+  actionsParticulier.removeFavoriteArtisanToParticulier
+);
+
 router.get(
   "/getFavoriteArtisanOfParticulier",
   actionsParticulier.getFavoriteArtisanOfParticulier
+);
+
+router.post(
+  "/checkFavoriteArtisanForParticulier",
+  actionsParticulier.checkFavoriteArtisanForParticulier
 );
 
 router.get(

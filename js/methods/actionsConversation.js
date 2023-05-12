@@ -8,8 +8,6 @@ var functions = {
   checkConversationExists: function (req, res) {
     const artisanID = req.headers.artisanid;
     const particulierID = req.headers.particulierid;
-    console.log(artisanID);
-    console.log(particulierID);
 
     mysqlConnection.query(
       "SELECT COUNT(*) AS count FROM conversation WHERE artisanID = ? AND particulierID = ?",
@@ -36,7 +34,6 @@ var functions = {
   },
 
   getOneConversation: function (req, res) {
-    console.log(req.headers.conversationid);
     mysqlConnection.query(
       "SELECT * FROM conversation WHERE id = ?",
       req.headers.conversationid,

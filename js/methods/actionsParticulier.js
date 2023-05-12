@@ -22,18 +22,7 @@ var functions = {
       res.json({ success: false, msg: "veuillez remplir tous les champs" });
     } else {
       const hashedPassword = bcrypt.hashSync(req.body.password, 10);
-      console.log(
-        "particulier : " + req.body.name,
-        req.body.password,
-        req.body.email,
-        req.body.username,
-        req.body.telephone,
-        req.body.city,
-        req.body.adress,
-        req.body.postalCode,
-        req.body.picture,
-        req.body.chantier
-      );
+
       const queryString = `INSERT INTO particuliers (name, lastname, password, email, username, telephone, city, adress, postalCode, picture, chantier)
       VALUES ('${req.body.name}', '${req.body.lastname}', '${hashedPassword}', '${req.body.email}', '${req.body.username}', '${req.body.telephone}', '${req.body.city}', '${req.body.adress}', '${req.body.postalCode}', '${req.body.picture}', '${req.body.chantier}')`;
       mysqlConnection.query(queryString, function (err, rows, fields) {
@@ -48,16 +37,12 @@ var functions = {
 
   // a function to authenticate a particulier
   authenticate: function (req, res) {
-    console.log("email : " + req.body.email);
-    console.log("password : " + req.body.password);
-
     mysqlConnection.query(
       "SELECT * FROM particuliers WHERE email = ?",
       req.body.email,
       function (error, results, fields) {
         // if the email is not found
         if (error || results[0] === undefined) {
-          console.log("error : " + error);
           return res.status(403).send({
             success: false,
             message: "Authentification échouée. Email introuvable.",
@@ -65,17 +50,14 @@ var functions = {
 
           // IF THE EMAIL IS FOUND
         } else {
-          console.log("results : " + results[0].password);
           bcrypt.compare(
             req.body.password,
             results[0].password,
             function (err, isMatch) {
               if (isMatch && !err) {
-                console.log("results : " + results[0]);
                 var token = jwt.encode(results[0], config.secret);
                 res.json({ success: true, token: token });
               } else {
-                console.log("error : " + err);
                 return res.status(403).send({
                   success: false,
                   msg: "Authenticate failed, Wrong password",
@@ -158,12 +140,10 @@ var functions = {
 
   // get all chantiers by particulier
   getAllChantiersByParticulier(req, res) {
-    console.log(req.headers.particulierid);
     mysqlConnection.query(
       "SELECT * FROM chantier WHERE particulierID = ?",
       req.headers.particulierid,
       function (error, results, fields) {
-        console.log(results);
         if (error) return res.json({ success: false, msg: error });
         res.json({ results: results });
       }
@@ -172,12 +152,10 @@ var functions = {
 
   // get favorite artisans of a particulier
   getFavoriteArtisanOfParticulier(req, res) {
-    console.log(req.headers.particulierid);
     mysqlConnection.query(
       "SELECT * FROM artisans WHERE FIND_IN_SET(_id, (SELECT favorite FROM particuliers WHERE _id = ?))",
       req.headers.particulierid,
       function (error, results, fields) {
-        console.log(results);
         if (error) return res.json({ success: false, msg: error });
         res.json({ results: results });
       }
@@ -201,9 +179,47 @@ var functions = {
       }
     );
   },
+  removeFavoriteArtisanToParticulier(req, res) {
+    const particulierId = req.body.particulierID;
+    const artisanId = req.body.artisanID;
+
+    mysqlConnection.query(
+      "UPDATE particuliers SET favorite = REPLACE(favorite, CONCAT(',', ?), '') WHERE _id = ?",
+      [artisanId, particulierId],
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({
+          success: true,
+          msg: "Artisan retiré des favoris du particulier",
+        });
+      }
+    );
+  },
+
+  checkFavoriteArtisanForParticulier(req, res) {
+    const particulierId = req.body.particulierID;
+    const artisanId = req.body.artisanID;
+
+    mysqlConnection.query(
+      "SELECT favorite FROM particuliers WHERE _id = ?",
+      [particulierId],
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+
+        const favorites = results[0].favorite;
+        const favoriteArtisans = favorites ? favorites.split(",") : [];
+
+        const isFavorite = favoriteArtisans.includes(artisanId);
+
+        res.json({
+          success: true,
+          isFavorite: isFavorite,
+        });
+      }
+    );
+  },
 
   getAllDevis(req, res) {
-    console.log(req.headers.particulierid);
     mysqlConnection.query(
       "SELECT * FROM devis WHERE particulierID = ? AND state != 0",
       req.headers.particulierid,
@@ -226,13 +242,10 @@ var functions = {
   },
 
   refuseDevis(req, res) {
-    console.log(req.body.particulierID);
-    console.log(req.body.devisID);
     mysqlConnection.query(
       "UPDATE devis SET state = 0 WHERE id = ? AND particulierID = ?",
       [req.body.particulierID, req.body.devisID],
       function (error, results, fields) {
-        console.log(results);
         if (error) return res.json({ success: false, msg: error });
         res.json({ success: true, msg: "Devis refusé" });
       }
@@ -241,10 +254,6 @@ var functions = {
   // "UPDATE devis SET particulier_refuses = CONCAT(IFNULL(particulier_refuses, ''),',', ?) WHERE id = ?"
 
   acceptDevis(req, res) {
-    console.log(req.body.particulierID);
-    console.log(req.body.devisID);
-    console.log(req.body.workID);
-    console.log(req.body.artisanID);
     mysqlConnection.query(
       "UPDATE chantier SET state = 1, artisanID = ? WHERE id = ?",
       [req.body.artisanID, req.body.workID]
@@ -253,7 +262,6 @@ var functions = {
       "UPDATE devis SET state = 3 WHERE id = ? AND particulierID = ?",
       [req.body.devisID, req.body.particulierID],
       function (error, results, fields) {
-        console.log(results);
         if (error) return res.json({ success: false, msg: error });
         res.json({ success: true, msg: "Devis accepté" });
       }

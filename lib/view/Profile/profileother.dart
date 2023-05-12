@@ -19,11 +19,29 @@ class ProfileOther extends StatefulWidget {
 }
 
 class _ProfileOtherState extends State<ProfileOther> {
+  var exist;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    isFavorite();
+  }
+
+  void isFavorite() async {
+    final data = ModalRoute.of(context)!.settings.arguments as Map;
+
+    final globalData = Provider.of<GlobalData>(context);
+    exist = await ConversationController.checkConversationExists(
+      data['_id'],
+      globalData.getId(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final data = ModalRoute.of(context)!.settings.arguments as Map;
     final globalData = Provider.of<GlobalData>(context);
-    print(data);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -173,8 +191,7 @@ class _ProfileOtherState extends State<ProfileOther> {
                     data['_id'],
                     globalData.getId(),
                   );
-                  print("conversationExists");
-                  print(conversationExists);
+
                   if (conversationExists == true) {
                     // La conversation existe déjà, effectuer les actions appropriées
                     const snackBar = SnackBar(
@@ -204,31 +221,58 @@ class _ProfileOtherState extends State<ProfileOther> {
                 child: const Text('Contacter',
                     style: TextStyle(color: Colors.black)),
               )),
-          Container(
-              padding: const EdgeInsets.only(
-                  top: 40, bottom: 15, right: 15, left: 15),
-              width: 160,
-              height: 85,
-              child: OutlinedButton(
-                onPressed: () async {
-                  var response = await ParticulierController
-                      .addFavoriteArtisanToParticulier(
-                          globalData.getId(), data['_id']);
-                  const snackBar = SnackBar(
-                    content: Text('Artisan ajouté aux favoris'),
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  Navigator.pop(context);
-                },
-                style: OutlinedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0),
-                    ),
-                    foregroundColor: Colors.red,
-                    side: const BorderSide(color: Colors.red)),
-                child: const Text('Ajouter aux favoris',
-                    style: TextStyle(color: Colors.black)),
-              )),
+          if (exist == false)
+            Container(
+                padding: const EdgeInsets.only(
+                    top: 40, bottom: 15, right: 15, left: 15),
+                width: 160,
+                height: 85,
+                child: OutlinedButton(
+                  onPressed: () async {
+                    var response = await ParticulierController
+                        .addFavoriteArtisanToParticulier(
+                            globalData.getId(), data['_id']);
+                    const snackBar = SnackBar(
+                      content: Text('Artisan ajouté aux favoris'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    Navigator.pop(context);
+                  },
+                  style: OutlinedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0),
+                      ),
+                      foregroundColor: Colors.red,
+                      side: const BorderSide(color: Colors.red)),
+                  child: const Text('Ajouter aux favoris',
+                      style: TextStyle(color: Colors.black)),
+                )),
+          if (exist == true)
+            Container(
+                padding: const EdgeInsets.only(
+                    top: 40, bottom: 15, right: 15, left: 15),
+                width: 160,
+                height: 85,
+                child: OutlinedButton(
+                  onPressed: () async {
+                    var response = await ParticulierController
+                        .removeFavoriteArtisanToParticulier(
+                            globalData.getId(), data['_id']);
+                    const snackBar = SnackBar(
+                      content: Text('Artisan retirés des favoris'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    Navigator.pop(context);
+                  },
+                  style: OutlinedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0),
+                      ),
+                      foregroundColor: Colors.red,
+                      side: const BorderSide(color: Colors.red)),
+                  child: const Text('Retirer des favoris',
+                      style: TextStyle(color: Colors.black)),
+                )),
         ]),
       ),
     );

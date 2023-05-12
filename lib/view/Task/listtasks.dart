@@ -66,7 +66,9 @@ class _ListTasksState extends State<ListTasks> {
   Widget addTask() {
     return GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed(AddTask.tag).then((_) => setState(() {}));
+          Navigator.of(context)
+              .pushNamed(AddTask.tag)
+              .then((_) => setState(() {}));
         },
         child: Card(
             shape: const StadiumBorder(
@@ -108,7 +110,6 @@ class _ListTasksState extends State<ListTasks> {
         //print(snapshot.hasData);
         if (snapshot.hasData) {
           if (snapshot.data['results'] == null) {
-            print(snapshot.data);
             return Center(
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -141,7 +142,9 @@ class _ListTasksState extends State<ListTasks> {
     //print(data['category']);
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(Task.tag, arguments: data).then((_) => setState(() {}));
+        Navigator.of(context)
+            .pushNamed(Task.tag, arguments: data)
+            .then((_) => setState(() {}));
       },
       child: Card(
           shape: RoundedRectangleBorder(

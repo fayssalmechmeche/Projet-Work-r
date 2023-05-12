@@ -17,8 +17,6 @@ class _DevisFollowState extends State<DevisFollow> {
     final data = ModalRoute.of(context)!.settings.arguments as Map;
     final globalData = Provider.of<GlobalData>(context);
 
-    print("lol");
-    print(data["artisanID"]);
     var particulierID = int.tryParse(data['particulierID']);
     var artisanID = int.tryParse(data['artisanID']);
     final particulier =
