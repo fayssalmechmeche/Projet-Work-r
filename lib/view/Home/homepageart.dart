@@ -32,6 +32,12 @@ class _HomePageArtState extends State<HomePageArt> {
         ArtisanController.getWorkByStatus(1, globalData.getId());
     final workDone = ArtisanController.getWorkByStatus(2, globalData.getId());
 
+    final devisAccepted =
+        ArtisanController.getAllDevisByStatus(3, globalData.getId());
+
+    final devisRefused =
+        ArtisanController.getAllDevisByStatus(0, globalData.getId());
+
     void getTotalWorkCount() async {
       final workInProgressResult = await workInProgress;
       final workInDoneResult = await workDone;
@@ -43,7 +49,7 @@ class _HomePageArtState extends State<HomePageArt> {
     }
 
     // void getTotalDevisAcceptedCount() async {
-     
+
     //   final devisAcceptedCount = devisAcceptedResult['results'].length;
     //   totalDevisAcceptedCount = devisAcceptedCount;
     // }
@@ -60,10 +66,24 @@ class _HomePageArtState extends State<HomePageArt> {
       totalWorkDone = workInDoneCount;
     }
 
+    void getTotalDevisAcceptedCount() async {
+      final devisAcceptedResult = await devisAccepted;
+      final devisAcceptedCount = devisAcceptedResult['results'].length;
+      totalDevisAcceptedCount = devisAcceptedCount;
+    }
+
+    void getTotalDevisRefusedCount() async {
+      final devisRefusedResult = await devisRefused;
+      final devisRefusedCount = devisRefusedResult['results'].length;
+      totalDevisRefusedCount = devisRefusedCount;
+    }
+
     getTotalWorkCount();
     getTotalWorkInProgressCount();
     getTotalWorkDoneCount();
 
+    getTotalDevisAcceptedCount();
+    getTotalDevisRefusedCount();
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -249,7 +269,8 @@ class _HomePageArtState extends State<HomePageArt> {
                                             style: TextStyle(fontSize: 15))),
                                     Padding(
                                         padding: EdgeInsets.only(top: 25),
-                                        child: Text('5',
+                                        child: Text(
+                                            totalDevisAcceptedCount.toString(),
                                             style: TextStyle(fontSize: 38))),
                                   ],
                                 ))
@@ -280,7 +301,8 @@ class _HomePageArtState extends State<HomePageArt> {
                                             style: TextStyle(fontSize: 15))),
                                     Padding(
                                         padding: EdgeInsets.only(top: 25),
-                                        child: Text('50',
+                                        child: Text(
+                                            totalDevisRefusedCount.toString(),
                                             style: TextStyle(fontSize: 38))),
                                   ],
                                 ))
