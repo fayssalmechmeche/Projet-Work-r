@@ -99,6 +99,7 @@ class ArtisanController {
     String telephone,
     String adress,
     String entreprise,
+    String picture,
   ) async {
     var response = await http.post(Uri.parse("${url}updateArtisan"),
         headers: <String, String>{
@@ -114,7 +115,7 @@ class ArtisanController {
           'telephone': telephone,
           'adress': adress,
           'entreprise': entreprise,
-          'picture': 'null',
+          'picture': picture,
           'chantier': 'null',
         }));
     //print('Response status 200: ${response.statusCode}');
@@ -373,8 +374,7 @@ class ArtisanController {
     }
   }
 
-static Future<Map<String, dynamic>> endChantier(
-      int workID) async {
+  static Future<Map<String, dynamic>> endChantier(int workID) async {
     var response = await http.post(Uri.parse("${url}endChantier"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -475,7 +475,6 @@ static Future<Map<String, dynamic>> endChantier(
       return jsonResponse;
     });
   }
-
 
   ///////////////////////////////  CONVERSATION ///////////////////////////////
   ///

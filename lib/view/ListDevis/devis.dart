@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:my_app/Controller/Artisan/ArtisanController.dart';
 import 'package:my_app/Controller/Particulier/ParticulierController.dart';
 import 'package:my_app/Controller/global.dart';
+import 'package:my_app/Controller/pdfAPI.dart';
+import 'package:my_app/view/ListDevis/pdfdevis.dart';
 import 'package:provider/provider.dart';
 
 class DevisFollow extends StatefulWidget {
@@ -126,9 +130,19 @@ class _DevisFollowState extends State<DevisFollow> {
                         Text("Devis en PDF : "),
                         SizedBox(width: 10),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            const snackBar = SnackBar(
+                              content: Text('Ouverture du devis en cours...'),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                            final url = "pdf/${data["pdf"]}";
+                            final file = await pdfAPI.loadFirebase(url);
+                            if (file == null) return;
+                            openPDF(context, file);
+                          },
                           child: Text(
-                            "Télécharger",
+                            "Voir le devis",
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
@@ -237,4 +251,13 @@ class _DevisFollowState extends State<DevisFollow> {
       },
     ));
   }
+}
+
+void openPDF(BuildContext context, File file) {
+  print("openPDF");
+  Navigator.of(context).push(
+    MaterialPageRoute(
+      builder: (context) => PdfDevis(file: file),
+    ),
+  );
 }

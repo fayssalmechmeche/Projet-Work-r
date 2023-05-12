@@ -75,7 +75,7 @@ class _ProfileOtherState extends State<ProfileOther> {
                     shape: BoxShape.circle,
                     image: DecorationImage(
                         image: data["picture"] != "null"
-                            ? Image.asset(data["picture"]).image
+                            ? NetworkImage(data["picture"])
                             : NetworkImage(
                                 "https://avatars.githubusercontent.com/u/77855537?s=40&v=4"),
                         fit: BoxFit.fill),

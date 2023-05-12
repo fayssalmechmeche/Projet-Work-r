@@ -44,4 +44,14 @@ class pdfAPI {
     await file.writeAsBytes(bytes, flush: true);
     return file;
   }
+
+  static Future<File?> pickImage() async {
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['jpg', 'png'],
+    );
+    if (result == null) return null;
+
+    return File(result.paths.first!);
+  }
 }

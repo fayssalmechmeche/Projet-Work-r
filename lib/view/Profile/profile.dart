@@ -48,7 +48,7 @@ class _ProfileState extends State<Profile> {
                     shape: BoxShape.circle,
                     image: DecorationImage(
                         image: globalData.getPicture() != "null"
-                            ? Image.asset(globalData.getPicture()).image
+                            ? NetworkImage(globalData.getPicture())
                             : NetworkImage(
                                 "https://avatars.githubusercontent.com/u/77855537?s=40&v=4"),
                         fit: BoxFit.fill),
@@ -195,7 +195,9 @@ class _ProfileState extends State<Profile> {
               height: 85,
               child: OutlinedButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(EditProfile.tag).then((_) => setState(() {}));
+                  Navigator.of(context)
+                      .pushNamed(EditProfile.tag)
+                      .then((_) => setState(() {}));
                 },
                 style: OutlinedButton.styleFrom(
                     shape: RoundedRectangleBorder(
