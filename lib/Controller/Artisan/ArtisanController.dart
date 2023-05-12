@@ -465,7 +465,7 @@ static Future<Map<String, dynamic>> endChantier(
   static Future<Map<String, dynamic>> getAllConversationsFromArtisan(
       int artisanID) async {
     var response = await http.get(
-      Uri.parse("${url}getAllConversationsFromartisanID"),
+      Uri.parse("${url}getAllConversationsFromartisan"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'artisanID': artisanID.toString()

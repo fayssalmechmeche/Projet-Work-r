@@ -164,21 +164,12 @@ class _ListPropositionState extends State<ListProposition> {
   }
 
   Widget statusCircleColor(data) {
-    if (data['state'] == 1) {
+    if (data['state'] == 1 || data['state'] == 2) {
       return Container(
         width: 20.0,
         height: 20.0,
         decoration: const BoxDecoration(
           color: Colors.orange,
-          shape: BoxShape.circle,
-        ),
-      );
-    } else if (data['state'] == 2) {
-      return Container(
-        width: 20.0,
-        height: 20.0,
-        decoration: const BoxDecoration(
-          color: Colors.green,
           shape: BoxShape.circle,
         ),
       );

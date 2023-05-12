@@ -229,7 +229,6 @@ var functions = {
 
   // a function to create a pdf to a chantier
   createDevis(req, res) {
-    console.log(req.body);
     mysqlConnection.query(
       "INSERT INTO devis (particulierID, artisanID, workID, type, category, price, description, pdf, state) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
@@ -252,10 +251,20 @@ var functions = {
 
   // a function to get all the devis from the mysql database and return them
   getAllDevis(req, res) {
-    console.log(req.headers.artisanid);
     mysqlConnection.query(
       "SELECT * FROM devis WHERE artisanID = ? AND state != 0",
       req.headers.artisanid,
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ results });
+      }
+    );
+  },
+
+  getDevisByStatus(req, res) {
+    mysqlConnection.query(
+      "SELECT * FROM devis WHERE artisanID = ? AND state = ?",
+      [req.headers.artisanid, req.headers.state],
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
         res.json({ results });
@@ -350,17 +359,15 @@ var functions = {
 
   ///////////////////////////conversation////////////////////////////
 
-  getAllConversationsFromArtisan: function (req, res) {
+  getAllConversationsFromartisan: function (req, res) {
     mysqlConnection.query(
       "SELECT * FROM conversation WHERE artisanID = ?",
       req.headers.artisanid,
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
-        res.json(results);
+        res.json({ results });
       }
     );
   },
-
-  
 };
 module.exports = functions;
