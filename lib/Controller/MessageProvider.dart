@@ -8,8 +8,6 @@ class MessageProvider with ChangeNotifier {
   void addMessage(Map<String, dynamic> message) {
     _messages.add(message);
     notifyListeners();
-    print("message");
-    print(_messages);
   }
 
   void clearMessages() {

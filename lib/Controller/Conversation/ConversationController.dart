@@ -48,6 +48,22 @@ class ConversationController {
     }
   }
 
+  static Future<Map<String, dynamic>> getOneConversation(
+      int conversationid) async {
+    var response =
+        await http.get(Uri.parse("${url}getOneConversation"), headers: {
+      "Content-Type": "application/json",
+      "conversationid": conversationid.toString(),
+    });
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } else {
+      throw Exception('Failed to load conversation.');
+    }
+  }
+
   static Future<Map<String, dynamic>>
       getAllConversationFromArtisanAndParticulier(
           int artisanID, int particulierid) async {
@@ -58,6 +74,42 @@ class ConversationController {
           "artisanid": artisanID.toString(),
           "particulierid": particulierid.toString(),
         });
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } else {
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    }
+  }
+
+  static Future<Map<String, dynamic>> getAllMessageFromPublicConversation(
+      int conversationID) async {
+    var response = await http
+        .get(Uri.parse("${url}getAllMessagesFromPublicConversation"), headers: {
+      "Content-Type": "application/json",
+      "conversationid": conversationID.toString()
+    });
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } else {
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    }
+  }
+
+  static Future<Map<String, dynamic>> sendMessagePublic(int conversationID,
+      int senderID, String pseudo, String sender_type, String content) async {
+    var response = await http.post(Uri.parse("${url}sendMessagePublic"), body: {
+      "conversationID": conversationID.toString(),
+      "senderID": senderID.toString(),
+      "pseudo": pseudo,
+      "sender_type": sender_type,
+      "content": content,
+    });
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);

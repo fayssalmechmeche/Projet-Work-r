@@ -129,6 +129,8 @@ router.get(
 
 router.post("/createConversation", actionsConversation.createConversation);
 
+router.get("/getOneConversation", actionsConversation.getOneConversation);
+
 router.get(
   "/getAllConversationFromArtisanAndParticulier",
   actionsConversation.getAllConversationFromArtisanAndParticulier
@@ -143,6 +145,13 @@ router.get(
   "/getAllMessagesForReceiverFromConversation",
   actionsConversation.getAllMessagesForReceiverFromConversation
 );
+
+router.get(
+  "/getAllMessagesFromPublicConversation",
+  actionsConversation.getAllMessagesFromPublicConversation
+);
+
+router.post("/sendMessagePublic", actionsConversation.sendMessagePublic);
 
 ///////////////////////////CHANTIER Conversation//////////////////////////////
 

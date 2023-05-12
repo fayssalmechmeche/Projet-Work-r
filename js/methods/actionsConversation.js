@@ -35,6 +35,18 @@ var functions = {
     );
   },
 
+  getOneConversation: function (req, res) {
+    console.log(req.headers.conversationid);
+    mysqlConnection.query(
+      "SELECT * FROM conversation WHERE id = ?",
+      req.headers.conversationid,
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ results });
+      }
+    );
+  },
+
   // Get all conversations
   getAllConversationFromArtisanAndParticulier: function (req, res) {
     mysqlConnection.query(
@@ -69,6 +81,34 @@ var functions = {
         req.headers.conversationid,
         req.headers.receiverid,
         req.headers.receivertype,
+      ],
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json(results);
+      }
+    );
+  },
+
+  getAllMessagesFromPublicConversation: function (req, res) {
+    mysqlConnection.query(
+      "SELECT * FROM message_chantier WHERE conversationID = ?",
+      req.headers.conversationid,
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ results });
+      }
+    );
+  },
+
+  sendMessagePublic: function (req, res) {
+    mysqlConnection.query(
+      "INSERT INTO message_chantier (conversationID, senderID, pseudo, sender_type, content) VALUES (?, ?, ?, ?, ?)",
+      [
+        req.body.conversationID,
+        req.body.senderID,
+        req.body.pseudo,
+        req.body.sender_type,
+        req.body.content,
       ],
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });

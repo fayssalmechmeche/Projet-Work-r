@@ -30,22 +30,38 @@ class _ChatPageState extends State<Chat> {
   getConversation() async {
     final data = ModalRoute.of(context)!.settings.arguments as Map;
 
-    if (data["type"] == "private") {
+    if (data["type"] == "public") {
+      // Traiter le cas "public"
+      conversation = await ConversationController.getOneConversation(
+          data["chantier"]["id"]);
+      return conversation["results"][0]["id"];
+    } else {
+      // Traiter le cas "private"
       conversation = await ConversationController.getOneConversationFromWork(
           data["chantier"]["id"]);
-
       return conversation["results"][0]["id"];
-    } else {}
+    }
   }
 
   Future<Map<String, dynamic>> getAllMessage() async {
     final messageProvider = Provider.of<MessageProvider>(context);
     messageProvider.clearMessages();
 
-    var messages = await ConversationController.getAllMessageFromConversation(
-        await getConversation());
+    final data = ModalRoute.of(context)!.settings.arguments as Map;
+    if (data["type"] == "public") {
+      // Traiter le cas "public"
+      var messages =
+          await ConversationController.getAllMessageFromPublicConversation(
+              await getConversation());
+      return messages;
+    } else {
+      // Traiter le cas "private"
 
-    return messages;
+      var messages = await ConversationController.getAllMessageFromConversation(
+          await getConversation());
+
+      return messages;
+    }
   }
 
   @override
@@ -112,19 +128,37 @@ class _ChatPageState extends State<Chat> {
                               hintText: "Écrire un message...",
                             ),
                             onSubmitted: (text) async {
-                              ConversationController.sendMessage(
-                                await getConversation(),
-                                globalData.getId(),
-                                globalData.getUsername(),
-                                globalData.getRole().toString(),
-                                text,
-                              );
-                              socket.emit('message', {
-                                "pseudo": globalData.getUsername(),
-                                "content": text,
-                                "senderID": globalData.getId(),
-                                "date": DateTime.now().toString()
-                              });
+                              if (inputController.text.isEmpty) return;
+
+                              if (data["type"] == "public") {
+                                await ConversationController.sendMessagePublic(
+                                  await getConversation(),
+                                  globalData.getId(),
+                                  globalData.getUsername(),
+                                  globalData.getRole().toString(),
+                                  inputController.text,
+                                );
+                                socket.emit('message', {
+                                  "pseudo": globalData.getUsername(),
+                                  "content": inputController.text,
+                                  "senderID": globalData.getId(),
+                                  "date": DateTime.now().toString()
+                                });
+                              } else {
+                                await ConversationController.sendMessage(
+                                  await getConversation(),
+                                  globalData.getId(),
+                                  globalData.getUsername(),
+                                  globalData.getRole().toString(),
+                                  inputController.text,
+                                );
+                                socket.emit('message', {
+                                  "pseudo": globalData.getUsername(),
+                                  "content": inputController.text,
+                                  "senderID": globalData.getId(),
+                                  "date": DateTime.now().toString()
+                                });
+                              }
                               inputController.clear();
                             },
                           ),
@@ -132,19 +166,37 @@ class _ChatPageState extends State<Chat> {
                         IconButton(
                           icon: const Icon(Icons.send),
                           onPressed: () async {
-                            await ConversationController.sendMessage(
-                              await getConversation(),
-                              globalData.getId(),
-                              globalData.getUsername(),
-                              globalData.getRole().toString(),
-                              inputController.text,
-                            );
-                            socket.emit('message', {
-                              "pseudo": globalData.getUsername(),
-                              "content": inputController.text,
-                              "senderID": globalData.getId(),
-                              "date": DateTime.now().toString()
-                            });
+                            if (inputController.text.isEmpty) return;
+
+                            if (data["type"] == "public") {
+                              await ConversationController.sendMessagePublic(
+                                await getConversation(),
+                                globalData.getId(),
+                                globalData.getUsername(),
+                                globalData.getRole().toString(),
+                                inputController.text,
+                              );
+                              socket.emit('message', {
+                                "pseudo": globalData.getUsername(),
+                                "content": inputController.text,
+                                "senderID": globalData.getId(),
+                                "date": DateTime.now().toString()
+                              });
+                            } else {
+                              await ConversationController.sendMessage(
+                                await getConversation(),
+                                globalData.getId(),
+                                globalData.getUsername(),
+                                globalData.getRole().toString(),
+                                inputController.text,
+                              );
+                              socket.emit('message', {
+                                "pseudo": globalData.getUsername(),
+                                "content": inputController.text,
+                                "senderID": globalData.getId(),
+                                "date": DateTime.now().toString()
+                              });
+                            }
                             inputController.clear();
                           },
                         ),

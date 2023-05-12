@@ -19,15 +19,14 @@ class _ListChatState extends State<ListChat> {
     final globalData = Provider.of<GlobalData>(context);
 
     var conversations;
-    print("role");
-    print(globalData.getRole());
+
     if (globalData.getRole() == 1) {
       conversations = ParticulierController.getAllConversationsFromParticulier(
           globalData.getId());
     }
     if (globalData.getRole() == 0) {
-      conversations = ArtisanController.getAllConversationsFromArtisan(
-          globalData.getId());
+      conversations =
+          ArtisanController.getAllConversationsFromArtisan(globalData.getId());
     }
     return Scaffold(
       appBar: AppBar(
@@ -110,11 +109,15 @@ class _ListChatState extends State<ListChat> {
   Widget CardChat(int index, data) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(Chat.tag);
-        final snackBar = SnackBar(
-          content: Text('Page message has been launched'),
+        const snackBar = SnackBar(
+          content: Text('La conversation existe déjà'),
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        Map<String, dynamic> arguments = {
+          'chantier': data,
+          'type': "public",
+        };
+        Navigator.of(context).pushNamed(Chat.tag, arguments: arguments);
       },
       child: Card(
         shape: StadiumBorder(
