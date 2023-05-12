@@ -60,7 +60,7 @@ class _WorkFollowState extends State<WorkFollow> {
       return result;
     }
 
-    Future<void> _dialogBuilder() {
+    Future<void> _dialogEndChantierBuilder() {
       return showDialog<void>(
         context: context,
         builder: (BuildContext context) {
@@ -94,6 +94,69 @@ class _WorkFollowState extends State<WorkFollow> {
                   Navigator.of(context)
                     ..pop()
                     ..pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
+    Future<void> _dialogNoteBuilder() {
+      return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          String? _dropdownvalue;
+          List<String> category = ['0','1', '2', '3', '4', '5'];
+          var _currentValue;
+          return AlertDialog(
+            title: const Text('Notez votre Artisan !'),
+            content: Container(
+            padding: const EdgeInsets.only(top: 20),
+            width: 330,
+            child: DropdownButtonFormField<String?>(
+              hint: const Text('Séléctionnez une note de 0 a 5'),
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(30.0),
+                  ),
+                ),
+                contentPadding: const EdgeInsets.all(2),
+              ),
+              items: category.map((value) {
+                return DropdownMenuItem<String>(
+                    child: Text(value), value: value);
+              }).toList(),
+              value: _dropdownvalue,
+              onChanged: (String? newValue) {
+                setState(() {
+                  _dropdownvalue = newValue;
+                });
+              },
+            ),
+          ),
+            actions: <Widget>[
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge,
+                ),
+                child:
+                    const Text('Annuler', style: TextStyle(color: Colors.red)),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge,
+                ),
+                child: const Text(
+                  'Ajouter',
+                  style: TextStyle(color: Colors.blue),
+                ),
+                onPressed: () async {
+                  Navigator.of(context).pop();
                 },
               ),
             ],
@@ -251,7 +314,7 @@ class _WorkFollowState extends State<WorkFollow> {
                                   width: 225,
                                   padding: const EdgeInsets.all(5),
                                   child: Text(
-                                    "Récente tâche",
+                                    "Tâche récente: ${data['name']}",
                                     overflow: TextOverflow.ellipsis,
                                     style: const TextStyle(
                                       fontSize: 16,
@@ -517,7 +580,9 @@ class _WorkFollowState extends State<WorkFollow> {
                     width: 200,
                     height: 105,
                     child: OutlinedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        _dialogNoteBuilder();
+                      },
                       style: OutlinedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(0),
@@ -538,7 +603,7 @@ class _WorkFollowState extends State<WorkFollow> {
                     height: 105,
                     child: OutlinedButton(
                       onPressed: () {
-                        _dialogBuilder();
+                        _dialogEndChantierBuilder();
                       },
                       style: OutlinedButton.styleFrom(
                           shape: RoundedRectangleBorder(
