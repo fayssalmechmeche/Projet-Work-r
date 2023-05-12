@@ -141,7 +141,7 @@ class _TaskState extends State<Task> {
             ],
           ),
         ),
-        if (globalData.getRole() == 0)
+        if (globalData.getRole() == 0 && globalData.chantier['state'] == 1)
           Container(
               padding: const EdgeInsets.only(top: 20),
               width: 120,

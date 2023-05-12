@@ -214,6 +214,19 @@ var functions = {
     );
   },
 
+  endChantier(req, res) {
+    
+    mysqlConnection.query(
+      "UPDATE chantier SET state = 2 WHERE id = ?",
+      [req.body.workID],
+    
+    function (error, results, fields) {
+      if (error) return res.json({ success: false, msg: error });
+      res.json({ success: true, msg: results });
+    }
+    );
+  },
+
   // a function to create a pdf to a chantier
   createDevis(req, res) {
     console.log(req.body);
