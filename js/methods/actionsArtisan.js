@@ -249,6 +249,8 @@ var functions = {
   },
 
   getDevisByStatus(req, res) {
+    console.log(req.headers.artisanid);
+    console.log(req.headers.state);
     mysqlConnection.query(
       "SELECT * FROM devis WHERE artisanID = ? AND state = ?",
       [req.headers.artisanid, req.headers.state],
@@ -346,7 +348,7 @@ var functions = {
 
   ///////////////////////////conversation////////////////////////////
 
-  getAllConversationsFromartisan: function (req, res) {
+  getAllConversationsFromArtisan: function (req, res) {
     mysqlConnection.query(
       "SELECT * FROM conversation WHERE artisanID = ?",
       req.headers.artisanid,

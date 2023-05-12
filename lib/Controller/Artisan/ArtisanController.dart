@@ -290,6 +290,29 @@ class ArtisanController {
     }
   }
 
+  static Future<Map<String, dynamic>> getAllDevisByStatus(
+      int state, int artisanID) async {
+    var response = await http.get(
+      Uri.parse("${url}getDevisByStatus"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'artisanid': artisanID.toString(),
+        'state': state.toString(),
+      },
+    );
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      //print("getChantierById réussie Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } else {
+      //print("getChantierById échouée Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    }
+  }
+
   ///////////////////////////////  TASK ///////////////////////////////
 
   static Future<Map<String, dynamic>> getAllTaskFromWork(int workID) async {
@@ -442,7 +465,7 @@ class ArtisanController {
   static Future<Map<String, dynamic>> getAllConversationsFromArtisan(
       int artisanID) async {
     var response = await http.get(
-      Uri.parse("${url}getAllConversationsFromartisan"),
+      Uri.parse("${url}getAllConversationsFromArtisan"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'artisanID': artisanID.toString()

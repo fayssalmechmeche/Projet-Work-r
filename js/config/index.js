@@ -66,6 +66,8 @@ router.post("/createDevis", actionsArtisan.createDevis);
 
 router.get("/getAllDevis", actionsArtisan.getAllDevis);
 
+router.get("/getDevisByStatus", actionsArtisan.getDevisByStatus);
+
 router.post("/refuseChantier", actionsArtisan.refuseChantier);
 
 router.get(
