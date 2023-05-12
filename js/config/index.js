@@ -54,6 +54,9 @@ router.get(
   "/getAllChantiersByArtisan",
   actionsArtisan.getAllChantiersByArtisan
 );
+// update Chantier to end it
+router.post("/endChantier", actionsArtisan.endChantier);
+
 router.get("/getAllTasksDone", actionsArtisan.getAllTasksDone);
 router.get("/getAllTasks", actionsArtisan.getAllTasks);
 router.get("/getLastTaskDone", actionsArtisan.getLastTaskDone);
@@ -91,6 +94,7 @@ router.get("/getinfoParticulier", actionsParticulier.getInfo);
 
 // add new chantier to particulier
 router.post("/addChantier", actionsParticulier.addChantier);
+
 
 // get All Chantier By Id Particulier
 router.get(

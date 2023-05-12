@@ -146,7 +146,7 @@ class _ListWorkState extends State<ListWork> {
         onTap: () {
           globalData.setChantier(data);
 
-          Navigator.of(context).pushNamed(WorkFollow.tag);
+          Navigator.of(context).pushNamed(WorkFollow.tag).then((_) => setState(() {}));
         },
         child: Card(
             shape: const StadiumBorder(

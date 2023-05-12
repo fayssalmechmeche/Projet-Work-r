@@ -60,6 +60,111 @@ class _WorkFollowState extends State<WorkFollow> {
       return result;
     }
 
+    Future<void> _dialogEndChantierBuilder() {
+      return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Confirmation de cloturation de chantier'),
+            content: const Text(
+              "Souhaiter vous bien mettre fin à ce chantier et accepter ainsi qu'il soit traiter comme un chantier terminer ?",
+            ),
+            actions: <Widget>[
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge,
+                ),
+                child:
+                    const Text('Refuser', style: TextStyle(color: Colors.red)),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge,
+                ),
+                child: const Text(
+                  'Accepter',
+                  style: TextStyle(color: Colors.blue),
+                ),
+                onPressed: () async {
+                  await ArtisanController.endChantier(
+                      globalData.chantier['id']);
+                  Navigator.of(context)
+                    ..pop()
+                    ..pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
+    Future<void> _dialogNoteBuilder() {
+      return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          String? _dropdownvalue;
+          List<String> category = ['0','1', '2', '3', '4', '5'];
+          var _currentValue;
+          return AlertDialog(
+            title: const Text('Notez votre Artisan !'),
+            content: Container(
+            padding: const EdgeInsets.only(top: 20),
+            width: 330,
+            child: DropdownButtonFormField<String?>(
+              hint: const Text('Séléctionnez une note de 0 a 5'),
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(30.0),
+                  ),
+                ),
+                contentPadding: const EdgeInsets.all(2),
+              ),
+              items: category.map((value) {
+                return DropdownMenuItem<String>(
+                    child: Text(value), value: value);
+              }).toList(),
+              value: _dropdownvalue,
+              onChanged: (String? newValue) {
+                setState(() {
+                  _dropdownvalue = newValue;
+                });
+              },
+            ),
+          ),
+            actions: <Widget>[
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge,
+                ),
+                child:
+                    const Text('Annuler', style: TextStyle(color: Colors.red)),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge,
+                ),
+                child: const Text(
+                  'Ajouter',
+                  style: TextStyle(color: Colors.blue),
+                ),
+                onPressed: () async {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -209,7 +314,7 @@ class _WorkFollowState extends State<WorkFollow> {
                                   width: 225,
                                   padding: const EdgeInsets.all(5),
                                   child: Text(
-                                    "Récente tâche",
+                                    "Tâche récente: ${data['name']}",
                                     overflow: TextOverflow.ellipsis,
                                     style: const TextStyle(
                                       fontSize: 16,
@@ -467,6 +572,50 @@ class _WorkFollowState extends State<WorkFollow> {
                               ),
                             ))
                       ])),
+              if (globalData.getRole() == 1 &&
+                  globalData.chantier['state'] == 2)
+                Container(
+                    padding: const EdgeInsets.only(
+                        top: 60, bottom: 15, right: 15, left: 15),
+                    width: 200,
+                    height: 105,
+                    child: OutlinedButton(
+                      onPressed: () {
+                        _dialogNoteBuilder();
+                      },
+                      style: OutlinedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(0),
+                          ),
+                          foregroundColor: Colors.yellow,
+                          backgroundColor: Colors.yellow.withOpacity(0.5),
+                          side: const BorderSide(color: Colors.yellow)),
+                      child: const Text('Noter mon artisan',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.black)),
+                    )),
+              if (globalData.getRole() == 0 &&
+                  globalData.chantier['state'] == 1)
+                Container(
+                    padding: const EdgeInsets.only(
+                        top: 60, bottom: 15, right: 15, left: 15),
+                    width: 200,
+                    height: 105,
+                    child: OutlinedButton(
+                      onPressed: () {
+                        _dialogEndChantierBuilder();
+                      },
+                      style: OutlinedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(0),
+                          ),
+                          foregroundColor: Colors.red,
+                          backgroundColor: Colors.red.withOpacity(0.5),
+                          side: const BorderSide(color: Colors.red)),
+                      child: const Text('Cloturer le chantier',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.black)),
+                    ))
             ],
           ),
         ));

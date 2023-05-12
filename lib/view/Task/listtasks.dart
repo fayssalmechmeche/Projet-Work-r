@@ -50,7 +50,7 @@ class _ListTasksState extends State<ListTasks> {
           elevation: 0,
         ),
         body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          if (globalData.getRole() == 0)
+          if (globalData.getRole() == 0 && globalData.chantier['state'] == 1)
             Visibility(
               visible: true,
               child: SizedBox(
