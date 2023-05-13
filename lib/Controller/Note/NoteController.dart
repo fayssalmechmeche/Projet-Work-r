@@ -18,7 +18,7 @@ class NoteController {
     var response = await http.post(Uri.parse("${url}addNotetoArtisan"), body: {
       "artisanID": artisanID.toString(),
       "particulierID": particulierID.toString(),
-      "note": note,
+      "note": note.toString(),
     });
 
     if (response.statusCode == 200) {

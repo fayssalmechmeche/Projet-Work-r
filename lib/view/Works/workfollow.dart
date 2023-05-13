@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:my_app/Controller/Artisan/ArtisanController.dart';
 import 'package:my_app/Controller/Conversation/ConversationController.dart';
+import 'package:my_app/Controller/Note/NoteController.dart';
 import 'package:my_app/Controller/Particulier/ParticulierController.dart';
 import 'package:my_app/Controller/pdfAPI.dart';
 import 'package:my_app/view/ListDevis/pdfdevis.dart';
@@ -107,35 +108,35 @@ class _WorkFollowState extends State<WorkFollow> {
         context: context,
         builder: (BuildContext context) {
           String? _dropdownvalue;
-          List<String> category = ['0','1', '2', '3', '4', '5'];
+          List<String> category = ['0', '1', '2', '3', '4', '5'];
           var _currentValue;
           return AlertDialog(
             title: const Text('Notez votre Artisan !'),
             content: Container(
-            padding: const EdgeInsets.only(top: 20),
-            width: 330,
-            child: DropdownButtonFormField<String?>(
-              hint: const Text('Séléctionnez une note de 0 a 5'),
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(30.0),
+              padding: const EdgeInsets.only(top: 20),
+              width: 330,
+              child: DropdownButtonFormField<String?>(
+                hint: const Text('Séléctionnez une note de 0 a 5'),
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30.0),
+                    ),
                   ),
+                  contentPadding: const EdgeInsets.all(2),
                 ),
-                contentPadding: const EdgeInsets.all(2),
+                items: category.map((value) {
+                  return DropdownMenuItem<String>(
+                      child: Text(value), value: value);
+                }).toList(),
+                value: _dropdownvalue,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _dropdownvalue = newValue;
+                  });
+                },
               ),
-              items: category.map((value) {
-                return DropdownMenuItem<String>(
-                    child: Text(value), value: value);
-              }).toList(),
-              value: _dropdownvalue,
-              onChanged: (String? newValue) {
-                setState(() {
-                  _dropdownvalue = newValue;
-                });
-              },
             ),
-          ),
             actions: <Widget>[
               TextButton(
                 style: TextButton.styleFrom(
@@ -156,6 +157,10 @@ class _WorkFollowState extends State<WorkFollow> {
                   style: TextStyle(color: Colors.blue),
                 ),
                 onPressed: () async {
+                  await NoteController.addNotetoArtisan(
+                      int.parse(globalData.getArtisanIdChantier()),
+                      globalData.getId(),
+                      int.parse(_dropdownvalue!));
                   Navigator.of(context).pop();
                 },
               ),
