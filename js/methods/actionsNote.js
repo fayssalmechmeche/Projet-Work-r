@@ -37,7 +37,7 @@ var functions = {
   updateNoteOfArtisan(req, res) {
     mysqlConnection.query(
       "UPDATE artisans SET note = ? WHERE _id = ?",
-      [req.body.note, req.body.particulierID],
+      [req.body.note, req.body.artisanID],
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
 

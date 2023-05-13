@@ -21,9 +21,24 @@ class NoteController {
       "note": note.toString(),
     });
 
-    if (response.statusCode == 200) {
-      // Parser le JSON reçu en réponse
+    var notes = await getNoteByArtisan(artisanID, particulierID);
+    print(notes);
 
+    if (notes != null && notes["success"] == true && notes["results"] != null) {
+      List<dynamic> noteList = notes["results"];
+      var totalNote = 0; // Initialize with 0
+
+      for (var i = 0; i < noteList.length; i++) {
+        totalNote += noteList[i]["note"] as int;
+      }
+
+      var averageNote = totalNote ~/ noteList.length;
+
+      await updateNoteOfArtisan(artisanID, averageNote);
+    }
+
+    if (response.statusCode == 200) {
+      // Parse the JSON received in the response
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse;
     } else {
@@ -36,10 +51,11 @@ class NoteController {
     int artisanID,
     int particulierID,
   ) async {
-    var response = await http.post(Uri.parse("${url}getNoteByArtisan"), body: {
-      "artisanID": artisanID.toString(),
-      "particulierID": particulierID.toString()
-    });
+    var response = await http.get(Uri.parse("${url}getNoteByArtisan"),
+        headers: {
+          "artisanid": artisanID.toString(),
+          "particulierid": particulierID.toString()
+        });
 
     if (response.statusCode == 200) {
       // Parser le JSON reçu en réponse
@@ -55,7 +71,7 @@ class NoteController {
   static Future<Map<String, dynamic>> updateNoteOfArtisan(
       int artisanID, int note) async {
     var response = await http.post(Uri.parse("${url}updateNoteOfArtisan"),
-        body: {"artisanID": artisanID.toString(), "note": note});
+        body: {"artisanID": artisanID.toString(), "note": note.toString()});
 
     if (response.statusCode == 200) {
       // Parser le JSON reçu en réponse
