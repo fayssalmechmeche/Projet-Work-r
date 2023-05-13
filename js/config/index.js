@@ -3,6 +3,7 @@ const actions = require("../methods/actions");
 const actionsArtisan = require("../methods/actionsArtisan");
 const actionsParticulier = require("../methods/actionsParticulier");
 const actionsConversation = require("../methods/actionsConversation");
+const actionsNote = require("../methods/actionsNote");
 
 const router = express.Router();
 
@@ -97,7 +98,6 @@ router.get("/getinfoParticulier", actionsParticulier.getInfo);
 
 // add new chantier to particulier
 router.post("/addChantier", actionsParticulier.addChantier);
-
 
 // get All Chantier By Id Particulier
 router.get(
@@ -194,4 +194,9 @@ router.get(
   actionsConversation.getAllMessagesFromConversation
 );
 
+///////////////////////////NOTE //////////////////////////////
+
+router.post("/addNotetoArtisan", actionsNote.addNotetoArtisan);
+router.get("/getNoteByArtisan", actionsNote.getNoteByArtisan);
+router.post("/updateNoteOfArtisan", actionsNote.updateNoteOfArtisan);
 module.exports = router;
