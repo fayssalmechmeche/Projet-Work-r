@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> {
                     child: IconButton(
                         icon: const Icon(Icons.star, size: 20),
                         onPressed: () {
-                          Navigator.of(context).pushNamed(ListFav.tag);
+                          Navigator.of(context).pushNamed(ListFav.tag).then((_) => setState(() {}));
                         })),
               Container(
                   padding: const EdgeInsets.only(left: 20, right: 20),
@@ -94,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                   child: IconButton(
                       icon: const Icon(Icons.search, size: 20),
                       onPressed: () {
-                        Navigator.of(context).pushNamed(Search.tag);
+                        Navigator.of(context).pushNamed(Search.tag).then((_) => setState(() {}));
                       })),
             ]),
             const Padding(
@@ -189,7 +189,7 @@ class _HomePageState extends State<HomePage> {
   Widget CardArtisan(int index, data) {
     return GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed(ProfileOther.tag, arguments: data);
+          Navigator.of(context).pushNamed(ProfileOther.tag, arguments: data).then((_) => setState(() {}));
         },
         child: Card(
             shape: RoundedRectangleBorder(
