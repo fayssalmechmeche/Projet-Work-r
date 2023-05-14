@@ -5,6 +5,25 @@ const mysqlConnection = require("../config/db");
 const bcrypt = require("bcrypt");
 
 var functions = {
+  checkNoteExists: function (req, res) {
+    const artisanID = req.headers.artisanid;
+    const particulierID = req.headers.particulierid;
+
+    mysqlConnection.query(
+      "SELECT COUNT(*) AS count FROM notes WHERE artisanID = ? AND particulierID = ?",
+      [artisanID, particulierID],
+      function (error, results, fields) {
+        if (error) {
+          return res.json({ success: false, msg: error });
+        }
+
+        const count = results[0].count;
+
+        res.json({ exists: count > 0 });
+      }
+    );
+  },
+
   addNotetoArtisan(req, res) {
     mysqlConnection.query(
       "INSERT INTO notes (note, artisanID, particulierID) VALUES (?, ?, ?)",
@@ -18,11 +37,25 @@ var functions = {
       }
     );
   },
+  getOneNoteByArtisan(req, res) {
+    mysqlConnection.query(
+      "SELECT * FROM notes WHERE artisanID = ? and particulierID = ?",
+      [req.headers.artisanid, req.headers.particulierid],
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+
+        res.json({
+          success: true,
+          results: results,
+        });
+      }
+    );
+  },
 
   getNoteByArtisan(req, res) {
     mysqlConnection.query(
-      "SELECT * FROM notes WHERE artisanID = ? AND particulierID = ?",
-      [req.headers.artisanid, req.headers.particulierid],
+      "SELECT * FROM notes WHERE artisanID = ?",
+      req.headers.artisanid,
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
 

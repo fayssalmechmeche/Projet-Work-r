@@ -10,6 +10,21 @@ import 'package:my_app/Controller/Artisan/ArtisanController.dart';
 class NoteController {
   static var url = "http://localhost:3000/";
 
+  static Future<bool> checkNoteExists(int artisanID, int particulierID) async {
+    var response = await http.get(Uri.parse("${url}checkNoteExists"), headers: {
+      "Content-Type": "application/json",
+      "artisanid": artisanID.toString(),
+      "particulierid": particulierID.toString(),
+    });
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse['exists'];
+    } else {
+      throw Exception('Failed to check note existence.');
+    }
+  }
+
   static Future<Map<String, dynamic>> addNotetoArtisan(
     int artisanID,
     int particulierID,
@@ -21,8 +36,7 @@ class NoteController {
       "note": note.toString(),
     });
 
-    var notes = await getNoteByArtisan(artisanID, particulierID);
-    print(notes);
+    var notes = await getNoteByArtisan(artisanID);
 
     if (notes != null && notes["success"] == true && notes["results"] != null) {
       List<dynamic> noteList = notes["results"];
@@ -49,13 +63,11 @@ class NoteController {
 
   static Future<Map<String, dynamic>> getNoteByArtisan(
     int artisanID,
-    int particulierID,
   ) async {
-    var response = await http.get(Uri.parse("${url}getNoteByArtisan"),
-        headers: {
-          "artisanid": artisanID.toString(),
-          "particulierid": particulierID.toString()
-        });
+    var response =
+        await http.get(Uri.parse("${url}getNoteByArtisan"), headers: {
+      "artisanid": artisanID.toString(),
+    });
 
     if (response.statusCode == 200) {
       // Parser le JSON reçu en réponse
@@ -72,6 +84,27 @@ class NoteController {
       int artisanID, int note) async {
     var response = await http.post(Uri.parse("${url}updateNoteOfArtisan"),
         body: {"artisanID": artisanID.toString(), "note": note.toString()});
+
+    if (response.statusCode == 200) {
+      // Parser le JSON reçu en réponse
+
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } else {
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    }
+  }
+
+  static Future<Map<String, dynamic>> getOneNoteByArtisan(
+    int artisanID,
+    int particulierID,
+  ) async {
+    var response =
+        await http.get(Uri.parse("${url}getOneNoteByArtisan"), headers: {
+      "artisanid": artisanID.toString(),
+      "particulierid": particulierID.toString(),
+    });
 
     if (response.statusCode == 200) {
       // Parser le JSON reçu en réponse

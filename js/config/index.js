@@ -199,4 +199,6 @@ router.get(
 router.post("/addNotetoArtisan", actionsNote.addNotetoArtisan);
 router.get("/getNoteByArtisan", actionsNote.getNoteByArtisan);
 router.post("/updateNoteOfArtisan", actionsNote.updateNoteOfArtisan);
+router.get("/checkNoteExists", actionsNote.checkNoteExists);
+router.get("/getOneNoteByArtisan", actionsNote.getOneNoteByArtisan);
 module.exports = router;
