@@ -38,44 +38,42 @@ class _HomePageArtState extends State<HomePageArt> {
     final devisRefused =
         ArtisanController.getAllDevisByStatus(0, globalData.getId());
 
-    void getTotalWorkCount() async {
+    Future<int> getTotalWorkCount() async {
       final workInProgressResult = await workInProgress;
       final workInDoneResult = await workDone;
 
       final workInProgressCount = workInProgressResult['results'].length;
       final workInDoneCount = workInDoneResult['results'].length;
 
-      totalWorkCount = workInProgressCount + workInDoneCount;
+      return workInProgressCount + workInDoneCount;
     }
 
-    // void getTotalDevisAcceptedCount() async {
-
-    //   final devisAcceptedCount = devisAcceptedResult['results'].length;
-    //   totalDevisAcceptedCount = devisAcceptedCount;
-    // }
-
-    void getTotalWorkInProgressCount() async {
+    Future<int> getTotalWorkInProgressCount() async {
       final workInProgressResult = await workInProgress;
       final workInProgressCount = workInProgressResult['results'].length;
-      totalWorkInProgress = workInProgressCount;
+
+      return workInProgressCount;
     }
 
-    void getTotalWorkDoneCount() async {
+    Future<int> getTotalWorkDoneCount() async {
       final workInDoneResult = await workDone;
       final workInDoneCount = workInDoneResult['results'].length;
-      totalWorkDone = workInDoneCount;
+
+      return workInDoneCount;
     }
 
-    void getTotalDevisAcceptedCount() async {
+    Future<int> getTotalDevisAcceptedCount() async {
       final devisAcceptedResult = await devisAccepted;
       final devisAcceptedCount = devisAcceptedResult['results'].length;
-      totalDevisAcceptedCount = devisAcceptedCount;
+
+      return devisAcceptedCount;
     }
 
-    void getTotalDevisRefusedCount() async {
+    Future<int> getTotalDevisRefusedCount() async {
       final devisRefusedResult = await devisRefused;
       final devisRefusedCount = devisRefusedResult['results'].length;
-      totalDevisRefusedCount = devisRefusedCount;
+
+      return devisRefusedCount;
     }
 
     getTotalWorkCount();
@@ -140,174 +138,250 @@ class _HomePageArtState extends State<HomePageArt> {
                   ),
                 ),
               ])),
-          Container(
-              padding: EdgeInsets.only(top: 20),
-              width: 330,
-              child: Card(
-                  shape: RoundedRectangleBorder(
-                    //<-- 3. SEE HERE
-                    side: const BorderSide(
-                      color: Colors.black,
-                      width: 1.0,
-                    ),
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  elevation: 0,
-                  color: Colors.yellow.withOpacity(0.5),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                          height: 85,
-                          child: Column(
-                            children: [
-                              Padding(
-                                  padding: EdgeInsets.only(top: 10),
-                                  child: Text('Nombre de Clients',
-                                      style: TextStyle(fontSize: 18))),
-                              Padding(
-                                  padding: EdgeInsets.only(top: 10),
-                                  child: Text(totalWorkCount.toString(),
-                                      style: TextStyle(fontSize: 28)))
+          FutureBuilder(
+              future: getTotalWorkCount(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  final totalWorkCount = snapshot.data;
+
+                  return Container(
+                      padding: EdgeInsets.only(top: 20),
+                      width: 330,
+                      child: Card(
+                          shape: RoundedRectangleBorder(
+                            //<-- 3. SEE HERE
+                            side: const BorderSide(
+                              color: Colors.black,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          elevation: 0,
+                          color: Colors.yellow.withOpacity(0.5),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                  height: 85,
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                          padding: EdgeInsets.only(top: 10),
+                                          child: Text('Nombre de Clients',
+                                              style: TextStyle(fontSize: 18))),
+                                      Padding(
+                                          padding: EdgeInsets.only(top: 10),
+                                          child: Text(totalWorkCount.toString(),
+                                              style: TextStyle(fontSize: 28)))
+                                    ],
+                                  ))
                             ],
-                          ))
-                    ],
-                  ))),
+                          )));
+                } else {
+                  return CircularProgressIndicator(); // or any other widget to show progress
+                }
+              }),
           Container(
               padding: EdgeInsets.only(top: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Column(children: [
-                    Card(
-                        shape: RoundedRectangleBorder(
-                          //<-- 3. SEE HERE
-                          side: const BorderSide(
-                            color: Colors.black,
-                            width: 1.0,
-                          ),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        elevation: 0,
-                        color: Colors.yellow.withOpacity(0.5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Container(
-                                width: 165,
-                                height: 145,
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                        padding: EdgeInsets.only(top: 15),
-                                        child: Text('Chantiers en cours',
-                                            style: TextStyle(fontSize: 15))),
-                                    Padding(
-                                        padding: EdgeInsets.only(top: 25),
-                                        child: Text(
-                                            totalWorkInProgress.toString(),
-                                            style: TextStyle(fontSize: 38))),
+                    FutureBuilder(
+                        future: getTotalWorkInProgressCount(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.done) {
+                            final totalWorkInProgress = snapshot.data;
+
+                            return Card(
+                                shape: RoundedRectangleBorder(
+                                  //<-- 3. SEE HERE
+                                  side: const BorderSide(
+                                    color: Colors.black,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                elevation: 0,
+                                color: Colors.yellow.withOpacity(0.5),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    Container(
+                                        width: 165,
+                                        height: 145,
+                                        child: Column(
+                                          children: [
+                                            Padding(
+                                                padding:
+                                                    EdgeInsets.only(top: 15),
+                                                child: Text(
+                                                    'Chantiers en cours',
+                                                    style: TextStyle(
+                                                        fontSize: 15))),
+                                            Padding(
+                                                padding:
+                                                    EdgeInsets.only(top: 25),
+                                                child: Text(
+                                                    totalWorkInProgress
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                        fontSize: 38))),
+                                          ],
+                                        ))
                                   ],
-                                ))
-                          ],
-                        )),
-                    Card(
-                        shape: RoundedRectangleBorder(
-                          //<-- 3. SEE HERE
-                          side: const BorderSide(
-                            color: Colors.black,
-                            width: 1.0,
-                          ),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        elevation: 0,
-                        color: Colors.yellow.withOpacity(0.5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Container(
-                                width: 165,
-                                height: 145,
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                        padding: EdgeInsets.only(top: 15),
-                                        child: Text('Chantiers terminés',
-                                            style: TextStyle(fontSize: 15))),
-                                    Padding(
-                                        padding: EdgeInsets.only(top: 25),
-                                        child: Text(totalWorkDone.toString(),
-                                            style: TextStyle(fontSize: 38))),
+                                ));
+                          } else {
+                            return CircularProgressIndicator(); // or any other widget to show progress
+                          }
+                        }),
+                    FutureBuilder(
+                        future: getTotalWorkDoneCount(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.done) {
+                            final totalWorkDone = snapshot.data;
+
+                            return Card(
+                                shape: RoundedRectangleBorder(
+                                  //<-- 3. SEE HERE
+                                  side: const BorderSide(
+                                    color: Colors.black,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                elevation: 0,
+                                color: Colors.yellow.withOpacity(0.5),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    Container(
+                                        width: 165,
+                                        height: 145,
+                                        child: Column(
+                                          children: [
+                                            Padding(
+                                                padding:
+                                                    EdgeInsets.only(top: 15),
+                                                child: Text(
+                                                    'Chantiers terminés',
+                                                    style: TextStyle(
+                                                        fontSize: 15))),
+                                            Padding(
+                                                padding:
+                                                    EdgeInsets.only(top: 25),
+                                                child: Text(
+                                                    totalWorkDone.toString(),
+                                                    style: TextStyle(
+                                                        fontSize: 38))),
+                                          ],
+                                        ))
                                   ],
-                                ))
-                          ],
-                        ))
+                                ));
+                          } else {
+                            return CircularProgressIndicator(); // or any other widget to show progress
+                          }
+                        })
                   ]),
                   Column(children: [
-                    Card(
-                        shape: RoundedRectangleBorder(
-                          //<-- 3. SEE HERE
-                          side: const BorderSide(
-                            color: Colors.black,
-                            width: 1.0,
-                          ),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        elevation: 0,
-                        color: Colors.yellow.withOpacity(0.5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Container(
-                                width: 165,
-                                height: 145,
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                        padding: EdgeInsets.only(top: 15),
-                                        child: Text(' Devis acceptés  ',
-                                            style: TextStyle(fontSize: 15))),
-                                    Padding(
-                                        padding: EdgeInsets.only(top: 25),
-                                        child: Text(
-                                            totalDevisAcceptedCount.toString(),
-                                            style: TextStyle(fontSize: 38))),
+                    FutureBuilder(
+                        future: getTotalDevisAcceptedCount(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.done) {
+                            final totalDevisAcceptedCount = snapshot.data;
+
+                            return Card(
+                                shape: RoundedRectangleBorder(
+                                  //<-- 3. SEE HERE
+                                  side: const BorderSide(
+                                    color: Colors.black,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                elevation: 0,
+                                color: Colors.yellow.withOpacity(0.5),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    Container(
+                                        width: 165,
+                                        height: 145,
+                                        child: Column(
+                                          children: [
+                                            Padding(
+                                                padding:
+                                                    EdgeInsets.only(top: 15),
+                                                child: Text(' Devis acceptés  ',
+                                                    style: TextStyle(
+                                                        fontSize: 15))),
+                                            Padding(
+                                                padding:
+                                                    EdgeInsets.only(top: 25),
+                                                child: Text(
+                                                    totalDevisAcceptedCount
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                        fontSize: 38))),
+                                          ],
+                                        ))
                                   ],
-                                ))
-                          ],
-                        )),
-                    Card(
-                        shape: RoundedRectangleBorder(
-                          //<-- 3. SEE HERE
-                          side: const BorderSide(
-                            color: Colors.black,
-                            width: 1.0,
-                          ),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        elevation: 0,
-                        color: Colors.yellow.withOpacity(0.5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Container(
-                                width: 165,
-                                height: 145,
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                        padding: EdgeInsets.only(top: 15),
-                                        child: Text(' Devis refusés  ',
-                                            style: TextStyle(fontSize: 15))),
-                                    Padding(
-                                        padding: EdgeInsets.only(top: 25),
-                                        child: Text(
-                                            totalDevisRefusedCount.toString(),
-                                            style: TextStyle(fontSize: 38))),
+                                ));
+                          } else {
+                            return CircularProgressIndicator(); // or any other widget to show progress
+                          }
+                        }),
+                    FutureBuilder(
+                        future: getTotalDevisRefusedCount(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.done) {
+                            final totalDevisRefusedCount = snapshot.data;
+
+                            return Card(
+                                shape: RoundedRectangleBorder(
+                                  //<-- 3. SEE HERE
+                                  side: const BorderSide(
+                                    color: Colors.black,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                elevation: 0,
+                                color: Colors.yellow.withOpacity(0.5),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    Container(
+                                        width: 165,
+                                        height: 145,
+                                        child: Column(
+                                          children: [
+                                            Padding(
+                                                padding:
+                                                    EdgeInsets.only(top: 15),
+                                                child: Text(' Devis refusés  ',
+                                                    style: TextStyle(
+                                                        fontSize: 15))),
+                                            Padding(
+                                                padding:
+                                                    EdgeInsets.only(top: 25),
+                                                child: Text(
+                                                    totalDevisRefusedCount
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                        fontSize: 38))),
+                                          ],
+                                        ))
                                   ],
-                                ))
-                          ],
-                        ))
+                                ));
+                          } else {
+                            return CircularProgressIndicator(); // or any other widget to show progress
+                          }
+                        }),
                   ]),
                 ],
               )),
