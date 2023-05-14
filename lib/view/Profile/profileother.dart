@@ -12,7 +12,7 @@ import '../../Controller/Conversation/ConversationController.dart';
 import '../../Controller/global.dart';
 
 class ProfileOther extends StatefulWidget {
-  const ProfileOther({super.key});
+  const ProfileOther({Key? key}) : super(key: key);
   static const tag = "/ProfileOther";
   @override
   State<ProfileOther> createState() => _ProfileOtherState();
@@ -225,15 +225,16 @@ class _ProfileOtherState extends State<ProfileOther> {
           FutureBuilder(
             future: checkFav,
             builder: (context, snapshot) {
+              var isCheckFav = false;
               if (snapshot.hasData) {
                 var results = snapshot.data?['results'];
                 if (results != null && results.isNotEmpty) {
-                  var isCheckFav = false;
                   results.forEach((item) {
                     if (item['_id'] == data['_id']) {
                       isCheckFav = true;
                     }
                   });
+                  }
                   if (isCheckFav == true) {
                     return Container(
                       padding: const EdgeInsets.only(
@@ -289,9 +290,7 @@ class _ProfileOtherState extends State<ProfileOther> {
                       ),
                     );
                   }
-                } else {
-                  return Text('');
-                }
+                
               } else if (snapshot.hasError) {
                 return Text('');
               } else {

@@ -66,6 +66,7 @@ class _SearchState extends State<Search> {
               onChanged: (String? newValue) {
                 setState(() {
                   inputDomaine = newValue;
+                  inputController.text = "";
                   print(inputDomaine);
                 });
               },
@@ -89,7 +90,7 @@ class _SearchState extends State<Search> {
                       borderRadius: BorderRadius.circular(90.0),
                     ),
                     contentPadding: const EdgeInsets.all(10),
-                    hintText: "Entrer un nom d'artisan",
+                    hintText: (inputDomaine == "Nom")? "Entrer un nom d'artisan" : "Entrer un nom de domain",
                     labelStyle: const TextStyle(color: Colors.grey),
                   ),
                 ),
@@ -155,21 +156,23 @@ class _SearchState extends State<Search> {
                                             arguments: artisan)
                                         .then((_) => setState(() {}));
                                   },
-                                  child: ListTile(
-                                    title: Text(artisan['name'] +
-                                        " " +
-                                        artisan['lastname']),
-                                    subtitle: Text(artisan['domaine']),
-                                    // Add any other relevant information from the artisan object
-                                    // to display in the ListTile.
-                                  ));
+                                  child: Card(
+                                      elevation: 2,
+                                      child: ListTile(
+                                        title: Text(artisan['name'] +
+                                            " " +
+                                            artisan['lastname']),
+                                        subtitle: Text(artisan['domaine']),
+                                        // Add any other relevant information from the artisan object
+                                        // to display in the ListTile.
+                                      )));
                             },
                           ));
-                    }else {
-                    return const Center(
-                      child: Text('Impossible de charger les résultats'),
-                    );
-                  }
+                    } else {
+                      return const Center(
+                        child: Text('Impossible de charger les résultats'),
+                      );
+                    }
                   } else {
                     return const Center(
                       child: Text('Impossible de charger les résultats'),
