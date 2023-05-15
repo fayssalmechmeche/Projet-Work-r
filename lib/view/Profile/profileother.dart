@@ -198,18 +198,34 @@ class _ProfileOtherState extends State<ProfileOther> {
                       content: Text('La conversation existe déjà'),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    Navigator.pushNamed(context, Chat.tag,
-                        arguments: data['_id']);
+                    var conversation = await ConversationController
+                        .getAllConversationFromArtisanAndParticulier(
+                      data['_id'],
+                      globalData.getId(),
+                    );
+
+                    Navigator.pushNamed(context, Chat.tag, arguments: {
+                      "id": conversation["results"][0]['id'],
+                      "type": "public"
+                    });
                   } else {
                     // Créer une nouvelle conversation
-                    ConversationController.createConversation(
+                    await ConversationController.createConversation(
                         data['_id'], globalData.getId(), "conversation");
+                    var conversation = await ConversationController
+                        .getAllConversationFromArtisanAndParticulier(
+                      data['_id'],
+                      globalData.getId(),
+                    );
                     const snackBar = SnackBar(
                       content: Text('Conversation créée'),
                     );
+
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    Navigator.pushNamed(context, Chat.tag,
-                        arguments: data['_id']);
+                    Navigator.pushNamed(context, Chat.tag, arguments: {
+                      "id": conversation["results"][0]['id'],
+                      "type": "public"
+                    });
                   }
                 },
                 style: OutlinedButton.styleFrom(

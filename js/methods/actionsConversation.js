@@ -22,13 +22,14 @@ var functions = {
       }
     );
   },
+
   createConversation: function (req, res) {
     mysqlConnection.query(
       "INSERT INTO conversation (artisanID, particulierID, name) VALUES (?, ?, ?)",
       [req.body.artisanID, req.body.particulierID, req.body.name],
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
-        res.json(results);
+        res.json({ results });
       }
     );
   },
@@ -51,7 +52,7 @@ var functions = {
       [req.headers.artisanid, req.headers.particulierid],
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
-        res.json(results);
+        res.json({ results });
       }
     );
   },

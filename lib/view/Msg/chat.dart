@@ -34,13 +34,14 @@ class _ChatPageState extends State<Chat> {
 
     if (data["type"] == "public") {
       // Traiter le cas "public"
-      conversation = await ConversationController.getOneConversation(
-          data["chantier"]["id"]);
+      conversation =
+          await ConversationController.getOneConversation(data["id"]);
+
       return conversation["results"][0]["id"];
     } else {
       // Traiter le cas "private"
-      conversation = await ConversationController.getOneConversationFromWork(
-          data["chantier"]["id"]);
+      conversation =
+          await ConversationController.getOneConversationFromWork(data["id"]);
       return conversation["results"][0]["id"];
     }
   }
