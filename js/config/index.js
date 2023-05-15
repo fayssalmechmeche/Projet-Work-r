@@ -80,6 +80,7 @@ router.get(
   actionsArtisan.getAllConversationsFromArtisan
 );
 
+router.get("/checkDevisExists", actionsArtisan.checkDevisExists);
 ///////////////////////////Particulier//////////////////////////////
 
 // insert new particulier

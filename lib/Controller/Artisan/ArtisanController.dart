@@ -245,6 +245,28 @@ class ArtisanController {
   }
 
   // create a devis for a work
+
+  static Future<bool> checkDevisExists(
+      int artisanID, int particulierID, int workID) async {
+    print("artisanID : " + artisanID.toString());
+    print("particulierID : " + particulierID.toString());
+    print("workID : " + workID.toString());
+    var response =
+        await http.get(Uri.parse("${url}checkDevisExists"), headers: {
+      "Content-Type": "application/json",
+      "artisanid": artisanID.toString(),
+      "particulierid": particulierID.toString(),
+      "workid": workID.toString(),
+    });
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse['exists'];
+    } else {
+      throw Exception('Failed to check devis existence.');
+    }
+  }
+
   static Future<Map<String, dynamic>> createDevis(artisanID, particulierID,
       workID, type, category, price, description, pdf) async {
     return await http
@@ -276,6 +298,28 @@ class ArtisanController {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'artisanID': artisanID.toString()
+      },
+    );
+
+    if (response.statusCode == 200) {
+      //print("getChantierById réussie Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } else {
+      //print("getChantierById échouée Particulier Controller");
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    }
+  }
+
+  static Future<Map<String, dynamic>> getAllDevisFromArtisanAndParticulier(
+      int artisanID, int particulierID) async {
+    var response = await http.get(
+      Uri.parse("${url}getAllDevisFromArtisanAndParticulier"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'artisanID': artisanID.toString(),
+        'particulierID': particulierID.toString()
       },
     );
 

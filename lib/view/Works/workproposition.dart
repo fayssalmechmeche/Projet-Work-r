@@ -299,9 +299,23 @@ class _WorkPropositionState extends State<WorkProposition> {
                   width: 160,
                   height: 85,
                   child: OutlinedButton(
-                    onPressed: () {
-                      Navigator.of(context)
-                          .pushNamed(AddDevis.tag, arguments: data);
+                    onPressed: () async {
+                      bool checkDevis =
+                          await ArtisanController.checkDevisExists(
+                              globalData.getId(),
+                              int.parse(data['particulierID']),
+                              data['id']);
+
+                      print(checkDevis);
+                      if (checkDevis == false) {
+                        Navigator.of(context)
+                            .pushNamed(AddDevis.tag, arguments: data);
+                      } else {
+                        const snackBar = SnackBar(
+                          content: Text('Devis déjà envoyé'),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }
                     },
                     style: OutlinedButton.styleFrom(
                         shape: RoundedRectangleBorder(

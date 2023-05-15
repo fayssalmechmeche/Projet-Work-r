@@ -202,15 +202,14 @@ var functions = {
   },
 
   endChantier(req, res) {
-    
     mysqlConnection.query(
       "UPDATE chantier SET state = 2 WHERE id = ?",
       [req.body.workID],
-    
-    function (error, results, fields) {
-      if (error) return res.json({ success: false, msg: error });
-      res.json({ success: true, msg: results });
-    }
+
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ success: true, msg: results });
+      }
     );
   },
 
@@ -244,6 +243,36 @@ var functions = {
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
         res.json({ results });
+      }
+    );
+  },
+
+  getAllDevisFromArtisanAndParticulier(req, res) {
+    mysqlConnection.query(
+      "SELECT * FROM devis WHERE artisanID = ? AND particulierID = ?",
+      [req.headers.artisanid, req.headers.particulierid],
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ results });
+      }
+    );
+  },
+
+  checkDevisExists: function (req, res) {
+    const artisanID = req.headers.artisanid;
+    const particulierID = req.headers.particulierid;
+
+    mysqlConnection.query(
+      "SELECT COUNT(*) AS count FROM devis WHERE artisanID = ? AND particulierID = ? and workID = ?",
+      [artisanID, particulierID, req.headers.workid],
+      function (error, results, fields) {
+        if (error) {
+          return res.json({ success: false, msg: error });
+        }
+
+        const count = results[0].count;
+
+        res.json({ exists: count > 0 });
       }
     );
   },
