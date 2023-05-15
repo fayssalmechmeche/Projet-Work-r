@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:icon_decoration/icon_decoration.dart';
 import 'package:my_app/Controller/Artisan/ArtisanController.dart';
+import 'package:my_app/Controller/Note/NoteController.dart';
 import 'package:provider/provider.dart';
 
 import '../../Controller/global.dart';
@@ -22,9 +23,6 @@ class _HomePageArtState extends State<HomePageArt> {
   var totalDevisAcceptedCount;
   var totalDevisRefusedCount;
 
-  var noteCount;
-  var noteMoyenne;
-
   @override
   Widget build(BuildContext context) {
     final globalData = Provider.of<GlobalData>(context);
@@ -37,6 +35,8 @@ class _HomePageArtState extends State<HomePageArt> {
 
     final devisRefused =
         ArtisanController.getAllDevisByStatus(0, globalData.getId());
+
+    final allNote = NoteController.getNoteByArtisan(globalData.getId());
 
     Future<int> getTotalWorkCount() async {
       final workInProgressResult = await workInProgress;
@@ -76,12 +76,6 @@ class _HomePageArtState extends State<HomePageArt> {
       return devisRefusedCount;
     }
 
-    getTotalWorkCount();
-    getTotalWorkInProgressCount();
-    getTotalWorkDoneCount();
-
-    getTotalDevisAcceptedCount();
-    getTotalDevisRefusedCount();
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -250,8 +244,7 @@ class _HomePageArtState extends State<HomePageArt> {
                                               return const Padding(
                                                   padding:
                                                       EdgeInsets.only(top: 30),
-                                                  child: Text(
-                                                      '?',
+                                                  child: Text('?',
                                                       style: TextStyle(
                                                           fontSize: 15)));
                                             } else {
@@ -314,8 +307,7 @@ class _HomePageArtState extends State<HomePageArt> {
                                               return const Padding(
                                                   padding:
                                                       EdgeInsets.only(top: 30),
-                                                  child: Text(
-                                                      '?',
+                                                  child: Text('?',
                                                       style: TextStyle(
                                                           fontSize: 15)));
                                             } else {
@@ -381,8 +373,7 @@ class _HomePageArtState extends State<HomePageArt> {
                                               return const Padding(
                                                   padding:
                                                       EdgeInsets.only(top: 30),
-                                                  child: Text(
-                                                      '?',
+                                                  child: Text('?',
                                                       style: TextStyle(
                                                           fontSize: 15)));
                                             } else {
@@ -446,8 +437,7 @@ class _HomePageArtState extends State<HomePageArt> {
                                               return const Padding(
                                                   padding:
                                                       EdgeInsets.only(top: 30),
-                                                  child: Text(
-                                                      '?',
+                                                  child: Text('?',
                                                       style: TextStyle(
                                                           fontSize: 15)));
                                             } else {
@@ -494,13 +484,58 @@ class _HomePageArtState extends State<HomePageArt> {
                                   padding: EdgeInsets.only(top: 10),
                                   child: Text('Ma note',
                                       style: TextStyle(fontSize: 18))),
-                              Container(
-                                  padding: const EdgeInsets.only(top: 10),
-                                  child: RatingOfProfile(3.5)),
-                              const Padding(
-                                  padding: EdgeInsets.only(top: 10),
-                                  child: Text('3.5 / 5',
-                                      style: TextStyle(fontSize: 20)))
+                              FutureBuilder(
+                                  future: allNote,
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.done) {
+                                      if (snapshot.hasData) {
+                                        var results = snapshot.data?['results'];
+                                        late double note;
+                                        
+                                        print(results);
+                                        if (results != null &&
+                                            results.isNotEmpty) {
+                                            double total = 0;
+                                          results.forEach((item) {
+                                            total = total + item['note'];
+                                          });
+                                          note = total / results.length;
+                                        } else {
+                                          note = 3;
+                                        }
+
+                                        return Column(
+                                          children: [
+                                            Container(
+                                                padding: const EdgeInsets.only(
+                                                    top: 10),
+                                                child: RatingOfProfile(note)),
+                                            Padding(
+                                                padding:
+                                                    EdgeInsets.only(top: 10),
+                                                child: Text('${note} / 5',
+                                                    style: TextStyle(
+                                                        fontSize: 20)))
+                                          ],
+                                        );
+                                      } else if (snapshot.hasError) {
+                                        return const Padding(
+                                            padding: EdgeInsets.only(top: 30),
+                                            child: Text('?',
+                                                style:
+                                                    TextStyle(fontSize: 15)));
+                                      } else {
+                                        return const Padding(
+                                            padding: EdgeInsets.only(top: 30),
+                                            child: Text('?',
+                                                style:
+                                                    TextStyle(fontSize: 15)));
+                                      }
+                                    } else {
+                                      return const CircularProgressIndicator(); // or any other widget to show progress
+                                    }
+                                  })
                             ],
                           ))
                     ],

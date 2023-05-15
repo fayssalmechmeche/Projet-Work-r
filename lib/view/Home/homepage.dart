@@ -13,6 +13,8 @@ import 'package:provider/provider.dart';
 // socket.Io
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
+import '../../Controller/Note/NoteController.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
   static const tag = "/home";
@@ -30,6 +32,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final globalData = Provider.of<GlobalData>(context);
+    final allNote = NoteController.getNoteByArtisan(globalData.getId());
 
     final allArtisan = ArtisanController.getAllArtisan();
     final recentArtisan = ArtisanController.getRecentArtisan();
