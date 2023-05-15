@@ -3,12 +3,14 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:icon_decoration/icon_decoration.dart';
 import 'package:my_app/Controller/Particulier/ParticulierController.dart';
 import 'package:my_app/view/Home/homepage.dart';
 import 'package:my_app/view/Msg/chat.dart';
 import 'package:provider/provider.dart';
 
 import '../../Controller/Conversation/ConversationController.dart';
+import '../../Controller/Note/NoteController.dart';
 import '../../Controller/global.dart';
 
 class ProfileOther extends StatefulWidget {
@@ -40,6 +42,7 @@ class _ProfileOtherState extends State<ProfileOther> {
   Widget build(BuildContext context) {
     final data = ModalRoute.of(context)!.settings.arguments as Map;
     final globalData = Provider.of<GlobalData>(context);
+    final allNote = NoteController.getNoteByArtisan(data['_id']);
     final checkFav = ParticulierController.getFavoriteArtisanOfParticulier(
         globalData.getId());
 
@@ -181,82 +184,149 @@ class _ProfileOtherState extends State<ProfileOther> {
                         style: TextStyle(fontSize: 16, color: Colors.grey)),
                   ])),
           Container(
-              padding: const EdgeInsets.only(
-                  top: 40, bottom: 15, right: 15, left: 15),
-              width: 160,
-              height: 85,
-              child: OutlinedButton(
-                onPressed: () async {
-                  bool conversationExists =
-                      await ConversationController.checkConversationExists(
-                    data['_id'],
-                    globalData.getId(),
-                  );
+              padding: const EdgeInsets.only(top: 20),
+              width: 330,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                      height: 105,
+                      child: Column(
+                        children: [
+                          const Padding(
+                              padding: EdgeInsets.only(top: 10),
+                              child: Text("Note de l'artisan",
+                                  style: TextStyle(fontSize: 18))),
+                          FutureBuilder(
+                              future: allNote,
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.done) {
+                                  if (snapshot.hasData) {
+                                    var results = snapshot.data?['results'];
+                                    late double note;
 
-                  if (conversationExists == true) {
-                    // La conversation existe déjà, effectuer les actions appropriées
-                    const snackBar = SnackBar(
-                      content: Text('La conversation existe déjà'),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    var conversation = await ConversationController
-                        .getAllConversationFromArtisanAndParticulier(
-                      data['_id'],
-                      globalData.getId(),
-                    );
+                                    print(results);
+                                    if (results != null && results.isNotEmpty) {
+                                      double total = 0;
+                                      results.forEach((item) {
+                                        total = total + item['note'];
+                                      });
+                                      note = total / results.length;
+                                    } else {
+                                      note = 3;
+                                    }
 
-                    Navigator.pushNamed(context, Chat.tag, arguments: {
-                      "id": conversation["results"][0]['id'],
-                      "type": "public"
-                    });
-                  } else {
-                    // Créer une nouvelle conversation
-                    await ConversationController.createConversation(
-                        data['_id'], globalData.getId(), "conversation");
-                    var conversation = await ConversationController
-                        .getAllConversationFromArtisanAndParticulier(
-                      data['_id'],
-                      globalData.getId(),
-                    );
-                    const snackBar = SnackBar(
-                      content: Text('Conversation créée'),
-                    );
-
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    Navigator.pushNamed(context, Chat.tag, arguments: {
-                      "id": conversation["results"][0]['id'],
-                      "type": "public"
-                    });
-                  }
-                },
-                style: OutlinedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0),
-                    ),
-                    foregroundColor: Colors.green,
-                    side: const BorderSide(color: Colors.green)),
-                child: const Text('Contacter',
-                    style: TextStyle(color: Colors.black)),
+                                    return Column(
+                                      children: [
+                                        Container(
+                                            padding:
+                                                const EdgeInsets.only(top: 10),
+                                            child: RatingOfProfile(note)),
+                                        Padding(
+                                            padding: EdgeInsets.only(top: 10),
+                                            child: Text('${note} / 5',
+                                                style: TextStyle(fontSize: 15)))
+                                      ],
+                                    );
+                                  } else if (snapshot.hasError) {
+                                    return Padding(
+                                        padding: const EdgeInsets.only(top: 10),
+                                        child: RatingOfProfile(0));
+                                  } else {
+                                    return Padding(
+                                        padding: const EdgeInsets.only(top: 10),
+                                        child: RatingOfProfile(0));
+                                  }
+                                } else {
+                                  return Padding(
+                                      padding: const EdgeInsets.only(top: 10),
+                                      child: RatingOfProfile(
+                                          0)); // or any other widget to show progress
+                                }
+                              })
+                        ],
+                      ))
+                ],
               )),
-          FutureBuilder(
-            future: checkFav,
-            builder: (context, snapshot) {
-              var isCheckFav = false;
-              if (snapshot.hasData) {
-                var results = snapshot.data?['results'];
-                if (results != null && results.isNotEmpty) {
-                  results.forEach((item) {
-                    if (item['_id'] == data['_id']) {
-                      isCheckFav = true;
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+            Container(
+                padding: const EdgeInsets.only(
+                    top: 20, bottom: 15, right: 15, left: 15),
+                width: 160,
+                height: 65,
+                child: OutlinedButton(
+                  onPressed: () async {
+                    bool conversationExists =
+                        await ConversationController.checkConversationExists(
+                      data['_id'],
+                      globalData.getId(),
+                    );
+
+                    if (conversationExists == true) {
+                      // La conversation existe déjà, effectuer les actions appropriées
+                      const snackBar = SnackBar(
+                        content: Text('La conversation existe déjà'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      var conversation = await ConversationController
+                          .getAllConversationFromArtisanAndParticulier(
+                        data['_id'],
+                        globalData.getId(),
+                      );
+
+                      Navigator.pushNamed(context, Chat.tag, arguments: {
+                        "id": conversation["results"][0]['id'],
+                        "type": "public"
+                      });
+                    } else {
+                      // Créer une nouvelle conversation
+                      await ConversationController.createConversation(
+                          data['_id'], globalData.getId(), "conversation");
+                      var conversation = await ConversationController
+                          .getAllConversationFromArtisanAndParticulier(
+                        data['_id'],
+                        globalData.getId(),
+                      );
+                      const snackBar = SnackBar(
+                        content: Text('Conversation créée'),
+                      );
+
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      Navigator.pushNamed(context, Chat.tag, arguments: {
+                        "id": conversation["results"][0]['id'],
+                        "type": "public"
+                      });
                     }
-                  });
+                  },
+                  style: OutlinedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0),
+                      ),
+                      foregroundColor: Colors.green,
+                      side: const BorderSide(color: Colors.green)),
+                  child: const Text('Contacter',
+                      style: TextStyle(color: Colors.black)),
+                )),
+            FutureBuilder(
+              future: checkFav,
+              builder: (context, snapshot) {
+                var isCheckFav = false;
+                if (snapshot.hasData) {
+                  var results = snapshot.data?['results'];
+                  if (results != null && results.isNotEmpty) {
+                    results.forEach((item) {
+                      if (item['_id'] == data['_id']) {
+                        isCheckFav = true;
+                      }
+                    });
                   }
                   if (isCheckFav == true) {
                     return Container(
                       padding: const EdgeInsets.only(
-                          top: 40, bottom: 15, right: 15, left: 15),
+                          top: 20, bottom: 15, right: 15, left: 15),
                       width: 160,
-                      height: 90,
+                      height: 70,
                       child: OutlinedButton(
                         onPressed: () async {
                           var response = await ParticulierController
@@ -274,16 +344,17 @@ class _ProfileOtherState extends State<ProfileOther> {
                             ),
                             foregroundColor: Colors.red,
                             side: const BorderSide(color: Colors.red)),
-                        child: const Text('Retirer des favoris',textAlign: TextAlign.center,
+                        child: const Text('Retirer des favoris',
+                            textAlign: TextAlign.center,
                             style: TextStyle(color: Colors.black)),
                       ),
                     );
                   } else {
                     return Container(
                       padding: const EdgeInsets.only(
-                          top: 40, bottom: 15, right: 15, left: 15),
+                          top: 20, bottom: 15, right: 15, left: 15),
                       width: 160,
-                      height: 90,
+                      height: 70,
                       child: OutlinedButton(
                         onPressed: () async {
                           var response = await ParticulierController
@@ -301,21 +372,72 @@ class _ProfileOtherState extends State<ProfileOther> {
                             ),
                             foregroundColor: Colors.green,
                             side: const BorderSide(color: Colors.green)),
-                        child: const Text('Ajouter aux favoris', textAlign: TextAlign.center,
+                        child: const Text('Ajouter aux favoris',
+                            textAlign: TextAlign.center,
                             style: TextStyle(color: Colors.black)),
                       ),
                     );
                   }
-                
-              } else if (snapshot.hasError) {
-                return Text('');
-              } else {
-                return Text('');
-              }
-            },
-          )
+                } else if (snapshot.hasError) {
+                  return Text('');
+                } else {
+                  return Text('');
+                }
+              },
+            )
+          ]),
         ]),
       ),
     );
+  }
+
+  Widget RatingOfProfile(double rating) {
+    return Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
+      DecoratedIcon(
+        icon: Icon(
+          rating > 0 && rating < 1 ? Icons.star_half : Icons.star,
+          color: rating > 0 ? Colors.yellow : Colors.black,
+          size: 25,
+        ),
+        decoration: const IconDecoration(
+            border: IconBorder(color: Colors.black, width: 2)),
+      ),
+      DecoratedIcon(
+        icon: Icon(
+          rating > 1.0 && rating < 2.0 ? Icons.star_half : Icons.star,
+          color: rating > 1 ? Colors.yellow : Colors.black,
+          size: 25,
+        ),
+        decoration: const IconDecoration(
+            border: IconBorder(color: Colors.black, width: 2)),
+      ),
+      DecoratedIcon(
+        icon: Icon(
+          rating > 2.0 && rating < 3.0 ? Icons.star_half : Icons.star,
+          color: rating > 2 ? Colors.yellow : Colors.black,
+          size: 25,
+        ),
+        decoration: const IconDecoration(
+            border: IconBorder(color: Colors.black, width: 2)),
+      ),
+      DecoratedIcon(
+        icon: Icon(
+          rating > 3.0 && rating < 4.0 ? Icons.star_half : Icons.star,
+          color: rating > 3 ? Colors.yellow : Colors.black,
+          size: 25,
+        ),
+        decoration: const IconDecoration(
+            border: IconBorder(color: Colors.black, width: 2)),
+      ),
+      DecoratedIcon(
+        icon: Icon(
+          rating > 4.0 && rating < 5.0 ? Icons.star_half : Icons.star,
+          color: rating > 4 ? Colors.yellow : Colors.black,
+          size: 25,
+        ),
+        decoration: const IconDecoration(
+            border: IconBorder(color: Colors.black, width: 2)),
+      ),
+    ]);
   }
 }

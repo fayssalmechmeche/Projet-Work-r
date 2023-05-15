@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final globalData = Provider.of<GlobalData>(context);
-    final allNote = NoteController.getNoteByArtisan(globalData.getId());
+    
 
     final allArtisan = ArtisanController.getAllArtisan();
     final recentArtisan = ArtisanController.getRecentArtisan();
@@ -86,7 +86,9 @@ class _HomePageState extends State<HomePage> {
                     child: IconButton(
                         icon: const Icon(Icons.star, size: 20),
                         onPressed: () {
-                          Navigator.of(context).pushNamed(ListFav.tag).then((_) => setState(() {}));
+                          Navigator.of(context)
+                              .pushNamed(ListFav.tag)
+                              .then((_) => setState(() {}));
                         })),
               Container(
                   padding: const EdgeInsets.only(left: 20, right: 20),
@@ -97,7 +99,9 @@ class _HomePageState extends State<HomePage> {
                   child: IconButton(
                       icon: const Icon(Icons.search, size: 20),
                       onPressed: () {
-                        Navigator.of(context).pushNamed(Search.tag).then((_) => setState(() {}));
+                        Navigator.of(context)
+                            .pushNamed(Search.tag)
+                            .then((_) => setState(() {}));
                       })),
             ]),
             const Padding(
@@ -190,9 +194,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget CardArtisan(int index, data) {
+    
+    final allNote = NoteController.getNoteByArtisan(data['_id']);
     return GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed(ProfileOther.tag, arguments: data).then((_) => setState(() {}));
+          Navigator.of(context)
+              .pushNamed(ProfileOther.tag, arguments: data)
+              .then((_) => setState(() {}));
         },
         child: Card(
             shape: RoundedRectangleBorder(
@@ -230,9 +238,47 @@ class _HomePageState extends State<HomePage> {
                         data['domaine'],
                         style: TextStyle(fontWeight: FontWeight.bold),
                       )),
-                  Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: RatingOfProfile(double.parse(data['note']))),
+                  FutureBuilder(
+                      future: allNote,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          if (snapshot.hasData) {
+                            var results = snapshot.data?['results'];
+                            late double note;
+
+                            
+                            if (results != null && results.isNotEmpty) {
+                              double total = 0;
+                              results.forEach((item) {
+                                total = total + item['note'];
+                              });
+                              note = total / results.length;
+                            } else {
+                              note = 0;
+                            }
+
+                            return Padding(
+                                padding: const EdgeInsets.only(top: 10),
+                                child: RatingOfProfile(
+                                    note));
+                          } else if (snapshot.hasError) {
+                            return Padding(
+                                padding: const EdgeInsets.only(top: 10),
+                                child: RatingOfProfile(
+                                    0));
+                          } else {
+                            return Padding(
+                                padding: const EdgeInsets.only(top: 10),
+                                child: RatingOfProfile(
+                                    0));
+                          }
+                        } else {
+                          return Padding(
+                                padding: const EdgeInsets.only(top: 10),
+                                child: RatingOfProfile(
+                                    0));// or any other widget to show progress
+                        }
+                      })
                 ]),
               ],
             )));
