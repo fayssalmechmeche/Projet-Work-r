@@ -44,7 +44,7 @@ class _NavigationPageState extends State<NavigationPage> {
           tabBackgroundColor: Colors.yellow.withOpacity(0.5),
           tabs: const [
             GButton(icon: Icons.chat_bubble_outline),
-            GButton(icon: Icons.location_on_outlined),
+            GButton(icon: Icons.insert_drive_file),
             GButton(icon: Icons.home_filled),
             GButton(icon: Icons.list_alt),
             GButton(icon: Icons.account_circle),

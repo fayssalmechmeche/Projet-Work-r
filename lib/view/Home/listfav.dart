@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:icon_decoration/icon_decoration.dart';
 import 'package:provider/provider.dart';
 
+import '../../Controller/Note/NoteController.dart';
 import '../../Controller/Particulier/ParticulierController.dart';
 import '../../Controller/global.dart';
 import '../Profile/profileother.dart';
@@ -42,7 +43,7 @@ class _ListFavState extends State<ListFav> {
             Container(
                 padding: EdgeInsets.only(top: 30),
                 height: 740,
-                width: 220,
+                width: 360,
                 child: listOfFavArtisan(FavoriteArtisans))
           ]),
         ]));
@@ -66,7 +67,6 @@ class _ListFavState extends State<ListFav> {
                 itemCount: snapshot.data['results'].length,
                 itemBuilder: (BuildContext context, int index) {
                   return SizedBox(
-                    height: 120,
                     child: CardArtisan(index, snapshot.data['results'][index]),
                   );
                 });
@@ -85,52 +85,61 @@ class _ListFavState extends State<ListFav> {
   }
 
   Widget CardArtisan(int index, data) {
+    final allNote = NoteController.getNoteByArtisan(data['_id']);
     return GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed(ProfileOther.tag, arguments: data);
+          Navigator.of(context)
+              .pushNamed(ProfileOther.tag, arguments: data)
+              .then((_) => setState(() {}));
         },
         child: Card(
-            shape: RoundedRectangleBorder(
-              //<-- 3. SEE HERE
-              side: const BorderSide(
-                color: Colors.black,
-                width: 1.0,
+            elevation: 2,
+            child: Column(children: [
+              ListTile(
+               
+    visualDensity: VisualDensity(horizontal: 0, vertical: -4),
+                  title: Text(data['name'] + " " + data['lastname']),
+                subtitle: Text(data['domaine']),
+                
               ),
-              borderRadius: BorderRadius.circular(40.0),
-            ),
-            elevation: 0,
-            color: Colors.yellow.withOpacity(0.5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20),
-                  child: Container(
-                    width: 20.0,
-                    height: 20.0,
-                    decoration: const BoxDecoration(
-                      color: Colors.green,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                ),
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Padding(
-                      padding: EdgeInsets.only(top: 10),
-                      child: Text(data['lastname'])),
-                  Text(data['name']),
-                  Padding(
-                      padding: EdgeInsets.only(top: 10),
-                      child: Text(
-                        data['domaine'],
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      )),
-                  Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: RatingOfProfile(double.parse(data['note']))),
-                ]),
-              ],
-            )));
+              FutureBuilder(
+                  future: allNote,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      if (snapshot.hasData) {
+                        var results = snapshot.data?['results'];
+                        late double note;
+
+                        if (results != null && results.isNotEmpty) {
+                          double total = 0;
+                          results.forEach((item) {
+                            total = total + item['note'];
+                          });
+                          note = total / results.length;
+                        } else {
+                          note = 0;
+                        }
+
+                        return Padding(
+                            padding: const EdgeInsets.only(left: 12),
+                            child: RatingOfProfile(note));
+                      } else if (snapshot.hasError) {
+                        return Padding(
+                            padding: const EdgeInsets.only(left: 12),
+                            child: RatingOfProfile(0));
+                      } else {
+                        return Padding(
+                            padding: const EdgeInsets.only(left: 12),
+                            child: RatingOfProfile(0));
+                      }
+                    } else {
+                      return Padding(
+                          padding: const EdgeInsets.only(left: 12),
+                          child: RatingOfProfile(
+                              0)); // or any other widget to show progress
+                    }
+                  })
+            ])));
   }
 
   Widget RatingOfProfile(double rating) {
