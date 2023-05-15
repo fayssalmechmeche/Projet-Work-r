@@ -251,7 +251,48 @@ class _TaskEditState extends State<TaskEdit> {
                   ),
                 )
               ])),
+              Row(mainAxisAlignment: MainAxisAlignment.center,children: [
+          
           Container(
+              padding: const EdgeInsets.only(
+                  top: 30, bottom: 15, right: 15, left: 15),
+              width: 160,
+              height: 75,
+              child: OutlinedButton(
+                onPressed: () {
+                  bool error = false;
+                  if (nameTaskController.text == "" ||
+                      descriptionController.text == "" ||
+                      dateStartController.text == "" ||
+                      dateEndController.text == "" ||
+                      _dropdownvalue2 == null) {
+                    error = true;
+                  }
+                  if (error == false) {
+                    var response = ArtisanController.deleteTask(data['id']);
+                    const snackBar = SnackBar(
+                      content: Text('Tâche supprimé !'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+                    Navigator.of(context).pushNamed(ListTasks.tag);
+                  } else {
+                    const snackBar = SnackBar(
+                      content: Text('Attention à bien remplir le formulaire !'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                },
+                style: OutlinedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(0),
+                    ),
+                    foregroundColor: Colors.red,
+                    side: const BorderSide(color: Colors.red)),
+                child: const Text('Supprimer',
+                    style: TextStyle(color: Colors.black)),
+              )),
+              Container(
               padding: const EdgeInsets.only(
                   top: 30, bottom: 15, right: 15, left: 15),
               width: 160,
@@ -297,46 +338,8 @@ class _TaskEditState extends State<TaskEdit> {
                     side: const BorderSide(color: Colors.green)),
                 child: const Text('Sauvegarder',
                     style: TextStyle(color: Colors.black)),
-              )),
-          Container(
-              padding: const EdgeInsets.only(
-                  top: 30, bottom: 15, right: 15, left: 15),
-              width: 160,
-              height: 75,
-              child: OutlinedButton(
-                onPressed: () {
-                  bool error = false;
-                  if (nameTaskController.text == "" ||
-                      descriptionController.text == "" ||
-                      dateStartController.text == "" ||
-                      dateEndController.text == "" ||
-                      _dropdownvalue2 == null) {
-                    error = true;
-                  }
-                  if (error == false) {
-                    var response = ArtisanController.deleteTask(data['id']);
-                    const snackBar = SnackBar(
-                      content: Text('Tâche supprimé !'),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
-                    Navigator.of(context).pushNamed(ListTasks.tag);
-                  } else {
-                    const snackBar = SnackBar(
-                      content: Text('Attention à bien remplir le formulaire !'),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  }
-                },
-                style: OutlinedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0),
-                    ),
-                    foregroundColor: Colors.red,
-                    side: const BorderSide(color: Colors.red)),
-                child: const Text('Supprimer',
-                    style: TextStyle(color: Colors.black)),
               ))
+              ])
         ]),
       ),
     );

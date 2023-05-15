@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/Controller/Artisan/ArtisanController.dart';
 
+import '../Profile/profileother.dart';
+
 class Search extends StatefulWidget {
   const Search({Key? key}) : super(key: key);
   static const tag = "/search";
@@ -43,7 +45,7 @@ class _SearchState extends State<Search> {
         children: [
           Container(
             padding: const EdgeInsets.only(top: 20),
-            width: 330,
+            width: 350,
             child: DropdownButtonFormField<String?>(
               hint: const Text('Type de recherche'),
               decoration: const InputDecoration(
@@ -64,6 +66,7 @@ class _SearchState extends State<Search> {
               onChanged: (String? newValue) {
                 setState(() {
                   inputDomaine = newValue;
+                  inputController.text = "";
                   print(inputDomaine);
                 });
               },
@@ -73,7 +76,7 @@ class _SearchState extends State<Search> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                padding: const EdgeInsets.only(top: 30),
+                padding: const EdgeInsets.only(top: 10),
                 width: 300,
                 child: TextFormField(
                   cursorColor: Colors.grey,
@@ -87,13 +90,13 @@ class _SearchState extends State<Search> {
                       borderRadius: BorderRadius.circular(90.0),
                     ),
                     contentPadding: const EdgeInsets.all(10),
-                    hintText: "Entrer un nom d'artisan",
+                    hintText: (inputDomaine == "Nom")? "Entrer un nom d'artisan" : "Entrer un nom de domain",
                     labelStyle: const TextStyle(color: Colors.grey),
                   ),
                 ),
               ),
               Container(
-                padding: const EdgeInsets.only(top: 30),
+                padding: const EdgeInsets.only(top: 10),
                 child: IconButton(
                   onPressed: () {
                     setState(() {
@@ -115,45 +118,64 @@ class _SearchState extends State<Search> {
                   );
                 } else if (snapshot.hasError) {
                   return Center(
-                    child: Text('Error: ${snapshot.error}'),
+                    child: Text('Impossible de charger les résultats'),
                   );
                 } else {
-                  final artisans = snapshot.data;
-                  if (artisans != null) {
-                    List<dynamic> artisanList = artisans['results'];
+                  if (snapshot.hasData) {
+                    final artisans = snapshot.data;
+                    if (snapshot.data?['results'] != null) {
+                      List<dynamic> artisanList = artisans?['results'];
 
-                    String searchTerm = inputController.text.trim();
+                      String searchTerm = inputController.text.trim();
 
-                    List<dynamic> filteredArtisans =
-                        artisanList.where((artisan) {
-                      if (inputDomaine == 'Nom') {
-                        return artisan['name']
-                            .toLowerCase()
-                            .contains(searchTerm.toLowerCase());
-                      } else if (inputDomaine == 'Domaine') {
-                        return artisan['domaine']
-                            .toLowerCase()
-                            .contains(searchTerm.toLowerCase());
-                      }
-                      return false;
-                    }).toList();
+                      List<dynamic> filteredArtisans =
+                          artisanList.where((artisan) {
+                        if (inputDomaine == 'Nom') {
+                          return artisan['name']
+                              .toLowerCase()
+                              .contains(searchTerm.toLowerCase());
+                        } else if (inputDomaine == 'Domaine') {
+                          return artisan['domaine']
+                              .toLowerCase()
+                              .contains(searchTerm.toLowerCase());
+                        }
+                        return false;
+                      }).toList();
 
-                    return ListView.builder(
-                      itemCount: filteredArtisans.length,
-                      itemBuilder: (context, index) {
-                        final artisan = filteredArtisans[index];
+                      return Container(
+                          padding: EdgeInsets.only(top: 20),
+                          child: ListView.builder(
+                            itemCount: filteredArtisans.length,
+                            itemBuilder: (context, index) {
+                              final artisan = filteredArtisans[index];
 
-                        return ListTile(
-                          title: Text(artisan['name']),
-                          subtitle: Text(artisan['domaine']),
-                          // Add any other relevant information from the artisan object
-                          // to display in the ListTile.
-                        );
-                      },
-                    );
+                              return GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .pushNamed(ProfileOther.tag,
+                                            arguments: artisan)
+                                        .then((_) => setState(() {}));
+                                  },
+                                  child: Card(
+                                      elevation: 2,
+                                      child: ListTile(
+                                        title: Text(artisan['name'] +
+                                            " " +
+                                            artisan['lastname']),
+                                        subtitle: Text(artisan['domaine']),
+                                        // Add any other relevant information from the artisan object
+                                        // to display in the ListTile.
+                                      )));
+                            },
+                          ));
+                    } else {
+                      return const Center(
+                        child: Text('Impossible de charger les résultats'),
+                      );
+                    }
                   } else {
                     return const Center(
-                      child: Text('No artisans found.'),
+                      child: Text('Impossible de charger les résultats'),
                     );
                   }
                 }

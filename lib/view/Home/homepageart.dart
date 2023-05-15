@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:icon_decoration/icon_decoration.dart';
 import 'package:my_app/Controller/Artisan/ArtisanController.dart';
+import 'package:my_app/Controller/Note/NoteController.dart';
 import 'package:provider/provider.dart';
 
 import '../../Controller/global.dart';
@@ -22,9 +23,6 @@ class _HomePageArtState extends State<HomePageArt> {
   var totalDevisAcceptedCount;
   var totalDevisRefusedCount;
 
-  var noteCount;
-  var noteMoyenne;
-
   @override
   Widget build(BuildContext context) {
     final globalData = Provider.of<GlobalData>(context);
@@ -38,52 +36,46 @@ class _HomePageArtState extends State<HomePageArt> {
     final devisRefused =
         ArtisanController.getAllDevisByStatus(0, globalData.getId());
 
-    void getTotalWorkCount() async {
+    final allNote = NoteController.getNoteByArtisan(globalData.getId());
+
+    Future<int> getTotalWorkCount() async {
       final workInProgressResult = await workInProgress;
       final workInDoneResult = await workDone;
 
       final workInProgressCount = workInProgressResult['results'].length;
       final workInDoneCount = workInDoneResult['results'].length;
 
-      totalWorkCount = workInProgressCount + workInDoneCount;
+      return workInProgressCount + workInDoneCount;
     }
 
-    // void getTotalDevisAcceptedCount() async {
-
-    //   final devisAcceptedCount = devisAcceptedResult['results'].length;
-    //   totalDevisAcceptedCount = devisAcceptedCount;
-    // }
-
-    void getTotalWorkInProgressCount() async {
+    Future<int> getTotalWorkInProgressCount() async {
       final workInProgressResult = await workInProgress;
       final workInProgressCount = workInProgressResult['results'].length;
-      totalWorkInProgress = workInProgressCount;
+
+      return workInProgressCount;
     }
 
-    void getTotalWorkDoneCount() async {
+    Future<int> getTotalWorkDoneCount() async {
       final workInDoneResult = await workDone;
       final workInDoneCount = workInDoneResult['results'].length;
-      totalWorkDone = workInDoneCount;
+
+      return workInDoneCount;
     }
 
-    void getTotalDevisAcceptedCount() async {
+    Future<int> getTotalDevisAcceptedCount() async {
       final devisAcceptedResult = await devisAccepted;
       final devisAcceptedCount = devisAcceptedResult['results'].length;
-      totalDevisAcceptedCount = devisAcceptedCount;
+
+      return devisAcceptedCount;
     }
 
-    void getTotalDevisRefusedCount() async {
+    Future<int> getTotalDevisRefusedCount() async {
       final devisRefusedResult = await devisRefused;
       final devisRefusedCount = devisRefusedResult['results'].length;
-      totalDevisRefusedCount = devisRefusedCount;
+
+      return devisRefusedCount;
     }
 
-    getTotalWorkCount();
-    getTotalWorkInProgressCount();
-    getTotalWorkDoneCount();
-
-    getTotalDevisAcceptedCount();
-    getTotalDevisRefusedCount();
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -91,7 +83,7 @@ class _HomePageArtState extends State<HomePageArt> {
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.logout,
               color: Colors.red,
             ),
@@ -107,7 +99,7 @@ class _HomePageArtState extends State<HomePageArt> {
         ),
         body: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
           Container(
-              padding: EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.only(top: 20),
               child:
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Container(
@@ -141,7 +133,7 @@ class _HomePageArtState extends State<HomePageArt> {
                 ),
               ])),
           Container(
-              padding: EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.only(top: 20),
               width: 330,
               child: Card(
                   shape: RoundedRectangleBorder(
@@ -161,20 +153,48 @@ class _HomePageArtState extends State<HomePageArt> {
                           height: 85,
                           child: Column(
                             children: [
-                              Padding(
+                              const Padding(
                                   padding: EdgeInsets.only(top: 10),
                                   child: Text('Nombre de Clients',
                                       style: TextStyle(fontSize: 18))),
-                              Padding(
-                                  padding: EdgeInsets.only(top: 10),
-                                  child: Text(totalWorkCount.toString(),
-                                      style: TextStyle(fontSize: 28)))
+                              FutureBuilder(
+                                  future: getTotalWorkCount(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.done) {
+                                      if (snapshot.hasData) {
+                                        final totalWorkCount = snapshot.data;
+
+                                        return Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 10),
+                                            child: Text(
+                                                totalWorkCount.toString(),
+                                                style: const TextStyle(
+                                                    fontSize: 28)));
+                                      } else if (snapshot.hasError) {
+                                        return const Padding(
+                                            padding: EdgeInsets.only(top: 10),
+                                            child: Text('Erreur de chargement',
+                                                style:
+                                                    TextStyle(fontSize: 15)));
+                                      } else {
+                                        return const Padding(
+                                            padding: EdgeInsets.only(top: 10),
+                                            child: Text('Erreur de chargement',
+                                                style:
+                                                    TextStyle(fontSize: 15)));
+                                      }
+                                    } else {
+                                      return const CircularProgressIndicator(); // or any other widget to show progress
+                                    }
+                                  })
                             ],
                           ))
                     ],
                   ))),
           Container(
-              padding: EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.only(top: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -198,15 +218,47 @@ class _HomePageArtState extends State<HomePageArt> {
                                 height: 145,
                                 child: Column(
                                   children: [
-                                    Padding(
+                                    const Padding(
                                         padding: EdgeInsets.only(top: 15),
                                         child: Text('Chantiers en cours',
                                             style: TextStyle(fontSize: 15))),
-                                    Padding(
-                                        padding: EdgeInsets.only(top: 25),
-                                        child: Text(
-                                            totalWorkInProgress.toString(),
-                                            style: TextStyle(fontSize: 38))),
+                                    FutureBuilder(
+                                        future: getTotalWorkInProgressCount(),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.done) {
+                                            if (snapshot.hasData) {
+                                              final totalWorkInProgress =
+                                                  snapshot.data;
+
+                                              return Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 25),
+                                                  child: Text(
+                                                      totalWorkInProgress
+                                                          .toString(),
+                                                      style: const TextStyle(
+                                                          fontSize: 38)));
+                                            } else if (snapshot.hasError) {
+                                              return const Padding(
+                                                  padding:
+                                                      EdgeInsets.only(top: 30),
+                                                  child: Text('?',
+                                                      style: TextStyle(
+                                                          fontSize: 15)));
+                                            } else {
+                                              return const Padding(
+                                                  padding:
+                                                      EdgeInsets.only(top: 30),
+                                                  child: Text('?',
+                                                      style: TextStyle(
+                                                          fontSize: 15)));
+                                            }
+                                          } else {
+                                            return const CircularProgressIndicator(); // or any other widget to show progress
+                                          }
+                                        })
                                   ],
                                 ))
                           ],
@@ -230,18 +282,50 @@ class _HomePageArtState extends State<HomePageArt> {
                                 height: 145,
                                 child: Column(
                                   children: [
-                                    Padding(
+                                    const Padding(
                                         padding: EdgeInsets.only(top: 15),
                                         child: Text('Chantiers terminés',
                                             style: TextStyle(fontSize: 15))),
-                                    Padding(
-                                        padding: EdgeInsets.only(top: 25),
-                                        child: Text(totalWorkDone.toString(),
-                                            style: TextStyle(fontSize: 38))),
+                                    FutureBuilder(
+                                        future: getTotalWorkDoneCount(),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.done) {
+                                            if (snapshot.hasData) {
+                                              final totalWorkDone =
+                                                  snapshot.data;
+
+                                              return Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 25),
+                                                  child: Text(
+                                                      totalWorkDone.toString(),
+                                                      style: const TextStyle(
+                                                          fontSize: 38)));
+                                            } else if (snapshot.hasError) {
+                                              return const Padding(
+                                                  padding:
+                                                      EdgeInsets.only(top: 30),
+                                                  child: Text('?',
+                                                      style: TextStyle(
+                                                          fontSize: 15)));
+                                            } else {
+                                              return const Padding(
+                                                  padding:
+                                                      EdgeInsets.only(top: 30),
+                                                  child: Text('?',
+                                                      style: TextStyle(
+                                                          fontSize: 15)));
+                                            }
+                                          } else {
+                                            return const CircularProgressIndicator(); // or any other widget to show progress
+                                          }
+                                        })
                                   ],
                                 ))
                           ],
-                        ))
+                        )),
                   ]),
                   Column(children: [
                     Card(
@@ -263,15 +347,47 @@ class _HomePageArtState extends State<HomePageArt> {
                                 height: 145,
                                 child: Column(
                                   children: [
-                                    Padding(
+                                    const Padding(
                                         padding: EdgeInsets.only(top: 15),
                                         child: Text(' Devis acceptés  ',
                                             style: TextStyle(fontSize: 15))),
-                                    Padding(
-                                        padding: EdgeInsets.only(top: 25),
-                                        child: Text(
-                                            totalDevisAcceptedCount.toString(),
-                                            style: TextStyle(fontSize: 38))),
+                                    FutureBuilder(
+                                        future: getTotalDevisAcceptedCount(),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.done) {
+                                            if (snapshot.hasData) {
+                                              final totalDevisAcceptedCount =
+                                                  snapshot.data;
+
+                                              return Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 25),
+                                                  child: Text(
+                                                      totalDevisAcceptedCount
+                                                          .toString(),
+                                                      style: const TextStyle(
+                                                          fontSize: 38)));
+                                            } else if (snapshot.hasError) {
+                                              return const Padding(
+                                                  padding:
+                                                      EdgeInsets.only(top: 30),
+                                                  child: Text('?',
+                                                      style: TextStyle(
+                                                          fontSize: 15)));
+                                            } else {
+                                              return const Padding(
+                                                  padding:
+                                                      EdgeInsets.only(top: 30),
+                                                  child: Text('?',
+                                                      style: TextStyle(
+                                                          fontSize: 15)));
+                                            }
+                                          } else {
+                                            return const CircularProgressIndicator(); // or any other widget to show progress
+                                          }
+                                        })
                                   ],
                                 ))
                           ],
@@ -295,15 +411,47 @@ class _HomePageArtState extends State<HomePageArt> {
                                 height: 145,
                                 child: Column(
                                   children: [
-                                    Padding(
+                                    const Padding(
                                         padding: EdgeInsets.only(top: 15),
                                         child: Text(' Devis refusés  ',
                                             style: TextStyle(fontSize: 15))),
-                                    Padding(
-                                        padding: EdgeInsets.only(top: 25),
-                                        child: Text(
-                                            totalDevisRefusedCount.toString(),
-                                            style: TextStyle(fontSize: 38))),
+                                    FutureBuilder(
+                                        future: getTotalDevisRefusedCount(),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.done) {
+                                            if (snapshot.hasData) {
+                                              final totalDevisRefusedCount =
+                                                  snapshot.data;
+
+                                              return Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 25),
+                                                  child: Text(
+                                                      totalDevisRefusedCount
+                                                          .toString(),
+                                                      style: const TextStyle(
+                                                          fontSize: 38)));
+                                            } else if (snapshot.hasError) {
+                                              return const Padding(
+                                                  padding:
+                                                      EdgeInsets.only(top: 30),
+                                                  child: Text('?',
+                                                      style: TextStyle(
+                                                          fontSize: 15)));
+                                            } else {
+                                              return const Padding(
+                                                  padding:
+                                                      EdgeInsets.only(top: 30),
+                                                  child: Text('?',
+                                                      style: TextStyle(
+                                                          fontSize: 15)));
+                                            }
+                                          } else {
+                                            return const CircularProgressIndicator(); // or any other widget to show progress
+                                          }
+                                        })
                                   ],
                                 ))
                           ],
@@ -312,7 +460,7 @@ class _HomePageArtState extends State<HomePageArt> {
                 ],
               )),
           Container(
-              padding: EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.only(top: 20),
               width: 330,
               child: Card(
                   shape: RoundedRectangleBorder(
@@ -332,17 +480,62 @@ class _HomePageArtState extends State<HomePageArt> {
                           height: 105,
                           child: Column(
                             children: [
-                              Padding(
+                              const Padding(
                                   padding: EdgeInsets.only(top: 10),
                                   child: Text('Ma note',
                                       style: TextStyle(fontSize: 18))),
-                              Container(
-                                  padding: EdgeInsets.only(top: 10),
-                                  child: RatingOfProfile(3.5)),
-                              Padding(
-                                  padding: EdgeInsets.only(top: 10),
-                                  child: Text('3.5 / 5',
-                                      style: TextStyle(fontSize: 20)))
+                              FutureBuilder(
+                                  future: allNote,
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.done) {
+                                      if (snapshot.hasData) {
+                                        var results = snapshot.data?['results'];
+                                        late double note;
+                                        
+                                        print(results);
+                                        if (results != null &&
+                                            results.isNotEmpty) {
+                                            double total = 0;
+                                          results.forEach((item) {
+                                            total = total + item['note'];
+                                          });
+                                          note = total / results.length;
+                                        } else {
+                                          note = 3;
+                                        }
+
+                                        return Column(
+                                          children: [
+                                            Container(
+                                                padding: const EdgeInsets.only(
+                                                    top: 10),
+                                                child: RatingOfProfile(note)),
+                                            Padding(
+                                                padding:
+                                                    EdgeInsets.only(top: 10),
+                                                child: Text('${note} / 5',
+                                                    style: TextStyle(
+                                                        fontSize: 20)))
+                                          ],
+                                        );
+                                      } else if (snapshot.hasError) {
+                                        return const Padding(
+                                            padding: EdgeInsets.only(top: 30),
+                                            child: Text('?',
+                                                style:
+                                                    TextStyle(fontSize: 15)));
+                                      } else {
+                                        return const Padding(
+                                            padding: EdgeInsets.only(top: 30),
+                                            child: Text('?',
+                                                style:
+                                                    TextStyle(fontSize: 15)));
+                                      }
+                                    } else {
+                                      return const CircularProgressIndicator(); // or any other widget to show progress
+                                    }
+                                  })
                             ],
                           ))
                     ],
@@ -358,8 +551,8 @@ class _HomePageArtState extends State<HomePageArt> {
           color: rating > 0 ? Colors.yellow : Colors.black,
           size: 25,
         ),
-        decoration:
-            IconDecoration(border: IconBorder(color: Colors.black, width: 2)),
+        decoration: const IconDecoration(
+            border: IconBorder(color: Colors.black, width: 2)),
       ),
       DecoratedIcon(
         icon: Icon(
@@ -367,8 +560,8 @@ class _HomePageArtState extends State<HomePageArt> {
           color: rating > 1 ? Colors.yellow : Colors.black,
           size: 25,
         ),
-        decoration:
-            IconDecoration(border: IconBorder(color: Colors.black, width: 2)),
+        decoration: const IconDecoration(
+            border: IconBorder(color: Colors.black, width: 2)),
       ),
       DecoratedIcon(
         icon: Icon(
@@ -376,8 +569,8 @@ class _HomePageArtState extends State<HomePageArt> {
           color: rating > 2 ? Colors.yellow : Colors.black,
           size: 25,
         ),
-        decoration:
-            IconDecoration(border: IconBorder(color: Colors.black, width: 2)),
+        decoration: const IconDecoration(
+            border: IconBorder(color: Colors.black, width: 2)),
       ),
       DecoratedIcon(
         icon: Icon(
@@ -385,8 +578,8 @@ class _HomePageArtState extends State<HomePageArt> {
           color: rating > 3 ? Colors.yellow : Colors.black,
           size: 25,
         ),
-        decoration:
-            IconDecoration(border: IconBorder(color: Colors.black, width: 2)),
+        decoration: const IconDecoration(
+            border: IconBorder(color: Colors.black, width: 2)),
       ),
       DecoratedIcon(
         icon: Icon(
@@ -394,8 +587,8 @@ class _HomePageArtState extends State<HomePageArt> {
           color: rating > 4 ? Colors.yellow : Colors.black,
           size: 25,
         ),
-        decoration:
-            IconDecoration(border: IconBorder(color: Colors.black, width: 2)),
+        decoration: const IconDecoration(
+            border: IconBorder(color: Colors.black, width: 2)),
       ),
     ]);
   }
