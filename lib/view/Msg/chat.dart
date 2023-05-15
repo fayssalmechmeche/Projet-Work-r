@@ -40,8 +40,8 @@ class _ChatPageState extends State<Chat> {
       return conversation["results"][0]["id"];
     } else {
       // Traiter le cas "private"
-      conversation =
-          await ConversationController.getOneConversationFromWork(data["id"]);
+      conversation = await ConversationController.getOneConversationFromWork(
+          data["chantier"]);
       return conversation["results"][0]["id"];
     }
   }

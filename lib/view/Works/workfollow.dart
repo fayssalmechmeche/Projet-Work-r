@@ -557,14 +557,14 @@ class _WorkFollowState extends State<WorkFollow> {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(snackBar);
                                   Map<String, dynamic> arguments = {
-                                    'chantier': globalData.getChantier(),
+                                    'chantier': globalData.getIdChantier(),
                                     'type': "private",
                                   };
                                   Navigator.of(context).pushNamed(Chat.tag,
                                       arguments: arguments);
                                 } else {
                                   Map<String, dynamic> arguments = {
-                                    'chantier': globalData.getChantier(),
+                                    'chantier': globalData.getIdChantier(),
                                     'type': "private",
                                   };
                                   await ConversationController
