@@ -41,7 +41,7 @@ class _ListChatState extends State<ListChat> {
           ),
         ),
         title: Text(
-          "Mes Devis",
+          "Mes discussions",
           style: TextStyle(
             color: Colors.black,
           ),
@@ -107,12 +107,19 @@ class _ListChatState extends State<ListChat> {
   }
 
   Widget CardChat(int index, data) {
+    final globalData = Provider.of<GlobalData>(context);
+    var dataProfile;
+    if (globalData.getRole() == 1) {
+      dataProfile =
+          ArtisanController.getArtisanById(int.parse(data['artisanID']));
+    }
+    if (globalData.getRole() == 0) {
+      dataProfile = ParticulierController.getParticulierById(
+          int.parse(data['particulierID']));
+    }
     return GestureDetector(
       onTap: () {
-        const snackBar = SnackBar(
-          content: Text('Ouverture de la conversation'),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        
         Map<String, dynamic> arguments = {
           'id': data["id"],
           'type': "public",
@@ -123,41 +130,73 @@ class _ListChatState extends State<ListChat> {
         shape: StadiumBorder(
           side: BorderSide(
             color: Colors.black,
-            width: index % 2 == 0 ? 1.0 : 0.0,
+            width: 1
           ),
         ),
         elevation: 10,
-        color: index % 2 == 0 ? Colors.white : Colors.grey,
+        color: index % 2 == 0 ? Colors.white : Color.fromARGB(255, 190, 188,
+                    188),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20),
+              padding: const EdgeInsets.only(left: 10, right: 20),
               child: Container(
                 width: 20.0,
                 height: 20.0,
-                decoration: BoxDecoration(
-                  color: Colors.green,
-                  shape: BoxShape.circle,
-                ),
+                
               ),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text("Plombier"),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text("Phillipe"),
-                ),
+                FutureBuilder(
+                    future: dataProfile,
+                    builder: (context,
+                        AsyncSnapshot<Map<String, dynamic>> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        if (snapshot.hasData) {
+                          if (snapshot.data?['results'] != null) {
+                            final res = snapshot.data?['results'];
+                            return Column(children: [
+                              Container(
+                                width: 150,
+                                padding: EdgeInsets.all(10),
+                                child: Text(
+                                    res[0]['name'] + " " + res[0]['lastname']),
+                              ),
+                              Container(
+                                width: 150,
+                                padding: EdgeInsets.all(10),
+                                child: (globalData.getRole() == 1)
+                                    ? Text(res[0]['domaine'])
+                                    : Text("Particulier"),
+                              ),
+                            ]);
+                          } else {
+                            return const Padding(
+                                padding: EdgeInsets.only(top: 30),
+                                child:
+                                    Text('?', style: TextStyle(fontSize: 15)));
+                          }
+                        } else if (snapshot.hasError) {
+                          return const Padding(
+                              padding: EdgeInsets.only(top: 30),
+                              child: Text('?', style: TextStyle(fontSize: 15)));
+                        } else {
+                          return const Padding(
+                              padding: EdgeInsets.only(top: 30),
+                              child: Text('?', style: TextStyle(fontSize: 15)));
+                        }
+                      } else {
+                        return const CircularProgressIndicator(); // or any other widget to show progress
+                      }
+                    })
               ],
             ),
             Container(
-              padding: EdgeInsets.only(left: 150),
+              padding: EdgeInsets.only(left: 120),
               height: 50,
               width: 50,
               child: Icon(Icons.arrow_forward_ios),

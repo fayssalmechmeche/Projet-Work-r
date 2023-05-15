@@ -217,14 +217,11 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  padding: const EdgeInsets.only(left: 10, right: 20),
                   child: Container(
                     width: 20.0,
                     height: 20.0,
-                    decoration: const BoxDecoration(
-                      color: Colors.green,
-                      shape: BoxShape.circle,
-                    ),
+                    
                   ),
                 ),
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -289,7 +286,7 @@ class _HomePageState extends State<HomePage> {
       DecoratedIcon(
         icon: Icon(
           rating > 0 && rating < 1 ? Icons.star_half : Icons.star,
-          color: rating > 0 ? Colors.yellow : Colors.black,
+          color: rating > 0 ? Color.fromARGB(255, 242, 210, 2): Colors.black,
           size: 16,
         ),
         decoration:
@@ -298,7 +295,7 @@ class _HomePageState extends State<HomePage> {
       DecoratedIcon(
         icon: Icon(
           rating > 1.0 && rating < 2.0 ? Icons.star_half : Icons.star,
-          color: rating > 1 ? Colors.yellow : Colors.black,
+          color: rating > 1 ? Color.fromARGB(255, 242, 210, 2) : Colors.black,
           size: 16,
         ),
         decoration:
@@ -307,7 +304,7 @@ class _HomePageState extends State<HomePage> {
       DecoratedIcon(
         icon: Icon(
           rating > 2.0 && rating < 3.0 ? Icons.star_half : Icons.star,
-          color: rating > 2 ? Colors.yellow : Colors.black,
+          color: rating > 2 ? Color.fromARGB(255, 242, 210, 2) : Colors.black,
           size: 16,
         ),
         decoration:
@@ -316,7 +313,7 @@ class _HomePageState extends State<HomePage> {
       DecoratedIcon(
         icon: Icon(
           rating > 3.0 && rating < 4.0 ? Icons.star_half : Icons.star,
-          color: rating > 3 ? Colors.yellow : Colors.black,
+          color: rating > 3 ? Color.fromARGB(255, 242, 210, 2) : Colors.black,
           size: 16,
         ),
         decoration:
@@ -325,7 +322,7 @@ class _HomePageState extends State<HomePage> {
       DecoratedIcon(
         icon: Icon(
           rating > 4.0 && rating < 5.0 ? Icons.star_half : Icons.star,
-          color: rating > 4 ? Colors.yellow : Colors.black,
+          color: rating > 4 ? Color.fromARGB(255, 242, 210, 2) : Colors.black,
           size: 16,
         ),
         decoration:
