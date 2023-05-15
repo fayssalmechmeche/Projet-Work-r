@@ -110,11 +110,11 @@ class _ListChatState extends State<ListChat> {
     return GestureDetector(
       onTap: () {
         const snackBar = SnackBar(
-          content: Text('La conversation existe déjà'),
+          content: Text('Ouverture de la conversation'),
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
         Map<String, dynamic> arguments = {
-          'chantier': data,
+          'id': data["id"],
           'type': "public",
         };
         Navigator.of(context).pushNamed(Chat.tag, arguments: arguments);
