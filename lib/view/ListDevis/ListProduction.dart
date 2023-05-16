@@ -86,7 +86,7 @@ class _ListPropositionState extends State<ListProposition> {
             return Center(
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [Text("Aucun chantier disponible")],
+              children: [Text("Aucune proposition de devis")],
             ));
           }
         } else {
@@ -100,16 +100,11 @@ class _ListPropositionState extends State<ListProposition> {
     final globalData = Provider.of<GlobalData>(context);
     return GestureDetector(
         onTap: () {
-          if (globalData.getRole() == 1) {
+          
             Navigator.of(context)
                 .pushNamed(DevisFollow.tag, arguments: data)
                 .then((_) => setState(() {}));
             ;
-          }
-          const snackBar = SnackBar(
-            content: Text('Works page have been lunched'),
-          );
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
         },
         child: Card(
             shape: StadiumBorder(
@@ -149,7 +144,7 @@ class _ListPropositionState extends State<ListProposition> {
                       ]),
                 ),
                 Container(
-                    padding: const EdgeInsets.only(left: 70),
+                    padding: const EdgeInsets.only(left: 120),
                     height: 50,
                     width: 50,
                     child: const Icon(Icons.arrow_forward_ios))

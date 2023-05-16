@@ -78,8 +78,7 @@ class _ChatPageState extends State<Chat> {
       messageProvider.addMessage(data);
     });
 
-    return SafeArea(
-      child: Scaffold(
+    return  Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           leading: const BackButton(
@@ -94,7 +93,8 @@ class _ChatPageState extends State<Chat> {
           toolbarHeight: 35,
           elevation: 0,
         ),
-        body: FutureBuilder<Map<String, dynamic>>(
+        body:SafeArea(
+      child: FutureBuilder<Map<String, dynamic>>(
           future: getAllMessage(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
