@@ -35,7 +35,7 @@ class _WorkFollowState extends State<WorkFollow> {
         _progressValue =
             chantiersDone["results"].length / chantiers["results"].length;
         if (_progressValue.isNaN) {
-          return _progressValue = 1;
+          return _progressValue = 0;
         }
       }
 
@@ -271,7 +271,7 @@ class _WorkFollowState extends State<WorkFollow> {
                               } else {
                                 // Le Future s'est terminé avec succès, vous pouvez accéder à la valeur dans snapshot.data.
                                 double _progressValue = snapshot.data!;
-
+                                print(_progressValue);
                                 return Container(
                                   padding: const EdgeInsets.only(top: 10),
                                   width: 250,

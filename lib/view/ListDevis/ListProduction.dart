@@ -7,7 +7,7 @@ import '../../Controller/global.dart';
 
 class ListProposition extends StatefulWidget {
   const ListProposition({Key? key}) : super(key: key);
-  static const tag = "/devis";
+  static const tag = "/listproposition";
 
   @override
   State<ListProposition> createState() => _ListPropositionState();
@@ -153,7 +153,7 @@ class _ListPropositionState extends State<ListProposition> {
   }
 
   Widget statusCircleColor(data) {
-    if (data['state'] == 1 || data['state'] == 2) {
+    if (data['state'] == 1) {
       return Container(
         width: 20.0,
         height: 20.0,
@@ -162,7 +162,18 @@ class _ListPropositionState extends State<ListProposition> {
           shape: BoxShape.circle,
         ),
       );
-    } else {
+    }else if (data['state'] == 2) {
+      return Container(
+        width: 20.0,
+        height: 20.0,
+        decoration: const BoxDecoration(
+          color: Colors.red,
+          shape: BoxShape.circle,
+          
+        ),
+      );
+    } 
+    else {
       return const SizedBox(
         width: 20.0,
         height: 20.0,

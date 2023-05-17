@@ -243,7 +243,7 @@ var functions = {
 
   refuseDevis(req, res) {
     mysqlConnection.query(
-      "UPDATE devis SET state = 0 WHERE id = ? AND particulierID = ?",
+      "UPDATE devis SET state = 2 WHERE id = ? AND particulierID = ?",
       [req.body.devisID, req.body.particulierID],
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });

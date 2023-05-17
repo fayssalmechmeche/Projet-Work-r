@@ -3,6 +3,7 @@ import 'package:my_app/view/Home/homepage.dart';
 import 'package:my_app/view/Home/listfav.dart';
 import 'package:my_app/view/Home/search.dart';
 import 'package:my_app/view/Home/homepageart.dart';
+import 'package:my_app/view/ListDevis/ListProduction.dart';
 import 'package:my_app/view/ListDevis/adddevis.dart';
 import 'package:my_app/view/ListDevis/devis.dart';
 import 'package:my_app/view/ListDevis/pdfdevis.dart';
@@ -126,6 +127,7 @@ class _MyAppState extends State<MyApp> {
         ProfileOther.tag: (context) => const ProfileOther(),
         Search.tag: (context) => const Search(),
         HomePageArt.tag: (context) => const HomePageArt(),
+        ListProposition.tag: (context) => const ListProposition(),
       },
     );
   }
