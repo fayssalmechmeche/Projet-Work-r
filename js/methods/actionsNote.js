@@ -8,10 +8,11 @@ var functions = {
   checkNoteExists: function (req, res) {
     const artisanID = req.headers.artisanid;
     const particulierID = req.headers.particulierid;
+    const workID = req.headers.workid;
 
     mysqlConnection.query(
-      "SELECT COUNT(*) AS count FROM notes WHERE artisanID = ? AND particulierID = ?",
-      [artisanID, particulierID],
+      "SELECT COUNT(*) AS count FROM notes WHERE artisanID = ? AND particulierID = ? and workID = ?",
+      [artisanID, particulierID, workID],
       function (error, results, fields) {
         if (error) {
           return res.json({ success: false, msg: error });
@@ -26,8 +27,13 @@ var functions = {
 
   addNotetoArtisan(req, res) {
     mysqlConnection.query(
-      "INSERT INTO notes (note, artisanID, particulierID) VALUES (?, ?, ?)",
-      [req.body.note, req.body.artisanID, req.body.particulierID],
+      "INSERT INTO notes (note, artisanID, particulierID, workID) VALUES (?, ?, ? ,?)",
+      [
+        req.body.note,
+        req.body.artisanID,
+        req.body.particulierID,
+        req.body.workID,
+      ],
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
         res.json({
@@ -39,8 +45,8 @@ var functions = {
   },
   getOneNoteByArtisan(req, res) {
     mysqlConnection.query(
-      "SELECT * FROM notes WHERE artisanID = ? and particulierID = ?",
-      [req.headers.artisanid, req.headers.particulierid],
+      "SELECT * FROM notes WHERE artisanID = ? and particulierID = ? and workID = ?",
+      [req.headers.artisanid, req.headers.particulierid, req.headers.workid],
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
 

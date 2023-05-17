@@ -10,11 +10,13 @@ import 'package:my_app/Controller/Artisan/ArtisanController.dart';
 class NoteController {
   static var url = "http://localhost:3000/";
 
-  static Future<bool> checkNoteExists(int artisanID, int particulierID) async {
+  static Future<bool> checkNoteExists(
+      int artisanID, int particulierID, int workID) async {
     var response = await http.get(Uri.parse("${url}checkNoteExists"), headers: {
       "Content-Type": "application/json",
       "artisanid": artisanID.toString(),
       "particulierid": particulierID.toString(),
+      "workid": workID.toString(),
     });
 
     if (response.statusCode == 200) {
@@ -29,11 +31,13 @@ class NoteController {
     int artisanID,
     int particulierID,
     int note,
+    int workID,
   ) async {
     var response = await http.post(Uri.parse("${url}addNotetoArtisan"), body: {
       "artisanID": artisanID.toString(),
       "particulierID": particulierID.toString(),
       "note": note.toString(),
+      "workID": workID.toString(),
     });
 
     var notes = await getNoteByArtisan(artisanID);
@@ -99,11 +103,13 @@ class NoteController {
   static Future<Map<String, dynamic>> getOneNoteByArtisan(
     int artisanID,
     int particulierID,
+    int workID,
   ) async {
     var response =
         await http.get(Uri.parse("${url}getOneNoteByArtisan"), headers: {
       "artisanid": artisanID.toString(),
       "particulierid": particulierID.toString(),
+      "workid": workID.toString(),
     });
 
     if (response.statusCode == 200) {
