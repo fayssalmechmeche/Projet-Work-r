@@ -7,8 +7,10 @@ import 'package:http/http.dart' as http;
 class ArtisanController {
   static var url = "http://localhost:3000/";
 
-  Future<bool> checkSiretExists(String siret) async {
+  static Future<Map<String, dynamic>> checkSiretExists(String siret) async {
     final token = dotenv.env['API_KEY'];
+    print(token);
+    print(siret);
     final url = 'https://api.insee.fr/entreprises/sirene/V3/siret/$siret';
     final response = await http.get(Uri.parse(url), headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
@@ -17,13 +19,14 @@ class ArtisanController {
 
     if (response.statusCode == 200) {
       // Analyser la réponse JSON et vérifier la validité du SIRET
-      final jsonResponse = jsonDecode(response.body);
-      final isValid = jsonResponse['valid'];
-
-      return isValid ?? false;
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      print(jsonResponse);
+      return jsonResponse['header'];
     } else {
       // Gérer les erreurs de requête HTTP
-      throw Exception('Erreur lors de la requête API : ${response.statusCode}');
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      print(jsonResponse);
+      return jsonResponse['header'];
     }
   }
 

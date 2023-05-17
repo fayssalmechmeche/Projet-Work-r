@@ -383,6 +383,76 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 }
+                if (phoneController.text.length != 10) {
+                  error = true;
+                  const snackBar = SnackBar(
+                    content: Text(
+                        'Le numéro de téléphone doit contenir 10 chiffres !'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+                if (siretController.text.length != 14) {
+                  error = true;
+                  const snackBar = SnackBar(
+                    content:
+                        Text('Le numéro de siret doit contenir 14 chiffres !'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+                if (phoneController.text[0] != '0') {
+                  error = true;
+                  const snackBar = SnackBar(
+                    content:
+                        Text('Le numéro de téléphone doit commencer par 0 !'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+                if (PostalCodeController.text.length != 5) {
+                  error = true;
+                  const snackBar = SnackBar(
+                    content: Text('Le code postal doit contenir 5 chiffres !'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+                if (passwordController.text.length < 8) {
+                  error = true;
+                  const snackBar = SnackBar(
+                    content: Text(
+                        'Le mot de passe doit contenir au moins 8 caractères !'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+
+                if (passwordController.text.contains(new RegExp(r'[A-Z]')) ==
+                    false) {
+                  error = true;
+                  const snackBar = SnackBar(
+                    content: Text(
+                        'Le mot de passe doit contenir au moins une majuscule !'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+
+                if (passwordController.text.contains(new RegExp(r'[0-9]')) ==
+                    false) {
+                  error = true;
+                  const snackBar = SnackBar(
+                    content: Text(
+                        'Le mot de passe doit contenir au moins un chiffre !'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+
+                if (passwordController.text
+                        .contains(new RegExp(r'[!@#$%^&*(),.?":{}|<>]')) ==
+                    false) {
+                  error = true;
+                  const snackBar = SnackBar(
+                    content: Text(
+                        'Le mot de passe doit contenir au moins un caractère spécial !'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
 
                 if (passwordController.text !=
                     confirmationPasswordController.text) {
@@ -393,26 +463,35 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 }
                 if (error == false) {
-                  if (await ArtisanController.createArtisan(
-                        firstnameController.text,
-                        nameController.text,
-                        passwordController.text,
-                        emailController.text,
-                        usernameController.text,
-                        phoneController.text,
-                        siretController.text,
-                        'test',
-                        AdressController.text,
-                        _dropdownvalue1!,
-                        companyController.text,
-                      ) ==
-                      200) {
+                  final checkSiret = await ArtisanController.checkSiretExists(
+                      siretController.text);
+                  if (checkSiret["statut"] == 200) {
+                    if (await ArtisanController.createArtisan(
+                          firstnameController.text,
+                          nameController.text,
+                          passwordController.text,
+                          emailController.text,
+                          usernameController.text,
+                          phoneController.text,
+                          siretController.text,
+                          'test',
+                          AdressController.text,
+                          _dropdownvalue1!,
+                          companyController.text,
+                        ) ==
+                        200) {
+                      const snackBar = SnackBar(
+                        content: Text(
+                            'Inscription réussi ! vous pouvez vous connecter'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      Navigator.of(context).pushNamed(SelectionPage.tag);
+                    }
+                  } else {
                     const snackBar = SnackBar(
-                      content: Text(
-                          'Inscription réussi ! vous pouvez vous connecter'),
+                      content: Text('Le siret n\'est pas valide !'),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    Navigator.of(context).pushNamed(SelectionPage.tag);
                   }
                 }
               },
