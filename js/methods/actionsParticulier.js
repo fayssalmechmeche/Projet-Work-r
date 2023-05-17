@@ -219,6 +219,17 @@ var functions = {
     );
   },
 
+  getDevisParticulierByWork(req, res) {
+    mysqlConnection.query(
+      "SELECT * FROM devis WHERE particulierID = ? AND workID = ?",
+      [req.headers.test1, req.headers.test2],
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ results });
+      }
+    );
+  },
+
   getAllDevis(req, res) {
     mysqlConnection.query(
       "SELECT * FROM devis WHERE particulierID = ? AND state != 0",

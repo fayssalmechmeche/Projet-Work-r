@@ -361,6 +361,26 @@ class ParticulierController {
     }
   }
 
+  static Future<Map<String, dynamic>> getDevisByWorkID(
+      int particulierID, int workID) async {
+    var response = await http.get(
+      Uri.parse("${url}getDevisParticulierByWork"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'test1': particulierID.toString(),
+        'test2': workID.toString()
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } else {
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    }
+  }
+
   static Future<Map<String, dynamic>> getActifDevisByWork(int workID) async {
     var response = await http.get(
       Uri.parse("${url}getActifDevisByWork"),

@@ -16,11 +16,19 @@ class ListProposition extends StatefulWidget {
 class _ListPropositionState extends State<ListProposition> {
   @override
   Widget build(BuildContext context) {
+     Map<dynamic, dynamic> data = {'id':'1'};
+    if (ModalRoute.of(context)!.settings.arguments != null) {
+      data = ModalRoute.of(context)!.settings.arguments as Map;
+    } else {
+      data['id'] = 1;
+    }
     final globalData = Provider.of<GlobalData>(context);
     var devis;
 
     if (globalData.getRole() == 1) {
-      devis = ParticulierController.getAllDevis(globalData.getId());
+      print('test');
+      devis = ParticulierController.getDevisByWorkID(
+          globalData.getId(), data['id']);
     }
     if (globalData.getRole() == 0) {
       devis = ArtisanController.getAllDevis(globalData.getId());
@@ -39,7 +47,7 @@ class _ListPropositionState extends State<ListProposition> {
             ),
           ),
           title: Text(
-            "Mes Devis",
+            "Mes propositions de devis",
             style: TextStyle(
               color: Colors.black,
             ),
@@ -63,7 +71,7 @@ class _ListPropositionState extends State<ListProposition> {
     return FutureBuilder(
       future: devis,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        //print(snapshot.hasData);
+        print(snapshot.hasData);
         if (snapshot.hasData) {
           if (snapshot.data['results'] == null) {
             return Center(
@@ -97,14 +105,14 @@ class _ListPropositionState extends State<ListProposition> {
   }
 
   Widget CardChat(int index, data) {
+    print(data);
     final globalData = Provider.of<GlobalData>(context);
     return GestureDetector(
         onTap: () {
-          
-            Navigator.of(context)
-                .pushNamed(DevisFollow.tag, arguments: data)
-                .then((_) => setState(() {}));
-            ;
+          Navigator.of(context)
+              .pushNamed(DevisFollow.tag, arguments: data)
+              .then((_) => setState(() {}));
+          ;
         },
         child: Card(
             shape: StadiumBorder(
@@ -162,18 +170,16 @@ class _ListPropositionState extends State<ListProposition> {
           shape: BoxShape.circle,
         ),
       );
-    }else if (data['state'] == 2) {
+    } else if (data['state'] == 2) {
       return Container(
         width: 20.0,
         height: 20.0,
         decoration: const BoxDecoration(
           color: Colors.red,
           shape: BoxShape.circle,
-          
         ),
       );
-    } 
-    else {
+    } else {
       return const SizedBox(
         width: 20.0,
         height: 20.0,

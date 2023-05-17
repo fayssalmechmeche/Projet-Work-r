@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/view/ListDevis/ListProduction.dart';
 import 'package:my_app/view/Works/workfollow.dart';
 import 'package:provider/provider.dart';
 import '../../Controller/Artisan/ArtisanController.dart';
@@ -146,8 +147,15 @@ class _ListWorkState extends State<ListWork> {
     return GestureDetector(
         onTap: () {
           globalData.setChantier(data);
-
-          Navigator.of(context).pushNamed(WorkFollow.tag).then((_) => setState(() {}));
+          if (data['state'] == 0) {
+             Navigator.of(context)
+                .pushNamed(ListProposition.tag, arguments: data)
+                .then((_) => setState(() {}));
+          } else {
+            Navigator.of(context)
+                .pushNamed(WorkFollow.tag)
+                .then((_) => setState(() {}));
+          }
         },
         child: Card(
             shape: const StadiumBorder(

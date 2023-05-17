@@ -18,33 +18,32 @@ class NavigationPage extends StatefulWidget {
 }
 
 class _NavigationPageState extends State<NavigationPage> {
-  int _selectedIndex = 2;
+  int _selectedIndex = 1;
   static final List<Widget> _NavScreens = <Widget>[
     ListChat(),
-    ListProposition(),
     const HomePage(),
     ListWork(),
     Profile(title: "profile"),
   ];
   static final List<Widget> _NavScreens2 = <Widget>[
     ListChat(),
-    ListProposition(),
     HomePageArt(),
     ListWork(),
     Profile(title: "profile"),
   ];
   @override
   Widget build(BuildContext context) {
-     final globalData = Provider.of<GlobalData>(context);
+    final globalData = Provider.of<GlobalData>(context);
     return Scaffold(
-      
-        body: Center(child: (globalData.getRole() == 1) ? _NavScreens.elementAt(_selectedIndex) : _NavScreens2.elementAt(_selectedIndex)),
+        body: Center(
+            child: (globalData.getRole() == 1)
+                ? _NavScreens.elementAt(_selectedIndex)
+                : _NavScreens2.elementAt(_selectedIndex)),
         bottomNavigationBar: GNav(
           gap: 8,
           tabBackgroundColor: Colors.yellow.withOpacity(0.5),
           tabs: const [
             GButton(icon: Icons.chat_bubble_outline),
-            GButton(icon: Icons.insert_drive_file),
             GButton(icon: Icons.home_filled),
             GButton(icon: Icons.list_alt),
             GButton(icon: Icons.account_circle),
