@@ -35,7 +35,7 @@ class _HomePageArtState extends State<HomePageArt> {
         ArtisanController.getAllDevisByStatus(3, globalData.getId());
 
     final devisRefused =
-        ArtisanController.getAllDevisByStatus(0, globalData.getId());
+        ArtisanController.getAllDevisByStatus(2, globalData.getId());
 
     final allNote = NoteController.getNoteByArtisan(globalData.getId());
 
@@ -112,12 +112,7 @@ class _HomePageArtState extends State<HomePageArt> {
                   child: IconButton(
                     icon: const Icon(Icons.home_repair_service_sharp, size: 20),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ListWorkArtisan(),
-                        ),
-                      );
+                     Navigator.of(context).pushNamed(ListWorkArtisan.tag).then((_) => setState(() {}));
                     },
                   ),
                 ),
@@ -129,7 +124,7 @@ class _HomePageArtState extends State<HomePageArt> {
                       border: Border.all(width: 1, color: Colors.black)),
                   child: IconButton(
                     icon: const Icon(Icons.insert_drive_file, size: 20),
-                    onPressed: () {Navigator.of(context).pushNamed(ListProposition.tag);},
+                    onPressed: () {Navigator.of(context).pushNamed(ListProposition.tag).then((_) => setState(() {}));},
                   ),
                 ),
               ])),

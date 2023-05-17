@@ -226,7 +226,10 @@ class _AddDevisState extends State<AddDevis> {
                         fileName);
                     //UploadFile
 
-                    Navigator.pop(context);
+                    Navigator.of(context)
+                    ..pop()
+                    ..pop();
+                  
                   } else {
                     const snackBar = SnackBar(
                       content: Text('Attention à bien remplir le formulaire !'),

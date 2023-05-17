@@ -42,7 +42,7 @@ class _DevisFollowState extends State<DevisFollow> {
             ),
           ),
           title: const Text(
-            "Mon devis",
+            "Proposition de devis",
             style: TextStyle(
               color: Colors.black,
             ),
@@ -113,6 +113,12 @@ class _DevisFollowState extends State<DevisFollow> {
                           }
                         }),
                     SizedBox(height: 20),
+                    Text("Nom du chantier : "),
+                    Text(
+                      data["nameWork"],
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                    SizedBox(height: 20),
                     Text("Catégorie de travaux : "),
                     Text(
                       data["category"],
@@ -154,7 +160,7 @@ class _DevisFollowState extends State<DevisFollow> {
                     Text("Description : "),
                     SizedBox(height: 10),
                     Container(
-                      height: 200,
+                      height: 150,
                       child: ListView(
                         children: [
                           Text(
