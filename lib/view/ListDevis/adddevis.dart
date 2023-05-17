@@ -37,7 +37,8 @@ class _AddDevisState extends State<AddDevis> {
   var fileName = 'aucun pdf';
   Future selectFile() async {
     PermissionStatus status = await Permission.storage.request();
-    final resultFile = await FilePicker.platform.pickFiles();
+    final resultFile = await FilePicker.platform
+        .pickFiles(type: FileType.custom, allowedExtensions: ['pdf']);
     if (resultFile == null) {
       return;
     }
@@ -218,21 +219,34 @@ class _AddDevisState extends State<AddDevis> {
                   if (error == false) {
                     print(fileName);
                     //AddDevisToBdd
-                    uploadFile();
-                    ArtisanController.createDevis(
-                        globalData.getId(),
-                        data['particulierID'],
-                        data['id'],
-                        _dropdownvalue1,
-                        _dropdownvalue2,
-                        budgetController.text,
-                        descriptionController.text,
-                        fileName);
-                    //UploadFile
 
-                    Navigator.of(context)
-                      ..pop()
-                      ..pop();
+                    if (file != null) {
+                      uploadFile();
+                      ArtisanController.createDevis(
+                          globalData.getId(),
+                          data['particulierID'],
+                          data['id'],
+                          _dropdownvalue1,
+                          _dropdownvalue2,
+                          budgetController.text,
+                          descriptionController.text,
+                          fileName);
+                      const snackBar = SnackBar(
+                        content: Text('Devis envoyé !'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      Navigator.of(context)
+                        ..pop()
+                        ..pop();
+                    } else {
+                      const snackBar = SnackBar(
+                        content:
+                            Text('Attention à bien ajouter un devis en pdf !'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    }
+
+                    //UploadFile
                   } else {
                     const snackBar = SnackBar(
                       content: Text('Attention à bien remplir le formulaire !'),
