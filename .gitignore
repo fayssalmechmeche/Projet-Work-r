@@ -50,3 +50,4 @@ js/config/db.js
 pubspec.lock
 
 .env # environment variables
+.env
