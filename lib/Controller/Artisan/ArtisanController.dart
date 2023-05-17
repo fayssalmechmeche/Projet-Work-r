@@ -1,10 +1,31 @@
 import 'dart:convert';
 import 'dart:ffi';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class ArtisanController {
   static var url = "http://localhost:3000/";
+
+  Future<bool> checkSiretExists(String siret) async {
+    final token = dotenv.env['API_KEY'];
+    final url = 'https://api.insee.fr/entreprises/sirene/V3/siret/$siret';
+    final response = await http.get(Uri.parse(url), headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer ${token}'
+    });
+
+    if (response.statusCode == 200) {
+      // Analyser la réponse JSON et vérifier la validité du SIRET
+      final jsonResponse = jsonDecode(response.body);
+      final isValid = jsonResponse['valid'];
+
+      return isValid ?? false;
+    } else {
+      // Gérer les erreurs de requête HTTP
+      throw Exception('Erreur lors de la requête API : ${response.statusCode}');
+    }
+  }
 
   // crea artisan
   static Future<int> createArtisan(

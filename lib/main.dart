@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:my_app/view/Home/homepage.dart';
 import 'package:my_app/view/Home/listfav.dart';
 import 'package:my_app/view/Home/search.dart';
@@ -35,6 +36,7 @@ import 'Controller/global.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 Future<void> main() async {
+  await dotenv.load(fileName: ".env");
   WidgetsFlutterBinding.ensureInitialized();
   try {
     await Firebase.initializeApp(
