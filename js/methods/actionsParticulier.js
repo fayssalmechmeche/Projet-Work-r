@@ -219,6 +219,17 @@ var functions = {
     );
   },
 
+  getDevisParticulierByWork(req, res) {
+    mysqlConnection.query(
+      "SELECT * FROM devis WHERE particulierID = ? AND workID = ?",
+      [req.headers.test1, req.headers.test2],
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ results });
+      }
+    );
+  },
+
   getAllDevis(req, res) {
     mysqlConnection.query(
       "SELECT * FROM devis WHERE particulierID = ? AND state != 0",
@@ -243,7 +254,7 @@ var functions = {
 
   refuseDevis(req, res) {
     mysqlConnection.query(
-      "UPDATE devis SET state = 0 WHERE id = ? AND particulierID = ?",
+      "UPDATE devis SET state = 2 WHERE id = ? AND particulierID = ?",
       [req.body.devisID, req.body.particulierID],
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });

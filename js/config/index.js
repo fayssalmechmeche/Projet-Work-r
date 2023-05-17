@@ -4,7 +4,7 @@ const actionsArtisan = require("../methods/actionsArtisan");
 const actionsParticulier = require("../methods/actionsParticulier");
 const actionsConversation = require("../methods/actionsConversation");
 const actionsNote = require("../methods/actionsNote");
-
+const actionsChantier = require("../methods/actionsChantier");
 const router = express.Router();
 
 // test route
@@ -107,6 +107,8 @@ router.get(
 );
 router.get("/getAllDevisParticulier", actionsParticulier.getAllDevis);
 
+router.get("/getDevisParticulierByWork", actionsParticulier.getDevisParticulierByWork);
+
 router.get("/getActifDevisByWork", actionsParticulier.getActifDevisByWork);
 
 router.post("/refuseDevis", actionsParticulier.refuseDevis);
@@ -202,4 +204,10 @@ router.get("/getNoteByArtisan", actionsNote.getNoteByArtisan);
 router.post("/updateNoteOfArtisan", actionsNote.updateNoteOfArtisan);
 router.get("/checkNoteExists", actionsNote.checkNoteExists);
 router.get("/getOneNoteByArtisan", actionsNote.getOneNoteByArtisan);
+///////////////////////////Chantier //////////////////////////////
+router.get(
+  "/getChantiersById",
+  actionsChantier.getChantiersById
+);
+
 module.exports = router;

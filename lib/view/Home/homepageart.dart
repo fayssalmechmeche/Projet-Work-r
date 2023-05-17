@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:icon_decoration/icon_decoration.dart';
 import 'package:my_app/Controller/Artisan/ArtisanController.dart';
 import 'package:my_app/Controller/Note/NoteController.dart';
+import 'package:my_app/view/ListDevis/ListProduction.dart';
 import 'package:provider/provider.dart';
 
 import '../../Controller/global.dart';
@@ -34,7 +35,7 @@ class _HomePageArtState extends State<HomePageArt> {
         ArtisanController.getAllDevisByStatus(3, globalData.getId());
 
     final devisRefused =
-        ArtisanController.getAllDevisByStatus(0, globalData.getId());
+        ArtisanController.getAllDevisByStatus(2, globalData.getId());
 
     final allNote = NoteController.getNoteByArtisan(globalData.getId());
 
@@ -111,12 +112,7 @@ class _HomePageArtState extends State<HomePageArt> {
                   child: IconButton(
                     icon: const Icon(Icons.home_repair_service_sharp, size: 20),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ListWorkArtisan(),
-                        ),
-                      );
+                     Navigator.of(context).pushNamed(ListWorkArtisan.tag).then((_) => setState(() {}));
                     },
                   ),
                 ),
@@ -127,8 +123,8 @@ class _HomePageArtState extends State<HomePageArt> {
                       shape: BoxShape.circle,
                       border: Border.all(width: 1, color: Colors.black)),
                   child: IconButton(
-                    icon: const Icon(Icons.favorite, size: 20),
-                    onPressed: () {},
+                    icon: const Icon(Icons.insert_drive_file, size: 20),
+                    onPressed: () {Navigator.of(context).pushNamed(ListProposition.tag).then((_) => setState(() {}));},
                   ),
                 ),
               ])),

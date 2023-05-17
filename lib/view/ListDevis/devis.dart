@@ -42,7 +42,7 @@ class _DevisFollowState extends State<DevisFollow> {
             ),
           ),
           title: const Text(
-            "Mon devis",
+            "Proposition de devis",
             style: TextStyle(
               color: Colors.black,
             ),
@@ -68,19 +68,19 @@ class _DevisFollowState extends State<DevisFollow> {
                                 snapshot.data?['results'] != null) {
                               final artisan = snapshot.data!['results'][0];
                               return Text(
-                                artisan['name'] +" "+ artisan['lastname'],
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                artisan['name'] + " " + artisan['lastname'],
+                                style: TextStyle(color: Colors.grey),
                               );
                             } else {
                               return Text(
                                 "Problème dans le chargement des données",
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(color: Colors.grey),
                               );
                             }
                           } else {
                             return Text(
                               "Problème dans le chargement des données",
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(color: Colors.grey),
                             );
                           }
                         }),
@@ -92,49 +92,50 @@ class _DevisFollowState extends State<DevisFollow> {
                           if (snapshot.hasData) {
                             if (snapshot.data != null &&
                                 snapshot.data?['results'] != null) {
-                              final particulier = snapshot.data!['results'][0];  
+                              final particulier = snapshot.data!['results'][0];
                               return Text(
-                                particulier['name'] +" "+ particulier['lastname'],
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                particulier['name'] +
+                                    " " +
+                                    particulier['lastname'],
+                                style: TextStyle(color: Colors.grey),
                               );
                             } else {
                               return Text(
                                 "Problème dans le chargement des données",
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(color: Colors.grey),
                               );
                             }
                           } else {
                             return Text(
                               "Problème dans le chargement des données",
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(color: Colors.grey),
                             );
                           }
                         }),
                     SizedBox(height: 20),
+                    Text("Nom du chantier : "),
+                    Text(
+                      data["nameWork"],
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                    SizedBox(height: 20),
                     Text("Catégorie de travaux : "),
                     Text(
                       data["category"],
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(color: Colors.grey),
                     ),
                     SizedBox(height: 20),
                     Text("Type de logement : "),
                     Text(
                       data["type"],
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(color: Colors.grey),
                     ),
                     SizedBox(height: 20),
                     Text("Budget : "),
                     SizedBox(width: 10),
                     Text(
                       data["price"],
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 20),
-                    Text("Description : "),
-                    SizedBox(height: 10),
-                    Text(
-                      data["description"],
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(color: Colors.grey),
                     ),
                     SizedBox(height: 20),
                     Text("Devis en PDF : "),
@@ -156,73 +157,91 @@ class _DevisFollowState extends State<DevisFollow> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    if (globalData.getRole() == 1 && data["state"] < 3)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                    Text("Description : "),
+                    SizedBox(height: 10),
+                    Container(
+                      height: 150,
+                      child: ListView(
                         children: [
-                          ElevatedButton(
-                            onPressed: () async {
-                              final response =
-                                  await ParticulierController.accepteDevis(
-                                      int.tryParse(data['particulierID'])!,
-                                      data['id'],
-                                      int.tryParse(data['workID'])!,
-                                      int.tryParse(data['artisanID'])!);
-
-                              if (response["success"] == true) {
-                                Navigator.pop(context);
-                              } else {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  content: Text(response["msg"]),
-                                ));
-                              }
-                            },
-                            child: Text(
-                              "Accepter",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.green,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                              ),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 30, vertical: 10),
-                            ),
+                          Text(
+                            data["description"],
+                            style: TextStyle(color: Colors.grey),
                           ),
-                          SizedBox(width: 20),
-                          ElevatedButton(
-                            onPressed: () async {
-                              final response =
-                                  await ParticulierController.refuseDevis(
-                                      int.tryParse(data['particulierID'])!,
-                                      data['id']);
-
-                              if (response["success"] == true) {
-                                Navigator.pop(context);
-                              } else {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  content: Text(response["msg"]),
-                                ));
-                              }
-                            },
-                            child: Text(
-                              "Refuser",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.red,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                              ),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 30, vertical: 10),
-                            ),
-                          )
                         ],
                       ),
+                    ),
+                    SizedBox(height: 20),
+                    if (globalData.getRole() == 1 && data["state"] < 3)
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                                padding: const EdgeInsets.only(
+                                    top: 30, bottom: 15, right: 30, ),
+                                width: 160,
+                                height: 75,
+                                child: OutlinedButton(
+                                  onPressed: () async {
+                                    final response =
+                                        await ParticulierController.refuseDevis(
+                                            int.tryParse(
+                                                data['particulierID'])!,
+                                            data['id']);
+
+                                    if (response["success"] == true) {
+                                      Navigator.pop(context);
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                        content: Text(response["msg"]),
+                                      ));
+                                    }
+                                  },
+                                  style: OutlinedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(0),
+                                      ),
+                                      foregroundColor: Colors.red,
+                                      side:
+                                          const BorderSide(color: Colors.red)),
+                                  child: const Text('Refuser',
+                                      style: TextStyle(color: Colors.black)),
+                                )),
+                            Container(
+                                padding: const EdgeInsets.only(
+                                    top: 30, bottom: 15, right: 15, left: 15),
+                                width: 160,
+                                height: 75,
+                                child: OutlinedButton(
+                                  onPressed: () async {
+                                    final response = await ParticulierController
+                                        .accepteDevis(
+                                            int.tryParse(
+                                                data['particulierID'])!,
+                                            data['id'],
+                                            int.tryParse(data['workID'])!,
+                                            int.tryParse(data['artisanID'])!);
+
+                                    if (response["success"] == true) {
+                                      Navigator.pop(context);
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                        content: Text(response["msg"]),
+                                      ));
+                                    }
+                                  },
+                                  style: OutlinedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(0),
+                                      ),
+                                      foregroundColor: Colors.green,
+                                      side: const BorderSide(
+                                          color: Colors.green)),
+                                  child: const Text('Accepter',
+                                      style: TextStyle(color: Colors.black)),
+                                ))
+                          ]),
                   ],
                 ),
               ),

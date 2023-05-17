@@ -61,7 +61,6 @@ class _WorkPropositionState extends State<WorkProposition> {
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 18,
-                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           const SizedBox(height: 5),
@@ -70,7 +69,6 @@ class _WorkPropositionState extends State<WorkProposition> {
                             style: TextStyle(
                               fontSize: 15,
                               color: Colors.grey,
-                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ],
@@ -81,7 +79,7 @@ class _WorkPropositionState extends State<WorkProposition> {
                 Row(
                   children: [
                     Container(
-                      padding: const EdgeInsets.only(left: 35, top: 10),
+                      padding: const EdgeInsets.only(left: 30, top: 20),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -90,7 +88,6 @@ class _WorkPropositionState extends State<WorkProposition> {
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 18,
-                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           const SizedBox(height: 5),
@@ -99,7 +96,6 @@ class _WorkPropositionState extends State<WorkProposition> {
                             style: TextStyle(
                               fontSize: 15,
                               color: Colors.grey,
-                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ],
@@ -110,7 +106,7 @@ class _WorkPropositionState extends State<WorkProposition> {
                 Row(
                   children: [
                     Container(
-                      padding: const EdgeInsets.only(left: 35, top: 20),
+                      padding: const EdgeInsets.only(left: 30, top: 20),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -119,7 +115,6 @@ class _WorkPropositionState extends State<WorkProposition> {
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 18,
-                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           const SizedBox(height: 5),
@@ -128,7 +123,6 @@ class _WorkPropositionState extends State<WorkProposition> {
                             style: TextStyle(
                               fontSize: 15,
                               color: Colors.grey,
-                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ],
@@ -139,7 +133,7 @@ class _WorkPropositionState extends State<WorkProposition> {
                 Row(
                   children: [
                     Container(
-                      padding: const EdgeInsets.only(left: 35, top: 20),
+                      padding: const EdgeInsets.only(left: 30, top: 20),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -148,16 +142,14 @@ class _WorkPropositionState extends State<WorkProposition> {
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 18,
-                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           const SizedBox(height: 5),
                           Text(
-                            data["date"],
+                            data["date"].toString().substring(0, 10),
                             style: TextStyle(
                               fontSize: 15,
                               color: Colors.grey,
-                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ],
@@ -169,7 +161,7 @@ class _WorkPropositionState extends State<WorkProposition> {
                   children: [
                     Expanded(
                       child: Container(
-                        padding: const EdgeInsets.only(left: 35, top: 20),
+                        padding: const EdgeInsets.only(left: 30, top: 20),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -178,16 +170,14 @@ class _WorkPropositionState extends State<WorkProposition> {
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 18,
-                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                            const SizedBox(height: 18),
+                            const SizedBox(height: 5),
                             Text(
                               data["description"],
                               style: TextStyle(
                                 fontSize: 15,
                                 color: Colors.grey,
-                                fontWeight: FontWeight.bold,
                               ),
                               softWrap: true,
                             ),
@@ -200,47 +190,6 @@ class _WorkPropositionState extends State<WorkProposition> {
                 Row(
                   children: [
                     Container(
-                      padding: const EdgeInsets.only(left: 35, top: 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "Photos",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                Container(
-                    height: 115,
-                    child: ListView.builder(
-                      itemCount: 5,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    width: 100,
-                                    child: Picture(index),
-                                  ),
-                                ],
-                              )
-                            ]);
-                      },
-                    )),
-                Row(
-                  children: [
-                    Container(
                       padding: const EdgeInsets.only(left: 30, top: 15),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -250,7 +199,6 @@ class _WorkPropositionState extends State<WorkProposition> {
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 18,
-                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           const SizedBox(height: 5),
@@ -259,7 +207,6 @@ class _WorkPropositionState extends State<WorkProposition> {
                             style: TextStyle(
                               fontSize: 18,
                               color: Colors.grey,
-                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ],
@@ -281,7 +228,7 @@ class _WorkPropositionState extends State<WorkProposition> {
                     var response = ArtisanController.refuseChantier(
                         globalData.getId(), data["id"]);
 
-                    Navigator.of(context).pushNamed(ListWorkArtisan.tag);
+                    Navigator.pop(context);
                   },
                   style: OutlinedButton.styleFrom(
                       shape: RoundedRectangleBorder(
