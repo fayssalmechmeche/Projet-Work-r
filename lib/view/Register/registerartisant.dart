@@ -443,6 +443,116 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 }
 
+                if (usernameController.text
+                        .contains(new RegExp(r'[!@#$%^&*(),.?":{}|<>]')) ==
+                    true) {
+                  error = true;
+                  const snackBar = SnackBar(
+                    content: Text(
+                        'Le nom d\'utilisateur ne doit pas contenir de caractères spéciaux !'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+
+                if (nameController.text
+                        .contains(new RegExp(r'[!@#$%^&*(),.?":{}|<>]')) ==
+                    true) {
+                  error = true;
+                  const snackBar = SnackBar(
+                    content: Text(
+                        'Le nom ne doit pas contenir de caractères spéciaux !'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+                if (nameController.text.contains(new RegExp(r'[0-9]')) ==
+                    true) {
+                  error = true;
+                  const snackBar = SnackBar(
+                    content: Text('Le nom ne doit pas contenir de chiffres !'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+                if (firstnameController.text.contains(new RegExp(r'[0-9]')) ==
+                    true) {
+                  error = true;
+                  const snackBar = SnackBar(
+                    content:
+                        Text('Le prénom ne doit pas contenir de chiffres !'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+                if (firstnameController.text
+                        .contains(new RegExp(r'[!@#$%^&*(),.?":{}|<>]')) ==
+                    true) {
+                  error = true;
+                  const snackBar = SnackBar(
+                    content: Text(
+                        'Le prénom ne doit pas contenir de caractères spéciaux !'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+                if (companyController.text
+                        .contains(new RegExp(r'[!@#$%^&*(),.?":{}|<>]')) ==
+                    true) {
+                  error = true;
+                  const snackBar = SnackBar(
+                    content: Text(
+                        'Le nom de l\'entreprise ne doit pas contenir de caractères spéciaux !'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+
+                if (AdressController.text
+                        .contains(new RegExp(r'[!@#$%^&*(),.?":{}|<>]')) ==
+                    true) {
+                  error = true;
+                  const snackBar = SnackBar(
+                    content: Text(
+                        'L\'adresse ne doit pas contenir de caractères spéciaux !'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+                if (CityController.text.contains(new RegExp(r'[0-9]')) ==
+                    true) {
+                  error = true;
+                  const snackBar = SnackBar(
+                    content:
+                        Text('La ville ne doit pas contenir de chiffres !'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+
+                if (CityController.text
+                        .contains(new RegExp(r'[!@#$%^&*(),.?":{}|<>]')) ==
+                    true) {
+                  error = true;
+                  const snackBar = SnackBar(
+                    content: Text(
+                        'La ville ne doit pas contenir de caractères spéciaux !'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+
+                if (passwordController.text.contains(new RegExp(r'[a-z]')) ==
+                    false) {
+                  error = true;
+                  const snackBar = SnackBar(
+                    content: Text(
+                        'Le mot de passe doit contenir au moins une minuscule !'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+
+                if (passwordController.text.contains(new RegExp(r'[0-9]')) ==
+                    false) {
+                  error = true;
+                  const snackBar = SnackBar(
+                    content: Text(
+                        'Le mot de passe doit contenir au moins un chiffre !'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+
                 if (passwordController.text
                         .contains(new RegExp(r'[!@#$%^&*(),.?":{}|<>]')) ==
                     false) {
