@@ -153,6 +153,10 @@ class _AddDevisState extends State<AddDevis> {
                   ),
                 ),
               )),
+          Text(
+            'Fichier PDF sélectionné : ${file?.name ?? "Aucun fichier sélectionné"}',
+            style: const TextStyle(color: Colors.grey),
+          ),
           Container(
             padding: const EdgeInsets.only(top: 20),
             width: 330,
@@ -227,9 +231,8 @@ class _AddDevisState extends State<AddDevis> {
                     //UploadFile
 
                     Navigator.of(context)
-                    ..pop()
-                    ..pop();
-                  
+                      ..pop()
+                      ..pop();
                   } else {
                     const snackBar = SnackBar(
                       content: Text('Attention à bien remplir le formulaire !'),
