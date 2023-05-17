@@ -105,9 +105,9 @@ class _WorkFollowState extends State<WorkFollow> {
 
     Future<void> _dialogNoteBuilder() async {
       bool noteExists = await NoteController.checkNoteExists(
-        int.parse(globalData.getArtisanIdChantier()),
-        globalData.getId(),
-      );
+          int.parse(globalData.getArtisanIdChantier()),
+          globalData.getId(),
+          globalData.getIdChantier());
 
       var _currentValue;
 
@@ -167,7 +167,8 @@ class _WorkFollowState extends State<WorkFollow> {
                     await NoteController.addNotetoArtisan(
                         int.parse(globalData.getArtisanIdChantier()),
                         globalData.getId(),
-                        int.parse(_dropdownvalue!));
+                        int.parse(_dropdownvalue!),
+                        globalData.getIdChantier());
 
                     const snackBar = SnackBar(
                       content: Text('Note ajoutée avec succès !'),
@@ -183,7 +184,9 @@ class _WorkFollowState extends State<WorkFollow> {
         );
       } else {
         var note = await NoteController.getOneNoteByArtisan(
-            int.parse(globalData.getArtisanIdChantier()), globalData.getId());
+            int.parse(globalData.getArtisanIdChantier()),
+            globalData.getId(),
+            globalData.getIdChantier());
 
         var result = note["results"][0]["note"];
         return showDialog<void>(
