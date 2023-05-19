@@ -72,29 +72,31 @@ class _ChatPageState extends State<Chat> {
     final messageProvider = Provider.of<MessageProvider>(context);
 
     final data = ModalRoute.of(context)!.settings.arguments as Map;
+   
     final globalData = Provider.of<GlobalData>(context);
     final socket = globalData.getSocket();
     socket!.on("message", (data) {
       messageProvider.addMessage(data);
     });
 
-    return  Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          leading: const BackButton(
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        leading: const BackButton(
+          color: Colors.black,
+        ),
+        title: Text(
+          
+          "",
+          style: TextStyle(
             color: Colors.black,
           ),
-          title: const Text(
-            "Chat",
-            style: TextStyle(
-              color: Colors.black,
-            ),
-          ),
-          toolbarHeight: 35,
-          elevation: 0,
         ),
-        body:SafeArea(
-      child: FutureBuilder<Map<String, dynamic>>(
+        toolbarHeight: 35,
+        elevation: 0,
+      ),
+      body: SafeArea(
+        child: FutureBuilder<Map<String, dynamic>>(
           future: getAllMessage(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -226,32 +228,42 @@ class _ChatPageState extends State<Chat> {
     final textColor = isMyMessage ? Colors.black : Colors.black;
     DateTime date = DateTime.parse(message["date"]);
 
-    String formattedDate = DateFormat('dd-MM-yyyy à HH:mm:ss').format(date);
+    String formattedDate = DateFormat('dd/MM/yyyy à HH:mm:ss').format(date);
 
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        crossAxisAlignment: alignment,
-        children: [
-          Text(
-            message["pseudo"] + " " + formattedDate,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: textColor,
-            ),
+    return Flex(
+      direction: Axis.horizontal,
+      mainAxisAlignment:
+          isMyMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
+      children: <Widget>[
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          constraints: BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width * 0.7,
           ),
-          const SizedBox(height: 4),
-          Text(
-            message["content"],
-            style: TextStyle(color: textColor),
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            borderRadius: BorderRadius.circular(16),
           ),
-        ],
-      ),
+          child: Column(
+            crossAxisAlignment: alignment,
+            children: [
+              Text(
+                formattedDate,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: textColor,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                message["content"],
+                style: TextStyle(color: textColor),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
