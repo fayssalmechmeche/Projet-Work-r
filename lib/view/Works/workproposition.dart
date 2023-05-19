@@ -22,6 +22,8 @@ class _WorkPropositionState extends State<WorkProposition> {
   Widget build(BuildContext context) {
     final data = ModalRoute.of(context)!.settings.arguments as Map;
     var globalData = Provider.of<GlobalData>(context);
+    final checkDevis = ArtisanController.checkDevisExists(
+        globalData.getId(), int.parse(data['particulierID']), data['id']);
     //print(data);
     return Scaffold(
       appBar: AppBar(
@@ -215,66 +217,79 @@ class _WorkPropositionState extends State<WorkProposition> {
                   ],
                 ),
               ])),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: const EdgeInsets.only(
-                    top: 15, right: 15, bottom: 40, left: 15),
-                width: 160,
-                height: 85,
-                child: OutlinedButton(
-                  onPressed: () {
-                    var response = ArtisanController.refuseChantier(
-                        globalData.getId(), data["id"]);
+          FutureBuilder(
+              future: checkDevis,
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData) {
+                  if (snapshot.data == true) {
+                    return SizedBox();
+                  } else {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.only(
+                              top: 15, right: 15, bottom: 40, left: 15),
+                          width: 160,
+                          height: 85,
+                          child: OutlinedButton(
+                            onPressed: () {
+                              var response = ArtisanController.refuseChantier(
+                                  globalData.getId(), data["id"]);
 
-                    Navigator.pop(context);
-                  },
-                  style: OutlinedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(0),
-                      ),
-                      foregroundColor: Colors.green,
-                      side: const BorderSide(color: Colors.red)),
-                  child: const Text('Refuser',
-                      style: TextStyle(color: Colors.black)),
-                ),
-              ),
-              Container(
-                  padding: const EdgeInsets.only(
-                      top: 15, bottom: 40, right: 15, left: 15),
-                  width: 160,
-                  height: 85,
-                  child: OutlinedButton(
-                    onPressed: () async {
-                      bool checkDevis =
-                          await ArtisanController.checkDevisExists(
-                              globalData.getId(),
-                              int.parse(data['particulierID']),
-                              data['id']);
-
-                      print(checkDevis);
-                      if (checkDevis == false) {
-                        Navigator.of(context)
-                            .pushNamed(AddDevis.tag, arguments: data);
-                      } else {
-                        const snackBar = SnackBar(
-                          content: Text('Devis déjà envoyé'),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      }
-                    },
-                    style: OutlinedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(0),
+                              Navigator.pop(context);
+                            },
+                            style: OutlinedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(0),
+                                ),
+                                foregroundColor: Colors.green,
+                                side: const BorderSide(color: Colors.red)),
+                            child: const Text('Refuser',
+                                style: TextStyle(color: Colors.black)),
+                          ),
                         ),
-                        foregroundColor: Colors.green,
-                        side: const BorderSide(color: Colors.green)),
-                    child: const Text('Accepter',
-                        style: TextStyle(color: Colors.black)),
-                  )),
-            ],
-          ),
+                        Container(
+                            padding: const EdgeInsets.only(
+                                top: 15, bottom: 40, right: 15, left: 15),
+                            width: 160,
+                            height: 85,
+                            child: OutlinedButton(
+                              onPressed: () async {
+                                bool checkDevis =
+                                    await ArtisanController.checkDevisExists(
+                                        globalData.getId(),
+                                        int.parse(data['particulierID']),
+                                        data['id']);
+
+                                print(checkDevis);
+                                if (checkDevis == false) {
+                                  Navigator.of(context)
+                                      .pushNamed(AddDevis.tag, arguments: data);
+                                } else {
+                                  const snackBar = SnackBar(
+                                    content: Text('Devis déjà envoyé'),
+                                  );
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
+                                }
+                              },
+                              style: OutlinedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(0),
+                                  ),
+                                  foregroundColor: Colors.green,
+                                  side: const BorderSide(color: Colors.green)),
+                              child: const Text('Accepter',
+                                  style: TextStyle(color: Colors.black)),
+                            )),
+                      ],
+                    );
+                  }
+                } else {
+                  return SizedBox();
+                }
+              })
         ],
       ),
     );
