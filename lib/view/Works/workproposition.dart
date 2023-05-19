@@ -228,27 +228,27 @@ class _WorkPropositionState extends State<WorkProposition> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          padding: const EdgeInsets.only(
-                              top: 15, right: 15, bottom: 40, left: 15),
-                          width: 160,
-                          height: 85,
-                          child: OutlinedButton(
-                            onPressed: () {
-                              var response = ArtisanController.refuseChantier(
-                                  globalData.getId(), data["id"]);
+                            padding: const EdgeInsets.only(
+                                top: 15, right: 15, bottom: 40, left: 15),
+                            width: 160,
+                            height: 85,
+                            child: OutlinedButton(
+                              onPressed: () {
+                                var response = ArtisanController.refuseChantier(
+                                    globalData.getId(), data["id"]);
 
-                              Navigator.pop(context);
-                            },
-                            style: OutlinedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(0),
-                                ),
-                                foregroundColor: Colors.green,
-                                side: const BorderSide(color: Colors.red)),
-                            child: const Text('Refuser',
-                                style: TextStyle(color: Colors.black)),
-                          ),
-                        ),
+                                Navigator.pop(context);
+                              },
+                              style: OutlinedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(0),
+                                  ),
+                                  foregroundColor: Colors.green,
+                                  backgroundColor: Colors.red.withOpacity(0.75),
+                                  side: const BorderSide(color: Colors.red)),
+                              child: Text('Refuser',
+                                  style: TextStyle(color: Colors.white)),
+                            )),
                         Container(
                             padding: const EdgeInsets.only(
                                 top: 15, bottom: 40, right: 15, left: 15),
@@ -279,10 +279,12 @@ class _WorkPropositionState extends State<WorkProposition> {
                                     borderRadius: BorderRadius.circular(0),
                                   ),
                                   foregroundColor: Colors.green,
+                                  backgroundColor:
+                                      Colors.green.withOpacity(0.75),
                                   side: const BorderSide(color: Colors.green)),
                               child: const Text('Accepter',
-                                  style: TextStyle(color: Colors.black)),
-                            )),
+                                  style: TextStyle(color: Colors.white)),
+                            ))
                       ],
                     );
                   }

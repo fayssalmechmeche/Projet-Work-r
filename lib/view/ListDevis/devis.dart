@@ -141,6 +141,7 @@ class _DevisFollowState extends State<DevisFollow> {
                     Text("Devis en PDF : "),
                     SizedBox(width: 10),
                     ElevatedButton(
+                      
                       onPressed: () async {
                         const snackBar = SnackBar(
                           content: Text('Ouverture du devis en cours...'),
@@ -177,7 +178,10 @@ class _DevisFollowState extends State<DevisFollow> {
                           children: [
                             Container(
                                 padding: const EdgeInsets.only(
-                                    top: 30, bottom: 15, right: 30, ),
+                                  top: 30,
+                                  bottom: 15,
+                                  right: 30,
+                                ),
                                 width: 160,
                                 height: 75,
                                 child: OutlinedButton(
@@ -199,17 +203,18 @@ class _DevisFollowState extends State<DevisFollow> {
                                   },
                                   style: OutlinedButton.styleFrom(
                                       shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(0),
+                                        borderRadius: BorderRadius.circular(5),
                                       ),
                                       foregroundColor: Colors.red,
+                                      backgroundColor: Colors.red.withOpacity(0.75),
                                       side:
                                           const BorderSide(color: Colors.red)),
-                                  child: const Text('Refuser',
-                                      style: TextStyle(color: Colors.black)),
+                                  child: Text('Refuser',
+                                      style: TextStyle(color: Colors.white)),
                                 )),
                             Container(
                                 padding: const EdgeInsets.only(
-                                    top: 30, bottom: 15, right: 15, left: 15),
+                                    top: 30, bottom: 15, right: 15, left: 10),
                                 width: 160,
                                 height: 75,
                                 child: OutlinedButton(
@@ -233,13 +238,14 @@ class _DevisFollowState extends State<DevisFollow> {
                                   },
                                   style: OutlinedButton.styleFrom(
                                       shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(0),
+                                        borderRadius: BorderRadius.circular(5),
                                       ),
                                       foregroundColor: Colors.green,
+                                      backgroundColor: Colors.green.withOpacity(0.75),
                                       side: const BorderSide(
                                           color: Colors.green)),
-                                  child: const Text('Accepter',
-                                      style: TextStyle(color: Colors.black)),
+                                  child: Text('Accepter',
+                                      style: TextStyle(color: Colors.white)),
                                 ))
                           ]),
                   ],

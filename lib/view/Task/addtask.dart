@@ -271,9 +271,10 @@ class _AddTaskState extends State<AddTask> {
                       borderRadius: BorderRadius.circular(0),
                     ),
                     foregroundColor: Colors.green,
+                    backgroundColor: Colors.green.withOpacity(0.75),
                     side: const BorderSide(color: Colors.green)),
                 child: const Text('Ajouter',
-                    style: TextStyle(color: Colors.black)),
+                    style: TextStyle(color: Colors.white)),
               ))
         ]),
       ),

@@ -304,9 +304,10 @@ class _ProfileOtherState extends State<ProfileOther> {
                         borderRadius: BorderRadius.circular(0),
                       ),
                       foregroundColor: Colors.green,
+                      backgroundColor: Colors.green.withOpacity(0.75),
                       side: const BorderSide(color: Colors.green)),
                   child: const Text('Contacter',
-                      style: TextStyle(color: Colors.black)),
+                      style: TextStyle(color: Colors.white)),
                 )),
             FutureBuilder(
               future: checkFav,
@@ -343,10 +344,11 @@ class _ProfileOtherState extends State<ProfileOther> {
                               borderRadius: BorderRadius.circular(0),
                             ),
                             foregroundColor: Colors.red,
+                            backgroundColor: Colors.red.withOpacity(0.75),
                             side: const BorderSide(color: Colors.red)),
                         child: const Text('Retirer des favoris',
                             textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.black)),
+                            style: TextStyle(color: Colors.white)),
                       ),
                     );
                   } else {
@@ -371,10 +373,11 @@ class _ProfileOtherState extends State<ProfileOther> {
                               borderRadius: BorderRadius.circular(0),
                             ),
                             foregroundColor: Colors.green,
+                            backgroundColor: Colors.green.withOpacity(0.75),
                             side: const BorderSide(color: Colors.green)),
                         child: const Text('Ajouter aux favoris',
                             textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.black)),
+                            style: TextStyle(color: Colors.white)),
                       ),
                     );
                   }

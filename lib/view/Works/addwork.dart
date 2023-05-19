@@ -190,12 +190,13 @@ class _AddWorkState extends State<AddWork> {
                 },
                 style: OutlinedButton.styleFrom(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0),
+                      borderRadius: BorderRadius.circular(5),
                     ),
                     foregroundColor: Colors.green,
+                    backgroundColor: Colors.green.withOpacity(0.75),
                     side: const BorderSide(color: Colors.green)),
                 child: const Text('Accepter',
-                    style: TextStyle(color: Colors.black)),
+                    style: TextStyle(color: Colors.white)),
               ))
         ]),
       ),

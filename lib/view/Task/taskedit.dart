@@ -251,95 +251,97 @@ class _TaskEditState extends State<TaskEdit> {
                   ),
                 )
               ])),
-              Row(mainAxisAlignment: MainAxisAlignment.center,children: [
-          
-          Container(
-              padding: const EdgeInsets.only(
-                  top: 30, bottom: 15, right: 15, left: 15),
-              width: 160,
-              height: 75,
-              child: OutlinedButton(
-                onPressed: () {
-                  bool error = false;
-                  if (nameTaskController.text == "" ||
-                      descriptionController.text == "" ||
-                      dateStartController.text == "" ||
-                      dateEndController.text == "" ||
-                      _dropdownvalue2 == null) {
-                    error = true;
-                  }
-                  if (error == false) {
-                    var response = ArtisanController.deleteTask(data['id']);
-                    const snackBar = SnackBar(
-                      content: Text('Tâche supprimé !'),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Container(
+                padding: const EdgeInsets.only(
+                    top: 30, bottom: 15, right: 15, left: 15),
+                width: 160,
+                height: 75,
+                child: OutlinedButton(
+                  onPressed: () {
+                    bool error = false;
+                    if (nameTaskController.text == "" ||
+                        descriptionController.text == "" ||
+                        dateStartController.text == "" ||
+                        dateEndController.text == "" ||
+                        _dropdownvalue2 == null) {
+                      error = true;
+                    }
+                    if (error == false) {
+                      var response = ArtisanController.deleteTask(data['id']);
+                      const snackBar = SnackBar(
+                        content: Text('Tâche supprimé !'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
-                    Navigator.of(context).pushNamed(ListTasks.tag);
-                  } else {
-                    const snackBar = SnackBar(
-                      content: Text('Attention à bien remplir le formulaire !'),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  }
-                },
-                style: OutlinedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0),
-                    ),
-                    foregroundColor: Colors.red,
-                    side: const BorderSide(color: Colors.red)),
-                child: const Text('Supprimer',
-                    style: TextStyle(color: Colors.black)),
-              )),
-              Container(
-              padding: const EdgeInsets.only(
-                  top: 30, bottom: 15, right: 15, left: 15),
-              width: 160,
-              height: 75,
-              child: OutlinedButton(
-                onPressed: () {
-                  bool error = false;
-                  if (nameTaskController.text == "" ||
-                      descriptionController.text == "" ||
-                      dateStartController.text == "" ||
-                      dateEndController.text == "" ||
-                      _dropdownvalue2 == null) {
-                    error = true;
-                  }
-                  if (error == false) {
-                    var response = ArtisanController.updateTask(
-                      nameTaskController.text,
-                      _dropdownvalue2!,
-                      dateStartController.text,
-                      dateEndController.text,
-                      descriptionController.text,
-                      isSwitched,
-                      data['id'],
-                    );
-                    const snackBar = SnackBar(
-                      content: Text('Tâche modifié !'),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      Navigator.of(context).pushNamed(ListTasks.tag);
+                    } else {
+                      const snackBar = SnackBar(
+                        content:
+                            Text('Attention à bien remplir le formulaire !'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    }
+                  },
+                  style: OutlinedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0),
+                      ),
+                      foregroundColor: Colors.red,
+                      side: const BorderSide(color: Colors.red)),
+                  child: const Text('Supprimer',
+                      style: TextStyle(color: Colors.black)),
+                )),
+            Container(
+                padding: const EdgeInsets.only(
+                    top: 30, bottom: 15, right: 15, left: 15),
+                width: 160,
+                height: 75,
+                child: OutlinedButton(
+                  onPressed: () {
+                    bool error = false;
+                    if (nameTaskController.text == "" ||
+                        descriptionController.text == "" ||
+                        dateStartController.text == "" ||
+                        dateEndController.text == "" ||
+                        _dropdownvalue2 == null) {
+                      error = true;
+                    }
+                    if (error == false) {
+                      var response = ArtisanController.updateTask(
+                        nameTaskController.text,
+                        _dropdownvalue2!,
+                        dateStartController.text,
+                        dateEndController.text,
+                        descriptionController.text,
+                        isSwitched,
+                        data['id'],
+                      );
+                      const snackBar = SnackBar(
+                        content: Text('Tâche modifié !'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
-                    Navigator.pop(context);
-                  } else {
-                    const snackBar = SnackBar(
-                      content: Text('Attention à bien remplir le formulaire !'),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  }
-                },
-                style: OutlinedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0),
-                    ),
-                    foregroundColor: Colors.green,
-                    side: const BorderSide(color: Colors.green)),
-                child: const Text('Sauvegarder',
-                    style: TextStyle(color: Colors.black)),
-              ))
-              ])
+                      Navigator.pop(context);
+                    } else {
+                      const snackBar = SnackBar(
+                        content:
+                            Text('Attention à bien remplir le formulaire !'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    }
+                  },
+                  style: OutlinedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0),
+                      ),
+                      foregroundColor: Colors.green,
+                      backgroundColor: Colors.green.withOpacity(0.75),
+                      side: const BorderSide(color: Colors.green)),
+                  child: const Text('Sauvegarder',
+                      style: TextStyle(color: Colors.white)),
+                ))
+          ])
         ]),
       ),
     );

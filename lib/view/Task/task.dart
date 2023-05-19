@@ -149,19 +149,20 @@ class _TaskState extends State<Task> {
               child: OutlinedButton(
                 onPressed: () {
                   Navigator.of(context)
-                      .pushNamed(TaskEdit.tag, arguments: data).then((_) => setState(() {}));
+                      .pushNamed(TaskEdit.tag, arguments: data)
+                      .then((_) => setState(() {}));
                 },
                 style: OutlinedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(0),
                     ),
                     foregroundColor: Colors.green,
+                    backgroundColor: Colors.green.withOpacity(0.75),
                     side: const BorderSide(color: Colors.green)),
                 child: const Text('Modifier',
-                    style: TextStyle(color: Colors.black)),
+                    style: TextStyle(color: Colors.white)),
               )),
       ]),
     );
-    
   }
 }
