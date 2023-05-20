@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ffi';
 import 'dart:math';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
@@ -184,14 +185,13 @@ class ParticulierController {
       //print(response.body);
 
       var artisans = await ArtisanController.getAllArtisan();
-
+      final emailKey = dotenv.env['EMAIL_KEY'];
       for (var artisan in artisans['results']) {
         String email = artisan['email'];
         //print(email);
 
         // Envoie un email à cet email
-        final smtpServer =
-            gmail("workr.professionel@gmail.com", "khimpyseszmipezx");
+        final smtpServer = gmail("workr.professionel@gmail.com", emailKey!);
 
         final message = Message()
           ..from = Address("workr.professionel@gmail.com", 'L\'équipe Workr')
