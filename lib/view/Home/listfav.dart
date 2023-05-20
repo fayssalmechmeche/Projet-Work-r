@@ -43,7 +43,7 @@ class _ListFavState extends State<ListFav> {
             Container(
                 padding: EdgeInsets.only(top: 30),
                 height: 740,
-                width: 360,
+                width: 380,
                 child: listOfFavArtisan(FavoriteArtisans))
           ]),
         ]));
@@ -93,53 +93,87 @@ class _ListFavState extends State<ListFav> {
               .then((_) => setState(() {}));
         },
         child: Card(
-            elevation: 2,
-            child: Column(children: [
-              ListTile(
-               
-    visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-                  title: Text(data['name'] + " " + data['lastname']),
-                subtitle: Text(data['domaine']),
-                
+            shape: const StadiumBorder(
+              //<-- 3. SEE HERE
+              side: BorderSide(
+                color: Colors.grey,
+                width: 1.0, //index % 2 == 0 ? 1.0 : 0.0,
               ),
-              FutureBuilder(
-                  future: allNote,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      if (snapshot.hasData) {
-                        var results = snapshot.data?['results'];
-                        late double note;
+            ),
+            elevation: 10,
+            color: Colors.white,
+            //index % 2 == 0 ? Colors.white : Colors.grey,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  padding: const EdgeInsets.only(left: 25),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                            width: 200,
+                            padding: const EdgeInsets.all(5),
+                            child: Text(
+                                data['name'] + " " + data['lastname'],
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold))),
+                        Container(
+                          width: 200,
+                          padding: const EdgeInsets.only(
+                              left: 5, right: 2, top: 2, bottom: 2),
+                          child: Text(data['domaine']),
+                        ),
+                        FutureBuilder(
+                            future: allNote,
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                if (snapshot.hasData) {
+                                  var results = snapshot.data?['results'];
+                                  late double note;
 
-                        if (results != null && results.isNotEmpty) {
-                          double total = 0;
-                          results.forEach((item) {
-                            total = total + item['note'];
-                          });
-                          note = total / results.length;
-                        } else {
-                          note = 0;
-                        }
+                                  if (results != null && results.isNotEmpty) {
+                                    double total = 0;
+                                    results.forEach((item) {
+                                      total = total + item['note'];
+                                    });
+                                    note = total / results.length;
+                                  } else {
+                                    note = 0;
+                                  }
 
-                        return Padding(
-                            padding: const EdgeInsets.only(left: 12),
-                            child: RatingOfProfile(note));
-                      } else if (snapshot.hasError) {
-                        return Padding(
-                            padding: const EdgeInsets.only(left: 12),
-                            child: RatingOfProfile(0));
-                      } else {
-                        return Padding(
-                            padding: const EdgeInsets.only(left: 12),
-                            child: RatingOfProfile(0));
-                      }
-                    } else {
-                      return Padding(
-                          padding: const EdgeInsets.only(left: 12),
-                          child: RatingOfProfile(
-                              0)); // or any other widget to show progress
-                    }
-                  })
-            ])));
+                                  return Padding(
+                                      padding: const EdgeInsets.all(5),
+                                      child: RatingOfProfile(note));
+                                } else if (snapshot.hasError) {
+                                  return Padding(
+                                      padding: const EdgeInsets.all(5),
+                                      child: RatingOfProfile(0));
+                                } else {
+                                  return Padding(
+                                      padding: const EdgeInsets.all(5),
+                                      child: RatingOfProfile(0));
+                                }
+                              } else {
+                                return Padding(
+                                    padding: const EdgeInsets.all(5),
+                                    child: RatingOfProfile(
+                                        0)); // or any other widget to show progress
+                              }
+                            })
+                      ]),
+                ),
+                Container(
+                    padding: const EdgeInsets.only(left: 105),
+                    height: 50,
+                    width: 50,
+                    child: const Icon(Icons.arrow_forward_ios))
+              ],
+            )));
   }
 
   Widget RatingOfProfile(double rating) {
