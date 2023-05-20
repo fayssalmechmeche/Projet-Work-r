@@ -263,7 +263,8 @@ class _ProfileOtherState extends State<ProfileOther> {
 
                       Navigator.pushNamed(context, Chat.tag, arguments: {
                         "id": conversation["results"][0]['id'],
-                        "type": "public"
+                        "type": "public",
+                        'receiver': data['name'] + " " + data['lastname']
                       });
                     } else {
                       // Créer une nouvelle conversation
@@ -281,7 +282,8 @@ class _ProfileOtherState extends State<ProfileOther> {
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       Navigator.pushNamed(context, Chat.tag, arguments: {
                         "id": conversation["results"][0]['id'],
-                        "type": "public"
+                        "type": "public",
+                        'receiver': data['name'] + " " + data['lastname']
                       });
                     }
                   },
