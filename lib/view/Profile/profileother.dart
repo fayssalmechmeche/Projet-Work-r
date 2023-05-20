@@ -112,20 +112,6 @@ class _ProfileOtherState extends State<ProfileOther> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              padding: const EdgeInsets.only(
-                                  top: 20, right: 20, bottom: 10),
-                              width: 210,
-                              child: const Text("Mobilité",
-                                  style: TextStyle(fontSize: 18)),
-                            ),
-                            Text(data['mobilite'],
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.grey)),
-                          ]),
-                      Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
                               padding:
                                   const EdgeInsets.only(top: 20, bottom: 10),
                               width: 120,
