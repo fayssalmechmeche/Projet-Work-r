@@ -7,6 +7,7 @@ import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 import 'package:mailer/smtp_server/gmail.dart';
 import 'package:my_app/Controller/Artisan/ArtisanController.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 class ParticulierController {
   static var url = "http://localhost:3000/";
@@ -186,6 +187,9 @@ class ParticulierController {
 
       var artisans = await ArtisanController.getAllArtisan();
       final emailKey = dotenv.env['EMAIL_KEY'];
+      final template =
+          await rootBundle.loadString('assets/emails/newChantier.html');
+
       for (var artisan in artisans['results']) {
         String email = artisan['email'];
         //print(email);
@@ -197,14 +201,18 @@ class ParticulierController {
           ..from = Address("workr.professionel@gmail.com", 'L\'équipe Workr')
           ..recipients.add(email)
           ..subject = 'Nouveau chantier : ${category}}'
-          ..text = 'Un nouveau chantier a été créé par un particulier. \n\n';
+          ..html = template
+              .replaceAll('[name]', name)
+              .replaceAll('[category]', category)
+              .replaceAll('[budget]', budget)
+              .replaceAll('[description]', description);
 
         try {
           final sendReport = await send(message, smtpServer);
         } on MailerException catch (e) {
-          //print('Message not sent.');
+          print('Message not sent.');
           for (var p in e.problems) {
-            //print('Problem: ${p.code}: ${p.msg}');
+            print('Problem: ${p.code}: ${p.msg}');
           }
         }
       }
