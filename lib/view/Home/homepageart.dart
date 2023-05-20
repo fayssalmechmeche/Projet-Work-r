@@ -112,7 +112,9 @@ class _HomePageArtState extends State<HomePageArt> {
                   child: IconButton(
                     icon: const Icon(Icons.home_repair_service_sharp, size: 20),
                     onPressed: () {
-                     Navigator.of(context).pushNamed(ListWorkArtisan.tag).then((_) => setState(() {}));
+                      Navigator.of(context)
+                          .pushNamed(ListWorkArtisan.tag)
+                          .then((_) => setState(() {}));
                     },
                   ),
                 ),
@@ -124,7 +126,11 @@ class _HomePageArtState extends State<HomePageArt> {
                       border: Border.all(width: 1, color: Colors.black)),
                   child: IconButton(
                     icon: const Icon(Icons.insert_drive_file, size: 20),
-                    onPressed: () {Navigator.of(context).pushNamed(ListProposition.tag).then((_) => setState(() {}));},
+                    onPressed: () {
+                      Navigator.of(context)
+                          .pushNamed(ListProposition.tag)
+                          .then((_) => setState(() {}));
+                    },
                   ),
                 ),
               ])),
@@ -488,11 +494,11 @@ class _HomePageArtState extends State<HomePageArt> {
                                       if (snapshot.hasData) {
                                         var results = snapshot.data?['results'];
                                         late double note;
-                                        
+
                                         print(results);
                                         if (results != null &&
                                             results.isNotEmpty) {
-                                            double total = 0;
+                                          double total = 0;
                                           results.forEach((item) {
                                             total = total + item['note'];
                                           });

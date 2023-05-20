@@ -37,7 +37,6 @@ class ParticulierController {
           'adress': adress,
           'postalCode': postalCode,
           'picture': 'null',
-          'chantier': 'null',
         }));
 
     //print('Response status 200: ${response.statusCode}');

@@ -39,7 +39,6 @@ class ArtisanController {
     String username,
     String telephone,
     String siret,
-    String mobilite,
     String adress,
     String domaine,
     String entreprise,
@@ -56,12 +55,10 @@ class ArtisanController {
           'email': email,
           'picture': 'null',
           'siret': siret,
-          'mobilite': mobilite,
           'adress': adress,
           'domaine': domaine,
           'entreprise': entreprise,
           'note': "0",
-          'chantier': "null",
           'password': password,
         }));
     //print('Response status: ${response.statusCode}');
@@ -140,7 +137,6 @@ class ArtisanController {
           'adress': adress,
           'entreprise': entreprise,
           'picture': picture,
-          'chantier': 'null',
         }));
     //print('Response status 200: ${response.statusCode}');
     //print('Response body: ${response.body}');

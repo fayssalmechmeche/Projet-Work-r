@@ -15,7 +15,6 @@ var functions = {
       !req.body.telephone ||
       !req.body.email ||
       !req.body.siret ||
-      !req.body.mobilite ||
       !req.body.adress ||
       !req.body.domaine ||
       !req.body.entreprise ||
@@ -24,8 +23,8 @@ var functions = {
       res.json({ success: false, msg: "veuillez remplir tous les champs" });
     } else {
       const hashedPassword = bcrypt.hashSync(req.body.password, 10);
-      const queryString = `INSERT INTO artisans (name,lastname, username, telephone, email, picture, siret, mobilite, adress, domaine, entreprise, note, chantier, password) 
-      VALUES ('${req.body.name}','${req.body.lastname}', '${req.body.username}', '${req.body.telephone}', '${req.body.email}', '${req.body.picture}', '${req.body.siret}', '${req.body.mobilite}', '${req.body.adress}', '${req.body.domaine}', '${req.body.entreprise}', '${req.body.note}', '${req.body.chantier}', '${hashedPassword}')`;
+      const queryString = `INSERT INTO artisans (name,lastname, username, telephone, email, picture, siret, adress, domaine, entreprise, note, password) 
+      VALUES ('${req.body.name}','${req.body.lastname}', '${req.body.username}', '${req.body.telephone}', '${req.body.email}', '${req.body.picture}', '${req.body.siret}', '${req.body.adress}', '${req.body.domaine}', '${req.body.entreprise}', '${req.body.note}', '${hashedPassword}')`;
 
       mysqlConnection.query(queryString, function (err, rows, fields) {
         if (!err) {
@@ -99,7 +98,7 @@ var functions = {
       hashedPassword = req.body.password;
     }
     mysqlConnection.query(
-      "UPDATE artisans SET name = ?, lastname = ?, password = IFNULL(?, password), email = ?, entreprise = ?, username = ?, telephone = ?, adress = ?, picture = ?, chantier = ? WHERE _id = ?",
+      "UPDATE artisans SET name = ?, lastname = ?, password = IFNULL(?, password), email = ?, entreprise = ?, username = ?, telephone = ?, adress = ?, picture = ? WHERE _id = ?",
       [
         req.body.name,
         req.body.lastname,
@@ -110,7 +109,6 @@ var functions = {
         req.body.telephone,
         req.body.adress,
         req.body.picture,
-        req.body.chantier,
         req.body.id,
       ],
       function (error, results, fields) {
@@ -169,8 +167,8 @@ var functions = {
   // a function to get an work from the mysql database where the state is equal to the state in the header and return it
   getWorkByStatus: function (req, res) {
     mysqlConnection.query(
-      "SELECT * FROM chantier WHERE state = ? AND (artisans_refuses IS NULL OR artisans_refuses NOT LIKE CONCAT('%', ?, '%'))",
-      [req.headers.state, req.headers.artisanid],
+      "SELECT * FROM chantier WHERE state = ? AND (artisans_refuses IS NULL OR artisans_refuses NOT LIKE CONCAT('%', ?, '%')) AND artisanID = ?",
+      [req.headers.state, req.headers.artisanid, req.headers.artisanid],
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
         res.json({ results: results });

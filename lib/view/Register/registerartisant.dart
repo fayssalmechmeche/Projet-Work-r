@@ -539,7 +539,6 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                             usernameController.text,
                             phoneController.text,
                             siretController.text,
-                            'test',
                             adressController.text,
                             _dropdownvalue1!,
                             companyController.text,

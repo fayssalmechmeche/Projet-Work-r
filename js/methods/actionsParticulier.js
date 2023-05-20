@@ -23,8 +23,8 @@ var functions = {
     } else {
       const hashedPassword = bcrypt.hashSync(req.body.password, 10);
 
-      const queryString = `INSERT INTO particuliers (name, lastname, password, email, username, telephone, city, adress, postalCode, picture, chantier)
-      VALUES ('${req.body.name}', '${req.body.lastname}', '${hashedPassword}', '${req.body.email}', '${req.body.username}', '${req.body.telephone}', '${req.body.city}', '${req.body.adress}', '${req.body.postalCode}', '${req.body.picture}', '${req.body.chantier}')`;
+      const queryString = `INSERT INTO particuliers (name, lastname, password, email, username, telephone, city, adress, postalCode, picture)
+      VALUES ('${req.body.name}', '${req.body.lastname}', '${hashedPassword}', '${req.body.email}', '${req.body.username}', '${req.body.telephone}', '${req.body.city}', '${req.body.adress}', '${req.body.postalCode}', '${req.body.picture}')`;
       mysqlConnection.query(queryString, function (err, rows, fields) {
         if (!err) {
           res.json({ success: true, msg: "Particulier sauvegardé" });
@@ -96,7 +96,7 @@ var functions = {
       hashedPassword = req.body.password;
     }
     mysqlConnection.query(
-      "UPDATE particuliers SET name = ?, password = IFNULL(?, password),lastname = ?, email = ?, username = ?, telephone = ?, city = ?, adress = ?, postalCode = ?, picture = ?, chantier = ? WHERE _id = ?",
+      "UPDATE particuliers SET name = ?, password = IFNULL(?, password),lastname = ?, email = ?, username = ?, telephone = ?, city = ?, adress = ?, postalCode = ?, picture = ? WHERE _id = ?",
       [
         req.body.name,
         hashedPassword,
@@ -108,7 +108,6 @@ var functions = {
         req.body.adress,
         req.body.postalCode,
         req.body.picture,
-        req.body.chantier,
         req.body.id,
       ],
       function (error, results, fields) {
