@@ -148,7 +148,7 @@ class _ListWorkState extends State<ListWork> {
         onTap: () {
           globalData.setChantier(data);
           if (data['state'] == 0) {
-             Navigator.of(context)
+            Navigator.of(context)
                 .pushNamed(ListProposition.tag, arguments: data)
                 .then((_) => setState(() {}));
           } else {

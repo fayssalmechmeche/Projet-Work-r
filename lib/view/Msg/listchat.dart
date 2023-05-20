@@ -117,25 +117,27 @@ class _ListChatState extends State<ListChat> {
       dataProfile = ParticulierController.getParticulierById(
           int.parse(data['particulierID']));
     }
+
     return GestureDetector(
-      onTap: () {
-        
+      onTap: () async {
+        final receiver = await dataProfile;
+
         Map<String, dynamic> arguments = {
           'id': data["id"],
           'type': "public",
+          'receiver': receiver['results'][0]['name'] +
+              " " +
+              receiver['results'][0]['lastname'],
         };
         Navigator.of(context).pushNamed(Chat.tag, arguments: arguments);
       },
       child: Card(
         shape: StadiumBorder(
-          side: BorderSide(
-            color: Colors.black,
-            width: 1
-          ),
+          side: BorderSide(color: Colors.black, width: 1),
         ),
         elevation: 10,
-        color: index % 2 == 0 ? Colors.white : Color.fromARGB(255, 190, 188,
-                    188),
+        color:
+            index % 2 == 0 ? Colors.white : Color.fromARGB(255, 190, 188, 188),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
@@ -144,7 +146,6 @@ class _ListChatState extends State<ListChat> {
               child: Container(
                 width: 20.0,
                 height: 20.0,
-                
               ),
             ),
             Column(

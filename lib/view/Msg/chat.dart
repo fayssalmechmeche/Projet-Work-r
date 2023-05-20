@@ -72,7 +72,7 @@ class _ChatPageState extends State<Chat> {
     final messageProvider = Provider.of<MessageProvider>(context);
 
     final data = ModalRoute.of(context)!.settings.arguments as Map;
-   
+
     final globalData = Provider.of<GlobalData>(context);
     final socket = globalData.getSocket();
     socket!.on("message", (data) {
@@ -86,8 +86,7 @@ class _ChatPageState extends State<Chat> {
           color: Colors.black,
         ),
         title: Text(
-          
-          "",
+          data["receiver"],
           style: TextStyle(
             color: Colors.black,
           ),

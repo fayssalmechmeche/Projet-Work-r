@@ -548,10 +548,25 @@ class _WorkFollowState extends State<WorkFollow> {
                             height: 130,
                             child: GestureDetector(
                               onTap: () async {
+                                var dataProfile;
+                                if (globalData.getRole() == 1) {
+                                  dataProfile = ArtisanController
+                                      .getArtisanById(int.parse(
+                                          globalData.getArtisanIdChantier()));
+                                }
+                                if (globalData.getRole() == 0) {
+                                  dataProfile =
+                                      ParticulierController.getParticulierById(
+                                          int.parse(globalData
+                                              .getPartiuclierIdChantier()));
+                                }
                                 bool conversationExists =
                                     await ConversationController
                                         .checkChantierConversationExists(
                                             globalData.getIdChantier());
+
+                                final receiver = await dataProfile;
+
                                 if (conversationExists) {
                                   const snackBar = SnackBar(
                                     content:
@@ -562,6 +577,9 @@ class _WorkFollowState extends State<WorkFollow> {
                                   Map<String, dynamic> arguments = {
                                     'chantier': globalData.getIdChantier(),
                                     'type': "private",
+                                    'receiver': receiver['results'][0]['name'] +
+                                        " " +
+                                        receiver['results'][0]['lastname']
                                   };
                                   Navigator.of(context).pushNamed(Chat.tag,
                                       arguments: arguments);
@@ -569,6 +587,9 @@ class _WorkFollowState extends State<WorkFollow> {
                                   Map<String, dynamic> arguments = {
                                     'chantier': globalData.getIdChantier(),
                                     'type': "private",
+                                    'receiver': receiver['results'][0]['name'] +
+                                        " " +
+                                        receiver['results'][0]['lastname']
                                   };
                                   await ConversationController
                                       .createChantierConversation(
