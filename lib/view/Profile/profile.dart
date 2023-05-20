@@ -94,18 +94,6 @@ class _ProfileState extends State<Profile> {
                               Text(globalData.getCity(),
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.grey)),
-                            if (globalData.getRole() == 0)
-                              Container(
-                                padding: const EdgeInsets.only(
-                                    top: 20, right: 20, bottom: 10),
-                                width: 210,
-                                child: const Text("Mobilité",
-                                    style: TextStyle(fontSize: 18)),
-                              ),
-                            if (globalData.getRole() == 0)
-                              Text(globalData.getMobilite(),
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.grey)),
                           ]),
                       Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
