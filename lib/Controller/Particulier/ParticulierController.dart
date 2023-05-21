@@ -9,6 +9,8 @@ import 'package:mailer/smtp_server/gmail.dart';
 import 'package:my_app/Controller/Artisan/ArtisanController.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
+import '../ChantierController/ChantierController.dart';
+
 class ParticulierController {
   static var url = "http://localhost:3000/";
 
@@ -443,9 +445,46 @@ class ParticulierController {
           'artisanID': artisanID.toString(),
         }));
 
+    final artisan = await ArtisanController.getArtisanById(artisanID);
+
     if (response.statusCode == 200) {
       //print("getChantierById réussie Particulier Controller");
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      final emailKey = dotenv.env['EMAIL_KEY'];
+      final template =
+          await rootBundle.loadString('assets/emails/acceptedDevis.html');
+      final work = await ChantierController.getChantierById(workID);
+
+      final devis =
+          await ParticulierController.getDevisByWorkID(particulierID, workID);
+
+      try {
+        final smtpServer = gmail("workr.professionel@gmail.com", emailKey!);
+        String email = artisan["results"][0]['email'];
+        String name = work["results"][0]['name'];
+
+        final message = Message()
+          ..from = Address("workr.professionel@gmail.com", 'L\'équipe Workr')
+          ..recipients.add(email)
+          ..subject = "Votre devis a été accepté"
+          ..html = template
+              .replaceAll(
+                  '[artisan]',
+                  artisan["results"][0]['name'] +
+                      " " +
+                      artisan["results"][0]['lastname'])
+              .replaceAll('[type]', devis["results"][0]['type'])
+              .replaceAll('[catégorie]', devis["results"][0]['category'])
+              .replaceAll('[prix]', devis["results"][0]['price'])
+              .replaceAll('[description]', devis["results"][0]['description']);
+
+        final sendReport = await send(message, smtpServer);
+      } on MailerException catch (e) {
+        print('Message not sent.');
+        for (var p in e.problems) {
+          print('Problem: ${p.code}: ${p.msg}');
+        }
+      }
       return jsonResponse;
     } else {
       //print("getChantierById échouée Particulier Controller");

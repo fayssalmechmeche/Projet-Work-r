@@ -274,9 +274,6 @@ class ArtisanController {
 
   static Future<bool> checkDevisExists(
       int artisanID, int particulierID, int workID) async {
-    print("artisanID : " + artisanID.toString());
-    print("particulierID : " + particulierID.toString());
-    print("workID : " + workID.toString());
     var response =
         await http.get(Uri.parse("${url}checkDevisExists"), headers: {
       "Content-Type": "application/json",

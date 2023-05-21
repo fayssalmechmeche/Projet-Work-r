@@ -17,7 +17,7 @@ class _ListWorkArtisanState extends State<ListWorkArtisan> {
   @override
   Widget build(BuildContext context) {
     final globalData = Provider.of<GlobalData>(context);
-    final chantiers = ArtisanController.getWorkByStatus(0, globalData.getId());
+    final chantiers = ArtisanController.getWorkByStatus(0, 0);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -78,18 +78,21 @@ class _ListWorkArtisanState extends State<ListWorkArtisan> {
     final globalData = Provider.of<GlobalData>(context);
     return GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed(WorkProposition.tag, arguments: data).then((_) => setState(() {}));
+          Navigator.of(context)
+              .pushNamed(WorkProposition.tag, arguments: data)
+              .then((_) => setState(() {}));
         },
         child: Card(
             shape: StadiumBorder(
               side: BorderSide(
                 color: Colors.black,
-                width:  1,
+                width: 1,
               ),
             ),
             elevation: 10,
-            color: index % 2 == 0 ? Colors.white : Color.fromARGB(255, 190, 188,
-                    188),
+            color: index % 2 == 0
+                ? Colors.white
+                : Color.fromARGB(255, 190, 188, 188),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -152,15 +155,15 @@ class _ListWorkArtisanState extends State<ListWorkArtisan> {
                 ),
               );
             } else {
-            return Container(
-              width: 20.0,
-              height: 20.0,
-              decoration: const BoxDecoration(
-                color: Colors.green,
-                shape: BoxShape.circle,
-              ),
-            );
-          }
+              return Container(
+                width: 20.0,
+                height: 20.0,
+                decoration: const BoxDecoration(
+                  color: Colors.green,
+                  shape: BoxShape.circle,
+                ),
+              );
+            }
           } else {
             return Container(
               width: 20.0,

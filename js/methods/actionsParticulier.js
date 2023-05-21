@@ -120,7 +120,7 @@ var functions = {
   // add a new chantier
   addChantier(req, res) {
     mysqlConnection.query(
-      "INSERT INTO chantier (name, type, category, state, budget, description, particulierID) VALUES (?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO chantier (name, type, category, state, budget, description, particulierID, artisanID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
       [
         req.body.name,
         req.body.type,
@@ -129,6 +129,7 @@ var functions = {
         req.body.budget,
         req.body.description,
         req.body.particulierID,
+        "0",
       ],
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
