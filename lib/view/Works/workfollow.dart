@@ -90,8 +90,8 @@ class _WorkFollowState extends State<WorkFollow> {
                   style: TextStyle(color: Colors.blue),
                 ),
                 onPressed: () async {
-                  await ArtisanController.endChantier(
-                      globalData.chantier['id']);
+                  await ArtisanController.endChantier(globalData.chantier['id'],
+                      int.parse(globalData.getPartiuclierIdChantier()));
                   Navigator.of(context)
                     ..pop()
                     ..pop();

@@ -26,7 +26,7 @@ class _RegisterPageState extends State<RegisterPage> {
     var PostalCodeController = TextEditingController();
     var emailController = TextEditingController();
     var cityController = TextEditingController();
-   
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -60,7 +60,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               width: 150,
                               child: TextFormField(
                                 cursorColor: Colors.grey,
-                                controller: firstnameController,
+                                controller: nameController,
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(90),
@@ -90,7 +90,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             width: 150,
                             child: TextFormField(
                               cursorColor: Colors.grey,
-                              controller: nameController,
+                              controller: firstnameController,
                               decoration: InputDecoration(
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(90),
@@ -144,7 +144,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                 if (val!.isEmpty) {
                                   return "Nom d'utilisateur manquant !";
                                 }
-                                if (val!.contains(new RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+                                if (val!.contains(
+                                    new RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
                                   return "Nom d'utilisateur n'est pas valide !";
                                 }
 
@@ -247,11 +248,10 @@ class _RegisterPageState extends State<RegisterPage> {
                                 if (val!.isEmpty) {
                                   return "Adresse manquante !";
                                 }
-                                if (val.contains(new RegExp(
-                                              r'[!@#$%^&*(),.?":{}|<>]'))) {
+                                if (val.contains(
+                                    new RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
                                   return "Adresse n'est pas valide !";
                                 }
-                                
 
                                 return null;
                               },

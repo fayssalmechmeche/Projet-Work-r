@@ -1,8 +1,14 @@
 import 'dart:convert';
 import 'dart:ffi';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server/gmail.dart';
+import 'package:my_app/Controller/ChantierController/ChantierController.dart';
+import 'package:my_app/Controller/Particulier/ParticulierController.dart';
+import 'package:my_app/Controller/global.dart';
 
 class ArtisanController {
   static var url = "http://localhost:3000/";
@@ -438,7 +444,8 @@ class ArtisanController {
     }
   }
 
-  static Future<Map<String, dynamic>> endChantier(int workID) async {
+  static Future<Map<String, dynamic>> endChantier(
+      int workID, int particulierID) async {
     var response = await http.post(Uri.parse("${url}endChantier"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -446,11 +453,48 @@ class ArtisanController {
         body: jsonEncode(<String, dynamic>{
           'workID': workID.toString(),
         }));
+
     print(response.body);
 
     if (response.statusCode == 200) {
       //print("getChantierById réussie Particulier Controller");
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      final emailKey = dotenv.env['EMAIL_KEY'];
+      final template =
+          await rootBundle.loadString('assets/emails/closedChantier.html');
+
+      final particulier =
+          await ParticulierController.getParticulierById(particulierID);
+
+      final work = await ChantierController.getChantierById(workID);
+
+      try {
+        final smtpServer = gmail("workr.professionel@gmail.com", emailKey!);
+        String email = particulier["results"][0]['email'];
+        String name = work["results"][0]['name'];
+        final message = Message()
+          ..from = Address("workr.professionel@gmail.com", 'L\'équipe Workr')
+          ..recipients.add(email)
+          ..subject = "Chantier cloturé : ${name}"
+          ..html = template
+              .replaceAll(
+                  '[particulier]',
+                  particulier["results"][0]['name'] +
+                      ' ' +
+                      particulier["results"][0]['lastname'])
+              .replaceAll('[name]', work["results"][0]['name'])
+              .replaceAll('[category]', work["results"][0]['category'])
+              .replaceAll('[budget]', work["results"][0]['budget'])
+              .replaceAll('[description]', work["results"][0]['description']);
+
+        final sendReport = await send(message, smtpServer);
+      } on MailerException catch (e) {
+        print('Message not sent.');
+        for (var p in e.problems) {
+          print('Problem: ${p.code}: ${p.msg}');
+        }
+      }
+
       return jsonResponse;
     } else {
       //print("getChantierById échouée Particulier Controller");
