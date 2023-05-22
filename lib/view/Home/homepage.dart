@@ -32,7 +32,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final globalData = Provider.of<GlobalData>(context);
-    
 
     final allArtisan = ArtisanController.getAllArtisan();
     final recentArtisan = ArtisanController.getRecentArtisan();
@@ -194,7 +193,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget CardArtisan(int index, data) {
-    
     final allNote = NoteController.getNoteByArtisan(data['_id']);
     return GestureDetector(
         onTap: () {
@@ -219,10 +217,7 @@ class _HomePageState extends State<HomePage> {
                 Padding(
                   padding: const EdgeInsets.only(left: 10, right: 20),
                   child: Container(
-                    width: 20.0,
-                    height: 20.0,
-                    
-                  ),
+                      width: 20.0, height: 20.0, child: statusIcon(data)),
                 ),
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Padding(
@@ -243,7 +238,6 @@ class _HomePageState extends State<HomePage> {
                             var results = snapshot.data?['results'];
                             late double note;
 
-                            
                             if (results != null && results.isNotEmpty) {
                               double total = 0;
                               results.forEach((item) {
@@ -256,24 +250,21 @@ class _HomePageState extends State<HomePage> {
 
                             return Padding(
                                 padding: const EdgeInsets.only(top: 10),
-                                child: RatingOfProfile(
-                                    note));
+                                child: RatingOfProfile(note));
                           } else if (snapshot.hasError) {
                             return Padding(
                                 padding: const EdgeInsets.only(top: 10),
-                                child: RatingOfProfile(
-                                    0));
+                                child: RatingOfProfile(0));
                           } else {
                             return Padding(
                                 padding: const EdgeInsets.only(top: 10),
-                                child: RatingOfProfile(
-                                    0));
+                                child: RatingOfProfile(0));
                           }
                         } else {
                           return Padding(
-                                padding: const EdgeInsets.only(top: 10),
-                                child: RatingOfProfile(
-                                    0));// or any other widget to show progress
+                              padding: const EdgeInsets.only(top: 10),
+                              child: RatingOfProfile(
+                                  0)); // or any other widget to show progress
                         }
                       })
                 ]),
@@ -281,12 +272,28 @@ class _HomePageState extends State<HomePage> {
             )));
   }
 
+  Widget statusIcon(data) {
+    if (data['domaine'] == 'Plomberie') {
+      return Icon(
+        Icons.water_drop,
+      );
+    } else if (data['domaine'] == 'Maçonnerie') {
+      return Icon(
+        Icons.handyman,
+      );
+    } else {
+      return Icon(
+        Icons.flash_on,
+      );
+    }
+  }
+
   Widget RatingOfProfile(double rating) {
     return Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
       DecoratedIcon(
         icon: Icon(
           rating > 0 && rating < 1 ? Icons.star_half : Icons.star,
-          color: rating > 0 ? Color.fromARGB(255, 242, 210, 2): Colors.black,
+          color: rating > 0 ? Color.fromARGB(255, 242, 210, 2) : Colors.black,
           size: 16,
         ),
         decoration:

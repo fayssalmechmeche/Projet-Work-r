@@ -35,6 +35,7 @@ class _TaskEditState extends State<TaskEdit> {
     List<String> category = ['Principale', 'Secondaire', 'Autre'];
     String? _dropdownvalue2 = data['type'];
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: const BackButton(color: Colors.black),

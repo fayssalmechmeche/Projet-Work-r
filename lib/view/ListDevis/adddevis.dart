@@ -72,6 +72,7 @@ class _AddDevisState extends State<AddDevis> {
     final globalData = Provider.of<GlobalData>(context);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: const BackButton(color: Colors.black),

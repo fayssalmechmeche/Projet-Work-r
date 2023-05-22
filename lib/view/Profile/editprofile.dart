@@ -100,6 +100,7 @@ class _EditProfileState extends State<EditProfile> {
       domaineController.text = globalData.getDomaine();
     }
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: const BackButton(color: Colors.black),
