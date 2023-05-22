@@ -72,7 +72,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     // Initialisation du socket
     socket = IO.io(
-        "http://localhost:3000",
+        dotenv.env['DB_HOST']!,
         IO.OptionBuilder()
             .setTransports(['websocket']) // for Flutter or Dart VM
             .disableAutoConnect() // disable auto-connection
