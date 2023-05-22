@@ -27,9 +27,19 @@ class _ChatPageState extends State<Chat> {
     // Simulation des messages
     getAllMessage();
     getConversation();
+    final messageProvider =
+        Provider.of<MessageProvider>(context, listen: false);
+
+    final globalData = Provider.of<GlobalData>(context, listen: false);
+    final socket = globalData.getSocket();
+    socket!.on("message", (data) {
+      setState(() {
+        messageProvider.addMessage(data);
+      });
+    });
   }
 
-  getConversation() async {
+  Future<int> getConversation() async {
     final data = ModalRoute.of(context)!.settings.arguments as Map;
 
     if (data["type"] == "public") {
@@ -47,7 +57,8 @@ class _ChatPageState extends State<Chat> {
   }
 
   Future<Map<String, dynamic>> getAllMessage() async {
-    final messageProvider = Provider.of<MessageProvider>(context);
+    final messageProvider =
+        Provider.of<MessageProvider>(context, listen: false);
     messageProvider.clearMessages();
 
     final data = ModalRoute.of(context)!.settings.arguments as Map;
@@ -69,18 +80,12 @@ class _ChatPageState extends State<Chat> {
 
   @override
   Widget build(BuildContext context) {
-    final messageProvider = Provider.of<MessageProvider>(context);
-
     final data = ModalRoute.of(context)!.settings.arguments as Map;
-
     final globalData = Provider.of<GlobalData>(context);
     final socket = globalData.getSocket();
-    socket!.on("message", (data) {
-      messageProvider.addMessage(data);
-    });
+    final messageProvider = Provider.of<MessageProvider>(context);
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: const BackButton(
@@ -88,7 +93,7 @@ class _ChatPageState extends State<Chat> {
         ),
         title: Text(
           data["receiver"],
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.black,
           ),
         ),
@@ -101,7 +106,7 @@ class _ChatPageState extends State<Chat> {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               // En attente de la récupération de la conversation
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
               // Erreur lors de la récupération de la conversation
               return Center(child: Text('Erreur : ${snapshot.error}'));
@@ -142,7 +147,7 @@ class _ChatPageState extends State<Chat> {
                                   globalData.getRole().toString(),
                                   inputController.text,
                                 );
-                                socket.emit('message', {
+                                socket!.emit('message', {
                                   "pseudo": globalData.getUsername(),
                                   "content": inputController.text,
                                   "senderID": globalData.getId(),
@@ -156,7 +161,7 @@ class _ChatPageState extends State<Chat> {
                                   globalData.getRole().toString(),
                                   inputController.text,
                                 );
-                                socket.emit('message', {
+                                socket!.emit('message', {
                                   "pseudo": globalData.getUsername(),
                                   "content": inputController.text,
                                   "senderID": globalData.getId(),
@@ -180,7 +185,7 @@ class _ChatPageState extends State<Chat> {
                                 globalData.getRole().toString(),
                                 inputController.text,
                               );
-                              socket.emit('message', {
+                              socket!.emit('message', {
                                 "pseudo": globalData.getUsername(),
                                 "content": inputController.text,
                                 "senderID": globalData.getId(),
@@ -194,7 +199,7 @@ class _ChatPageState extends State<Chat> {
                                 globalData.getRole().toString(),
                                 inputController.text,
                               );
-                              socket.emit('message', {
+                              socket!.emit('message', {
                                 "pseudo": globalData.getUsername(),
                                 "content": inputController.text,
                                 "senderID": globalData.getId(),
@@ -237,28 +242,30 @@ class _ChatPageState extends State<Chat> {
       children: <Widget>[
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width * 0.7,
+          constraints: const BoxConstraints(
+            maxWidth: double.infinity,
           ),
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: BoxDecoration(
             color: backgroundColor,
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(8),
           ),
           child: Column(
             crossAxisAlignment: alignment,
-            children: [
+            children: <Widget>[
               Text(
-                formattedDate,
+                message["content"],
                 style: TextStyle(
-                  fontWeight: FontWeight.bold,
                   color: textColor,
                 ),
               ),
               const SizedBox(height: 4),
               Text(
-                message["content"],
-                style: TextStyle(color: textColor),
+                formattedDate,
+                style: const TextStyle(
+                  fontSize: 10,
+                  color: Colors.grey,
+                ),
               ),
             ],
           ),
