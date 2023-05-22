@@ -504,7 +504,7 @@ class _HomePageArtState extends State<HomePageArt> {
                                           });
                                           note = total / results.length;
                                         } else {
-                                          note = 3;
+                                          note = 0;
                                         }
 
                                         return Column(
