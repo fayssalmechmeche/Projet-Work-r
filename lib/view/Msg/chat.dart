@@ -242,8 +242,8 @@ class _ChatPageState extends State<Chat> {
       children: <Widget>[
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          constraints: const BoxConstraints(
-            maxWidth: double.infinity,
+          constraints:  BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width * 0.7
           ),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: BoxDecoration(
