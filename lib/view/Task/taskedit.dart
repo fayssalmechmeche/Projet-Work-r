@@ -322,7 +322,9 @@ class _TaskEditState extends State<TaskEdit> {
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
-                      Navigator.pop(context);
+                      Navigator.of(context)
+                        ..pop()
+                        ..pop();
                     } else {
                       const snackBar = SnackBar(
                         content:
