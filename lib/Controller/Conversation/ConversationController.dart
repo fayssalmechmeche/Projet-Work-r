@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ffi';
 import 'dart:math';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
@@ -8,7 +9,7 @@ import 'package:mailer/smtp_server/gmail.dart';
 import 'package:my_app/Controller/Artisan/ArtisanController.dart';
 
 class ConversationController {
-  static var url = "http://localhost:3000/";
+  static var url = dotenv.env['DB_HOST'];
 
 // checkConversationExists
   static Future<bool> checkConversationExists(

@@ -12,7 +12,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import '../ChantierController/ChantierController.dart';
 
 class ParticulierController {
-  static var url = "http://localhost:3000/";
+  static var url = dotenv.env['DB_HOST'];
 
   // create particulier
   static Future<int> createParticulier(

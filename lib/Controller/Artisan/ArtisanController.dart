@@ -11,7 +11,7 @@ import 'package:my_app/Controller/Particulier/ParticulierController.dart';
 import 'package:my_app/Controller/global.dart';
 
 class ArtisanController {
-  static var url = "http://localhost:3000/";
+  static var url = dotenv.env['DB_HOST'];
 
   static Future<Map<String, dynamic>> checkSiretExists(String siret) async {
     final token = dotenv.env['API_KEY'];
