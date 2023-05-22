@@ -11,6 +11,9 @@ const app = express();
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+if (process.env.NODE_ENV === "production") {
+  app.use(morgan("prod"));
+}
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -26,7 +29,7 @@ const io = require("socket.io")(server);
 //
 messages = [];
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
 
 io.on("connection", (socket) => {
   console.log("a user connected: ", socket.handshake.query.username);
