@@ -29,6 +29,7 @@ class _AddWorkState extends State<AddWork> {
   Widget build(BuildContext context) {
     final globalData = Provider.of<GlobalData>(context);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: const BackButton(color: Colors.black),

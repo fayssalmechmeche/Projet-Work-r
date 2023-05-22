@@ -80,6 +80,7 @@ class _ChatPageState extends State<Chat> {
     });
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: const BackButton(
