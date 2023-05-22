@@ -20,6 +20,7 @@ class _LoginArtState extends State<LoginArt> {
   Widget build(BuildContext context) {
     final globalData = Provider.of<GlobalData>(context);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: const BackButton(color: Colors.black),
