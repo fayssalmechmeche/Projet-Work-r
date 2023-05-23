@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:my_app/view/Home/homepage.dart';
 import 'package:my_app/view/Home/listfav.dart';
@@ -70,6 +71,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     // Initialisation du socket
     socket = IO.io(
         dotenv.env['DB_HOST']!,
