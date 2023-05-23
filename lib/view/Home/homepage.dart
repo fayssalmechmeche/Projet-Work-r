@@ -5,6 +5,7 @@ import 'package:my_app/Controller/Particulier/ParticulierController.dart';
 import 'package:my_app/Controller/global.dart';
 import 'package:my_app/view/Home/listfav.dart';
 import 'package:my_app/view/Home/search.dart';
+import 'package:my_app/view/Login/selectionPage.dart';
 
 import 'package:my_app/view/Profile/profileother.dart';
 
@@ -14,6 +15,7 @@ import 'package:provider/provider.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import '../../Controller/Note/NoteController.dart';
+import '../LunchPage/firstpage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -44,7 +46,11 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.transparent,
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context){
+  return const FirstPage(title: '',);
+}), (r){
+  return false;
+});
           },
           icon: Icon(
             Icons.logout,
@@ -220,10 +226,20 @@ class _HomePageState extends State<HomePage> {
                       width: 20.0, height: 20.0, child: statusIcon(data)),
                 ),
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Padding(
+                  Container(
+                      width: 100,
                       padding: EdgeInsets.only(top: 10),
-                      child: Text(data['lastname'])),
-                  Text(data['name']),
+                      child: Text(
+                        data['lastname'],
+                        overflow: TextOverflow.ellipsis,
+                      )),
+                  Container(
+                    width: 100,
+                    child: Text(
+                      data['name'],
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                   Padding(
                       padding: EdgeInsets.only(top: 10),
                       child: Text(
