@@ -18,7 +18,7 @@ class Chat extends StatefulWidget {
 
 class _ChatPageState extends State<Chat> {
   final inputController = TextEditingController();
-final ScrollController _controller = ScrollController();
+
   var conversation;
 
   @override
@@ -27,19 +27,9 @@ final ScrollController _controller = ScrollController();
     // Simulation des messages
     getAllMessage();
     getConversation();
-    final messageProvider =
-        Provider.of<MessageProvider>(context, listen: false);
-
-    final globalData = Provider.of<GlobalData>(context, listen: false);
-    final socket = globalData.getSocket();
-    socket!.on("message", (data) {
-      setState(() {
-        messageProvider.addMessage(data);
-      });
-    });
   }
 
-  Future<int> getConversation() async {
+  getConversation() async {
     final data = ModalRoute.of(context)!.settings.arguments as Map;
 
     if (data["type"] == "public") {
@@ -57,8 +47,7 @@ final ScrollController _controller = ScrollController();
   }
 
   Future<Map<String, dynamic>> getAllMessage() async {
-    final messageProvider =
-        Provider.of<MessageProvider>(context, listen: false);
+    final messageProvider = Provider.of<MessageProvider>(context);
     messageProvider.clearMessages();
 
     final data = ModalRoute.of(context)!.settings.arguments as Map;
@@ -80,10 +69,15 @@ final ScrollController _controller = ScrollController();
 
   @override
   Widget build(BuildContext context) {
+    final messageProvider = Provider.of<MessageProvider>(context);
+
     final data = ModalRoute.of(context)!.settings.arguments as Map;
+
     final globalData = Provider.of<GlobalData>(context);
     final socket = globalData.getSocket();
-    final messageProvider = Provider.of<MessageProvider>(context);
+    socket!.on("message", (data) {
+      messageProvider.addMessage(data);
+    });
 
     return Scaffold(
       appBar: AppBar(
@@ -91,12 +85,15 @@ final ScrollController _controller = ScrollController();
         leading: const BackButton(
           color: Colors.black,
         ),
-        title: Container(width: 200,child:Text(
-          data["receiver"],
-          style: const TextStyle(
-            color: Colors.black,
+        title: Container(
+          width: 200,
+          child: Text(
+            data["receiver"],
+            style: const TextStyle(
+              color: Colors.black,
+            ),
           ),
-        ),),
+        ),
         toolbarHeight: 35,
         elevation: 0,
       ),
@@ -107,19 +104,17 @@ final ScrollController _controller = ScrollController();
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               // En attente de la récupération de la conversation
-              return const Expanded(
-                child:Center(child: Text("")));
+              return const Expanded(child: Center(child: Text("")));
             } else if (snapshot.hasError) {
               // Erreur lors de la récupération de la conversation
-              return  Expanded(
-                child: Center(child: Text('Erreur : ${snapshot.error}')));
+              return Expanded(
+                  child: Center(child: Text('Erreur : ${snapshot.error}')));
             } else {
               final conversation = snapshot.data;
               final messages = messageProvider.messages;
 
               return Expanded(
                 child: ListView.builder(
-                 controller: _controller,
                   itemCount: snapshot.data!["results"].length,
                   itemBuilder: (context, index) {
                     messageProvider
@@ -142,8 +137,6 @@ final ScrollController _controller = ScrollController();
                     hintText: "Écrire un message...",
                   ),
                   onSubmitted: (text) async {
-                    if (inputController.text.isEmpty)  _controller.jumpTo(0.0);
-
                     if (data["type"] == "public") {
                       await ConversationController.sendMessagePublic(
                         await getConversation(),
