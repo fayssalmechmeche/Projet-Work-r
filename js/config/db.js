@@ -1,8 +1,8 @@
 // const mongoose = require("mongoose");
-require('dotenv').config()
+require("dotenv").config();
 const dbConfig = require("./dbConfig");
 var mysql = require("mysql");
-console.log(process.env.HOST)
+console.log(process.env.HOST);
 const connection = mysql.createConnection({
   host: process.env.HOST,
   user: process.env.USER,
@@ -10,9 +10,15 @@ const connection = mysql.createConnection({
   database: process.env.DATABASE,
 });
 
-connection.connect(function () {
+try {
+  connection.connect();
   console.log("Connected to MySQL database!");
-});
+
+  // Autres opérations sur la base de données ici
+} catch (err) {
+  console.error("Failed to connect to MySQL database:", err);
+  process.exit(1);
+}
 
 //   try {
 //     const conn = await mongoose.connect(
@@ -32,4 +38,4 @@ module.exports = connection;
 
 // Path: js/config/dbConfig.js
 
-// ecris moi un try catch qui permet de me connecter à ma base de donnée mysql 
+// ecris moi un try catch qui permet de me connecter à ma base de donnée mysql
