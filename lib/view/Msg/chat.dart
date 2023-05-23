@@ -20,6 +20,15 @@ class _ChatPageState extends State<Chat> {
   final inputController = TextEditingController();
 
   var conversation;
+  ScrollController _scrollController = ScrollController();
+
+  void scrollToBottom() {
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeOut,
+    );
+  }
 
   @override
   void initState() {
@@ -27,6 +36,8 @@ class _ChatPageState extends State<Chat> {
     // Simulation des messages
     getAllMessage();
     getConversation();
+
+    _scrollController = ScrollController();
   }
 
   getConversation() async {
@@ -77,6 +88,7 @@ class _ChatPageState extends State<Chat> {
     final socket = globalData.getSocket();
     socket!.on("message", (data) {
       messageProvider.addMessage(data);
+      scrollToBottom();
     });
 
     return Scaffold(
@@ -112,9 +124,14 @@ class _ChatPageState extends State<Chat> {
             } else {
               final conversation = snapshot.data;
               final messages = messageProvider.messages;
+              WidgetsBinding.instance!.addPostFrameCallback((_) {
+                // Faites défiler jusqu'au dernier message après que le widget soit construit
+                scrollToBottom();
+              });
 
               return Expanded(
                 child: ListView.builder(
+                  controller: _scrollController,
                   itemCount: snapshot.data!["results"].length,
                   itemBuilder: (context, index) {
                     messageProvider
