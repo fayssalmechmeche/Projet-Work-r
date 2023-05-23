@@ -1,41 +1,38 @@
-// const mongoose = require("mongoose");
 require("dotenv").config();
-const dbConfig = require("./dbConfig");
-var mysql = require("mysql");
-console.log(process.env.HOST);
-const connection = mysql.createConnection({
+const mysql = require("mysql");
+
+const dbConfig = {
   host: process.env.HOST,
   user: process.env.USER,
   password: process.env.PASSWORD,
   database: process.env.DATABASE,
-});
+};
 
-try {
-  connection.connect();
-  console.log("Connected to MySQL database!");
+let connection;
 
-  // Autres opérations sur la base de données ici
-} catch (err) {
-  console.error("Failed to connect to MySQL database:", err);
-  process.exit(1);
+function handleDisconnect() {
+  connection = mysql.createConnection(dbConfig);
+
+  connection.connect(function (err) {
+    if (err) {
+      console.error("Error connecting to MySQL:", err);
+      console.log("Retrying connection...");
+      setTimeout(handleDisconnect, 2000); // Temps d'attente avant la prochaine tentative de connexion
+    } else {
+      console.log("Connected to MySQL database!");
+    }
+  });
+
+  connection.on("error", function (err) {
+    if (err.code === "PROTOCOL_CONNECTION_LOST") {
+      console.error("MySQL connection lost. Reconnecting...");
+      handleDisconnect();
+    } else {
+      throw err;
+    }
+  });
 }
 
-//   try {
-//     const conn = await mongoose.connect(
-//       "mongodb+srv://workr:workr1234@workr.auzdikl.mongodb.net/WorkRdb?retryWrites=true&w=majority",
-//       {
-//         useNewUrlParser: true,
-//         useUnifiedTopology: true,
-//       }
-//     );
-//     console.log(mongo connected: ${conn.connection.host});
-//   } catch (err) {
-//     console.log(err);
-//     process.exit(1);
-//   }
+handleDisconnect();
 
 module.exports = connection;
-
-// Path: js/config/dbConfig.js
-
-// ecris moi un try catch qui permet de me connecter à ma base de donnée mysql
