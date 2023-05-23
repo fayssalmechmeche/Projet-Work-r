@@ -67,6 +67,9 @@ class _ProfileState extends State<Profile> {
                   ]),
                 )
               ])),
+              SizedBox(
+              height: 454,
+              child: ListView(shrinkWrap: true, children: [
           Container(
               padding: const EdgeInsets.only(left: 45),
               child: Column(
@@ -124,7 +127,8 @@ class _ProfileState extends State<Profile> {
                                       fontSize: 16, color: Colors.grey)),
                           ]),
                     ]),
-                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                   
+                  
                       Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -161,7 +165,7 @@ class _ProfileState extends State<Profile> {
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.grey)),
                             ]),
-                    ]),
+                    
                     const Padding(
                       padding: EdgeInsets.only(top: 20, bottom: 10),
                       child:
@@ -176,11 +180,12 @@ class _ProfileState extends State<Profile> {
                     Text(globalData.getPhone(),
                         style: TextStyle(fontSize: 16, color: Colors.grey)),
                   ])),
+              ])),
           Container(
               padding: const EdgeInsets.only(
-                  top: 40, bottom: 15, right: 15, left: 15),
+                  top: 20, bottom: 15, right: 15, left: 15),
               width: 160,
-              height: 85,
+              height: 65,
               child: OutlinedButton(
                 onPressed: () {
                   Navigator.of(context)

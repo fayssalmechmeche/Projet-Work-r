@@ -70,7 +70,7 @@ class _ProfileOtherState extends State<ProfileOther> {
       body: SafeArea(
         child: Column(children: [
           Container(
-              padding: const EdgeInsets.only(top: 30, left: 40),
+              padding: const EdgeInsets.only(top: 20, left: 40),
               child: Row(children: [
                 Container(
                   width: 120,
@@ -96,145 +96,157 @@ class _ProfileOtherState extends State<ProfileOther> {
                   ]),
                 )
               ])),
-          Container(
-              padding: const EdgeInsets.only(left: 45),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(top: 40, bottom: 10),
-                      child: Text("Adresse", style: TextStyle(fontSize: 18)),
-                    ),
-                    Text(data['adress'],
-                        style: TextStyle(fontSize: 16, color: Colors.grey)),
-                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                      Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              padding:
-                                  const EdgeInsets.only(top: 20, bottom: 10),
-                              width: 120,
-                              child: const Text("Domaine",
-                                  style: TextStyle(fontSize: 18)),
-                            ),
-                            Text(data['domaine'],
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.grey)),
-                          ]),
-                    ]),
-                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                      Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.only(
-                                top: 20,
-                                right: 20,
-                              ),
-                              width: 210,
-                              child: const Text("Mail",
-                                  style: TextStyle(fontSize: 18)),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.only(
-                                  top: 10, right: 20, bottom: 10),
-                              width: 210,
-                              child: Text(data['email'],
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 3,
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.grey)),
-                            ),
-                          ]),
-                      Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              padding:
-                                  const EdgeInsets.only(top: 20, bottom: 10),
-                              width: 120,
-                              child: const Text("Siret",
-                                  style: TextStyle(fontSize: 18)),
-                            ),
-                            Text(data['siret'],
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.grey)),
-                          ]),
-                    ]),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 20, bottom: 10),
-                      child: Text("Téléphone", style: TextStyle(fontSize: 18)),
-                    ),
-                    Text(data['telephone'],
-                        style: TextStyle(fontSize: 16, color: Colors.grey)),
-                  ])),
-          Container(
-              padding: const EdgeInsets.only(top: 20),
-              width: 330,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                      height: 105,
-                      child: Column(
+          SizedBox(
+              height: 504,
+              child: ListView(shrinkWrap: true, children: [
+                Container(
+                    padding: const EdgeInsets.only(left: 45),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Container(
+                            width: 210,
+                            padding: EdgeInsets.only(top: 40, bottom: 10),
+                            child:
+                                Text("Adresse", style: TextStyle(fontSize: 18)),
+                          ),
+                          Text(data['adress'],
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 3,
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.grey)),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        padding: const EdgeInsets.only(
+                                            top: 20, bottom: 10),
+                                        width: 120,
+                                        child: const Text("Domaine",
+                                            style: TextStyle(fontSize: 18)),
+                                      ),
+                                      Text(data['domaine'],
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.grey)),
+                                    ]),
+                              ]),
+                          Container(
+                            padding: const EdgeInsets.only(
+                              top: 20,
+                              right: 20,
+                            ),
+                            width: 210,
+                            child: const Text("Mail",
+                                style: TextStyle(fontSize: 18)),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(
+                                top: 10, right: 20, bottom: 10),
+                            width: 210,
+                            child: Text(data['email'],
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 3,
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.grey)),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(top: 10, bottom: 10),
+                            width: 120,
+                            child: const Text("Siret",
+                                style: TextStyle(fontSize: 18)),
+                          ),
+                          Text(data['siret'],
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.grey)),
                           const Padding(
-                              padding: EdgeInsets.only(top: 10),
-                              child: Text("Note de l'artisan",
-                                  style: TextStyle(fontSize: 18))),
-                          FutureBuilder(
-                              future: allNote,
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.done) {
-                                  if (snapshot.hasData) {
-                                    var results = snapshot.data?['results'];
-                                    late double note;
+                            padding: EdgeInsets.only(top: 20, bottom: 10),
+                            child: Text("Téléphone",
+                                style: TextStyle(fontSize: 18)),
+                          ),
+                          Text(data['telephone'],
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.grey)),
+                        ])),
+                Container(
+                    padding: const EdgeInsets.only(top: 20),
+                    width: 330,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                            height: 105,
+                            child: Column(
+                              children: [
+                                const Padding(
+                                    padding: EdgeInsets.only(top: 10),
+                                    child: Text("Note de l'artisan",
+                                        style: TextStyle(fontSize: 18))),
+                                FutureBuilder(
+                                    future: allNote,
+                                    builder: (context, snapshot) {
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.done) {
+                                        if (snapshot.hasData) {
+                                          var results =
+                                              snapshot.data?['results'];
+                                          late double note;
 
-                                    print(results);
-                                    if (results != null && results.isNotEmpty) {
-                                      double total = 0;
-                                      results.forEach((item) {
-                                        total = total + item['note'];
-                                      });
-                                      note = total / results.length;
-                                    } else {
-                                      note = 0;
-                                    }
+                                          print(results);
+                                          if (results != null &&
+                                              results.isNotEmpty) {
+                                            double total = 0;
+                                            results.forEach((item) {
+                                              total = total + item['note'];
+                                            });
+                                            note = total / results.length;
+                                          } else {
+                                            note = 0;
+                                          }
 
-                                    return Column(
-                                      children: [
-                                        Container(
+                                          return Column(
+                                            children: [
+                                              Container(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 10),
+                                                  child: RatingOfProfile(note)),
+                                              Padding(
+                                                  padding:
+                                                      EdgeInsets.only(top: 10),
+                                                  child: Text('${note} / 5',
+                                                      style: TextStyle(
+                                                          fontSize: 15)))
+                                            ],
+                                          );
+                                        } else if (snapshot.hasError) {
+                                          return Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 10),
+                                              child: RatingOfProfile(0));
+                                        } else {
+                                          return Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 10),
+                                              child: RatingOfProfile(0));
+                                        }
+                                      } else {
+                                        return Padding(
                                             padding:
                                                 const EdgeInsets.only(top: 10),
-                                            child: RatingOfProfile(note)),
-                                        Padding(
-                                            padding: EdgeInsets.only(top: 10),
-                                            child: Text('${note} / 5',
-                                                style: TextStyle(fontSize: 15)))
-                                      ],
-                                    );
-                                  } else if (snapshot.hasError) {
-                                    return Padding(
-                                        padding: const EdgeInsets.only(top: 10),
-                                        child: RatingOfProfile(0));
-                                  } else {
-                                    return Padding(
-                                        padding: const EdgeInsets.only(top: 10),
-                                        child: RatingOfProfile(0));
-                                  }
-                                } else {
-                                  return Padding(
-                                      padding: const EdgeInsets.only(top: 10),
-                                      child: RatingOfProfile(
-                                          0)); // or any other widget to show progress
-                                }
-                              })
-                        ],
-                      ))
-                ],
-              )),
+                                            child: RatingOfProfile(
+                                                0)); // or any other widget to show progress
+                                      }
+                                    })
+                              ],
+                            ))
+                      ],
+                    )),
+              ])),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
             Container(
                 padding: const EdgeInsets.only(

@@ -100,7 +100,7 @@ class _EditProfileState extends State<EditProfile> {
       domaineController.text = globalData.getDomaine();
     }
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: const BackButton(color: Colors.black),
@@ -234,26 +234,6 @@ class _EditProfileState extends State<EditProfile> {
                       labelStyle: const TextStyle(color: Colors.grey)),
                 ),
               ),
-            if (globalData.getRole() == 0)
-              Container(
-                padding: const EdgeInsets.only(top: 20, right: 20),
-                width: 210,
-                child: TextFormField(
-                  cursorColor: Colors.grey,
-                  controller: mobiliteController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(90.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(90.0),
-                      ),
-                      contentPadding: const EdgeInsets.all(10),
-                      label: const Text("Mobilité"),
-                      labelStyle: const TextStyle(color: Colors.grey)),
-                ),
-              ),
             if (globalData.getRole() == 1)
               Container(
                 padding: const EdgeInsets.only(top: 20),
@@ -277,7 +257,7 @@ class _EditProfileState extends State<EditProfile> {
             if (globalData.getRole() == 0)
               Container(
                 padding: const EdgeInsets.only(top: 20),
-                width: 120,
+                width: 330,
                 child: TextFormField(
                   cursorColor: Colors.grey,
                   controller: domaineController,
