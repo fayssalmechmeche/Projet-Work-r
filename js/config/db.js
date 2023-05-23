@@ -6,6 +6,7 @@ const dbConfig = {
   user: process.env.USER,
   password: process.env.PASSWORD,
   database: process.env.DATABASE,
+  connectTimeout: 20000,
 };
 
 let connection;
