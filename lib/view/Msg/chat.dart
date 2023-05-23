@@ -18,7 +18,7 @@ class Chat extends StatefulWidget {
 
 class _ChatPageState extends State<Chat> {
   final inputController = TextEditingController();
-
+final ScrollController _controller = ScrollController();
   var conversation;
 
   @override
@@ -91,133 +91,133 @@ class _ChatPageState extends State<Chat> {
         leading: const BackButton(
           color: Colors.black,
         ),
-        title: Text(
+        title: Container(width: 200,child:Text(
           data["receiver"],
           style: const TextStyle(
             color: Colors.black,
           ),
-        ),
+        ),),
         toolbarHeight: 35,
         elevation: 0,
       ),
       body: SafeArea(
-        child: FutureBuilder<Map<String, dynamic>>(
+          child: Column(children: [
+        FutureBuilder<Map<String, dynamic>>(
           future: getAllMessage(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               // En attente de la récupération de la conversation
-              return const Center(child: CircularProgressIndicator());
+              return const Expanded(
+                child:Center(child: Text("")));
             } else if (snapshot.hasError) {
               // Erreur lors de la récupération de la conversation
-              return Center(child: Text('Erreur : ${snapshot.error}'));
+              return  Expanded(
+                child: Center(child: Text('Erreur : ${snapshot.error}')));
             } else {
               final conversation = snapshot.data;
               final messages = messageProvider.messages;
 
-              return Column(
-                children: [
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: snapshot.data!["results"].length,
-                      itemBuilder: (context, index) {
-                        messageProvider
-                            .addMessage(snapshot.data!["results"][index]);
-                        return _buildMessageItem(messages[index]);
-                      },
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            controller: inputController,
-                            decoration: const InputDecoration(
-                              hintText: "Écrire un message...",
-                            ),
-                            onSubmitted: (text) async {
-                              if (inputController.text.isEmpty) return;
-
-                              if (data["type"] == "public") {
-                                await ConversationController.sendMessagePublic(
-                                  await getConversation(),
-                                  globalData.getId(),
-                                  globalData.getUsername(),
-                                  globalData.getRole().toString(),
-                                  inputController.text,
-                                );
-                                socket!.emit('message', {
-                                  "pseudo": globalData.getUsername(),
-                                  "content": inputController.text,
-                                  "senderID": globalData.getId(),
-                                  "date": DateTime.now().toString()
-                                });
-                              } else {
-                                await ConversationController.sendMessage(
-                                  await getConversation(),
-                                  globalData.getId(),
-                                  globalData.getUsername(),
-                                  globalData.getRole().toString(),
-                                  inputController.text,
-                                );
-                                socket!.emit('message', {
-                                  "pseudo": globalData.getUsername(),
-                                  "content": inputController.text,
-                                  "senderID": globalData.getId(),
-                                  "date": DateTime.now().toString()
-                                });
-                              }
-                              inputController.clear();
-                            },
-                          ),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.send),
-                          onPressed: () async {
-                            if (inputController.text.isEmpty) return;
-
-                            if (data["type"] == "public") {
-                              await ConversationController.sendMessagePublic(
-                                await getConversation(),
-                                globalData.getId(),
-                                globalData.getUsername(),
-                                globalData.getRole().toString(),
-                                inputController.text,
-                              );
-                              socket!.emit('message', {
-                                "pseudo": globalData.getUsername(),
-                                "content": inputController.text,
-                                "senderID": globalData.getId(),
-                                "date": DateTime.now().toString()
-                              });
-                            } else {
-                              await ConversationController.sendMessage(
-                                await getConversation(),
-                                globalData.getId(),
-                                globalData.getUsername(),
-                                globalData.getRole().toString(),
-                                inputController.text,
-                              );
-                              socket!.emit('message', {
-                                "pseudo": globalData.getUsername(),
-                                "content": inputController.text,
-                                "senderID": globalData.getId(),
-                                "date": DateTime.now().toString()
-                              });
-                            }
-                            inputController.clear();
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+              return Expanded(
+                child: ListView.builder(
+                 controller: _controller,
+                  itemCount: snapshot.data!["results"].length,
+                  itemBuilder: (context, index) {
+                    messageProvider
+                        .addMessage(snapshot.data!["results"][index]);
+                    return _buildMessageItem(messages[index]);
+                  },
+                ),
               );
             }
           },
         ),
-      ),
+        Container(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: inputController,
+                  decoration: const InputDecoration(
+                    hintText: "Écrire un message...",
+                  ),
+                  onSubmitted: (text) async {
+                    if (inputController.text.isEmpty)  _controller.jumpTo(0.0);
+
+                    if (data["type"] == "public") {
+                      await ConversationController.sendMessagePublic(
+                        await getConversation(),
+                        globalData.getId(),
+                        globalData.getUsername(),
+                        globalData.getRole().toString(),
+                        inputController.text,
+                      );
+                      socket!.emit('message', {
+                        "pseudo": globalData.getUsername(),
+                        "content": inputController.text,
+                        "senderID": globalData.getId(),
+                        "date": DateTime.now().toString()
+                      });
+                    } else {
+                      await ConversationController.sendMessage(
+                        await getConversation(),
+                        globalData.getId(),
+                        globalData.getUsername(),
+                        globalData.getRole().toString(),
+                        inputController.text,
+                      );
+                      socket!.emit('message', {
+                        "pseudo": globalData.getUsername(),
+                        "content": inputController.text,
+                        "senderID": globalData.getId(),
+                        "date": DateTime.now().toString()
+                      });
+                    }
+                    inputController.clear();
+                  },
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.send),
+                onPressed: () async {
+                  if (inputController.text.isEmpty) return;
+
+                  if (data["type"] == "public") {
+                    await ConversationController.sendMessagePublic(
+                      await getConversation(),
+                      globalData.getId(),
+                      globalData.getUsername(),
+                      globalData.getRole().toString(),
+                      inputController.text,
+                    );
+                    socket!.emit('message', {
+                      "pseudo": globalData.getUsername(),
+                      "content": inputController.text,
+                      "senderID": globalData.getId(),
+                      "date": DateTime.now().toString()
+                    });
+                  } else {
+                    await ConversationController.sendMessage(
+                      await getConversation(),
+                      globalData.getId(),
+                      globalData.getUsername(),
+                      globalData.getRole().toString(),
+                      inputController.text,
+                    );
+                    socket!.emit('message', {
+                      "pseudo": globalData.getUsername(),
+                      "content": inputController.text,
+                      "senderID": globalData.getId(),
+                      "date": DateTime.now().toString()
+                    });
+                  }
+                  inputController.clear();
+                },
+              ),
+            ],
+          ),
+        ),
+      ])),
     );
   }
 
@@ -242,9 +242,8 @@ class _ChatPageState extends State<Chat> {
       children: <Widget>[
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          constraints:  BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width * 0.7
-          ),
+          constraints:
+              BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.7),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: BoxDecoration(
             color: backgroundColor,
