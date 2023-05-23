@@ -200,7 +200,7 @@ class _ProfileOtherState extends State<ProfileOther> {
                                       });
                                       note = total / results.length;
                                     } else {
-                                      note = 0;
+                                      note = 3;
                                     }
 
                                     return Column(

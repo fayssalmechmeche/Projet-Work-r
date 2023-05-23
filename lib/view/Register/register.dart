@@ -28,7 +28,6 @@ class _RegisterPageState extends State<RegisterPage> {
     var cityController = TextEditingController();
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: BackButton(color: Colors.black),

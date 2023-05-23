@@ -34,7 +34,6 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
   List<String> category = ['Electricité', 'Plomberie', 'Maçonnerie'];
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: BackButton(color: Colors.black),
