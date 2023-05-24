@@ -133,7 +133,10 @@ class _LoginState extends State<Login> {
                   onTap: () {
                     //print('Text Clicked');
                   },
-                  child: const Text('Mot de passe oublié ?'),
+                  child: Container(
+                      width: 300,
+                      child: Text(
+                          'Un probleme ? \nContactez nous par mail à cette adresse : workr.support@gmail.com',textAlign: TextAlign.center,)),
                 ),
               )
             ]),
