@@ -558,6 +558,13 @@ class ArtisanController {
       //print("updateTask réussie Artisan Controller");
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
 
+      if (state == 1) {
+        final emailKey = dotenv.env['EMAIL_KEY'];
+        final template = rootBundle.loadString('assets/emails/closedChantier.html');
+
+        
+      }
+
       return jsonResponse;
     });
   }
