@@ -263,10 +263,7 @@ class _ProfileOtherState extends State<ProfileOther> {
 
                     if (conversationExists == true) {
                       // La conversation existe déjà, effectuer les actions appropriées
-                      const snackBar = SnackBar(
-                        content: Text('La conversation existe déjà'),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      
                       var conversation = await ConversationController
                           .getAllConversationFromArtisanAndParticulier(
                         data['_id'],
@@ -287,11 +284,7 @@ class _ProfileOtherState extends State<ProfileOther> {
                         data['_id'],
                         globalData.getId(),
                       );
-                      const snackBar = SnackBar(
-                        content: Text('Conversation créée'),
-                      );
-
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      
                       Navigator.pushNamed(context, Chat.tag, arguments: {
                         "id": conversation["results"][0]['id'],
                         "type": "public",

@@ -56,12 +56,10 @@ class _ListFavState extends State<ListFav> {
         if (snapshot.hasData) {
           if (snapshot.data['results'] == null) {
             return Center(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [Text("Aucun artisan trouvé")],
-            ));
+                child: Text("Aucun artisan trouvé"),
+            );
           }
-          if (snapshot.data['results'].length >= 0) {
+          if (snapshot.data['results'].length > 0) {
             return ListView.builder(
                 scrollDirection: Axis.vertical,
                 itemCount: snapshot.data['results'].length,
@@ -71,11 +69,8 @@ class _ListFavState extends State<ListFav> {
                   );
                 });
           } else {
-            return Center(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [Text("Aucun Artisan")],
-            ));
+            return const Center(
+                child: Text("Aucun Artisan dans les favoris"));
           }
         } else {
           return const Center(child: CircularProgressIndicator());

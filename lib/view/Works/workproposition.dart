@@ -7,6 +7,7 @@ import 'package:my_app/view/Works/listworkartisan.dart';
 import 'package:my_app/view/Works/workfollow.dart';
 import 'package:provider/provider.dart';
 
+import '../../Controller/Particulier/ParticulierController.dart';
 import '../../Controller/global.dart';
 
 class WorkProposition extends StatefulWidget {
@@ -25,6 +26,8 @@ class _WorkPropositionState extends State<WorkProposition> {
     final checkDevis = ArtisanController.checkDevisExists(
         globalData.getId(), int.parse(data['particulierID']), data['id']);
     //print(data);
+    final particulier = ParticulierController.getParticulierById(
+          int.parse(data['particulierID']));
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -65,14 +68,40 @@ class _WorkPropositionState extends State<WorkProposition> {
                               fontSize: 18,
                             ),
                           ),
-                          const SizedBox(height: 5),
-                          const Text(
-                            "Jean Dupont",
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.grey,
-                            ),
-                          ),
+                          FutureBuilder(
+                            future: particulier,
+                            builder:
+                                (BuildContext context, AsyncSnapshot snapshot) {
+                              if (snapshot.hasData) {
+                                //print(snapshot.data['results']);
+                                if (snapshot.data['results'] != null) {
+                                  print(snapshot.data);
+                                  return Container(
+                                      width: 230,
+                                      padding: EdgeInsets.only(top: 5),
+                                      child: Text(snapshot.data['results'][0]
+                                                      ['lastname'] +
+                                                  ' ' +
+                                                  snapshot.data['results'][0]
+                                                      ['name'],
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.grey
+                                              )));
+                                } else {
+                                  return Container(
+                                      width: 230,
+                                      padding: EdgeInsets.only(top: 5),
+                                      child: Text(" "));
+                                }
+                              } else {
+                                return Container(
+                                    width: 230,
+                                    padding: EdgeInsets.only(top: 5),
+                                    child: Text(""));
+                              }
+                            }),
                         ],
                       ),
                     ),

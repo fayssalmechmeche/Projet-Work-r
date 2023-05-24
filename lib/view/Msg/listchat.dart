@@ -34,11 +34,14 @@ class _ListChatState extends State<ListChat> {
         backgroundColor: Colors.transparent,
         leading: IconButton(
           onPressed: () {
-            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context){
-  return const FirstPage(title: '',);
-}), (r){
-  return false;
-});
+            Navigator.pushAndRemoveUntil(context,
+                MaterialPageRoute(builder: (BuildContext context) {
+              return const FirstPage(
+                title: '',
+              );
+            }), (r) {
+              return false;
+            });
           },
           icon: Icon(
             Icons.logout,
@@ -77,12 +80,7 @@ class _ListChatState extends State<ListChat> {
         if (snapshot.hasData) {
           if (snapshot.data['results'] == null) {
             return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Aucune proposition de devis"),
-                ],
-              ),
+              child: Text("Aucune conversation"),
             );
           }
           if (snapshot.data['results'].length != 0) {
@@ -96,12 +94,7 @@ class _ListChatState extends State<ListChat> {
             );
           } else {
             return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Aucun chantier disponible"),
-                ],
-              ),
+              child: Text("Aucune conversation"),
             );
           }
         } else {
