@@ -532,14 +532,14 @@ class ArtisanController {
   }
 
   static Future<Map<String, dynamic>> updateTask(
-    String name,
-    String type,
-    String startAt,
-    String endAt,
-    String description,
-    bool state,
-    int taskID,
-  ) async {
+      String name,
+      String type,
+      String startAt,
+      String endAt,
+      String description,
+      bool state,
+      int taskID,
+      int particulierID) async {
     return await http
         .post(Uri.parse("${url}updateTask"),
             headers: <String, String>{
@@ -554,15 +554,39 @@ class ArtisanController {
               'state': state,
               'taskID': taskID,
             }))
-        .then((http.Response response) {
+        .then((http.Response response) async {
       //print("updateTask réussie Artisan Controller");
+
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
 
-      if (state == 1) {
+      if (state == true) {
         final emailKey = dotenv.env['EMAIL_KEY'];
-        final template = rootBundle.loadString('assets/emails/closedChantier.html');
+        final template =
+            await rootBundle.loadString('assets/emails/endTask.html');
 
-        
+        final particulier =
+            await ParticulierController.getParticulierById(particulierID);
+
+        String email = particulier["results"][0]['email'];
+        final smtpServer = gmail("workr.professionel@gmail.com", emailKey!);
+
+        final message = Message()
+          ..from = Address("workr.professionel@gmail.com", 'L\'équipe Workr')
+          ..recipients.add(email)
+          ..subject = "Tache terminé : ${name}"
+          ..html = template
+              .replaceAll(
+                  '[particulier]',
+                  particulier["results"][0]['name'] +
+                      ' ' +
+                      particulier["results"][0]['lastname'])
+              .replaceAll('[name]', name)
+              .replaceAll('[type]', type)
+              .replaceAll('[start_at]', startAt)
+              .replaceAll('[end_at]', endAt)
+              .replaceAll('[description]', description);
+
+        final sendReport = await send(message, smtpServer);
       }
 
       return jsonResponse;

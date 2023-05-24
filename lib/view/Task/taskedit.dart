@@ -310,14 +310,14 @@ class _TaskEditState extends State<TaskEdit> {
                     }
                     if (error == false) {
                       var response = ArtisanController.updateTask(
-                        nameTaskController.text,
-                        _dropdownvalue2!,
-                        dateStartController.text,
-                        dateEndController.text,
-                        descriptionController.text,
-                        isSwitched,
-                        data['id'],
-                      );
+                          nameTaskController.text,
+                          _dropdownvalue2!,
+                          dateStartController.text,
+                          dateEndController.text,
+                          descriptionController.text,
+                          isSwitched,
+                          data['id'],
+                          int.parse(globalData.getPartiuclierIdChantier()));
                       const snackBar = SnackBar(
                         content: Text('Tâche modifié !'),
                       );
