@@ -167,7 +167,7 @@ var functions = {
   // a function to get an work from the mysql database where the state is equal to the state in the header and return it
   getWorkByStatus: function (req, res) {
     mysqlConnection.query(
-      "SELECT * FROM chantier WHERE state = ? AND artisanID = ? AND (artisans_refuses IS NULL OR FIND_IN_SET(?, artisans_refuses) = 0)",
+      "SELECT * FROM chantier WHERE state = ? AND (artisans_refuses IS NULL OR artisans_refuses NOT LIKE CONCAT('%', ?, '%')) AND artisanID = ?",
       [req.headers.state, req.headers.artisanid, req.headers.artisanid],
       function (error, results, fields) {
         if (error) return res.json({ success: false, msg: error });
