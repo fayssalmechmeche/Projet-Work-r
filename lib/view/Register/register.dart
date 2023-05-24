@@ -28,14 +28,14 @@ class _RegisterPageState extends State<RegisterPage> {
     var cityController = TextEditingController();
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: BackButton(color: Colors.black),
         elevation: 0,
       ),
       body: SafeArea(
-          child: Column(
+          child: SingleChildScrollView(child: Column(
         children: <Widget>[
           Container(
             padding: EdgeInsets.only(bottom: 10),
@@ -459,6 +459,7 @@ class _RegisterPageState extends State<RegisterPage> {
               )),
         ],
       )),
+      )
     );
   }
 

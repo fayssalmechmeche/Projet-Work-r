@@ -100,14 +100,15 @@ class _EditProfileState extends State<EditProfile> {
       domaineController.text = globalData.getDomaine();
     }
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: const BackButton(color: Colors.black),
         elevation: 0,
       ),
       body: SafeArea(
-        child: Column(children: [
+        child: SingleChildScrollView(child:
+        Column(children: [
           Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
             Text(
               "Profile",
@@ -444,6 +445,7 @@ class _EditProfileState extends State<EditProfile> {
                     style: TextStyle(color: Colors.white)),
               )),
         ]),
+        )
       ),
     );
   }
