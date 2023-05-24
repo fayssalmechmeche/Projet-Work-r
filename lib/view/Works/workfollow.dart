@@ -468,12 +468,6 @@ class _WorkFollowState extends State<WorkFollow> {
                                     final file = await pdfAPI.loadFirebase(url);
                                     if (file == null) return;
                                     openPDF(context, file);
-                                    const snackBar = SnackBar(
-                                      content: Text(
-                                          'Redirection vers la page Mon Dossier'),
-                                    );
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(snackBar);
                                   },
                                   child: Card(
                                     shape: RoundedRectangleBorder(
@@ -568,12 +562,6 @@ class _WorkFollowState extends State<WorkFollow> {
                                 final receiver = await dataProfile;
 
                                 if (conversationExists) {
-                                  const snackBar = SnackBar(
-                                    content:
-                                        Text('La conversation existe déjà'),
-                                  );
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(snackBar);
                                   Map<String, dynamic> arguments = {
                                     'chantier': globalData.getIdChantier(),
                                     'type': "private",

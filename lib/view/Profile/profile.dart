@@ -3,6 +3,7 @@ import 'package:my_app/view/Profile/editprofile.dart';
 import 'package:provider/provider.dart';
 
 import '../../Controller/global.dart';
+import '../LunchPage/firstpage.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key, required String title}) : super(key: key);
@@ -21,7 +22,11 @@ class _ProfileState extends State<Profile> {
         backgroundColor: Colors.transparent,
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context){
+  return const FirstPage(title: '',);
+}), (r){
+  return false;
+});
           },
           icon: Icon(
             Icons.logout,

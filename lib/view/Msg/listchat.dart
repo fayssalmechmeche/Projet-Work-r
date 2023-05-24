@@ -5,6 +5,7 @@ import 'package:my_app/view/Msg/chat.dart';
 import 'package:provider/provider.dart';
 
 import '../../Controller/global.dart';
+import '../LunchPage/firstpage.dart';
 
 class ListChat extends StatefulWidget {
   const ListChat({Key? key}) : super(key: key);
@@ -33,7 +34,11 @@ class _ListChatState extends State<ListChat> {
         backgroundColor: Colors.transparent,
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context){
+  return const FirstPage(title: '',);
+}), (r){
+  return false;
+});
           },
           icon: Icon(
             Icons.logout,
