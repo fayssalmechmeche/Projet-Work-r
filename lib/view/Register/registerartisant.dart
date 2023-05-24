@@ -88,6 +88,9 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                                   if (val.contains(new RegExp(r'[0-9]'))) {
                                     return "Le nom n\'est pas valide !";
                                   }
+                                  if (val.contains(new RegExp(r'[;]')) ) {
+                                      return 'Invalide !';
+                                    }
 
                                   return null;
                                 },
@@ -118,6 +121,9 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                                 if (val.contains(new RegExp(r'[0-9]'))) {
                                   return "Le prénom n\'est pas valide !";
                                 }
+                                if (val.contains(new RegExp(r'[;]')) ) {
+                                      return 'Invalide !';
+                                    }
 
                                 return null;
                               },
@@ -155,6 +161,9 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                                     new RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
                                   return "Nom d'utilisateur n'est pas valide !";
                                 }
+                                if (val.contains(new RegExp(r'[;]')) ) {
+                                      return 'Invalide !';
+                                    }
 
                                 return null;
                               },
@@ -194,6 +203,9 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                                   print(val.indexOf("0"));
                                   return "Le numero de telephone doit commencer par 0 !";
                                 }
+                                if (val.contains(new RegExp(r'[;]')) ) {
+                                      return 'Invalide !';
+                                    }
 
                                 return null;
                               },
@@ -227,6 +239,9 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                                     false) {
                                   return "L\'adresse mail n\'est pas valide !";
                                 }
+                                if (val.contains(new RegExp(r'[;]')) ) {
+                                      return 'Invalide !';
+                                    }
 
                                 return null;
                               },
@@ -259,6 +274,9 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                                     new RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
                                   return "Adresse n'est pas valide !";
                                 }
+                                if (val.contains(new RegExp(r'[;]')) ) {
+                                      return 'Invalide !';
+                                    }
 
                                 return null;
                               },
@@ -299,6 +317,9 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                                               r'[!@#$%^&*(),.?":{}|<>]'))) {
                                         return "La ville n'est pas valide !";
                                       }
+                                      if (val.contains(new RegExp(r'[;]')) ) {
+                                      return 'Invalide !';
+                                    }
 
                                       return null;
                                     },
@@ -337,6 +358,9 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                                       if (val!.length != 5) {
                                         return "Le code postal n'est pas valide !";
                                       }
+                                      if (val.contains(new RegExp(r'[;]')) ) {
+                                      return 'Invalide !';
+                                    }
 
                                       return null;
                                     },
@@ -370,6 +394,9 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                                     new RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
                                   return "Nom de l'entreprise n'est pas valide !";
                                 }
+                                if (val.contains(new RegExp(r'[;]')) ) {
+                                      return 'Invalide !';
+                                    }
 
                                 return null;
                               },
@@ -430,6 +457,9 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                                 if (val.length != 14) {
                                   return "Numéro de siret n'est pas valide !";
                                 }
+                                if (val.contains(new RegExp(r'[;]')) ) {
+                                      return 'Invalide !';
+                                    }
 
                                 return null;
                               },
@@ -478,6 +508,9 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                                     false) {
                                   return 'Le mot de passe doit contenir un caractère spécial !';
                                 }
+                                if (val.contains(new RegExp(r'[;]')) ) {
+                                      return 'Invalide !';
+                                    }
 
                                 return null;
                               },
@@ -509,6 +542,9 @@ class _RegisterArtisanState extends State<RegisterArtisan> {
                                 if (val != passwordController.text) {
                                   return 'La confirmation de mot de passe et le mot de passe ne sont pas identique !';
                                 }
+                                if (val.contains(new RegExp(r'[;]')) ) {
+                                      return 'Invalide !';
+                                    }
 
                                 return null;
                               },

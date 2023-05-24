@@ -97,25 +97,33 @@ class _LoginState extends State<Login> {
                   onPressed: () async {
                     var email = emailController.text;
                     var password = passwordController.text;
-                    var authenticated =
-                        await ParticulierController.authenticate(
-                      emailController.text,
-                      passwordController.text,
-                    );
-                    if (authenticated.keys.contains("token")) {
-                      var decodedToken = await ParticulierController.getInfo(
-                          authenticated["token"]);
-
-                      globalData.setUser(decodedToken["msg"], 1);
-                      //print(globalData.user["email"]);
-
-                      Navigator.pushNamed(context, NavigationPage.tag);
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Email ou mot de passe incorrect'),
-                        ),
+                    if (email.contains(new RegExp(r'[;]')) == false && password.contains(new RegExp(r'[;]')) == false) {
+                      var authenticated =
+                          await ParticulierController.authenticate(
+                        emailController.text,
+                        passwordController.text,
                       );
+                      if (authenticated.keys.contains("token")) {
+                        var decodedToken = await ParticulierController.getInfo(
+                            authenticated["token"]);
+
+                        globalData.setUser(decodedToken["msg"], 1);
+                        //print(globalData.user["email"]);
+
+                        Navigator.pushNamed(context, NavigationPage.tag);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Email ou mot de passe incorrect'),
+                          ),
+                        );
+                      }
+                    }else{
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Email ou mot de passe invalide'),
+                          ),
+                        );
                     }
                   },
                   style: OutlinedButton.styleFrom(
@@ -136,7 +144,9 @@ class _LoginState extends State<Login> {
                   child: Container(
                       width: 300,
                       child: Text(
-                          'Un probleme ? \nContactez nous par mail à cette adresse : workr.support@gmail.com',textAlign: TextAlign.center,)),
+                        'Un probleme ? \nContactez nous par mail à cette adresse : workr.support@gmail.com',
+                        textAlign: TextAlign.center,
+                      )),
                 ),
               )
             ]),
