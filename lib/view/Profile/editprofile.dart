@@ -52,6 +52,11 @@ class _EditProfileState extends State<EditProfile> {
             name: path.basename(image.path), path: image.path, size: 0);
       });
     }
+    var imageText = image!.name;
+    var snackBar = SnackBar(
+      content: Text("Image choisi : $imageText "),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   Future uploadFile() async {
@@ -107,8 +112,8 @@ class _EditProfileState extends State<EditProfile> {
         elevation: 0,
       ),
       body: SafeArea(
-        child: SingleChildScrollView(child:
-        Column(children: [
+          child: SingleChildScrollView(
+        child: Column(children: [
           Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
             Text(
               "Profile",
@@ -445,8 +450,7 @@ class _EditProfileState extends State<EditProfile> {
                     style: TextStyle(color: Colors.white)),
               )),
         ]),
-        )
-      ),
+      )),
     );
   }
 }
