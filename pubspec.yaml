@@ -65,6 +65,7 @@ flutter_launcher_icons:
   ios: true
   image_path: "assets/icons/icon.png"
   min_sdk_android: 21
+  background_color_ios: "#ffffff"
 
 dev_dependencies:
   flutter_test:
