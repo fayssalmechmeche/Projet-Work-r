@@ -16,6 +16,7 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     final globalData = Provider.of<GlobalData>(context);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: IconButton(
