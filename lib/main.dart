@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -29,6 +32,7 @@ import 'package:my_app/view/Works/addwork.dart';
 import 'package:my_app/view/Works/workfollow.dart';
 import 'package:my_app/view/Works/listworkartisan.dart';
 import 'package:my_app/view/Works/workproposition.dart';
+import 'package:my_app/view/NoInternetPage.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'Controller/MessageProvider.dart';
@@ -68,10 +72,24 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late IO.Socket socket;
 
+  late ConnectivityResult _connectivityResult;
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+
   @override
   void initState() {
     super.initState();
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    _connectivitySubscription =
+        Connectivity().onConnectivityChanged.listen((result) {
+      setState(() {
+        _connectivityResult = result;
+      });
+    });
+    Connectivity().checkConnectivity().then((result) {
+      setState(() {
+        _connectivityResult = result;
+      });
+    });
     // Initialisation du socket
     socket = IO.io(
         dotenv.env['DB_HOST']!,
@@ -86,7 +104,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void dispose() {
-    socket.dispose(); // Déconnecte et libère les ressources du socket
+    socket.dispose(); 
+    _connectivitySubscription.cancel();// Déconnecte et libère les ressources du socket
     super.dispose();
   }
 
@@ -101,7 +120,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const FirstPage(title: 'Flutter Demo Home Page'),
+      home: _buildHomePage(),
       routes: {
         HomePage.tag: (context) => HomePage(),
         Login.tag: (context) => const Login(),
@@ -134,5 +153,21 @@ class _MyAppState extends State<MyApp> {
         ListProposition.tag: (context) => const ListProposition(),
       },
     );
+  }
+  Widget _buildHomePage() {
+    if (_connectivityResult == ConnectivityResult.none) {
+      return NoInternetPage(
+        onRefresh: () {
+          Connectivity().checkConnectivity().then((result) {
+            setState(() {
+              _connectivityResult = result;
+            });
+          });
+        },
+      );
+    } else {
+      // Retourne votre page d'accueil normale ici
+      return FirstPage(title: '',);
+    }
   }
 }

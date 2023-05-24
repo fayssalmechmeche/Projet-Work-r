@@ -83,25 +83,25 @@ class _HomePageState extends State<HomePage> {
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               if (globalData.getRole() == 1)
                 Container(
-                    padding: const EdgeInsets.only(left: 20, right: 20),
-                    decoration: BoxDecoration(
-                      color: Colors.grey.withOpacity(0.75),
+                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  decoration: BoxDecoration(
+                      color: Colors.yellow.withOpacity(0.5),
                       shape: BoxShape.circle,
-                    ),
-                    child: IconButton(
+                      border: Border.all(width: 1, color: Colors.black)),
+                  child: IconButton(
                         icon: const Icon(Icons.star, size: 20),
                         onPressed: () {
                           Navigator.of(context)
                               .pushNamed(ListFav.tag)
                               .then((_) => setState(() {}));
                         })),
-              Container(
+             Container(
                   padding: const EdgeInsets.only(left: 20, right: 20),
                   decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.75),
-                    shape: BoxShape.circle,
-                  ),
-                  child: IconButton(
+                      color: Colors.yellow.withOpacity(0.5),
+                      shape: BoxShape.circle,
+                      border: Border.all(width: 1, color: Colors.black)),
+                  child:  IconButton(
                       icon: const Icon(Icons.search, size: 20),
                       onPressed: () {
                         Navigator.of(context)
