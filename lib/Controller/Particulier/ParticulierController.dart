@@ -202,7 +202,7 @@ class ParticulierController {
         final message = Message()
           ..from = Address("workr.professionel@gmail.com", 'L\'équipe Workr')
           ..recipients.add(email)
-          ..subject = 'Nouveau chantier : ${name}}'
+          ..subject = 'Nouveau chantier : ${name}'
           ..html = template
               .replaceAll('[name]', name)
               .replaceAll('[category]', category)
