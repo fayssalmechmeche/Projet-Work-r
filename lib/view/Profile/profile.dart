@@ -174,13 +174,6 @@ class _ProfileState extends State<Profile> {
                     
                     const Padding(
                       padding: EdgeInsets.only(top: 20, bottom: 10),
-                      child:
-                          Text("Mot de passe", style: TextStyle(fontSize: 18)),
-                    ),
-                    const Text("**********",
-                        style: TextStyle(fontSize: 16, color: Colors.grey)),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 20, bottom: 10),
                       child: Text("Téléphone", style: TextStyle(fontSize: 18)),
                     ),
                     Text(globalData.getPhone(),
