@@ -135,7 +135,7 @@ class _ProfileState extends State<Profile> {
                                           padding: const EdgeInsets.only(
                                               top: 20, bottom: 10),
                                           width: 120,
-                                          child: const Text("Code Postale",
+                                          child: const Text("Code Postal",
                                               style: TextStyle(fontSize: 18)),
                                         ),
                                       if (globalData.getRole() == 1)

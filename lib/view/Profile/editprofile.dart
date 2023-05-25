@@ -256,7 +256,7 @@ class _EditProfileState extends State<EditProfile> {
                         borderRadius: BorderRadius.circular(90.0),
                       ),
                       contentPadding: const EdgeInsets.all(10),
-                      label: const Text("Code Postale"),
+                      label: const Text("Code Postal"),
                       labelStyle: const TextStyle(color: Colors.grey)),
                 ),
               ),
