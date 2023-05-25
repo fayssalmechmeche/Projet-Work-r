@@ -51,7 +51,7 @@ class _LoginArtState extends State<LoginArt> {
                       borderRadius: BorderRadius.circular(90.0),
                     ),
                     contentPadding: const EdgeInsets.all(10),
-                    labelText: "Adresse mail",
+                    labelText: "Adresse email",
                     labelStyle: TextStyle(color: Colors.grey),
                   ),
                 ),
@@ -133,7 +133,7 @@ class _LoginArtState extends State<LoginArt> {
                   child: Container(
                       width: 300,
                       child: Text(
-                        'Un probleme ? \nContactez nous par mail à cette adresse : workr.support@gmail.com',
+                        'Un problème ? \nContactez-nous par email à cette adresse : workr.support@gmail.com',
                         textAlign: TextAlign.center,
                       )),
                 ),

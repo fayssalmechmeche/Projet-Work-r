@@ -30,7 +30,7 @@ class _RegisterSelectionPageState extends State<RegisterSelectionPage> {
             const Padding(
                 padding: EdgeInsets.only(top: 80),
                 child: Text(
-                  "Je m'inscrit en tant que :",
+                  "Je m'inscris en tant que :",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 )),
             Container(

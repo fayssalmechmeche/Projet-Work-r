@@ -113,7 +113,7 @@ class _ListTasksState extends State<ListTasks> {
             return Center(
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [Text("Aucune proposition de chantier")],
+              children: [Text("Aucune tâche disponible")],
             ));
           }
           if (snapshot.data['results'].length != 0) {
@@ -128,7 +128,7 @@ class _ListTasksState extends State<ListTasks> {
             return Center(
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [Text("Aucun chantier disponible")],
+              children: [Text("Aucune tâche disponible")],
             ));
           }
         } else {

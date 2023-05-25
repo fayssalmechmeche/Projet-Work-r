@@ -84,12 +84,14 @@ class _HomePageArtState extends State<HomePageArt> {
           backgroundColor: Colors.transparent,
           leading: IconButton(
             onPressed: () {
-             
-             Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context){
-  return const FirstPage(title: '',);
-}), (r){
-  return false;
-});
+              Navigator.pushAndRemoveUntil(context,
+                  MaterialPageRoute(builder: (BuildContext context) {
+                return const FirstPage(
+                  title: '',
+                );
+              }), (r) {
+                return false;
+              });
             },
             icon: const Icon(
               Icons.logout,
@@ -164,7 +166,7 @@ class _HomePageArtState extends State<HomePageArt> {
                             children: [
                               const Padding(
                                   padding: EdgeInsets.only(top: 10),
-                                  child: Text('Nombre de Clients',
+                                  child: Text('Nombre de clients',
                                       style: TextStyle(fontSize: 18))),
                               FutureBuilder(
                                   future: getTotalWorkCount(),

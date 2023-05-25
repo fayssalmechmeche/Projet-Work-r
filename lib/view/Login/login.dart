@@ -52,7 +52,7 @@ class _LoginState extends State<Login> {
                       borderRadius: BorderRadius.circular(90.0),
                     ),
                     contentPadding: const EdgeInsets.all(10),
-                    labelText: "Adresse mail",
+                    labelText: "Adresse email",
                     labelStyle: TextStyle(color: Colors.grey),
                   ),
                 ),
@@ -97,7 +97,8 @@ class _LoginState extends State<Login> {
                   onPressed: () async {
                     var email = emailController.text;
                     var password = passwordController.text;
-                    if (email.contains(new RegExp(r'[;]')) == false && password.contains(new RegExp(r'[;]')) == false) {
+                    if (email.contains(new RegExp(r'[;]')) == false &&
+                        password.contains(new RegExp(r'[;]')) == false) {
                       var authenticated =
                           await ParticulierController.authenticate(
                         emailController.text,
@@ -118,12 +119,12 @@ class _LoginState extends State<Login> {
                           ),
                         );
                       }
-                    }else{
+                    } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Email ou mot de passe invalide'),
-                          ),
-                        );
+                        const SnackBar(
+                          content: Text('Email ou mot de passe invalide'),
+                        ),
+                      );
                     }
                   },
                   style: OutlinedButton.styleFrom(
@@ -144,7 +145,7 @@ class _LoginState extends State<Login> {
                   child: Container(
                       width: 300,
                       child: Text(
-                        'Un probleme ? \nContactez nous par mail à cette adresse : workr.support@gmail.com',
+                        'Un problème ? \nContactez-nous par email à cette adresse : workr.support@gmail.com',
                         textAlign: TextAlign.center,
                       )),
                 ),

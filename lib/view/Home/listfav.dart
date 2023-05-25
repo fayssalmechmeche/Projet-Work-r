@@ -70,7 +70,7 @@ class _ListFavState extends State<ListFav> {
                 });
           } else {
             return const Center(
-                child: Text("Aucun Artisan dans les favoris"));
+                child: Text("Aucun artisan dans les favoris"));
           }
         } else {
           return const Center(child: CircularProgressIndicator());

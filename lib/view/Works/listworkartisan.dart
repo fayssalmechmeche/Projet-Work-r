@@ -25,7 +25,7 @@ class _ListWorkArtisanState extends State<ListWorkArtisan> {
           color: Colors.black,
         ),
         title: const Text(
-          "Propositions de chantiers",
+          "Propositions de chantier",
           style: TextStyle(
             color: Colors.black,
           ),

@@ -66,9 +66,9 @@ class _WorkFollowState extends State<WorkFollow> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Confirmation de cloturation de chantier'),
+            title: const Text('Confirmation de la clôturation du chantier'),
             content: const Text(
-              "Souhaiter vous bien mettre fin à ce chantier et accepter ainsi qu'il soit traiter comme un chantier terminer ?",
+              "Souhaitez-vous bien mettre fin à ce chantier et accepter ainsi qu'il soit traité comme un chantier terminé ?",
             ),
             actions: <Widget>[
               TextButton(
@@ -118,12 +118,12 @@ class _WorkFollowState extends State<WorkFollow> {
             String? _dropdownvalue;
             List<String> category = ['0', '1', '2', '3', '4', '5'];
             return AlertDialog(
-              title: const Text('Notez votre Artisan !'),
+              title: const Text('Notez votre artisan !'),
               content: Container(
                 padding: const EdgeInsets.only(top: 20),
                 width: 330,
                 child: DropdownButtonFormField<String?>(
-                  hint: const Text('Séléctionnez une note de 0 a 5'),
+                  hint: const Text('Sélectionnez une note de 0 à 5'),
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(
@@ -664,7 +664,7 @@ class _WorkFollowState extends State<WorkFollow> {
                           foregroundColor: Colors.red,
                           backgroundColor: Colors.red.withOpacity(0.5),
                           side: const BorderSide(color: Colors.red)),
-                      child: const Text('Cloturer le chantier',
+                      child: const Text('Clôturer le chantier',
                           textAlign: TextAlign.center,
                           style: TextStyle(color: Colors.black)),
                     ))

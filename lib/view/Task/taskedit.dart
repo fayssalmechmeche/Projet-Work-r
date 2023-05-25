@@ -77,7 +77,7 @@ class _TaskEditState extends State<TaskEdit> {
                   padding: const EdgeInsets.only(top: 20),
                   width: 330,
                   child: DropdownButtonFormField<String?>(
-                    hint: const Text('Categorie'),
+                    hint: const Text('Catégorie'),
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(
@@ -114,7 +114,7 @@ class _TaskEditState extends State<TaskEdit> {
                             borderRadius: BorderRadius.circular(90.0),
                           ),
                           contentPadding: const EdgeInsets.all(10),
-                          label: const Text("Date réalisé de début"),
+                          label: const Text("Date de début"),
                           labelStyle: const TextStyle(color: Colors.grey)),
                       readOnly:
                           true, //set it true, so that user will not able to edit text
@@ -175,7 +175,7 @@ class _TaskEditState extends State<TaskEdit> {
                             borderRadius: BorderRadius.circular(90.0),
                           ),
                           contentPadding: const EdgeInsets.all(10),
-                          label: const Text("Date de fin réalisé"),
+                          label: const Text("Date de fin"),
                           labelStyle: const TextStyle(color: Colors.grey)),
                       readOnly:
                           true, //set it true, so that user will not able to edit text
@@ -241,7 +241,7 @@ class _TaskEditState extends State<TaskEdit> {
                 ),
                 Container(
                   child: SwitchListTile(
-                    title: const Text('Tâche terminé'),
+                    title: const Text('Tâche terminée'),
                     value: isSwitched,
                     onChanged: (bool value) {
                       setState(() {

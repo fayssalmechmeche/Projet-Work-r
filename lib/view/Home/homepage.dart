@@ -188,7 +188,7 @@ class _HomePageState extends State<HomePage> {
             return Center(
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [Text("Aucun Artisan")],
+              children: [Text("Aucun artisan")],
             ));
           }
         } else {

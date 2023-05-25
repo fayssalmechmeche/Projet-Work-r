@@ -152,7 +152,7 @@ class _ProfileState extends State<Profile> {
                                   padding: const EdgeInsets.only(
                                       top: 20, right: 20, bottom: 10),
                                   width: 210,
-                                  child: const Text("Mail",
+                                  child: const Text("Email",
                                       style: TextStyle(fontSize: 18)),
                                 ),
                                 Container(

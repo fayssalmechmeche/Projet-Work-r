@@ -55,7 +55,7 @@ class _TaskState extends State<Task> {
                       children: [
                         Container(
                           child: const Text(
-                            "Categorie",
+                            "Catégorie",
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 16,

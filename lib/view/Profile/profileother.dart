@@ -59,7 +59,7 @@ class _ProfileOtherState extends State<ProfileOther> {
           ),
         ),
         title: const Text(
-          "Profile",
+          "Profil",
           style: TextStyle(
             color: Colors.black,
           ),
@@ -141,7 +141,7 @@ class _ProfileOtherState extends State<ProfileOther> {
                               right: 20,
                             ),
                             width: 210,
-                            child: const Text("Mail",
+                            child: const Text("Email",
                                 style: TextStyle(fontSize: 18)),
                           ),
                           Container(
@@ -263,7 +263,7 @@ class _ProfileOtherState extends State<ProfileOther> {
 
                     if (conversationExists == true) {
                       // La conversation existe déjà, effectuer les actions appropriées
-                      
+
                       var conversation = await ConversationController
                           .getAllConversationFromArtisanAndParticulier(
                         data['_id'],
@@ -284,7 +284,7 @@ class _ProfileOtherState extends State<ProfileOther> {
                         data['_id'],
                         globalData.getId(),
                       );
-                      
+
                       Navigator.pushNamed(context, Chat.tag, arguments: {
                         "id": conversation["results"][0]['id'],
                         "type": "public",
@@ -327,7 +327,7 @@ class _ProfileOtherState extends State<ProfileOther> {
                               .removeFavoriteArtisanToParticulier(
                                   globalData.getId(), data['_id']);
                           const snackBar = SnackBar(
-                            content: Text('Artisan retirés des favoris'),
+                            content: Text('Artisan retiré des favoris'),
                           );
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                           Navigator.pop(context);

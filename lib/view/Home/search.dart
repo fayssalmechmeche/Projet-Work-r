@@ -94,8 +94,8 @@ class _SearchState extends State<Search> {
                     ),
                     contentPadding: const EdgeInsets.all(10),
                     hintText: (inputDomaine == "Nom")
-                        ? "Entrer un nom d'artisan"
-                        : "Entrer un nom de domain",
+                        ? "Entrez un nom d'artisan"
+                        : "Entrez un nom de domaine",
                     labelStyle: const TextStyle(color: Colors.grey),
                   ),
                 ),

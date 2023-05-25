@@ -116,7 +116,7 @@ class _EditProfileState extends State<EditProfile> {
         child: Column(children: [
           Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
             Text(
-              "Profile",
+              "Profil",
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
           ]),
@@ -173,7 +173,7 @@ class _EditProfileState extends State<EditProfile> {
                               borderRadius: BorderRadius.circular(90.0),
                             ),
                             contentPadding: const EdgeInsets.all(10),
-                            label: const Text("Prenom"),
+                            label: const Text("Prénom"),
                             labelStyle: const TextStyle(color: Colors.grey)),
                       ),
                     ),
@@ -296,7 +296,7 @@ class _EditProfileState extends State<EditProfile> {
                     borderRadius: BorderRadius.circular(90.0),
                   ),
                   contentPadding: const EdgeInsets.all(10),
-                  label: const Text("Mail"),
+                  label: const Text("Email"),
                   labelStyle: const TextStyle(color: Colors.grey)),
             ),
           ),

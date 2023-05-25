@@ -84,9 +84,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                       if (val!.isEmpty) {
                                         return "Nom manquant !";
                                       }
-                                       if (val.contains(new RegExp(r'[;]')) ) {
-                                      return 'Invalide !';
-                                    }
+                                      if (val.contains(new RegExp(r'[;]'))) {
+                                        return 'Invalide !';
+                                      }
 
                                       if (val.contains(new RegExp(r'[0-9]'))) {
                                         return "Le nom n\'est pas valide !";
@@ -113,7 +113,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         borderRadius: BorderRadius.circular(90),
                                       ),
                                       contentPadding: const EdgeInsets.all(10),
-                                      labelText: "Prenom",
+                                      labelText: "Prénom",
                                       labelStyle:
                                           TextStyle(color: Colors.grey)),
                                   validator: (String? val) {
@@ -123,7 +123,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     if (val.contains(new RegExp(r'[0-9]'))) {
                                       return "Le prénom n\'est pas valide !";
                                     }
-                                    if (val.contains(new RegExp(r'[;]')) ) {
+                                    if (val.contains(new RegExp(r'[;]'))) {
                                       return 'Invalide !';
                                     }
 
@@ -163,7 +163,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         r'[!@#$%^&*(),.?":{}|<>]'))) {
                                       return "Nom d'utilisateur n'est pas valide !";
                                     }
-                                    if (val.contains(new RegExp(r'[;]')) ) {
+                                    if (val.contains(new RegExp(r'[;]'))) {
                                       return 'Invalide !';
                                     }
 
@@ -191,21 +191,21 @@ class _RegisterPageState extends State<RegisterPage> {
                                       borderRadius: BorderRadius.circular(90.0),
                                     ),
                                     contentPadding: const EdgeInsets.all(10),
-                                    labelText: "Numero de telephone",
+                                    labelText: "Numéro de téléphone",
                                     labelStyle: TextStyle(color: Colors.grey),
                                   ),
                                   validator: (String? val) {
                                     if (val!.isEmpty) {
-                                      return "Numero de telephone manquant !";
+                                      return "Numéro de téléphone manquant !";
                                     }
                                     if (val!.length != 10) {
-                                      return "Le numero de telephone n\'est pas valide !";
+                                      return "Le numéro de téléphone n\'est pas valide !";
                                     }
                                     if (val.indexOf("0") != 0) {
                                       print(val.indexOf("0"));
-                                      return "Le numero de telephone doit commencer par 0 !";
+                                      return "Le numéro de téléphone doit commencer par 0 !";
                                     }
-                                    if (val.contains(new RegExp(r'[;]')) ) {
+                                    if (val.contains(new RegExp(r'[;]'))) {
                                       return 'Invalide !';
                                     }
 
@@ -229,7 +229,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                       borderRadius: BorderRadius.circular(90.0),
                                     ),
                                     contentPadding: const EdgeInsets.all(10),
-                                    labelText: "Adresse mail",
+                                    labelText: "Adresse email",
                                     labelStyle: TextStyle(color: Colors.grey),
                                   ),
                                   validator: (String? val) {
@@ -239,9 +239,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                     if (RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
                                             .hasMatch(val) ==
                                         false) {
-                                      return "L\'adresse mail n\'est pas valide !";
+                                      return "L\'adresse email n\'est pas valide !";
                                     }
-                                    if (val.contains(new RegExp(r'[;]')) ) {
+                                    if (val.contains(new RegExp(r'[;]'))) {
                                       return 'Invalide !';
                                     }
 
@@ -278,7 +278,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         r'[!@#$%^&*(),.?":{}|<>]'))) {
                                       return "Adresse n'est pas valide !";
                                     }
-                                    if (val.contains(new RegExp(r'[;]')) ) {
+                                    if (val.contains(new RegExp(r'[;]'))) {
                                       return 'Invalide !';
                                     }
 
@@ -322,9 +322,10 @@ class _RegisterPageState extends State<RegisterPage> {
                                                   r'[!@#$%^&*(),.?":{}|<>]'))) {
                                             return "La ville n'est pas valide !";
                                           }
-                                          if (val.contains(new RegExp(r'[;]')) ) {
-                                      return 'Invalide !';
-                                    }
+                                          if (val
+                                              .contains(new RegExp(r'[;]'))) {
+                                            return 'Invalide !';
+                                          }
 
                                           return null;
                                         },
@@ -363,9 +364,10 @@ class _RegisterPageState extends State<RegisterPage> {
                                           if (val!.length != 5) {
                                             return "Le code postal n'est pas valide !";
                                           }
-                                          if (val.contains(new RegExp(r'[;]')) ) {
-                                      return 'Invalide !';
-                                    }
+                                          if (val
+                                              .contains(new RegExp(r'[;]'))) {
+                                            return 'Invalide !';
+                                          }
 
                                           return null;
                                         },
@@ -415,7 +417,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         false) {
                                       return 'Le mot de passe doit contenir un caractère spécial !';
                                     }
-                                    if (val.contains(new RegExp(r'[;]')) ) {
+                                    if (val.contains(new RegExp(r'[;]'))) {
                                       return 'Invalide !';
                                     }
 
@@ -439,17 +441,17 @@ class _RegisterPageState extends State<RegisterPage> {
                                       borderRadius: BorderRadius.circular(90.0),
                                     ),
                                     contentPadding: const EdgeInsets.all(10),
-                                    labelText: "Repeter mote de passe ",
+                                    labelText: "Répeter mot de passe ",
                                     labelStyle: TextStyle(color: Colors.grey),
                                   ),
                                   validator: (String? val) {
                                     if (val!.isEmpty) {
-                                      return "Comfirmation de mot de passe manquante !";
+                                      return "Comfirmation du mot de passe manquante !";
                                     }
                                     if (val != passwordController.text) {
-                                      return 'La confirmation de mot de passe et le mot de passe ne sont pas identique !';
+                                      return 'La confirmation du mot de passe et le mot de passe ne sont pas identiques !';
                                     }
-                                    if (val.contains(new RegExp(r'[;]')) ) {
+                                    if (val.contains(new RegExp(r'[;]'))) {
                                       return 'Invalide !';
                                     }
 
@@ -485,7 +487,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                         const snackBar = SnackBar(
                           content: Text(
-                              'Inscription réussi ! vous pouvez vous connecter'),
+                              'Inscription réussie ! Vous pouvez vous connecter'),
                         );
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         Navigator.pop(context);

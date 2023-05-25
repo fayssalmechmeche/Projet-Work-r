@@ -91,7 +91,7 @@ class _AddWorkState extends State<AddWork> {
             padding: const EdgeInsets.only(top: 20),
             width: 330,
             child: DropdownButtonFormField<String?>(
-              hint: const Text('Categorie'),
+              hint: const Text('Catégorie'),
               decoration: const InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(
