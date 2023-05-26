@@ -41,6 +41,9 @@ router.get("/getinfoArtisan", actionsArtisan.getInfo);
 // get Work By Status of artisan
 router.get("/getWorkByStatus", actionsArtisan.getWorkByStatus);
 
+// get Work By Status of artisan
+router.get("/getWorkDone", actionsArtisan.getWorkDone);
+
 // get All Artisan
 router.get("/getAllArtisan", actionsArtisan.getAllArtisan);
 
@@ -107,7 +110,10 @@ router.get(
 );
 router.get("/getAllDevisParticulier", actionsParticulier.getAllDevis);
 
-router.get("/getDevisParticulierByWork", actionsParticulier.getDevisParticulierByWork);
+router.get(
+  "/getDevisParticulierByWork",
+  actionsParticulier.getDevisParticulierByWork
+);
 
 router.get("/getActifDevisByWork", actionsParticulier.getActifDevisByWork);
 
@@ -205,9 +211,6 @@ router.post("/updateNoteOfArtisan", actionsNote.updateNoteOfArtisan);
 router.get("/checkNoteExists", actionsNote.checkNoteExists);
 router.get("/getOneNoteByArtisan", actionsNote.getOneNoteByArtisan);
 ///////////////////////////Chantier //////////////////////////////
-router.get(
-  "/getChantiersById",
-  actionsChantier.getChantiersById
-);
+router.get("/getChantiersById", actionsChantier.getChantiersById);
 
 module.exports = router;

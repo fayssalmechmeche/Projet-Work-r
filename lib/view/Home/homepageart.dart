@@ -29,9 +29,8 @@ class _HomePageArtState extends State<HomePageArt> {
   @override
   Widget build(BuildContext context) {
     final globalData = Provider.of<GlobalData>(context);
-    final workInProgress =
-        ArtisanController.getWorkByStatus(1, globalData.getId());
-    final workDone = ArtisanController.getWorkByStatus(2, globalData.getId());
+    final workInProgress = ArtisanController.getWorkDone(1, globalData.getId());
+    final workDone = ArtisanController.getWorkDone(2, globalData.getId());
 
     final devisAccepted =
         ArtisanController.getAllDevisByStatus(3, globalData.getId());

@@ -176,6 +176,17 @@ var functions = {
     );
   },
 
+  getWorkDone: function (req, res) {
+    mysqlConnection.query(
+      "SELECT * FROM chantier WHERE state = ? AND (artisans_refuses IS NULL OR artisans_refuses NOT LIKE CONCAT('%', ?, '%')) and artisanID = ?",
+      [req.headers.state, req.headers.artisanid, req.headers.artisanid],
+      function (error, results, fields) {
+        if (error) return res.json({ success: false, msg: error });
+        res.json({ results: results });
+      }
+    );
+  },
+
   // a function to get an work from the mysql database with artisanID and return it
   getAllChantiersByArtisan(req, res) {
     mysqlConnection.query(
